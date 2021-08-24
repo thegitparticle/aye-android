@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.toastgoand.network.userdetails.UserDetailsApi
 import kotlinx.coroutines.launch
 import java.util.*
+import javax.security.auth.callback.Callback
 
 class EnterPhoneViewModel(): ViewModel() {
 
@@ -25,22 +26,23 @@ class EnterPhoneViewModel(): ViewModel() {
     }
 
     init {
-//        getUserDetails()
-        _userName.value = "ffffffffff"
+        getUserDetails()
     }
+
 
     private fun getUserDetails() {
         viewModelScope.launch{
             try {
                 val userResult = UserDetailsApi.retrofitService.getUserDetails()
-                _userName.value = "success user"
-                Log.i("EnterPhoneModel", userResult.toString())
+                _userName.value = "failed user"
+                Log.i("EnterPhoneModelAPIWorked", userResult.toString())
             }
             catch (e: Exception) {
                 _userName.value = "failed user"
-                Log.i("EnterPhoneModel", "api call failed")
+                Log.i("EnterPhoneModelFailed", e.toString())
             }
         }
     }
 
 }
+
