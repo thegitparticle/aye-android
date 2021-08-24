@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 
 abstract class BaseActivity: AppCompatActivity() {
-    lateinit var viewBinding: ViewBinding
+    open lateinit var viewBinding: ViewBinding
     abstract fun binding(): ViewBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
