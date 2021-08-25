@@ -9,5 +9,5 @@ enum class Screen {
 }
 
 interface Navigator {
-    fun navigateTo(screen: Screen, view: View, animationKey: String)
+    fun navigateTo(screen: Screen)
 }

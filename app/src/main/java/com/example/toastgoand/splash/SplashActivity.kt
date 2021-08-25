@@ -9,14 +9,16 @@ import android.os.Looper
 import android.view.View
 import android.widget.ImageView
 import androidx.viewbinding.ViewBinding
+import com.example.toastgoand.data.KEY_USER_LOGIN
 import dagger.hilt.android.AndroidEntryPoint
 import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.R
+import com.example.toastgoand.data.impl.prefs.IPref
 import com.example.toastgoand.databinding.ActivitySplashBinding
 import com.example.toastgoand.navigator.Screen
-import com.example.toastgoand.resrc.DELAY_HOME
 import com.example.toastgoand.navigator.Navigator
-import com.example.toastgoand.resrc.DELAY_LOGIN
+import com.example.toastgoand.data.DELAY_HOME
+import com.example.toastgoand.data.DELAY_LOGIN
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -29,6 +31,7 @@ class SplashActivity : BaseActivity() {
     // dependency objects
     @Inject
     lateinit var navigator: Navigator
+    @Inject lateinit var pref: IPref
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +50,12 @@ class SplashActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        navigator.navigateTo(Screen.LOGIN, splashLogoImage, "logoImageTransition")
+        if (pref.bool(KEY_USER_LOGIN)) {
+            navigator.navigateTo((Screen.HOME))
+        } else {
+            navigator.navigateTo((Screen.LOGIN))
+        }
+//        navigator.navigateTo(if (pref.bool(KEY_USER_LOGIN) Screen.HOME else Screen.LOGIN)
 //        splashLogoImage.animate().setListener(object : AnimatorListenerAdapter() {
 //            fun onAnimatedEnd(animation: Animator?) {
 //                loadNextScreen(

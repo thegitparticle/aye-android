@@ -1,4 +1,4 @@
-package com.example.toastgoand.resrc
+package com.example.toastgoand.data
 
 const val KEY_USER_LOGIN = "is_user_logged_in"
 const val DELAY_HOME = 1000L

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/clans"
+        android:title="clans"
+        android:icon="@drawable/clans_on_background"/>
+    <item
+        android:id="@+id/directs"
+        android:title="directs"
+        android:icon="@mipmap/directs_off_round"/>
+</menu>

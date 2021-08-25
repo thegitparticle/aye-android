@@ -1,4 +1,4 @@
-package com.example.toastgoand.resrc
+package com.example.toastgoand.data.impl.resrc
 
 import android.content.Context
 import android.graphics.drawable.Drawable
