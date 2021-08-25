@@ -18,7 +18,7 @@
             android:layout_marginTop="132dp"
             android:layout_marginEnd="40dp"
             android:fontFamily="@font/lato"
-            android:text="welcome, "
+            android:text=""
             android:textAlignment="center"
             android:textColor="#00BCD4"
             app:layout_constraintEnd_toEndOf="parent"
