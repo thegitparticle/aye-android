@@ -5,10 +5,25 @@
     android:id="@+id/auth_navigation"
     app:startDestination="@id/enterPhoneFragment">
 
-
     <fragment
         android:id="@+id/enterPhoneFragment"
         android:name="com.example.toastgoand.auth.fragments.EnterPhoneFragment"
         android:label="EnterPhoneFragment"
-        tools:layout="@layout/enter_phone"/>
+        tools:layout="@layout/enter_phone">
+        <action
+            android:id="@+id/action_enterPhoneFragment_to_OTPFragment"
+            app:destination="@id/OTPFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/OTPFragment"
+        android:name="com.example.toastgoand.auth.fragments.OTPFragment"
+        android:label="otp_fragment"
+        tools:layout="@layout/otp_fragment">
+        <argument
+            android:name="phoneNumber"
+            android:defaultValue="9"
+            app:argType="string" />
+    </fragment>
+
 </navigation>
