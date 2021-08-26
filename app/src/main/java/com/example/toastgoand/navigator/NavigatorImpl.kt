@@ -6,7 +6,8 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.FragmentActivity
 import com.example.toastgoand.auth.LoginActivity
 import com.example.toastgoand.home.HomeActivity
-import com.example.toastgoand.resrc.IRes
+import com.example.toastgoand.home.LandingActivity
+//import com.example.toastgoand.resrc.IRes
 import javax.inject.Inject
 
 class NavigatorImpl @Inject constructor(
@@ -21,6 +22,9 @@ class NavigatorImpl @Inject constructor(
             }
             Screen.HOME -> {
                 activity.startActivity(Intent(activity, HomeActivity::class.java))
+            }
+            Screen.LANDING -> {
+                activity.startActivity(Intent(activity, LandingActivity::class.java))
             }
         }
     }

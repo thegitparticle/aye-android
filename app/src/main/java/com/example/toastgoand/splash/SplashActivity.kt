@@ -13,7 +13,7 @@ import com.example.toastgoand.data.KEY_USER_LOGIN
 import dagger.hilt.android.AndroidEntryPoint
 import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.R
-import com.example.toastgoand.data.impl.prefs.IPref
+//import com.example.toastgoand.data.impl.prefs.IPref
 import com.example.toastgoand.databinding.ActivitySplashBinding
 import com.example.toastgoand.navigator.Screen
 import com.example.toastgoand.navigator.Navigator
@@ -31,7 +31,7 @@ class SplashActivity : BaseActivity() {
     // dependency objects
     @Inject
     lateinit var navigator: Navigator
-    @Inject lateinit var pref: IPref
+//    @Inject lateinit var pref: IPref
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,8 +50,9 @@ class SplashActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (pref.bool(KEY_USER_LOGIN)) {
-            navigator.navigateTo((Screen.HOME))
+//        if (pref.bool(KEY_USER_LOGIN)) {
+        if (true) {
+            navigator.navigateTo((Screen.LANDING))
         } else {
             navigator.navigateTo((Screen.LOGIN))
         }

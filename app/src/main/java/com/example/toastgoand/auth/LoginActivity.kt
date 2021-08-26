@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.data.KEY_USER_LOGIN
-import com.example.toastgoand.data.impl.prefs.IPref
+//import com.example.toastgoand.data.impl.prefs.IPref
 import com.example.toastgoand.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 import com.example.toastgoand.databinding.LoginBinding
@@ -19,7 +19,7 @@ class LoginActivity: BaseActivity() {
 
     @Inject
     lateinit var navigator: Navigator
-    @Inject lateinit var pref: IPref
+//    @Inject lateinit var pref: IPref
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +29,7 @@ class LoginActivity: BaseActivity() {
         binding.button.setOnClickListener @Suppress("UNUSED_ANONYMOUS_PARAMETER") { view: View ->
             navigator.navigateTo(Screen.HOME)
         }
-        pref.put(KEY_USER_LOGIN, true)
+//        pref.put(KEY_USER_LOGIN, true)
 
     }
 
