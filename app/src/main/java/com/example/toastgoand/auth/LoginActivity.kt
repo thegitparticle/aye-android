@@ -27,7 +27,7 @@ class LoginActivity: BaseActivity() {
         binding = viewBinding as LoginBinding
 
         binding.button.setOnClickListener @Suppress("UNUSED_ANONYMOUS_PARAMETER") { view: View ->
-            navigator.navigateTo(Screen.HOME)
+            navigator.navigateTo(Screen.LANDING)
         }
 //        pref.put(KEY_USER_LOGIN, true)
 

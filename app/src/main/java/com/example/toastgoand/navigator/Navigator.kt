@@ -5,7 +5,6 @@ import android.view.View
 enum class Screen {
 
     LOGIN,
-    HOME,
     LANDING
 }
 

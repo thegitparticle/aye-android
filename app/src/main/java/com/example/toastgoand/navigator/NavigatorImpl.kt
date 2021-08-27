@@ -1,11 +1,8 @@
 package com.example.toastgoand.navigator
 
 import android.content.Intent
-import android.view.View
-import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.FragmentActivity
 import com.example.toastgoand.auth.LoginActivity
-import com.example.toastgoand.home.HomeActivity
 import com.example.toastgoand.home.LandingActivity
 //import com.example.toastgoand.resrc.IRes
 import javax.inject.Inject
@@ -19,9 +16,6 @@ class NavigatorImpl @Inject constructor(
         when (screen) {
             Screen.LOGIN -> {
                 activity.startActivity(Intent(activity, LoginActivity::class.java))
-            }
-            Screen.HOME -> {
-                activity.startActivity(Intent(activity, HomeActivity::class.java))
             }
             Screen.LANDING -> {
                 activity.startActivity(Intent(activity, LandingActivity::class.java))
