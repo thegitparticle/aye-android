@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.fragment.app.FragmentActivity
 import com.example.toastgoand.auth.LoginActivity
 import com.example.toastgoand.home.LandingActivity
+import com.example.toastgoand.quick.QuickActivity
 //import com.example.toastgoand.resrc.IRes
 import javax.inject.Inject
 
@@ -19,6 +20,9 @@ class NavigatorImpl @Inject constructor(
             }
             Screen.LANDING -> {
                 activity.startActivity(Intent(activity, LandingActivity::class.java))
+            }
+            Screen.QUICK -> {
+                activity.startActivity(Intent(activity, QuickActivity::class.java))
             }
         }
     }

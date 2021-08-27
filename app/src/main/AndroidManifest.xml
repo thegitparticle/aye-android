@@ -19,17 +19,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ToastgoandN">
         <activity
-            android:name=".home.LandingActivity"
+            android:name=".quick.QuickActivity"
             android:exported="true" />
         <activity
-            android:name=".home.HomeActivity"
+            android:name=".home.LandingActivity"
             android:exported="true" />
         <activity
             android:name=".splash.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

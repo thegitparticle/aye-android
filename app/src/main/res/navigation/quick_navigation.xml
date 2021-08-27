@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/quick_navigation"
+    app:startDestination="@id/groundFragment">
+
+    <fragment
+        android:id="@+id/groundFragment"
+        android:name="com.example.toastgoand.quick.groundlayer.GroundFragment"
+        android:label="ground_fragment"
+        tools:layout="@layout/ground_fragment" >
+        <action
+            android:id="@+id/action_groundFragment_to_callFragment"
+            app:destination="@id/callFragment" />
+        <action
+            android:id="@+id/action_groundFragment_to_messageFragment"
+            app:destination="@id/messageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/callFragment"
+        android:name="com.example.toastgoand.quick.callactivity.CallFragment"
+        android:label="call_fragment"
+        tools:layout="@layout/call_fragment" />
+    <fragment
+        android:id="@+id/messageFragment"
+        android:name="com.example.toastgoand.quick.MessageFragment"
+        android:label="MessageFragment"
+        tools:layout="@layout/message_fragment"/>
+</navigation>

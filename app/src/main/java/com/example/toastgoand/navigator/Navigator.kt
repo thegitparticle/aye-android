@@ -5,7 +5,8 @@ import android.view.View
 enum class Screen {
 
     LOGIN,
-    LANDING
+    LANDING,
+    QUICK
 }
 
 interface Navigator {

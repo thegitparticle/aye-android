@@ -88,6 +88,6 @@ dependencies {
     // layout percentage library
     implementation "androidx.percentlayout:percentlayout:1.0.0"
 
-    // agora android UI kit
-    implementation 'com.github.AgoraIO-Community.Android-UIKit:final:v2.0.6'
+    //agora main library for android
+    implementation 'com.github.agorabuilder:native-full-sdk:3.5.0.2'
 }

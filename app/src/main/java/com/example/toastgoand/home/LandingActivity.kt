@@ -17,13 +17,19 @@ import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.R
 import com.example.toastgoand.databinding.ActivityLandingBinding
 import com.example.toastgoand.databinding.StartCallDialogBinding
+import com.example.toastgoand.navigator.Navigator
+import com.example.toastgoand.navigator.Screen
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class LandingActivity: BaseActivity() {
 
     private lateinit var binding: ActivityLandingBinding
+
+    @Inject
+    lateinit var navigator: Navigator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,8 +82,8 @@ class LandingActivity: BaseActivity() {
         }.show()
 
         dialogBinding?.btnOk?.setOnClickListener {
-//            customDialog.dismiss()
-
+            customDialog.dismiss()
+            navigator.navigateTo(Screen.QUICK)
         }
 
         dialogBinding?.backImageButton?.setOnClickListener{
