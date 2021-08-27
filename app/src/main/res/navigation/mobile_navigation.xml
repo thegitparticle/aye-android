@@ -9,12 +9,12 @@
         android:id="@+id/navigation_home"
         android:name="com.example.toastgoand.home.clans.ClansFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/clans_fragment" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.example.toastgoand.home.directs.DirectsFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/directs_fragment" />
 
 </navigation>
