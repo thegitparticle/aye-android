@@ -41,7 +41,9 @@ class GroundFragment : Fragment() {
 
 
         binding.button4.setOnClickListener {
-            findNavController().navigate(GroundFragmentDirections.actionGroundFragmentToMessageFragment())
+//            findNavController().navigate(GroundFragmentDirections.actionGroundFragmentToMessageFragment())
+            findNavController().navigate(GroundFragmentDirections.actionGroundFragmentToMultiProcess())
+
         }
 
         return binding.root

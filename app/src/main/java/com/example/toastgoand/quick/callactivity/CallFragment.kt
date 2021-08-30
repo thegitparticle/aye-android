@@ -77,7 +77,7 @@ class CallFragment : Fragment() {
     private val CHANNEL = "chan"
 
     // Fill the temp token generated on Agora Console.
-    private val TOKEN = "0065de5dd821ca244599496505f2481b447IAAUmAkTfmremkAN1onDdtOUUdZMpYX/MOkTRmTnQTnwwdAL/5gAAAAAEAA8nW45DEEqYQEAAQALQSph"
+    private val TOKEN = "0065de5dd821ca244599496505f2481b447IAD8WnxXDDZqLTE4PgArzfKU2Cq4mrg0no71yhWozMEJ0tAL/5gAAAAAEAA8nW45m8QsYQEAAQCaxCxh"
 
     private var mRtcEngine: RtcEngine? = null
 

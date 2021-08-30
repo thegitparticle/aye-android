@@ -38,6 +38,7 @@ class LandingActivity: BaseActivity() {
 
         // start stream button login
 
+
         binding.floatingActionButton.setOnClickListener{
             Toast.makeText(this, "start stream", Toast.LENGTH_SHORT).show()
             showDefaultDialog()

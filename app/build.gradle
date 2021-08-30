@@ -38,6 +38,12 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    sourceSets {
+        main {
+            aidl.srcDirs = ['src/main/aidl/com.example.toastgoand', 'src/main/aidl/']
+        }
+    }
 }
 
 dependencies {
@@ -90,4 +96,11 @@ dependencies {
 
     //agora main library for android
     implementation 'com.github.agorabuilder:native-full-sdk:3.5.0.2'
+
+    // permission manager needed for agora
+    implementation 'com.yanzhenjie:permission:2.0.3'
+
+    //recycled view for agora needed
+    implementation 'com.github.luizgrp:SectionedRecyclerViewAdapter:v3.2.0'
+
 }

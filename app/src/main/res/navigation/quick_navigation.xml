@@ -2,7 +2,6 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/quick_navigation"
     app:startDestination="@id/groundFragment">
 
     <fragment
@@ -16,6 +15,9 @@
         <action
             android:id="@+id/action_groundFragment_to_messageFragment"
             app:destination="@id/messageFragment" />
+        <action
+            android:id="@+id/action_groundFragment_to_multiProcess"
+            app:destination="@id/multiProcess" />
     </fragment>
     <fragment
         android:id="@+id/callFragment"
@@ -27,4 +29,9 @@
         android:name="com.example.toastgoand.quick.MessageFragment"
         android:label="MessageFragment"
         tools:layout="@layout/message_fragment"/>
+    <fragment
+        android:id="@+id/multiProcess"
+        android:name="com.example.toastgoand.quick.callactivity.MultiProcess"
+        android:label="fragment_two_process_screen_share"
+        tools:layout="@layout/fragment_two_process_screen_share" />
 </navigation>
