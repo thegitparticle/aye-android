@@ -3,6 +3,8 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
 
+<!--    auth activity - welcome screen-->
+    <string name="enter_app">dive in</string>
     <!--    start stream dialog-->
     <string name="start_sharing">Start Sharing</string>
 

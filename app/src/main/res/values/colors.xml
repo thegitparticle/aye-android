@@ -7,4 +7,18 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+<!--    aye splash colors - light mode-->
+    <color name="green_splash">#0acf83</color>
+    <color name="red_splash">#ef4f2b</color>
+    <color name="pink_splash">#f654a2</color>
+    <color name="purple_splash">#a259ff</color>
+    <color name="dark_splash">#040405</color>
+    <color name="off_light_splash">#f2f2f3</color>
+    <color name="off_dark_splash">#16161a</color>
+    <color name="blue_splash">#1abcfe</color>
+    <color name="peach_splash">#ff7262</color>
+    <color name="light_splash">#ffffff</color>
+    <color name="orange_splash">#ffa24a</color>
+    <color name="danger_red_splash">#f32013</color>
 </resources>

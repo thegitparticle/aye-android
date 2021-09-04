@@ -34,12 +34,12 @@ class LoginActivity: BaseActivity() {
         binding = viewBinding as LoginBinding
 
 
-        binding.button.setOnClickListener @Suppress("UNUSED_ANONYMOUS_PARAMETER") { view: View ->
-
-            prefHelper = PrefHelper(this)
-            prefHelper.put( Constant.PREF_IS_LOGIN, true)
-            navigator.navigateTo(Screen.LANDING)
-        }
+//        binding.button.setOnClickListener @Suppress("UNUSED_ANONYMOUS_PARAMETER") { view: View ->
+//
+//            prefHelper = PrefHelper(this)
+//            prefHelper.put( Constant.PREF_IS_LOGIN, true)
+//            navigator.navigateTo(Screen.LANDING)
+//        }
     }
 
     override fun binding(): ViewBinding {
