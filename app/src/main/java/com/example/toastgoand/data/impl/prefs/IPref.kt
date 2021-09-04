@@ -1,7 +1,8 @@
 package com.example.toastgoand.data.impl.prefs
-
+//
 //import dagger.Provides
 //
+//@Provides
 //interface IPref {
 //
 //    fun put(key: String, value: Any)

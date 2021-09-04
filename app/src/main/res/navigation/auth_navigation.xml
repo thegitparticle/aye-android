@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/enterPhoneFragment"
-        android:name="com.example.toastgoand.auth.fragments.EnterPhoneFragment"
+        android:name="com.example.toastgoand.auth.fragments.enterphone.EnterPhoneFragment"
         android:label="EnterPhoneFragment"
         tools:layout="@layout/enter_phone">
         <action
@@ -16,7 +16,7 @@
 
     <fragment
         android:id="@+id/OTPFragment"
-        android:name="com.example.toastgoand.auth.fragments.OTPFragment"
+        android:name="com.example.toastgoand.auth.fragments.otp.OTPFragment"
         android:label="otp_fragment"
         tools:layout="@layout/otp_fragment">
         <argument

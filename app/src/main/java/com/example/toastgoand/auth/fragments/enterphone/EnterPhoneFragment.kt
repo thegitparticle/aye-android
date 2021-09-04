@@ -1,4 +1,4 @@
-package com.example.toastgoand.auth.fragments
+package com.example.toastgoand.auth.fragments.enterphone
 
 import android.os.Bundle
 import android.util.Log

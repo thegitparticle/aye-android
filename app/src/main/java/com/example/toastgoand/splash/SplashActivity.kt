@@ -2,6 +2,9 @@ package com.example.toastgoand.splash
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.animation.AnimationUtils
 import android.os.Handler
@@ -13,12 +16,15 @@ import com.example.toastgoand.data.KEY_USER_LOGIN
 import dagger.hilt.android.AndroidEntryPoint
 import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.R
-//import com.example.toastgoand.data.impl.prefs.IPref
+import com.example.toastgoand.auth.LoginActivity
 import com.example.toastgoand.databinding.ActivitySplashBinding
 import com.example.toastgoand.navigator.Screen
 import com.example.toastgoand.navigator.Navigator
 import com.example.toastgoand.data.DELAY_HOME
 import com.example.toastgoand.data.DELAY_LOGIN
+import com.example.toastgoand.home.LandingActivity
+import com.example.toastgoand.prefhelpers.Constant
+import com.example.toastgoand.prefhelpers.PrefHelper
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -27,15 +33,16 @@ class SplashActivity : BaseActivity() {
     // view objects
     lateinit var binding: ActivitySplashBinding
     lateinit var splashLogoImage: ImageView
+    lateinit var prefHelper: PrefHelper
 
     // dependency objects
     @Inject
     lateinit var navigator: Navigator
-//    @Inject lateinit var pref: IPref
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bindViews()
+        prefHelper = PrefHelper(this)
     }
 
     private fun bindViews() {
@@ -50,26 +57,13 @@ class SplashActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-//        if (pref.bool(KEY_USER_LOGIN)) {
-        if (true) {
-            navigator.navigateTo((Screen.LANDING))
+
+        if (prefHelper.getBoolean( Constant.PREF_IS_LOGIN )) {
+            navigator.navigateTo(Screen.LANDING)
         } else {
-            navigator.navigateTo((Screen.LOGIN))
+            navigator.navigateTo(Screen.LOGIN)
         }
-//        navigator.navigateTo(if (pref.bool(KEY_USER_LOGIN) Screen.HOME else Screen.LOGIN)
-//        splashLogoImage.animate().setListener(object : AnimatorListenerAdapter() {
-//            fun onAnimatedEnd(animation: Animator?) {
-//                loadNextScreen(
-//                    Screen.LOGIN,
-//                    DELAY_LOGIN
-//                )
-//            }
-//        }).start()
+
     }
 
-//    private fun loadNextScreen(screen: Screen, delay: Long) {
-//        Handler(Looper.getMainLooper()).postDelayed({
-//            navigator.navigateTo(screen, splashLogoImage, "logoImageTransition")
-//        }, delay)
-//    }
 }

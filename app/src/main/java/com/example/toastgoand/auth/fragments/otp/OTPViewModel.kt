@@ -1,4 +1,4 @@
-package com.example.toastgoand.auth.fragments
+package com.example.toastgoand.auth.fragments.otp
 
 import androidx.lifecycle.ViewModel
 

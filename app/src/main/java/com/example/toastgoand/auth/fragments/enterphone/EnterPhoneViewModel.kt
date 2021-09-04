@@ -1,4 +1,4 @@
-package com.example.toastgoand.auth.fragments
+package com.example.toastgoand.auth.fragments.enterphone
 
 import android.util.Log
 import androidx.lifecycle.LiveData
