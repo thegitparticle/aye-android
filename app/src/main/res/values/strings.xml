@@ -5,8 +5,8 @@
 
     <!--    auth activity -->
     <string name="enter_app">dive in</string>
-    <string name="enter_phone">temme your phone number</string>
-
+    <string name="enter_phone_main">Hey there!</string>
+    <string name="enter_phone_sub">tell me your phone number</string>
 
     <!--    start stream dialog-->
     <string name="start_sharing">Start Sharing</string>

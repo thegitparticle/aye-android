@@ -8,10 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.fragment.findNavController
 import com.example.toastgoand.R
-import com.example.toastgoand.auth.LoginActivity
-import com.example.toastgoand.auth.fragments.enterphone.EnterPhoneFragmentDirections
 import com.example.toastgoand.databinding.ClansFragmentBinding
 
 class ClansFragment : Fragment() {

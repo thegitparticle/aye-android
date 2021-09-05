@@ -25,6 +25,10 @@
         android:theme="@style/Theme.ToastgoandN"
         tools:replace="android:appComponentFactory">
         <activity
+            android:name=".auth.enterphone.EnterPhoneActivity"
+            android:exported="true"
+            android:windowSoftInputMode="stateAlwaysVisible"/>
+        <activity
             android:name=".auth.welcome.WelcomeActivity"
             android:exported="true" />
         <activity

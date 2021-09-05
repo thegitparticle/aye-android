@@ -1,30 +1,17 @@
 package com.example.toastgoand.splash
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
-import android.content.Context
-import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.animation.AnimationUtils
-import android.os.Handler
-import android.os.Looper
-import android.view.View
 import android.widget.ImageView
 import androidx.viewbinding.ViewBinding
-import com.example.toastgoand.data.KEY_USER_LOGIN
-import dagger.hilt.android.AndroidEntryPoint
 import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.R
-import com.example.toastgoand.auth.LoginActivity
 import com.example.toastgoand.databinding.ActivitySplashBinding
-import com.example.toastgoand.navigator.Screen
 import com.example.toastgoand.navigator.Navigator
-import com.example.toastgoand.data.DELAY_HOME
-import com.example.toastgoand.data.DELAY_LOGIN
-import com.example.toastgoand.home.LandingActivity
+import com.example.toastgoand.navigator.Screen
 import com.example.toastgoand.prefhelpers.Constant
 import com.example.toastgoand.prefhelpers.PrefHelper
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint

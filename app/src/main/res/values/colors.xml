@@ -21,4 +21,11 @@
     <color name="light_splash">#ffffff</color>
     <color name="orange_splash">#ffa24a</color>
     <color name="danger_red_splash">#f32013</color>
+
+    <color name="auth_light_splash">#ffffff</color>
+    <color name="auth_dark_splash">#0F0F11</color>
+    <color name="auth_off_light_splash">#f2f2f3</color>
+    <color name="auth_mid_light_splash">#D9D9DC</color>
+    <color name="auth_off_dark_splash">#17171A</color>
+    <color name="auth_mid_dark_splash">#222227</color>
 </resources>
