@@ -14,9 +14,4 @@ abstract class BaseActivity: AppCompatActivity() {
         viewBinding = binding()
         setContentView(viewBinding.root)
     }
-
-    open fun ShowMessage(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
-
 }

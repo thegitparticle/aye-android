@@ -19,7 +19,7 @@ import com.example.toastgoand.prefhelpers.PrefHelper
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class LoginActivity: BaseActivity() {
+open class LoginActivity: BaseActivity() {
 
     private lateinit var binding: LoginBinding
 

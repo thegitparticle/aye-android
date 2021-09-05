@@ -1,5 +1,8 @@
 package com.example.toastgoand.auth.fragments.enterphone
 
+import android.content.res.AssetManager
+import android.content.res.loader.AssetsProvider
+import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,6 +15,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.toastgoand.R
 import com.example.toastgoand.databinding.EnterPhoneBinding
+import com.hbb20.CountryCodePicker
+
+import androidx.core.content.res.ResourcesCompat
+import com.example.toastgoand.auth.LoginActivity
+
 
 class EnterPhoneFragment: Fragment() {
 
@@ -35,19 +43,22 @@ class EnterPhoneFragment: Fragment() {
         viewModel = ViewModelProvider(this).get(EnterPhoneViewModel::class.java)
         binding.enterPhoneViewModel = viewModel
 
-        // Specify the fragment view as the lifecycle owner of the binding.
-        // This is used so that the binding can observe LiveData updates
         binding.lifecycleOwner = viewLifecycleOwner
 
-        viewModel.userName.observe(viewLifecycleOwner, Observer<String> { newName ->
-            binding.userDetailsName.text = newName
-        })
+        val typeface = context?.let { ResourcesCompat.getFont(it, R.font.lato) }
 
-        binding.imageButton.setOnClickListener{
-            findNavController().navigate(EnterPhoneFragmentDirections.actionEnterPhoneFragmentToOTPFragment(
-                binding.editTextPhone.text.toString()
-            ))
-        }
+        val ccp = binding.ccp
+        ccp.setTypeFace(typeface)
+
+//        viewModel.userName.observe(viewLifecycleOwner, Observer<String> { newName ->
+//            binding.userDetailsName.text = newName
+//        })
+//
+//        binding.imageButton.setOnClickListener{
+//            findNavController().navigate(EnterPhoneFragmentDirections.actionEnterPhoneFragmentToOTPFragment(
+//                binding.editTextPhone.text.toString()
+//            ))
+//        }
 
         return binding.root
     }

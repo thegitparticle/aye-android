@@ -11,19 +11,22 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:name=".ToastgoApplication"
-        android:appComponentFactory="androidx"
-        tools:replace="android:appComponentFactory"
-        android:process=":screensharingsvc"
         android:allowBackup="true"
+        android:appComponentFactory="androidx"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:process=":screensharingsvc"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.ToastgoandN">
+        android:theme="@style/Theme.ToastgoandN"
+        tools:replace="android:appComponentFactory">
+        <activity
+            android:name=".auth.welcome.WelcomeActivity"
+            android:exported="true" />
         <activity
             android:name=".quick.QuickActivity"
             android:exported="true" />
@@ -35,6 +38,7 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -44,6 +48,7 @@
             android:process=":screensharingsvc"
             android:screenOrientation="fullUser"
             android:theme="@android:style/Theme.Translucent" />
+
         <service
             android:name=".quick.callactivity.impl.ScreenSharingService"
             android:foregroundServiceType="mediaProjection"

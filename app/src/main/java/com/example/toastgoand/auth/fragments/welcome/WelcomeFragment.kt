@@ -8,7 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.findNavController
 import com.example.toastgoand.R
+import com.example.toastgoand.auth.fragments.enterphone.EnterPhoneFragmentDirections
 import com.example.toastgoand.databinding.WelcomeFragmentBinding
 
 class WelcomeFragment : Fragment() {
@@ -31,6 +33,12 @@ class WelcomeFragment : Fragment() {
         binding.welcomeViewModel = viewModel
 
         binding.lifecycleOwner = viewLifecycleOwner
+
+        binding.button5.setOnClickListener {
+            findNavController().navigate(
+                WelcomeFragmentDirections.actionWelcomeFragmentToEnterPhoneFragment()
+            )
+        }
 
         return binding.root
     }

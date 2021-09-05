@@ -8,6 +8,7 @@
         <entry key="app/src/main/res/drawable/clans_on_background.xml" value="0.24487179487179486" />
         <entry key="app/src/main/res/drawable/color_aura_background.xml" value="0.2417721518987342" />
         <entry key="app/src/main/res/drawable/directs_on_background.xml" value="0.2417721518987342" />
+        <entry key="app/src/main/res/drawable/ic_arrow_left.xml" value="0.20462962962962963" />
         <entry key="app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.2417721518987342" />
         <entry key="app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.2417721518987342" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.2417721518987342" />
@@ -21,7 +22,7 @@
         <entry key="app/src/main/res/layout/call_fragment.xml" value="0.1" />
         <entry key="app/src/main/res/layout/clans_fragment.xml" value="0.19655797101449277" />
         <entry key="app/src/main/res/layout/directs_fragment.xml" value="0.165" />
-        <entry key="app/src/main/res/layout/enter_phone.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/enter_phone.xml" value="0.165" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.19655797101449277" />
         <entry key="app/src/main/res/layout/fragment_main.xml" value="0.18568840579710144" />
         <entry key="app/src/main/res/layout/fragment_two_process_screen_share.xml" value="0.18568840579710144" />
