@@ -28,7 +28,7 @@ class NameClanActivity : BaseActivity() {
         binding.nameClanModel = viewModel
 
         binding.nextImageButton.setOnClickListener {
-            val intent = Intent(this, WelcomeActivity::class.java).apply{
+            val intent = Intent(this, ClanCreatedActivity::class.java).apply{
             }
             startActivity(intent)
         }

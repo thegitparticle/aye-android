@@ -1,5 +1,6 @@
 package com.example.toastgoand.auth.clancreate
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.R
+import com.example.toastgoand.auth.invitedby.InvitedByActivity
 import com.example.toastgoand.databinding.ActivityCreateClanBinding
 import java.util.*
 
@@ -43,6 +45,12 @@ class CreateClanActivity : BaseActivity() {
 
         // Setting the Adapter with the recyclerview
         recyclerview.adapter = adapter
+
+        binding.floatingNextButton.setOnClickListener {
+            val intent = Intent(this, NameClanActivity::class.java).apply {
+            }
+            startActivity(intent)
+        }
 
     }
 

@@ -47,7 +47,7 @@ class EnterPhoneActivity : BaseActivity() {
 
         binding.nextImageButton.setOnClickListener {
 //            viewModel.checkPhoneNumberHere(countryCode + phoneNumber.toString())
-            val intent = Intent(this, StrangerIntroActivity::class.java).apply{
+            val intent = Intent(this, DetailsSignupActivity::class.java).apply{
                 putExtra("phoneNumber", countryCode + phoneNumber.toString())
             }
             startActivity(intent)

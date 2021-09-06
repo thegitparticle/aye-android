@@ -25,6 +25,9 @@
         android:theme="@style/Theme.ToastgoandN"
         tools:replace="android:appComponentFactory">
         <activity
+            android:name=".auth.clancreate.ClanCreatedActivity"
+            android:exported="true" />
+        <activity
             android:name=".auth.clancreate.NameClanActivity"
             android:exported="true" />
         <activity

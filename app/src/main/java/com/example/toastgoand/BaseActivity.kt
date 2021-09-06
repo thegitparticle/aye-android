@@ -13,5 +13,6 @@ abstract class BaseActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         viewBinding = binding()
         setContentView(viewBinding.root)
+        getSupportActionBar()?.hide()
     }
 }
