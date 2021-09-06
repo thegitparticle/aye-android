@@ -5,8 +5,18 @@
 
     <!--    auth activity -->
     <string name="enter_app">dive in</string>
+
     <string name="enter_phone_main">Hey there!</string>
     <string name="enter_phone_sub">tell me your phone number</string>
+
+    <string name="otp_login_main">Yo, you\'re back?</string>
+    <string name="otp_login_sub">enter otp to prove it\'s you</string>
+
+    <string name="details_signup_main">Hey, new friend!</string>
+    <string name="details_signup_sub">tell me about you</string>
+
+    <string name="otp_signup_main">Gotcha!</string>
+    <string name="otp_signup_sub">now enter the otp I sent</string>
 
     <!--    start stream dialog-->
     <string name="start_sharing">Start Sharing</string>

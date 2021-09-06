@@ -25,9 +25,18 @@
         android:theme="@style/Theme.ToastgoandN"
         tools:replace="android:appComponentFactory">
         <activity
+            android:name=".auth.otpsignup.OtpSignupActivity"
+            android:exported="true" />
+        <activity
+            android:name=".auth.detailssignup.DetailsSignupActivity"
+            android:exported="true" />
+        <activity
+            android:name=".auth.otplogin.OtpLoginActivity"
+            android:exported="true" />
+        <activity
             android:name=".auth.enterphone.EnterPhoneActivity"
             android:exported="true"
-            android:windowSoftInputMode="stateAlwaysVisible"/>
+            android:windowSoftInputMode="stateAlwaysVisible" />
         <activity
             android:name=".auth.welcome.WelcomeActivity"
             android:exported="true" />
