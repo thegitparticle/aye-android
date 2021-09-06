@@ -116,4 +116,9 @@ dependencies {
 
     // otp input
     implementation "io.github.chaosleung:pinview:1.4.4"
+
+    //animated text views
+    def htextview_version = "0.1.6"
+    implementation "com.hanks:htextview-base:$htextview_version"        // base library
+    implementation "com.hanks:htextview-evaporate:$htextview_version"
 }

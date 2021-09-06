@@ -10,6 +10,7 @@ import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.auth.detailssignup.DetailsSignupActivity
 import com.example.toastgoand.auth.otplogin.OtpLoginActivity
+import com.example.toastgoand.auth.strangerintro.StrangerIntroActivity
 import com.example.toastgoand.databinding.ActivityEnterPhoneBinding
 import com.hbb20.CountryCodePicker.OnCountryChangeListener
 
@@ -46,7 +47,7 @@ class EnterPhoneActivity : BaseActivity() {
 
         binding.nextImageButton.setOnClickListener {
 //            viewModel.checkPhoneNumberHere(countryCode + phoneNumber.toString())
-            val intent = Intent(this, DetailsSignupActivity::class.java).apply{
+            val intent = Intent(this, StrangerIntroActivity::class.java).apply{
                 putExtra("phoneNumber", countryCode + phoneNumber.toString())
             }
             startActivity(intent)
