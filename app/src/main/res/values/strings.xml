@@ -18,6 +18,22 @@
     <string name="otp_signup_main">Gotcha!</string>
     <string name="otp_signup_sub">now enter the otp I sent</string>
 
+    <string name="setting_up_main">setting up your profile...</string>
+    <string name="setting_up_contacts">Aye! needs contacts to work</string>
+    <string name="setting_up_contacts_button">allow contacts</string>
+
+    <string name="invited_by_go_button">talk to San</string>
+
+    <string name="stranger_intro_1">Aye! is only for friends...</string>
+    <string name="stranger_intro_2">start a clan with you besties</string>
+    <string name="stranger_intro_3">&amp; stay connected, better!</string>
+    <string name="stranger_start_clan_button">start</string>
+    <string name="stranger_start_clan_choosing_heading">choose friends</string>
+    <string name="stranger_start_clan_naming_heading">name your clan</string>
+    <string name="stranger_start_clan_starting">clan in the making...</string>
+    <string name="stranger_start_clan_success">done</string>
+
+
     <!--    start stream dialog-->
     <string name="start_sharing">Start Sharing</string>
 

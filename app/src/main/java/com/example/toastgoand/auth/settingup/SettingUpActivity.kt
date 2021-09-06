@@ -15,6 +15,8 @@ import com.example.toastgoand.auth.enterphone.EnterPhoneViewModel
 import com.example.toastgoand.databinding.ActivityEnterPhoneBinding
 import com.example.toastgoand.databinding.ActivitySettingUpBinding
 import android.Manifest
+import com.example.toastgoand.auth.invitedby.InvitedByActivity
+import com.example.toastgoand.auth.otpsignup.OtpSignupActivity
 
 class SettingUpActivity : BaseActivity() {
     private lateinit var binding: ActivitySettingUpBinding
@@ -40,8 +42,16 @@ class SettingUpActivity : BaseActivity() {
         viewModel = ViewModelProvider(this).get(SettingUpViewModel::class.java)
 
         requestPermissionLauncher.launch(
-            Manifest.permission.CAMERA
+            Manifest.permission.READ_CONTACTS
         )
+
+
+        binding.allowContactsButton.setOnClickListener {
+            val intent = Intent(this, InvitedByActivity::class.java).apply {
+                putExtra("phoneNumber", intent.getStringExtra("phoneNumber"))
+            }
+            startActivity(intent)
+        }
 
     }
 

@@ -2,7 +2,8 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".auth.invitedby.InvitedByActivity">
+    tools:context=".auth.invitedby.InvitedByActivity"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
@@ -27,25 +28,25 @@
             android:layout_gravity="center"
             android:text="you have been invited by San" />
 
-        <Button
-            android:id="@+id/contactsButton"
-            android:text="talk to san"
-            android:fontFamily="@font/lato"
-            android:textColor="#FFFFFF"
-            android:textSize="22sp"
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/diveInButton"
             android:layout_width="270dp"
             android:layout_height="60dp"
-            android:background="@drawable/big_button_on_blue"
-            android:shadowColor="#9CE2FE"
-            android:shadowDx="0"
-            android:shadowDy="0"
-            android:shadowRadius="25"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_gravity="bottom"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="45dp"
-            />
+            android:fontFamily="@font/lato"
+            fancy:fb_defaultColor="@color/auth_off_dark_splash"
+            fancy:fb_iconPosition="left"
+            fancy:fb_radius="30dp"
+            fancy:fb_text="@string/invited_by_go_button"
+            fancy:fb_textColor="#FFFFFF"/>
 
     </RelativeLayout>
 </layout>
