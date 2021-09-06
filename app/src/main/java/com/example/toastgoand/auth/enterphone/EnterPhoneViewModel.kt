@@ -24,7 +24,7 @@ class EnterPhoneViewModel: ViewModel() {
         Log.i("QuoteFragmentViewModel", "QuoteFragmentViewModel destroyed")
     }
 
-    fun getUserDetailsHere(phone: String) {
+    fun checkPhoneNumberHere(phone: String) {
         viewModelScope.launch {
             try {
                 val userResult = PhoneCheckApi.retrofitService.checkPhone(phone)

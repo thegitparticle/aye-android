@@ -7,12 +7,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.toastgoand.network.phonecheck.PhoneCheckApi
 import com.example.toastgoand.network.phonecheck.PhoneCheckDataClass
+import com.example.toastgoand.network.userdetails.UserDetailsApi
+import com.example.toastgoand.network.userdetails.UserDetailsDataClass
 import kotlinx.coroutines.launch
 
 class SettingUpViewModel: ViewModel() {
-    private val _phoneCheck = MutableLiveData<String>()
-    val phoneCheck: LiveData<String>
-        get() = _phoneCheck
+    private val _myUserName = MutableLiveData<String>()
+    val myUserName: LiveData<String>
+        get() = _myUserName
 
     override fun onCleared() {
         super.onCleared()
@@ -22,13 +24,13 @@ class SettingUpViewModel: ViewModel() {
     fun getUserDetailsHere(phone: String) {
         viewModelScope.launch {
             try {
-                val userResult = PhoneCheckApi.retrofitService.checkPhone(phone)
+                val userResult = UserDetailsApi.retrofitService.getUserDetails(phone)
 //                Log.i("EnterPhoneViewModel", userResult.toString())
-                var x_here: PhoneCheckDataClass = userResult
-                _phoneCheck.value = x_here?.user_exists
-                Log.i("EnterPhoneViewModel", _phoneCheck.value!!)
+                var x_here: UserDetailsDataClass = userResult
+                _myUserName.value = x_here.user.username
+                Log.i("SettingUpViewModel", _myUserName.value!!)
             } catch (e: Exception) {
-                Log.i("EnterPhoneViewModel", "API call for user details, Failed! ${e.message}")
+                Log.i("SettingUpViewModel", "API call for user details, Failed! ${e.message}")
             }
         }
     }

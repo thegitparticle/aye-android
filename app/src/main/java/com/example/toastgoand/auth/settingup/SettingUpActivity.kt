@@ -45,6 +45,9 @@ class SettingUpActivity : BaseActivity() {
             Manifest.permission.READ_CONTACTS
         )
 
+        intent.getStringExtra("phoneNumber")?.let { viewModel.getUserDetailsHere(it) }
+
+        binding.username.text = viewModel.myUserName.value
 
         binding.allowContactsButton.setOnClickListener {
             val intent = Intent(this, InvitedByActivity::class.java).apply {

@@ -1,7 +1,5 @@
 package com.example.toastgoand.network.userdetails
 
-import com.squareup.moshi.Json
-
 data class UserDetailsDataClass (
     val user : User,
     val bio : String,
@@ -10,7 +8,6 @@ data class UserDetailsDataClass (
 )
 
 data class User (
-
     val username : String,
     val phone : Int,
     val full_name : String,
