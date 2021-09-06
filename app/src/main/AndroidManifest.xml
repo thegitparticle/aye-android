@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.toastgoand">
+    package="com.example.toastgoand" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -23,7 +23,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ToastgoandN"
-        tools:replace="android:appComponentFactory">
+        tools:replace="android:appComponentFactory" >
+        <activity
+            android:name=".auth.invitedby.InvitedByActivity"
+            android:exported="true" />
+        <activity
+            android:name=".auth.settingup.SettingUpActivity"
+            android:exported="true" />
         <activity
             android:name=".auth.otpsignup.OtpSignupActivity"
             android:exported="true" />
@@ -48,7 +54,7 @@
             android:exported="true" />
         <activity
             android:name=".splash.SplashActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -65,7 +71,7 @@
         <service
             android:name=".quick.callactivity.impl.ScreenSharingService"
             android:foregroundServiceType="mediaProjection"
-            android:process=":screensharingsvc">
+            android:process=":screensharingsvc" >
             <intent-filter>
                 <action android:name="android.intent.action.screenshare" />
             </intent-filter>
