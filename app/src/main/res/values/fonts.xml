@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="LargeTitle">
+        <item name="android:fontFamily">@font/gotham_rounded_bold</item>
+        <item name="android:textSize">34sp</item>
+    </style>
+
+    <style name="Title1">
+        <item name="android:fontFamily">@font/gotham_rounded_bold</item>
+        <item name="android:textSize">28sp</item>
+    </style>
+
+    <style name="Title2">
+        <item name="android:fontFamily">@font/gotham_rounded_bold</item>
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="Title3">
+        <item name="android:fontFamily">@font/gotham_rounded_bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="Headline">
+        <item name="android:fontFamily">@font/gotham_rounded_medium</item>
+        <item name="android:textSize">17sp</item>
+    </style>
+
+    <style name="SubheadMed">
+        <item name="android:fontFamily">@font/gotham_rounded_medium</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="Subhead">
+        <item name="android:fontFamily">@font/gotham_rounded_book</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="BodyMed">
+        <item name="android:fontFamily">@font/gotham_rounded_medium</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="Body">
+        <item name="android:fontFamily">@font/gotham_rounded_book</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="Small">
+        <item name="android:fontFamily">@font/gotham_rounded_book</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+</resources>

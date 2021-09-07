@@ -121,4 +121,10 @@ dependencies {
     def htextview_version = "0.1.6"
     implementation "com.hanks:htextview-base:$htextview_version"        // base library
     implementation "com.hanks:htextview-evaporate:$htextview_version"
+
+    // circular image for dp render
+    implementation 'com.mikhaellopez:circularimageview:4.3.0'
+
+    // shadow layout - css type code
+    implementation "com.h6ah4i.android.materialshadowninepatch:materialshadowninepatch:1.0.0"
 }
