@@ -7,6 +7,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.databinding.DataBindingUtil
 import com.example.toastgoand.R
 import com.example.toastgoand.databinding.ClansFragmentBinding
@@ -20,18 +24,32 @@ class ClansFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.clans_fragment,
-            container,
-            false
-        )
+//        binding = DataBindingUtil.inflate(
+//            inflater,
+//            R.layout.clans_fragment,
+//            container,
+//            false
+//        )
+//
+//        viewModel = ViewModelProvider(this).get(ClansViewModel::class.java)
+//
+//        binding.lifecycleOwner = viewLifecycleOwner
+//
+//        return binding.root
 
-        viewModel = ViewModelProvider(this).get(ClansViewModel::class.java)
+        return ComposeView(requireContext()).apply {
+            // Dispose the Composition when viewLifecycleOwner is destroyed
+            setViewCompositionStrategy(
+                ViewCompositionStrategy.DisposeOnLifecycleDestroyed(viewLifecycleOwner)
+            )
 
-        binding.lifecycleOwner = viewLifecycleOwner
-
-        return binding.root
+            setContent {
+                MaterialTheme {
+                    // In Compose world
+                    Text("Hello Compose!")
+                }
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -10,73 +10,7 @@
         android:orientation="vertical"
         tools:context=".home.clans.ClansFragment">
 
-        <com.h6ah4i.android.materialshadowninepatch.MaterialShadowContainerView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/shadow_item_container"
-            style="@style/ms9_DefaultShadowStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:ms9_shadowElevation="4dp"
-            app:ms9_shadowTranslationZ="20dp"
-            app:ms9_spotShadowDrawablesList="@array/ms9_spot_shadow_drawables_z18"
-            app:ms9_ambientShadowDrawablesList="@array/ms9_ambient_shadow_drawables_z18">
 
-            <com.google.android.material.appbar.AppBarLayout
-                android:id="@+id/app_bar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/light_splash"
-                android:paddingTop="0dp"
-                android:shadowRadius="40"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <com.google.android.material.appbar.MaterialToolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:shadowRadius="40" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:paddingVertical="10dp">
-
-                    <ImageView
-                        android:id="@+id/imageView4"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:layout_gravity="start"
-                        android:layout_marginLeft="5dp"
-                        android:layout_weight="0.1"
-                        app:srcCompat="@drawable/ic_invitepeople" />
-
-                    <ImageView
-                        android:id="@+id/imageView2"
-                        android:layout_width="45dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="center"
-                        android:layout_weight="0.5"
-                        app:srcCompat="@drawable/aye_pink_gradient" />
-
-                    <com.mikhaellopez.circularimageview.CircularImageView
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_weight="0.1"
-                        android:src="@drawable/sample_dp"
-                        app:civ_border_color="#3f51b5"
-                        app:civ_border_width="4dp"
-                        app:civ_shadow="true"
-                        app:civ_shadow_color="#3f51b5"
-                        app:civ_shadow_radius="10dp" />
-
-                </LinearLayout>
-
-            </com.google.android.material.appbar.AppBarLayout>
-
-        </com.h6ah4i.android.materialshadowninepatch.MaterialShadowContainerView>
 
     </LinearLayout>
 </layout>

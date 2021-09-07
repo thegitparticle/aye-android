@@ -26,13 +26,16 @@
         tools:replace="android:appComponentFactory">
         <activity
             android:name=".auth.clancreate.ClanCreatedActivity"
-            android:exported="true" />
+            android:exported="true"
+            />
         <activity
             android:name=".auth.clancreate.NameClanActivity"
-            android:exported="true" />
+            android:exported="true"
+            />
         <activity
             android:name=".auth.clancreate.CreateClanActivity"
-            android:exported="true" />
+            android:exported="true"
+            />
         <activity
             android:name=".auth.strangerintro.StrangerIntroActivity"
             android:exported="true" />
@@ -63,7 +66,8 @@
             android:exported="true" />
         <activity
             android:name=".home.LandingActivity"
-            android:exported="true" />
+            android:exported="true"
+           />
         <activity
             android:name=".splash.SplashActivity"
             android:exported="true">

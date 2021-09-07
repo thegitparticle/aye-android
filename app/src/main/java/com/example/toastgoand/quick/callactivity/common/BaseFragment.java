@@ -28,7 +28,7 @@ public class BaseFragment extends Fragment
             return;
         }
 
-        new AlertDialog.Builder(context).setTitle("Tips").setMessage(message)
+        new AlertDialog.Builder(context).setMessage(message)
                 .setPositiveButton("OK", (dialog, which) -> dialog.dismiss())
                 .show();
     }
