@@ -6,6 +6,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -39,8 +40,8 @@ private fun DormantClan(myclan: MyClanDataClass) {
                 .padding(16.dp)
                 .fillMaxWidth()
         ) {
-            Text(text = myclan.clubName, style = typography.h6)
-            Text(text = "VIEW DETAIL", style = typography.caption)
+            Text(text = myclan.clubName, style = MaterialTheme.typography.subtitle1, color = Color.Black)
+            Text(text = "tap to start new frame", style = MaterialTheme.typography.caption, color = Color.Blue)
         } 
     }
 }
