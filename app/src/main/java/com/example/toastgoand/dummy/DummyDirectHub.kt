@@ -3,7 +3,7 @@ package com.example.toastgoand.dummy
 import com.example.toastgoand.home.directhub.DirectHubDataClass
 import com.example.toastgoand.home.directhub.User
 
-class DummyDirectHub {
+object DummyDirectHub {
     val directHub = listOf(
         DirectHubDataClass(
             user = User(

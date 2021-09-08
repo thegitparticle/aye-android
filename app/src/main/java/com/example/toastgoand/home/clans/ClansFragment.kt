@@ -48,7 +48,6 @@ class ClansFragment : Fragment() {
             setContent {
                 MaterialTheme {
                     val puppies = remember { Dummyclans.myClans }
-
                     Surface (
                         color = colorResource(id = R.color.off_light_splash)
                             ) {

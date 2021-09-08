@@ -3,7 +3,7 @@ package com.example.toastgoand.dummy
 import com.example.toastgoand.home.clanhub.ClanHubDataClass
 import com.example.toastgoand.home.clanhub.User
 
-class DummyClanHub {
+object DummyClanHub {
     val clanHub = ClanHubDataClass(
         id = 89,
         name = "Random ideas",
