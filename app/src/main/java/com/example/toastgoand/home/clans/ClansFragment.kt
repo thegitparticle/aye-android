@@ -60,21 +60,6 @@ class ClansFragment : Fragment() {
                                     MyClanItem(myclan = it)
                                 })
                         }
-                        Column(modifier = Modifier.padding(16.dp)) {
-                            var name by remember { mutableStateOf("") }
-                            if (name.isNotEmpty()) {
-                                Text(
-                                    text = "Hello, $name!",
-                                    modifier = Modifier.padding(bottom = 8.dp),
-                                    style = MaterialTheme.typography.h5
-                                )
-                            }
-                            OutlinedTextField(
-                                value = name,
-                                onValueChange = { name = it },
-                                label = { Text("Name") }
-                            )
-                        }
                     }
                 }
             }
