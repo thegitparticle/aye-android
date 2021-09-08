@@ -9,13 +9,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,10 +23,11 @@ import com.example.toastgoand.R
 import com.example.toastgoand.databinding.ClansFragmentBinding
 import com.example.toastgoand.dummy.Dummyclans
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Surface
-import androidx.compose.material.lightColors
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
+import com.google.accompanist.appcompattheme.AppCompatTheme
 
 class ClansFragment : Fragment() {
 
@@ -46,14 +45,14 @@ class ClansFragment : Fragment() {
             )
 
             setContent {
-                MaterialTheme {
+                AppCompatTheme {
                     val puppies = remember { Dummyclans.myClans }
-                    Surface (
+                    Surface(
                         color = colorResource(id = R.color.off_light_splash)
-                            ) {
+                    ) {
                         LazyColumn(
                             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-                                    modifier = Modifier.fillMaxHeight()
+                            modifier = Modifier.fillMaxHeight()
                         ) {
                             items(
                                 items = puppies,
@@ -61,8 +60,22 @@ class ClansFragment : Fragment() {
                                     MyClanItem(myclan = it)
                                 })
                         }
+                        Column(modifier = Modifier.padding(16.dp)) {
+                            var name by remember { mutableStateOf("") }
+                            if (name.isNotEmpty()) {
+                                Text(
+                                    text = "Hello, $name!",
+                                    modifier = Modifier.padding(bottom = 8.dp),
+                                    style = MaterialTheme.typography.h5
+                                )
+                            }
+                            OutlinedTextField(
+                                value = name,
+                                onValueChange = { name = it },
+                                label = { Text("Name") }
+                            )
+                        }
                     }
-
                 }
             }
         }

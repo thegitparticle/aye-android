@@ -17,11 +17,12 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.example.toastgoand.home.directhub.DirectHubDataClass
 import com.example.toastgoand.utilities.drawColorShadow
+import com.google.accompanist.appcompattheme.AppCompatTheme
 import com.google.android.material.composethemeadapter.MdcTheme
 
 @Composable
 fun DirectHubUserDetails (userProfile: DirectHubDataClass) {
-    MdcTheme() {
+    AppCompatTheme() {
         Row () {
             UserDP(userProfile.image)
             Text(text = userProfile.user.fullName, style = MaterialTheme.typography.subtitle1, color = Color.Black)

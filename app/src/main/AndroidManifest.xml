@@ -25,6 +25,9 @@
         android:theme="@style/Theme.ToastgoandN"
         tools:replace="android:appComponentFactory">
         <activity
+            android:name=".home.clanframes.ClanFramesActivity"
+            android:exported="true" />
+        <activity
             android:name=".home.directhub.DirectHubActivity"
             android:exported="true" />
         <activity

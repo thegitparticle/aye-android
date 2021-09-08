@@ -11,6 +11,7 @@ import com.example.toastgoand.dummy.DummyDirectHub
 import com.example.toastgoand.home.clanhub.ClanHubViewModel
 import com.example.toastgoand.home.directhub.components.DirectHubUserDetails
 import com.example.toastgoand.home.directhub.components.DirectHubUserMetrics
+import com.google.accompanist.appcompattheme.AppCompatTheme
 import com.google.android.material.composethemeadapter.MdcTheme
 
 class DirectHubActivity : BaseActivity() {
@@ -23,7 +24,7 @@ class DirectHubActivity : BaseActivity() {
         binding = viewBinding as ActivityDirectHubBinding
 
         setContent {
-            MdcTheme {
+            AppCompatTheme {
                 DirectHubUserDetails(userProfile = DummyDirectHub.directHub[0])
                 DirectHubUserMetrics(userProfile = DummyDirectHub.directHub[0])
             }

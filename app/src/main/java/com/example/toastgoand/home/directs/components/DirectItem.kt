@@ -15,11 +15,12 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.example.toastgoand.home.directs.MyDirectDataClass
 import com.example.toastgoand.utilities.drawColorShadow
+import com.google.accompanist.appcompattheme.AppCompatTheme
 import com.google.android.material.composethemeadapter.MdcTheme
 
 @Composable
 fun DirectItem (directItem: MyDirectDataClass) {
-    MdcTheme() {
+    AppCompatTheme() {
         Row () {
             DirectImage(directItem = directItem)
             Column(

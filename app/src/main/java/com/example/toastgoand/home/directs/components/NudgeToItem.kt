@@ -16,11 +16,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.example.toastgoand.home.directs.NudgeItemDataClass
+import com.google.accompanist.appcompattheme.AppCompatTheme
 import com.google.android.material.composethemeadapter.MdcTheme
 
 @Composable
 fun NudgeToItem (nudgeItem: NudgeItemDataClass) {
-    MdcTheme() {
+    AppCompatTheme() {
         Row {
             NudgeToImage(nudgeItem = nudgeItem)
             Column(

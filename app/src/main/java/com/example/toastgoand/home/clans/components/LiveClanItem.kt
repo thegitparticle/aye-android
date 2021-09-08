@@ -29,13 +29,14 @@ import coil.compose.rememberImagePainter
 import com.example.toastgoand.home.clans.DisplayPhoto
 import com.example.toastgoand.home.clans.MyClanDataClass
 import com.example.toastgoand.utilities.drawColorShadow
+import com.google.accompanist.appcompattheme.AppCompatTheme
 import com.google.android.material.composethemeadapter.MdcTheme
 
 @Composable
 fun LiveClanItem(myclan: MyClanDataClass) {
     val totalMember = myclan.displayPhotos.size
 
-    MdcTheme() {
+    AppCompatTheme() {
         Column() {
             if (totalMember == 2) {
                 OnePerson(displayObject = myclan.displayPhotos[0])
@@ -55,14 +56,14 @@ fun LiveClanItem(myclan: MyClanDataClass) {
 
 @Composable
 fun OnePerson(displayObject: DisplayPhoto) {
-    MdcTheme() {
+    AppCompatTheme() {
         PersonImage(displayObject.displayPic)
     }
 }
 
 @Composable
 fun TwoPeople(displayItems: List<DisplayPhoto>) {
-    MdcTheme() {
+    AppCompatTheme() {
         Row() {
            PersonImage(imageLink = displayItems[0].displayPic)
             PersonImage(imageLink = displayItems[1].displayPic)
@@ -73,7 +74,7 @@ fun TwoPeople(displayItems: List<DisplayPhoto>) {
 
 @Composable
 fun ThreePeople(displayItems: List<DisplayPhoto>) {
-    MdcTheme() {
+    AppCompatTheme() {
         Column() {
             PersonImage(imageLink = displayItems[0].displayPic)
             Row() {
@@ -86,7 +87,7 @@ fun ThreePeople(displayItems: List<DisplayPhoto>) {
 
 @Composable
 fun ThreePlusPeople(displayItems: List<DisplayPhoto>) {
-    MdcTheme() {
+    AppCompatTheme() {
         Column() {
             PersonImage(imageLink = displayItems[0].displayPic)
             Row() {
@@ -100,7 +101,7 @@ fun ThreePlusPeople(displayItems: List<DisplayPhoto>) {
 
 @Composable
 fun TextPieces(myclan: MyClanDataClass) {
-    MdcTheme() {
+    AppCompatTheme() {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

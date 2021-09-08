@@ -6,7 +6,8 @@ enum class Screen {
 
     LOGIN,
     LANDING,
-    QUICK
+    QUICK,
+    FRAMES
 }
 
 interface Navigator {
