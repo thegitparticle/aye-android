@@ -2,18 +2,19 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_home"
+    >
 
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.toastgoand.home.clans.ClansFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/clans_fragment" />
+        tools:layout="@layout/clans_fragment"
+        />
 
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.example.toastgoand.home.directs.DirectsFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/directs_fragment" />
-
+        tools:layout="@layout/directs_fragment"
+        android:icon="@drawable/ic_chevronleftbg"
+/>
 </navigation>
