@@ -23,7 +23,7 @@ import com.google.accompanist.appcompattheme.AppCompatTheme
 class DirectFramesActivity : BaseActivity() {
     private lateinit var binding: ActivityDirectFramesBinding
 
-    private lateinit var viewModel: DirectFramesViewModel
+    private lateinit var viewModel: DirectFrameViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

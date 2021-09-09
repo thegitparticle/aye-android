@@ -9,7 +9,7 @@ data class UserDetailsDataClass (
 
 data class User (
     val username : String,
-    val phone : Int,
+    val phone : String,
     val full_name : String,
     val id : Int,
     val clubs_joined_by_user : String,

@@ -15,6 +15,7 @@ import com.example.toastgoand.auth.enterphone.EnterPhoneViewModel
 import com.example.toastgoand.databinding.ActivityEnterPhoneBinding
 import com.example.toastgoand.databinding.ActivitySettingUpBinding
 import android.Manifest
+import androidx.lifecycle.Observer
 import com.example.toastgoand.auth.invitedby.InvitedByActivity
 import com.example.toastgoand.auth.otpsignup.OtpSignupActivity
 
@@ -47,7 +48,9 @@ class SettingUpActivity : BaseActivity() {
 
         intent.getStringExtra("phoneNumber")?.let { viewModel.getUserDetailsHere(it) }
 
-        binding.username.text = viewModel.myUserName.value
+        viewModel.myUserName.observe(this, Observer { newUserName ->
+            binding.username.text = newUserName
+        })
 
         binding.allowContactsButton.setOnClickListener {
             val intent = Intent(this, InvitedByActivity::class.java).apply {

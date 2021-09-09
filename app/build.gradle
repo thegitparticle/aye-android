@@ -128,7 +128,6 @@ dependencies {
     implementation "com.hanks:htextview-evaporate:$htextview_version"
 
     // circular image for dp render
-    implementation 'com.mikhaellopez:circularimageview:4.3.0'
     implementation 'com.jackandphantom.android:circularimageview:1.2.0'
 
     // shadow layout - css type code

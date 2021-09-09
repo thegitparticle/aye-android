@@ -33,7 +33,7 @@
             android:textSize="22sp"
             android:layout_centerInParent="true"
             android:layout_gravity="center"
-            android:text="" />
+            android:text="gone" />
 
         <TextView
             android:id="@+id/changingText"

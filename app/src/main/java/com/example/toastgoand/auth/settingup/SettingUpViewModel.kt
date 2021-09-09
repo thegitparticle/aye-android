@@ -25,7 +25,6 @@ class SettingUpViewModel: ViewModel() {
         viewModelScope.launch {
             try {
                 val userResult = UserDetailsApi.retrofitService.getUserDetails(phone)
-//                Log.i("EnterPhoneViewModel", userResult.toString())
                 var x_here: UserDetailsDataClass = userResult
                 _myUserName.value = x_here.user.username
                 Log.i("SettingUpViewModel", _myUserName.value!!)
