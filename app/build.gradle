@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
     id 'androidx.navigation.safeargs.kotlin'
+    id 'org.jetbrains.kotlin.plugin.serialization' version '1.5.30'
 }
 
 
@@ -135,6 +136,7 @@ dependencies {
 
     //kotlin json parser
     implementation 'com.beust:klaxon:5.5'
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1"
 
     // compose things
     // Integration with activities
@@ -155,4 +157,10 @@ dependencies {
 
     // coil for image caching and better loading - compose edition
     implementation "io.coil-kt:coil-compose:1.3.2"
+
+    // Room components
+    def roomVersion = "2.3.0"
+    implementation "androidx.room:room-ktx:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
+    androidTestImplementation "androidx.room:room-testing:$roomVersion"
 }

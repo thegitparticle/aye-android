@@ -15,14 +15,20 @@ import com.example.toastgoand.auth.enterphone.EnterPhoneViewModel
 import com.example.toastgoand.databinding.ActivityEnterPhoneBinding
 import com.example.toastgoand.databinding.ActivitySettingUpBinding
 import android.Manifest
+import androidx.activity.viewModels
 import androidx.lifecycle.Observer
+import androidx.room.Room
+import com.example.toastgoand.ToastgoApplication
 import com.example.toastgoand.auth.invitedby.InvitedByActivity
 import com.example.toastgoand.auth.otpsignup.OtpSignupActivity
 
 class SettingUpActivity : BaseActivity() {
     private lateinit var binding: ActivitySettingUpBinding
 
-    private lateinit var viewModel: SettingUpViewModel
+    private val viewModel: SettingUpViewModel by viewModels {
+        SettingUpViewModelFactory((application as ToastgoApplication).repository)
+    }
+
 
     private val requestPermissionLauncher =
         registerForActivityResult(
@@ -40,13 +46,17 @@ class SettingUpActivity : BaseActivity() {
 
         binding = viewBinding as ActivitySettingUpBinding
 
-        viewModel = ViewModelProvider(this).get(SettingUpViewModel::class.java)
-
         requestPermissionLauncher.launch(
             Manifest.permission.READ_CONTACTS
         )
 
         intent.getStringExtra("phoneNumber")?.let { viewModel.getUserDetailsHere(it) }
+
+        viewModel.userDetailsHere.observe(this, {details -> details?.image?.let {
+            Log.i("roomdbdata",
+                it
+            )
+        } })
 
         viewModel.myUserName.observe(this, Observer { newUserName ->
             binding.username.text = newUserName
