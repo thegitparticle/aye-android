@@ -2,6 +2,7 @@ package com.example.toastgoand
 
 import android.app.Application
 import com.example.toastgoand.network.AppRoomDB
+import com.example.toastgoand.network.myclans.MyClansRepo
 import com.example.toastgoand.network.userdetails.UserDetailsRepo
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
@@ -15,4 +16,5 @@ class ToastgoApplication: Application() {
     // rather than when the application starts
     val database by lazy { AppRoomDB.getDatabase(this, applicationScope) }
     val repository by lazy { UserDetailsRepo(database.userDetailsDao()) }
+    val repositoryMyClans by lazy { MyClansRepo(database.myClansDao()) }
 }

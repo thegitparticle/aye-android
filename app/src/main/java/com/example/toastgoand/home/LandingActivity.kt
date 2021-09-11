@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
@@ -20,6 +21,8 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.asLiveData
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -28,11 +31,16 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.R
+import com.example.toastgoand.ToastgoApplication
 import com.example.toastgoand.auth.LoginActivity
+import com.example.toastgoand.auth.settingup.SettingUpViewModel
+import com.example.toastgoand.auth.settingup.SettingUpViewModelFactory
 import com.example.toastgoand.databinding.ActivityLandingBinding
 import com.example.toastgoand.databinding.StartCallDialogBinding
 import com.example.toastgoand.navigator.Navigator
 import com.example.toastgoand.navigator.Screen
+import com.example.toastgoand.network.userdetails.UserDetailsDataClass
+import com.example.toastgoand.network.userdetails.UserDetailsRepo
 import com.example.toastgoand.prefhelpers.Constant
 import com.example.toastgoand.prefhelpers.PrefHelper
 import com.google.accompanist.appcompattheme.AppCompatTheme
@@ -56,8 +64,6 @@ class LandingActivity: BaseActivity() {
         binding = viewBinding as ActivityLandingBinding
 
         // start stream button login
-
-
         binding.floatingActionButton.setOnClickListener{
             Toast.makeText(this, "start stream", Toast.LENGTH_SHORT).show()
             showDefaultDialog()
@@ -89,8 +95,6 @@ class LandingActivity: BaseActivity() {
 
 
     }
-
-
 
     override fun onResume() {
         super.onResume()

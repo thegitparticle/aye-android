@@ -46,7 +46,7 @@ class SplashActivity : BaseActivity() {
         super.onResume()
 
         if (prefHelper.getBoolean( Constant.PREF_IS_LOGIN )) {
-            navigator.navigateTo(Screen.LOGIN)
+            navigator.navigateTo(Screen.LANDING)
         } else {
             navigator.navigateTo(Screen.LOGIN)
         }

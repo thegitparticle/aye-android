@@ -50,7 +50,7 @@ class SettingUpActivity : BaseActivity() {
         }
 
         viewModel.userDetails.observe(this) {
-            deets -> binding.username.text = deets.user.full_name
+            deets -> binding.username.text = deets?.user?.full_name
         }
 
     }
