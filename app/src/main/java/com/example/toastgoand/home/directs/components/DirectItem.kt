@@ -14,12 +14,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.example.toastgoand.home.directs.MyDirectDataClass
+import com.example.toastgoand.network.directs.MyDirectsDataClass
 import com.example.toastgoand.utilities.drawColorShadow
 import com.google.accompanist.appcompattheme.AppCompatTheme
 import com.google.android.material.composethemeadapter.MdcTheme
 
 @Composable
-fun DirectItem (directItem: MyDirectDataClass) {
+fun DirectItem (directItem: MyDirectsDataClass) {
     AppCompatTheme() {
         Row () {
             DirectImage(directItem = directItem)
@@ -28,7 +29,7 @@ fun DirectItem (directItem: MyDirectDataClass) {
                     .padding(16.dp)
                     .fillMaxWidth()
             ) {
-                Text(text = directItem.displayGuys.fullName, style = MaterialTheme.typography.subtitle1, color = Color.Black)
+                Text(text = directItem.display_guys.full_name, style = MaterialTheme.typography.subtitle1, color = Color.Black)
                 Text(text = "tap to start new frame", style = MaterialTheme.typography.caption, color = Color.Blue)
             }
         }
@@ -36,8 +37,8 @@ fun DirectItem (directItem: MyDirectDataClass) {
 }
 
 @Composable
-fun DirectImage (directItem: MyDirectDataClass) {
-    val painter = rememberImagePainter(data = directItem.displayGuys.profilePicture)
+fun DirectImage (directItem: MyDirectsDataClass) {
+    val painter = rememberImagePainter(data = directItem.display_guys.profile_picture)
     Image(
         painter = painter,
         contentDescription = "Forest Image",

@@ -28,8 +28,6 @@ import com.google.accompanist.appcompattheme.AppCompatTheme
 
 class ClansFragment : Fragment() {
 
-    private lateinit var clansHere: List<MyClansDataClass>
-
     private val viewModel: ClansViewModel by viewModels {
         ClansViewModelFactory((getActivity()?.getApplication() as ToastgoApplication).repositoryMyClans, (getActivity()?.getApplication() as ToastgoApplication).repository)
     }
@@ -44,8 +42,6 @@ class ClansFragment : Fragment() {
             findViewById<ComposeView>(R.id.composeView).setContent {
 
                 AppCompatTheme {
-                    val puppies = remember { Dummyclans.myClans }
-
                     val clansHere: List<MyClansDataClass> by viewModel.myClans.observeAsState(listOf<MyClansDataClass>())
 
                     Surface(
@@ -56,7 +52,7 @@ class ClansFragment : Fragment() {
                             modifier = Modifier.fillMaxHeight()
                         ) {
                             items(
-                                items = puppies,
+                                items = clansHere,
                                 itemContent = {
                                     MyClanItem(myclan = it)
                                 })

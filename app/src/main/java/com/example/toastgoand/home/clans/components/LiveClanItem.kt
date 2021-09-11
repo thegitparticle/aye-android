@@ -28,26 +28,30 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.example.toastgoand.home.clans.DisplayPhoto
 import com.example.toastgoand.home.clans.MyClanDataClass
+import com.example.toastgoand.network.myclans.DisplayPhotos
+import com.example.toastgoand.network.myclans.MyClansDataClass
 import com.example.toastgoand.utilities.drawColorShadow
 import com.google.accompanist.appcompattheme.AppCompatTheme
 import com.google.android.material.composethemeadapter.MdcTheme
 
 @Composable
-fun LiveClanItem(myclan: MyClanDataClass) {
-    val totalMember = myclan.displayPhotos.size
+fun LiveClanItem(myclan: MyClansDataClass) {
+    val totalMember: Int? = myclan.display_photos?.size
 
     AppCompatTheme() {
         Column() {
             if (totalMember == 2) {
-                OnePerson(displayObject = myclan.displayPhotos[0])
+                OnePerson(displayObject = myclan.display_photos?.get(0))
             } else if (totalMember == 3) {
-                TwoPeople(displayItems = myclan.displayPhotos)
+                TwoPeople(displayItems = myclan.display_photos)
             } else if (totalMember == 4) {
-                ThreePeople(displayItems = myclan.displayPhotos)
-            } else if (totalMember > 4) {
-                ThreePlusPeople(displayItems = myclan.displayPhotos)
-            } else {
-                OnePerson(displayObject = myclan.displayPhotos[0])
+                ThreePeople(displayItems = myclan.display_photos)
+            } else if (totalMember != null) {
+                if (totalMember > 4) {
+                    myclan.display_photos?.let { ThreePlusPeople(displayItems = it) }
+                } else {
+                    OnePerson(displayObject = myclan.display_photos?.get(0))
+                }
             }
             TextPieces(myclan = myclan)
         }
@@ -55,44 +59,44 @@ fun LiveClanItem(myclan: MyClanDataClass) {
 }
 
 @Composable
-fun OnePerson(displayObject: DisplayPhoto) {
+fun OnePerson(displayObject: DisplayPhotos) {
     AppCompatTheme() {
-        PersonImage(displayObject.displayPic)
+        PersonImage(displayObject.display_pic)
     }
 }
 
 @Composable
-fun TwoPeople(displayItems: List<DisplayPhoto>) {
+fun TwoPeople(displayItems: List<DisplayPhotos>) {
     AppCompatTheme() {
         Row() {
-           PersonImage(imageLink = displayItems[0].displayPic)
-            PersonImage(imageLink = displayItems[1].displayPic)
+           PersonImage(imageLink = displayItems[0].display_pic)
+            PersonImage(imageLink = displayItems[1].display_pic)
         }
 
     }
 }
 
 @Composable
-fun ThreePeople(displayItems: List<DisplayPhoto>) {
+fun ThreePeople(displayItems: List<DisplayPhotos>) {
     AppCompatTheme() {
         Column() {
-            PersonImage(imageLink = displayItems[0].displayPic)
+            PersonImage(imageLink = displayItems[0].display_pic)
             Row() {
-                PersonImage(imageLink = displayItems[1].displayPic)
-                PersonImage(imageLink = displayItems[2].displayPic)
+                PersonImage(imageLink = displayItems[1].display_pic)
+                PersonImage(imageLink = displayItems[2].display_pic)
             }
         }
     }
 }
 
 @Composable
-fun ThreePlusPeople(displayItems: List<DisplayPhoto>) {
+fun ThreePlusPeople(displayItems: List<DisplayPhotos>) {
     AppCompatTheme() {
         Column() {
-            PersonImage(imageLink = displayItems[0].displayPic)
+            PersonImage(imageLink = displayItems[0].display_pic)
             Row() {
-                PersonImage(imageLink = displayItems[1].displayPic)
-                PersonImage(imageLink = displayItems[2].displayPic)
+                PersonImage(imageLink = displayItems[1].display_pic)
+                PersonImage(imageLink = displayItems[2].display_pic)
             }
             PlusPeople(displayItems = displayItems)
         }
@@ -100,12 +104,12 @@ fun ThreePlusPeople(displayItems: List<DisplayPhoto>) {
 }
 
 @Composable
-fun TextPieces(myclan: MyClanDataClass) {
+fun TextPieces(myclan: MyClansDataClass) {
     AppCompatTheme() {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = myclan.clubName, style = MaterialTheme.typography.subtitle1, color = Color.Black)
+            Text(text = myclan.club_name, style = MaterialTheme.typography.subtitle1, color = Color.Black)
             Text(text = "new frames", style = MaterialTheme.typography.caption, color = Color.Blue)
         }
         
@@ -128,7 +132,7 @@ private fun PersonImage(imageLink: String) {
 }
 
 @Composable
-private fun PlusPeople(displayItems: List<DisplayPhoto>) {
+private fun PlusPeople(displayItems: List<DisplayPhotos>) {
     val extraNumber = displayItems.size - 3
 
     Box(contentAlignment= Alignment.Center,

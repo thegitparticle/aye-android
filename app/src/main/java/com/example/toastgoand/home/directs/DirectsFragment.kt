@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.lazy.LazyColumn
@@ -13,6 +14,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -21,7 +24,9 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import com.example.toastgoand.R
+import com.example.toastgoand.ToastgoApplication
 import com.example.toastgoand.databinding.DirectsFragmentBinding
 import com.example.toastgoand.dummy.DummyDirects
 import com.example.toastgoand.dummy.DummyNudge
@@ -30,24 +35,26 @@ import com.example.toastgoand.home.clans.ClansViewModel
 import com.example.toastgoand.home.clans.MyClanItem
 import com.example.toastgoand.home.directs.components.DirectItem
 import com.example.toastgoand.home.directs.components.NudgeToItem
+import com.example.toastgoand.network.directs.MyDirectsDataClass
+import com.example.toastgoand.network.myclans.MyClansDataClass
+import com.google.accompanist.appcompattheme.AppCompatTheme
 
 class DirectsFragment : Fragment() {
 
-    private lateinit var viewModel: DirectsViewModel
+    private val viewModel: DirectsViewModel by viewModels {
+        DirectsViewModelFactory((getActivity()?.getApplication() as ToastgoApplication).repositoryMyDirects, (getActivity()?.getApplication() as ToastgoApplication).repository)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        return ComposeView(requireContext()).apply {
-            setViewCompositionStrategy(
-                ViewCompositionStrategy.DisposeOnLifecycleDestroyed(viewLifecycleOwner)
-            )
+        return inflater.inflate(R.layout.directs_fragment, container, false).apply {
+            findViewById<ComposeView>(R.id.composeView).setContent {
 
-            setContent {
-                MaterialTheme {
-                    val directs = remember { DummyDirects.myDirects }
+                AppCompatTheme {
+                    val directsHere: List<MyDirectsDataClass> by viewModel.myDirects.observeAsState(listOf<MyDirectsDataClass>())
                     val nudges = remember {DummyNudge.nudgeItems}
 
                     Surface (
@@ -58,7 +65,7 @@ class DirectsFragment : Fragment() {
                             modifier = Modifier.fillMaxHeight()
                         ) {
                             items(
-                                items = directs,
+                                items = directsHere,
                                 itemContent = {
                                     DirectItem(directItem = it)
                                 })
@@ -84,8 +91,6 @@ class DirectsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(DirectsViewModel::class.java)
-        // TODO: Use the ViewModel
     }
 
 }

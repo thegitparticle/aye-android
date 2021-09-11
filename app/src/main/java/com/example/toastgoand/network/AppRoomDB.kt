@@ -6,13 +6,15 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.example.toastgoand.network.directs.MyDirectsDao
+import com.example.toastgoand.network.directs.MyDirectsDataClass
 import com.example.toastgoand.network.myclans.MyClansDao
 import com.example.toastgoand.network.myclans.MyClansDataClass
 import com.example.toastgoand.network.userdetails.UserDetailsDao
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
 import kotlinx.coroutines.CoroutineScope
 
-@Database(entities = [UserDetailsDataClass::class, MyClansDataClass::class], version = 1)
+@Database(entities = [UserDetailsDataClass::class, MyClansDataClass::class, MyDirectsDataClass::class], version = 1)
 
 @TypeConverters(ConverterGo::class)
 
@@ -21,6 +23,7 @@ abstract class AppRoomDB : RoomDatabase() {
     //list all DAOs
     abstract fun userDetailsDao(): UserDetailsDao
     abstract fun myClansDao(): MyClansDao
+    abstract fun myDirectsDao(): MyDirectsDao
 
     companion object {
         @Volatile
@@ -37,6 +40,7 @@ abstract class AppRoomDB : RoomDatabase() {
                     AppRoomDB::class.java,
                     "database"
                 )
+                    .fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance
                 // return instance

@@ -2,6 +2,7 @@ package com.example.toastgoand.network
 
 import androidx.room.TypeConverter
 import com.example.toastgoand.home.clans.DisplayPhoto
+import com.example.toastgoand.network.directs.DisplayGuys
 import com.example.toastgoand.network.myclans.DisplayPhotos
 import com.example.toastgoand.network.userdetails.User
 import kotlinx.serialization.Serializable
@@ -22,4 +23,10 @@ class ConverterGo {
 
     @TypeConverter
     fun toListMyClans(value: String) = Json.decodeFromString<MutableList<DisplayPhotos>>(value)
+
+    @TypeConverter
+    fun fromListMyDirects(value : DisplayGuys) = Json.encodeToString(value)
+
+    @TypeConverter
+    fun toListMyDirects(value: String) = Json.decodeFromString<DisplayGuys>(value)
 }
