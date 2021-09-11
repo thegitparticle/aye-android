@@ -1,26 +1,17 @@
 package com.example.toastgoand.auth.settingup
 
+import android.Manifest
 import android.content.Intent
-import android.media.MediaRecorder.VideoSource.CAMERA
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.lifecycle.ViewModelProvider
+import androidx.activity.viewModels
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
-import com.example.toastgoand.auth.detailssignup.DetailsSignupActivity
-import com.example.toastgoand.auth.enterphone.EnterPhoneViewModel
-import com.example.toastgoand.databinding.ActivityEnterPhoneBinding
-import com.example.toastgoand.databinding.ActivitySettingUpBinding
-import android.Manifest
-import androidx.activity.viewModels
-import androidx.lifecycle.Observer
-import androidx.room.Room
 import com.example.toastgoand.ToastgoApplication
 import com.example.toastgoand.auth.invitedby.InvitedByActivity
-import com.example.toastgoand.auth.otpsignup.OtpSignupActivity
+import com.example.toastgoand.databinding.ActivitySettingUpBinding
 
 class SettingUpActivity : BaseActivity() {
     private lateinit var binding: ActivitySettingUpBinding
@@ -52,21 +43,15 @@ class SettingUpActivity : BaseActivity() {
 
         intent.getStringExtra("phoneNumber")?.let { viewModel.getUserDetailsHere(it) }
 
-        viewModel.userDetailsHere.observe(this, {details -> details?.image?.let {
-            Log.i("roomdbdata",
-                it
-            )
-        } })
-
-        viewModel.myUserName.observe(this, Observer { newUserName ->
-            binding.username.text = newUserName
-        })
-
         binding.allowContactsButton.setOnClickListener {
             val intent = Intent(this, InvitedByActivity::class.java).apply {
                 putExtra("phoneNumber", intent.getStringExtra("phoneNumber"))
             }
             startActivity(intent)
+        }
+
+        viewModel.userDetails.observe(this) {
+            deets -> binding.username.text = deets.user.full_name
         }
 
     }

@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -17,9 +18,10 @@ data class UserDetailsDataClass (
     @ColumnInfo(name = "user") val user : User,
     @ColumnInfo(name = "bio") val bio : String,
     @ColumnInfo(name = "image") val image : String,
-    @ColumnInfo(name = "id") val id : Int
+    @PrimaryKey @ColumnInfo(name = "id") val id : Int
 )
 
+@Serializable
 data class User (
      val username : String,
      val phone : String,
