@@ -6,12 +6,9 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
-import androidx.sqlite.db.SupportSQLiteQuery
 import com.example.toastgoand.network.userdetails.UserDetailsDao
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 @Database(entities = [UserDetailsDataClass::class], version = 1)
 

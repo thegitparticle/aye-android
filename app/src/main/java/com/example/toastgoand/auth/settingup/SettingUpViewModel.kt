@@ -1,18 +1,11 @@
 package com.example.toastgoand.auth.settingup
 
-import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.toastgoand.ToastgoApplication
-import com.example.toastgoand.network.AppRoomDB
-import com.example.toastgoand.network.phonecheck.PhoneCheckApi
-import com.example.toastgoand.network.phonecheck.PhoneCheckDataClass
 import com.example.toastgoand.network.userdetails.UserDetailsApi
-import com.example.toastgoand.network.userdetails.UserDetailsDao
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
 import com.example.toastgoand.network.userdetails.UserDetailsRepo
 import kotlinx.coroutines.launch
-import okhttp3.internal.notifyAll
 
 class SettingUpViewModel(private val repo: UserDetailsRepo): ViewModel() {
 

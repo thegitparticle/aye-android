@@ -1,9 +1,6 @@
 package com.example.toastgoand.network.userdetails
 
-import android.accounts.Account
 import androidx.annotation.WorkerThread
-import androidx.lifecycle.LiveData
-import androidx.sqlite.db.SimpleSQLiteQuery
 import kotlinx.coroutines.flow.Flow
 
 class UserDetailsRepo(private val userDetailsDao: UserDetailsDao) {

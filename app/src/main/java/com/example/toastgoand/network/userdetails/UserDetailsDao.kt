@@ -1,9 +1,10 @@
 package com.example.toastgoand.network.userdetails
 
-import androidx.lifecycle.LiveData
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
-import kotlinx.serialization.Serializable
 
 @Dao
 interface UserDetailsDao {
