@@ -22,6 +22,7 @@ import com.example.toastgoand.dummy.DummyClanHub
 import com.example.toastgoand.home.clanhub.components.ClanMetrics
 import com.example.toastgoand.home.clanhub.components.UsersListItem
 import com.example.toastgoand.home.clantalk.ClanTalkViewModel
+import com.google.accompanist.appcompattheme.AppCompatTheme
 import com.google.android.material.composethemeadapter.MdcTheme
 
 class DirectTalkActivity : BaseActivity() {
@@ -34,7 +35,7 @@ class DirectTalkActivity : BaseActivity() {
         binding = viewBinding as ActivityDirectTalkBinding
 
         setContent {
-            MdcTheme {
+            AppCompatTheme {
                 ClanMetrics(clanHub = DummyClanHub.clanHub)
                 val members = DummyClanHub.clanHub.users
                 Surface() {

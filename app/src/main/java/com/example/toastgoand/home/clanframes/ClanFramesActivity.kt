@@ -1,39 +1,25 @@
 package com.example.toastgoand.home.clanframes
 
-import androidx.appcompat.app.AppCompatActivity
+import android.app.ActivityOptions
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.unit.dp
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.R
 import com.example.toastgoand.databinding.ActivityClanFramesBinding
-import com.example.toastgoand.databinding.ActivityDirectHubBinding
-import com.example.toastgoand.dummy.DummyDirectHub
-import com.example.toastgoand.dummy.DummyFramesList
-import com.example.toastgoand.home.clanframes.components.ADay
 import com.example.toastgoand.home.clanframes.components.AStrip
-import com.example.toastgoand.home.clans.MyClanItem
-import com.example.toastgoand.home.directhub.DirectHubViewModel
-import com.example.toastgoand.home.directhub.components.DirectHubUserDetails
-import com.example.toastgoand.home.directhub.components.DirectHubUserMetrics
+import com.example.toastgoand.home.clanhub.ClanHubActivity
 import com.google.accompanist.appcompattheme.AppCompatTheme
-import com.google.android.material.composethemeadapter.MdcTheme
 
 class ClanFramesActivity : BaseActivity() {
     private lateinit var binding: ActivityClanFramesBinding
@@ -46,8 +32,27 @@ class ClanFramesActivity : BaseActivity() {
 
         setContent {
             AppCompatTheme() {
+                val clubName = intent.getStringExtra("clubName")
+                val context = LocalContext.current
+
+                TopAppBar(title = {
+                    if (clubName != null) {
+                        Text(clubName, style = MaterialTheme.typography.subtitle1, color = Color.Black)
+                    }
+                },
+                    navigationIcon = {
+                        IconButton(onClick = {
+                            context.startActivity(Intent(context, ClanHubActivity::class.java).apply {
+                                putExtra("clubName", clubName)
+                            }, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+                        }) {
+                            Icon(imageVector = Icons.Filled.Star  , contentDescription = "Hub")
+                        }
+                    })
                 Surface(
-                    modifier = Modifier.fillMaxHeight().fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .fillMaxWidth(),
                     color = colorResource(id = R.color.off_light_splash)
                 ) {
                     Row (horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.CenterVertically) {
