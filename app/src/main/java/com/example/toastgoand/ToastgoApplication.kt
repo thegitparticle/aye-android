@@ -4,6 +4,7 @@ import android.app.Application
 import com.example.toastgoand.network.AppRoomDB
 import com.example.toastgoand.network.directs.MyDirectsRepo
 import com.example.toastgoand.network.myclans.MyClansRepo
+import com.example.toastgoand.network.nudgelist.NudgeToRepo
 import com.example.toastgoand.network.userdetails.UserDetailsRepo
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
@@ -19,4 +20,5 @@ class ToastgoApplication: Application() {
     val repository by lazy { UserDetailsRepo(database.userDetailsDao()) }
     val repositoryMyClans by lazy { MyClansRepo(database.myClansDao()) }
     val repositoryMyDirects by lazy {MyDirectsRepo(database.myDirectsDao())}
+    val repositoryNudgeTo by lazy {NudgeToRepo(database.nudgeToDao())}
 }

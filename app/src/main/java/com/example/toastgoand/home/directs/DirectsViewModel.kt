@@ -5,22 +5,30 @@ import androidx.lifecycle.*
 import com.example.toastgoand.network.directs.MyDirectsApi
 import com.example.toastgoand.network.directs.MyDirectsDataClass
 import com.example.toastgoand.network.directs.MyDirectsRepo
+import com.example.toastgoand.network.nudgelist.NudgeToApi
+import com.example.toastgoand.network.nudgelist.NudgeToDataClass
+import com.example.toastgoand.network.nudgelist.NudgeToRepo
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
 import com.example.toastgoand.network.userdetails.UserDetailsRepo
 import kotlinx.coroutines.launch
 
-class DirectsViewModel(private val repo: MyDirectsRepo, private val repoDeets: UserDetailsRepo) : ViewModel() {
+class DirectsViewModel(private val repo: MyDirectsRepo, private val repoDeets: UserDetailsRepo, private val repoNudgeTo: NudgeToRepo) : ViewModel() {
 
     val myDirects: LiveData<List<MyDirectsDataClass>> = repo.myDirects.asLiveData()
+    val nudgeTo: LiveData<List<NudgeToDataClass>> = repoNudgeTo.nudgeTo.asLiveData()
     val deets: LiveData<UserDetailsDataClass> = repoDeets.userDetails.asLiveData()
 
-    private fun insert(myDirects: List<MyDirectsDataClass>) = viewModelScope.launch {
+    private fun insertDirects(myDirects: List<MyDirectsDataClass>) = viewModelScope.launch {
         repo.insert(myDirects)
+    }
+
+    private fun insertNudgeTo(nudgeTo: List<NudgeToDataClass>) = viewModelScope.launch {
+        repoNudgeTo.insert(nudgeTo)
     }
 
     init {
         deets.observeForever {
-            deets.value?.user?.let { getMyDirectsHere(it.id) }
+            deets.value?.user?.let { getMyDirectsHere(it.id); getNudgeToHere(it.id) }
         }
     }
 
@@ -29,21 +37,33 @@ class DirectsViewModel(private val repo: MyDirectsRepo, private val repoDeets: U
             try {
                 val myDirectsResult = MyDirectsApi.retrofitService.getMyDirects(userid.toString())
                 var x_here: List<MyDirectsDataClass> = myDirectsResult
-                insert(x_here)
-//                repo.insert(x_here)
+                insertDirects(x_here)
                 Log.i("DirectsViewModel", x_here.toString())
             } catch (e: Exception) {
                 Log.i("DirectsViewModel", "API call for user details, Failed! ${e.message}")
             }
         }
     }
+
+    fun getNudgeToHere(userid: Int) {
+        viewModelScope.launch {
+            try {
+                val nudgeToResult = NudgeToApi.retrofitService.getNudgeTo(userid.toString())
+                var y_here: List<NudgeToDataClass> = nudgeToResult
+                insertNudgeTo(y_here)
+                Log.i("DirectsViewModelNudge", y_here.toString())
+            } catch (e: Exception) {
+                Log.i("DirectsViewModelNudge", "API call for user details, Failed! ${e.message}")
+            }
+        }
+    }
 }
 
-class DirectsViewModelFactory (private val repo: MyDirectsRepo, private val repoDeets: UserDetailsRepo) : ViewModelProvider.Factory {
+class DirectsViewModelFactory (private val repo: MyDirectsRepo, private val repoDeets: UserDetailsRepo, private val repoNudgeTo: NudgeToRepo) : ViewModelProvider.Factory {
     override fun <T: ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(DirectsViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return DirectsViewModel(repo, repoDeets) as T
+            return DirectsViewModel(repo, repoDeets, repoNudgeTo) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

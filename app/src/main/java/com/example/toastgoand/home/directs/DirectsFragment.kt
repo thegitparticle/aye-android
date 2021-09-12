@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.lazy.LazyColumn
@@ -37,12 +38,17 @@ import com.example.toastgoand.home.directs.components.DirectItem
 import com.example.toastgoand.home.directs.components.NudgeToItem
 import com.example.toastgoand.network.directs.MyDirectsDataClass
 import com.example.toastgoand.network.myclans.MyClansDataClass
+import com.example.toastgoand.network.nudgelist.NudgeToDataClass
 import com.google.accompanist.appcompattheme.AppCompatTheme
 
 class DirectsFragment : Fragment() {
 
     private val viewModel: DirectsViewModel by viewModels {
-        DirectsViewModelFactory((getActivity()?.getApplication() as ToastgoApplication).repositoryMyDirects, (getActivity()?.getApplication() as ToastgoApplication).repository)
+        DirectsViewModelFactory(
+            (getActivity()?.getApplication() as ToastgoApplication).repositoryMyDirects,
+            (getActivity()?.getApplication() as ToastgoApplication).repository,
+            (getActivity()?.getApplication() as ToastgoApplication).repositoryNudgeTo
+        )
     }
 
     override fun onCreateView(
@@ -54,32 +60,41 @@ class DirectsFragment : Fragment() {
             findViewById<ComposeView>(R.id.composeView).setContent {
 
                 AppCompatTheme {
-                    val directsHere: List<MyDirectsDataClass> by viewModel.myDirects.observeAsState(listOf<MyDirectsDataClass>())
-                    val nudges = remember {DummyNudge.nudgeItems}
-
-                    Surface (
+                    val directsHere: List<MyDirectsDataClass> by viewModel.myDirects.observeAsState(
+                        listOf<MyDirectsDataClass>()
+                    )
+                    val nudgeToHere: List<NudgeToDataClass> by viewModel.nudgeTo.observeAsState(
+                        listOf<NudgeToDataClass>()
+                    )
+                    Surface(
                         color = colorResource(id = R.color.off_light_splash)
                     ) {
-                        LazyColumn(
-                            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-                            modifier = Modifier.fillMaxHeight()
-                        ) {
-                            items(
-                                items = directsHere,
-                                itemContent = {
-                                    DirectItem(directItem = it)
-                                })
-                        }
-                        Text(text = "more friends", style = MaterialTheme.typography.subtitle1, color = Color.Black)
-                        LazyColumn(
-                            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-                            modifier = Modifier.fillMaxHeight()
-                        ) {
-                            items(
-                                items = nudges,
-                                itemContent = {
-                                    NudgeToItem(nudgeItem = it)
-                                })
+                        Column() {
+                            LazyColumn(
+                                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+                                modifier = Modifier.fillMaxHeight()
+                            ) {
+                                items(
+                                    items = directsHere,
+                                    itemContent = {
+                                        DirectItem(directItem = it)
+                                    })
+                            }
+                            Text(
+                                text = "more friends",
+                                style = MaterialTheme.typography.subtitle1,
+                                color = Color.Black
+                            )
+                            LazyColumn(
+                                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+                                modifier = Modifier.fillMaxHeight()
+                            ) {
+                                items(
+                                    items = nudgeToHere,
+                                    itemContent = {
+                                        NudgeToItem(nudgeItem = it)
+                                    })
+                            }
                         }
                     }
 

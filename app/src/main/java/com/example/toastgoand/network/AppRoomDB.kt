@@ -10,11 +10,13 @@ import com.example.toastgoand.network.directs.MyDirectsDao
 import com.example.toastgoand.network.directs.MyDirectsDataClass
 import com.example.toastgoand.network.myclans.MyClansDao
 import com.example.toastgoand.network.myclans.MyClansDataClass
+import com.example.toastgoand.network.nudgelist.NudgeToDao
+import com.example.toastgoand.network.nudgelist.NudgeToDataClass
 import com.example.toastgoand.network.userdetails.UserDetailsDao
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
 import kotlinx.coroutines.CoroutineScope
 
-@Database(entities = [UserDetailsDataClass::class, MyClansDataClass::class, MyDirectsDataClass::class], version = 1)
+@Database(entities = [UserDetailsDataClass::class, MyClansDataClass::class, MyDirectsDataClass::class, NudgeToDataClass::class], version = 1)
 
 @TypeConverters(ConverterGo::class)
 
@@ -24,6 +26,7 @@ abstract class AppRoomDB : RoomDatabase() {
     abstract fun userDetailsDao(): UserDetailsDao
     abstract fun myClansDao(): MyClansDao
     abstract fun myDirectsDao(): MyDirectsDao
+    abstract fun nudgeToDao(): NudgeToDao
 
     companion object {
         @Volatile

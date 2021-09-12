@@ -16,11 +16,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.example.toastgoand.home.directs.NudgeItemDataClass
+import com.example.toastgoand.network.nudgelist.NudgeToDataClass
 import com.google.accompanist.appcompattheme.AppCompatTheme
 import com.google.android.material.composethemeadapter.MdcTheme
 
 @Composable
-fun NudgeToItem (nudgeItem: NudgeItemDataClass) {
+fun NudgeToItem (nudgeItem: NudgeToDataClass) {
     AppCompatTheme() {
         Row {
             NudgeToImage(nudgeItem = nudgeItem)
@@ -46,8 +47,8 @@ private fun StartButton() {
 }
 
 @Composable
-private fun NudgeToImage (nudgeItem: NudgeItemDataClass) {
-    val painter = rememberImagePainter(data = nudgeItem.profilePic)
+private fun NudgeToImage (nudgeItem: NudgeToDataClass) {
+    val painter = rememberImagePainter(data = nudgeItem.profile_pic)
     Image(
         painter = painter,
         contentDescription = "Forest Image",
