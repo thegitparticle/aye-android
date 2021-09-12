@@ -15,4 +15,5 @@ abstract class BaseActivity: AppCompatActivity() {
         setContentView(viewBinding.root)
         getSupportActionBar()?.hide()
     }
+
 }

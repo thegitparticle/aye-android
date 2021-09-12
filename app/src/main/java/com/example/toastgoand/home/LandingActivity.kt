@@ -33,10 +33,12 @@ import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.R
 import com.example.toastgoand.ToastgoApplication
 import com.example.toastgoand.auth.LoginActivity
+import com.example.toastgoand.auth.detailssignup.DetailsSignupActivity
 import com.example.toastgoand.auth.settingup.SettingUpViewModel
 import com.example.toastgoand.auth.settingup.SettingUpViewModelFactory
 import com.example.toastgoand.databinding.ActivityLandingBinding
 import com.example.toastgoand.databinding.StartCallDialogBinding
+import com.example.toastgoand.home.myprofile.MyProfileActivity
 import com.example.toastgoand.navigator.Navigator
 import com.example.toastgoand.navigator.Screen
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
@@ -45,6 +47,7 @@ import com.example.toastgoand.prefhelpers.Constant
 import com.example.toastgoand.prefhelpers.PrefHelper
 import com.google.accompanist.appcompattheme.AppCompatTheme
 import dagger.hilt.android.AndroidEntryPoint
+import spencerstudios.com.bungeelib.Bungee
 import javax.inject.Inject
 
 
@@ -76,6 +79,14 @@ class LandingActivity: BaseActivity() {
             startActivity(Intent(this, LoginActivity::class.java))
         }
 
+        binding.circleImage.setOnClickListener {
+            val intent = Intent(this, MyProfileActivity::class.java).apply{
+//                putExtra("phoneNumber", countryCode + phoneNumber.toString())
+            }
+            startActivity(intent)
+            Bungee.slideUp(this)
+        }
+
         // below is all code for bottom navigation
         val navView: BottomNavigationView = binding.navView
 
@@ -92,7 +103,6 @@ class LandingActivity: BaseActivity() {
         navView.setupWithNavController(navController)
 
         getSupportActionBar()?.hide()
-
 
     }
 
