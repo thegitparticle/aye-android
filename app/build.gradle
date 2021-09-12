@@ -172,4 +172,10 @@ dependencies {
 
     // Bungee - activity transitions
     implementation 'com.github.Binary-Finery:Bungee:3.0'
+
+    // date time for kotlin
+    implementation "org.jetbrains.kotlinx:kotlinx-datetime:0.2.1"
+
+    // compose icons
+    implementation "br.com.devsrsouza.compose.icons.android:feather:1.0.0"
 }
