@@ -23,6 +23,7 @@ import com.example.toastgoand.dummy.DummyClanHub
 import com.example.toastgoand.home.clanhub.ClanHubViewModel
 import com.example.toastgoand.home.clanhub.components.ClanMetrics
 import com.example.toastgoand.home.clanhub.components.UsersListItem
+import com.google.accompanist.appcompattheme.AppCompatTheme
 import com.google.android.material.composethemeadapter.MdcTheme
 
 class ClanTalkActivity : BaseActivity() {
@@ -36,9 +37,10 @@ class ClanTalkActivity : BaseActivity() {
         binding = viewBinding as ActivityClanTalkBinding
 
         setContent {
-            MdcTheme {
+            AppCompatTheme {
                 ClanMetrics(clanHub = DummyClanHub.clanHub)
                 val members = DummyClanHub.clanHub.users
+                val clubName = intent.getStringExtra("clubName")
                 Surface() {
                     LazyColumn(
                         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
@@ -56,7 +58,9 @@ class ClanTalkActivity : BaseActivity() {
                         backgroundColor = Color.Red
                     )
                 ) {
-                    Text("quit clan")
+                    if (clubName != null) {
+                        Text(clubName)
+                    }
                 }
             }
         }

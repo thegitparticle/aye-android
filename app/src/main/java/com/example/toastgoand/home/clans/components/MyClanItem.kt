@@ -1,8 +1,12 @@
 package com.example.toastgoand.home.clans
 
+import android.app.PendingIntent.getActivity
+import android.content.Intent
 import android.os.Build
+import android.text.style.ClickableSpan
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -14,12 +18,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.Role.Companion.Image
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat.startActivity
 import coil.compose.rememberImagePainter
+import com.example.toastgoand.auth.strangerintro.StrangerIntroActivity
+import com.example.toastgoand.home.LandingActivity
 import com.example.toastgoand.home.clans.components.LiveClanItem
+import com.example.toastgoand.home.clantalk.ClanTalkActivity
 import com.example.toastgoand.network.myclans.MyClansDataClass
 import com.example.toastgoand.utilities.drawColorShadow
+import com.google.android.material.internal.ContextUtils.getActivity
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -34,7 +44,13 @@ fun MyClanItem(myclan: MyClansDataClass) {
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 private fun DormantClan(myclan: MyClansDataClass) {
-    Row () {
+    val context = LocalContext.current
+
+    Row (modifier = Modifier.clickable {
+        context.startActivity(Intent(context, ClanTalkActivity::class.java).apply {
+            putExtra("clubName", myclan.club_name)
+        })
+    }) {
         ClanImage(myclan = myclan)
         Column(
             modifier = Modifier

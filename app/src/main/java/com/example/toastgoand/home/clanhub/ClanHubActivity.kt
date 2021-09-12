@@ -23,6 +23,7 @@ import com.example.toastgoand.dummy.DummyClanHub.clanHub
 import com.example.toastgoand.home.clanhub.components.ClanMetrics
 import com.example.toastgoand.home.clanhub.components.UsersListItem
 import com.example.toastgoand.home.clans.ClansViewModel
+import com.google.accompanist.appcompattheme.AppCompatTheme
 import com.google.android.material.composethemeadapter.MdcTheme
 
 class ClanHubActivity : BaseActivity() {
@@ -36,9 +37,9 @@ class ClanHubActivity : BaseActivity() {
         binding = viewBinding as ActivityClanHubBinding
 
         setContent {
-            MdcTheme {
-                ClanMetrics(clanHub = DummyClanHub.clanHub)
-                val members = DummyClanHub.clanHub.users
+            AppCompatTheme {
+                ClanMetrics(clanHub = clanHub)
+                val members = clanHub.users
                 Surface() {
                     LazyColumn(
                         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),

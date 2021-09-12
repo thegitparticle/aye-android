@@ -15,11 +15,12 @@ import androidx.compose.ui.layout.layout
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.toastgoand.home.clanhub.ClanHubDataClass
+import com.google.accompanist.appcompattheme.AppCompatTheme
 import com.google.android.material.composethemeadapter.MdcTheme
 
 @Composable
 fun ClanMetrics (clanHub: ClanHubDataClass) {
-    MdcTheme() {
+    AppCompatTheme() {
         Box(contentAlignment= Alignment.Center,
             modifier = Modifier
                 .background(Color.Black, shape = CircleShape)

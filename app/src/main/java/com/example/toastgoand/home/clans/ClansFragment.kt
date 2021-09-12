@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
@@ -20,6 +21,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.activity.compose.setContent
 import com.example.toastgoand.R
 import com.example.toastgoand.ToastgoApplication
 import com.example.toastgoand.dummy.Dummyclans
@@ -29,7 +31,10 @@ import com.google.accompanist.appcompattheme.AppCompatTheme
 class ClansFragment : Fragment() {
 
     private val viewModel: ClansViewModel by viewModels {
-        ClansViewModelFactory((getActivity()?.getApplication() as ToastgoApplication).repositoryMyClans, (getActivity()?.getApplication() as ToastgoApplication).repository)
+        ClansViewModelFactory(
+            (getActivity()?.getApplication() as ToastgoApplication).repositoryMyClans,
+            (getActivity()?.getApplication() as ToastgoApplication).repository
+        )
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -48,8 +53,8 @@ class ClansFragment : Fragment() {
                         color = colorResource(id = R.color.off_light_splash)
                     ) {
                         LazyColumn(
-                            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-                            modifier = Modifier.fillMaxHeight()
+                            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
+                            modifier = Modifier.fillMaxHeight(),
                         ) {
                             items(
                                 items = clansHere,
@@ -57,7 +62,6 @@ class ClansFragment : Fragment() {
                                     MyClanItem(myclan = it)
                                 })
                         }
-                        Text(text = clansHere.size.toString(), style = MaterialTheme.typography.subtitle1, color = Color.Black)
                     }
                 }
             }
