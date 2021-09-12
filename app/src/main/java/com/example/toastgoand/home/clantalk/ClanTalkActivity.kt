@@ -93,7 +93,6 @@ class ClanTalkActivity : BaseActivity() {
 
             }
         }
-//        }
     }
 
     override fun binding(): ViewBinding {
