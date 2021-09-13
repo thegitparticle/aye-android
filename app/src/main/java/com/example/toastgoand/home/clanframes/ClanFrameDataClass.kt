@@ -1,39 +1,14 @@
 package com.example.toastgoand.home.clanframes
 
-import com.beust.klaxon.*
-
-private val klaxon = Klaxon()
 
 data class ClanFrameDataClass (
-    val id: Long,
-
-    @Json(name = "club_name")
-    val clubName: Long,
-
-    @Json(name = "published_date")
-    val publishedDate: String,
-
-    @Json(name = "frame_picture")
-    val framePicture: Any? = null,
-
-    @Json(name = "frame_status")
-    val frameStatus: Boolean,
-
-    @Json(name = "channel_id")
-    val channelID: String,
-
-    @Json(name = "start_time")
-    val startTime: String,
-
-    @Json(name = "end_time")
-    val endTime: String,
-
-    @Json(name = "frame_picture_link")
-    val framePictureLink: String
-) {
-    public fun toJson() = klaxon.toJsonString(this)
-
-    companion object {
-        public fun fromJson(json: String) = klaxon.parse<ClanFrameDataClass>(json)
-    }
-}
+    val id: Int,
+    val club_name: Int,
+    val published_date: String,
+    val frame_picture: String?,
+    val start_time: String,
+    val end_time: String,
+    val channel_id: String,
+    val frame_picture_link: String,
+    val frame_status: Boolean
+)

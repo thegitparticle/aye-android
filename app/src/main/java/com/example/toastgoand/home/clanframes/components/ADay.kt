@@ -14,18 +14,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
-import com.example.toastgoand.dummy.DummyFramesList
 import com.example.toastgoand.home.clanframes.ClanFrameDataClass
 import com.google.accompanist.appcompattheme.AppCompatTheme
 
 @Composable
-fun ADay (date: Int) {
+fun ADay (date: Int, framesList: List<ClanFrameDataClass>) {
     AppCompatTheme () {
-        val checkResult = checkForFrames(date)
+        val checkResult = checkForFrames(date, framesList)
 
         if (checkResult.size > 0) {
             for (item in checkResult) {
-                FrameImage(item.framePictureLink)
+                FrameImage(item.frame_picture_link)
             }
         } else {
             Text(text = date.toString(), style = MaterialTheme.typography.subtitle1, color = Color.Black)
@@ -33,14 +32,14 @@ fun ADay (date: Int) {
     }
 }
 
-private fun checkForFrames(date: Int): MutableList<ClanFrameDataClass> {
+private fun checkForFrames(date: Int, framesList: List<ClanFrameDataClass>): MutableList<ClanFrameDataClass> {
 
-    val framesListHere = DummyFramesList.framesList
+val framesListHere = framesList
 
     val datesArray = mutableListOf<ClanFrameDataClass>()
 
     for (item in framesListHere) {
-        if (item.publishedDate.takeLast(2) == date.toString()) {
+        if (item.published_date.takeLast(2) == date.toString() || item.published_date.takeLast(1) == date.toString()) {
             datesArray.add(item)
         }
     }

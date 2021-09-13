@@ -24,6 +24,7 @@ import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.R
 import com.example.toastgoand.databinding.ActivityClanFramesBinding
 import com.example.toastgoand.home.clanframes.components.AMonth
+import com.example.toastgoand.home.clanframes.components.AMonthClanViewModel
 import com.example.toastgoand.home.clanframes.components.AStrip
 import com.example.toastgoand.home.clanhub.ClanHubActivity
 import com.example.toastgoand.uibits.TopHeaderPlayScreens
@@ -173,7 +174,9 @@ class ClanFramesActivity : BaseActivity() {
                             }
                         )
                     }
-                    AMonth(viewMonth, currentMonth, todayDate)
+                    if (clubid != null) {
+                        AMonth(AMonthClanViewModel(), clubid.toString(), viewMonth, currentMonth, todayDate)
+                    }
                 }
             }
         }

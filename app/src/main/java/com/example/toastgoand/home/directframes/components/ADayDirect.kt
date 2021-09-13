@@ -14,8 +14,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
-import com.example.toastgoand.dummy.DummyFramesList
-import com.example.toastgoand.home.clanframes.ClanFrameDataClass
 import com.example.toastgoand.home.directframes.DirectFrameDataClass
 import com.google.accompanist.appcompattheme.AppCompatTheme
 
@@ -36,13 +34,12 @@ fun ADayDirect (date: Int, framesList: List<DirectFrameDataClass>) {
 
 private fun checkForFrames(date: Int, framesList: List<DirectFrameDataClass>): MutableList<DirectFrameDataClass> {
 
-//    val framesListHere = DummyFramesList.framesList
     val framesListHere = framesList
 
     val datesArray = mutableListOf<DirectFrameDataClass>()
 
     for (item in framesListHere) {
-        if (item.published_date.takeLast(2) == date.toString()) {
+        if (item.published_date.takeLast(2) == date.toString() || item.published_date.takeLast(1) == date.toString()) {
             datesArray.add(item)
         }
     }

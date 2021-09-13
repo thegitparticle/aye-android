@@ -41,7 +41,6 @@ class AMonthViewModel : ViewModel() {
             }
         }
     }
-
 }
 
 @Composable

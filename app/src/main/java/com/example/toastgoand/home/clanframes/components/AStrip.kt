@@ -13,7 +13,7 @@ import com.example.toastgoand.home.clanframes.ClanFrameDataClass
 import com.google.accompanist.appcompattheme.AppCompatTheme
 
 @Composable
-fun AStrip (start: Int, end: Int) {
+fun AStrip (start: Int, end: Int, framesList: List<ClanFrameDataClass>) {
 
     val datesArray = mutableListOf<Int>()
 
@@ -34,7 +34,7 @@ fun AStrip (start: Int, end: Int) {
             )
             Column() {
                 for (date in datesArray) {
-                    ADay(date)
+                    ADay(date, framesList)
                 }
             }
         }
