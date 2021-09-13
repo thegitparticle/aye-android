@@ -8,6 +8,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
@@ -27,7 +29,12 @@ import com.example.toastgoand.databinding.ActivityMyProfileBinding
 import com.example.toastgoand.databinding.ActivityStartClanBinding
 import com.example.toastgoand.home.aye.TheAyeViewModel
 import com.example.toastgoand.home.aye.TheAyeViewModelFactory
+import com.example.toastgoand.home.directs.components.DirectItem
+import com.example.toastgoand.home.directs.components.NudgeToItem
 import com.example.toastgoand.home.myprofile.MyProfileViewModel
+import com.example.toastgoand.home.startclan.components.FriendsListItem
+import com.example.toastgoand.network.myfriends.MyFriendsDataClass
+import com.example.toastgoand.network.nudgelist.NudgeToDataClass
 import com.example.toastgoand.network.userdetails.User
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
 import com.example.toastgoand.uibits.TopHeaderModals
@@ -41,6 +48,7 @@ class StartClanActivity : BaseActivity() {
 
     private val viewModel: StartClanViewModel by viewModels {
         StartClanViewModelFactory(
+            (this.application as ToastgoApplication).repositoryMyFriends,
             (this.application as ToastgoApplication).repository
         )
     }
@@ -71,6 +79,10 @@ class StartClanActivity : BaseActivity() {
                         username = ""
                     ), id = 0
                 )
+            )
+
+            val myFriendsListHere: List<MyFriendsDataClass> by viewModel.friendsList.observeAsState(
+                listOf<MyFriendsDataClass>()
             )
 
             Column(modifier = Modifier.fillMaxWidth()) {
@@ -105,16 +117,6 @@ class StartClanActivity : BaseActivity() {
                     modifier = Modifier.fillMaxWidth(),
                     verticalArrangement = Arrangement.SpaceBetween
                 ) {
-                    val painter =
-                        rememberImagePainter(data = imageResource(id = R.drawable.aye_logo))
-                    Image(
-                        painter = painter,
-                        contentDescription = "aye logo",
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .size(100.dp)
-                    )
                     Column(modifier = Modifier.fillMaxWidth()) {
                         Box(
                             Modifier
@@ -122,6 +124,16 @@ class StartClanActivity : BaseActivity() {
                                 .background(Color.Blue)
                         ) {
                             Text("talk to founder", modifier = Modifier.align(Alignment.TopStart))
+                            LazyColumn(
+                                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+                                modifier = Modifier.fillMaxSize()
+                            ) {
+                                items(
+                                    items = myFriendsListHere,
+                                    itemContent = {
+                                        FriendsListItem(it)
+                                    })
+                            }
                         }
                     }
                 }

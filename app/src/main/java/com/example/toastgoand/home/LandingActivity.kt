@@ -41,6 +41,7 @@ import com.example.toastgoand.databinding.StartCallDialogBinding
 import com.example.toastgoand.home.aye.TheAyeActivity
 import com.example.toastgoand.home.invitepeopledirectly.InvitePeopleDirectlyActivity
 import com.example.toastgoand.home.myprofile.MyProfileActivity
+import com.example.toastgoand.home.startclan.StartClanActivity
 import com.example.toastgoand.navigator.Navigator
 import com.example.toastgoand.navigator.Screen
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
@@ -94,7 +95,7 @@ class LandingActivity: BaseActivity() {
         }
 
         binding.invitePeopleLogo.setOnClickListener {
-            val intent = Intent(this, InvitePeopleDirectlyActivity::class.java).apply{}
+            val intent = Intent(this, StartClanActivity::class.java).apply{}
             startActivity(intent)
             Bungee.slideUp(this)
         }

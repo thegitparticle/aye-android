@@ -1,5 +1,6 @@
-package com.example.toastgoand.network.directs
+package com.example.toastgoand.network.myfriends
 
+import com.example.toastgoand.network.directs.MyDirectsApiInterface
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
@@ -19,13 +20,13 @@ private val retrofit =
         .baseUrl(BASE_URL)
         .build()
 
-interface MyDirectsApiInterface {
-    @GET("users/my_directs/{userid}")
-    suspend fun getMyDirects(@Path("userid") userid: String): List<MyDirectsDataClass>
+interface MyFriendsApiInterface {
+    @GET("users/fetch_friends_list/{userid}/")
+    suspend fun getMyFriends(@Path("userid") userid: String): List<MyFriendsDataClass>
 }
 
-object MyDirectsApi {
-    val retrofitService: MyDirectsApiInterface by lazy {
-        retrofit.create(MyDirectsApiInterface::class.java)
+object MyFriendsApi {
+    val retrofitService: MyFriendsApiInterface by lazy {
+        retrofit.create(MyFriendsApiInterface::class.java)
     }
 }

@@ -7,9 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
@@ -24,7 +21,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import com.example.toastgoand.R
 import com.example.toastgoand.ToastgoApplication
 import com.example.toastgoand.dummy.Dummyclans
@@ -55,7 +54,7 @@ class ClansFragment : Fragment() {
                     val clansHere: List<MyClansDataClass> by viewModel.myClans.observeAsState(listOf<MyClansDataClass>())
 
                     Column(
-                        Modifier.background(Color.Magenta)
+                        Modifier.background(Color.Magenta).fillMaxHeight().padding(horizontal = 8.dp, vertical = 60.dp)
                     ) {
                         LazyColumn(
                             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
@@ -71,7 +70,7 @@ class ClansFragment : Fragment() {
                             context.startActivity(Intent(context, StartClanActivity::class.java).apply {
                             })
                         }, colors = ButtonDefaults.textButtonColors(
-                            backgroundColor = Color.Green
+                            backgroundColor = Color.Green,
                         )) {
                             Text("start clan")
                         }
