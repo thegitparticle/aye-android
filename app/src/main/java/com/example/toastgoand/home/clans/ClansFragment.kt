@@ -1,5 +1,6 @@
 package com.example.toastgoand.home.clans
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -22,9 +23,13 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import com.example.toastgoand.R
 import com.example.toastgoand.ToastgoApplication
 import com.example.toastgoand.dummy.Dummyclans
+import com.example.toastgoand.home.clantalk.ClanTalkActivity
+import com.example.toastgoand.home.startclan.StartClanActivity
 import com.example.toastgoand.network.myclans.MyClansDataClass
 import com.google.accompanist.appcompattheme.AppCompatTheme
 
@@ -49,8 +54,8 @@ class ClansFragment : Fragment() {
                 AppCompatTheme {
                     val clansHere: List<MyClansDataClass> by viewModel.myClans.observeAsState(listOf<MyClansDataClass>())
 
-                    Surface(
-                        color = colorResource(id = R.color.off_light_splash)
+                    Column(
+                        Modifier.background(Color.Magenta)
                     ) {
                         LazyColumn(
                             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
@@ -61,6 +66,14 @@ class ClansFragment : Fragment() {
                                 itemContent = {
                                     MyClanItem(myclan = it)
                                 })
+                        }
+                        Button(onClick = {
+                            context.startActivity(Intent(context, StartClanActivity::class.java).apply {
+                            })
+                        }, colors = ButtonDefaults.textButtonColors(
+                            backgroundColor = Color.Green
+                        )) {
+                            Text("start clan")
                         }
                     }
                 }

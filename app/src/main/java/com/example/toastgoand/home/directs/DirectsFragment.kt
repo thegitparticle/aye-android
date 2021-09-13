@@ -7,9 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
@@ -69,15 +67,20 @@ class DirectsFragment : Fragment() {
                     Surface(
                         color = colorResource(id = R.color.off_light_splash)
                     ) {
-                        Column() {
+                        Column(modifier = Modifier.fillMaxSize()) {
                             LazyColumn(
                                 contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-                                modifier = Modifier.fillMaxHeight()
+                                modifier = Modifier.fillMaxSize()
                             ) {
                                 items(
                                     items = directsHere,
                                     itemContent = {
                                         DirectItem(directItem = it)
+                                    })
+                                items(
+                                    items = nudgeToHere,
+                                    itemContent = {
+                                        NudgeToItem(nudgeItem = it)
                                     })
                             }
                             Text(
@@ -85,16 +88,6 @@ class DirectsFragment : Fragment() {
                                 style = MaterialTheme.typography.subtitle1,
                                 color = Color.Black
                             )
-                            LazyColumn(
-                                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-                                modifier = Modifier.fillMaxHeight()
-                            ) {
-                                items(
-                                    items = nudgeToHere,
-                                    itemContent = {
-                                        NudgeToItem(nudgeItem = it)
-                                    })
-                            }
                         }
                     }
 

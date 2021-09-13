@@ -32,6 +32,7 @@ import compose.icons.FeatherIcons
 import compose.icons.feathericons.ChevronLeft
 import compose.icons.feathericons.ChevronRight
 import kotlinx.datetime.*
+import spencerstudios.com.bungeelib.Bungee
 
 class ClanFramesActivity : BaseActivity() {
     private lateinit var binding: ActivityClanFramesBinding
@@ -47,12 +48,23 @@ class ClanFramesActivity : BaseActivity() {
                 val clubName = intent.getStringExtra("clubName")
                 val context = LocalContext.current
 
+                fun onHubPressed() {
+                    startActivity(
+                        Intent(
+                            this,
+                            ClanHubActivity::class.java
+                        ).apply {
+                            putExtra("clubName", clubName)
+                        })
+                    Bungee.slideUp(this)
+                }
+
                 val now: Instant = Clock.System.now()
                 val today: LocalDate = now.toLocalDateTime(TimeZone.currentSystemDefault()).date
 
                 val todayDate = today.dayOfMonth
                 val currentMonth = today.monthNumber
-                var viewMonth by remember {mutableStateOf(currentMonth)}
+                var viewMonth by remember { mutableStateOf(currentMonth) }
 
                 fun getMonthName(month: Int): String {
                     var monthName: String
@@ -62,40 +74,31 @@ class ClanFramesActivity : BaseActivity() {
                     } else if (month == 2) {
                         monthName = "FEBRUARY"
                         return monthName
-                    }
-                    else if (month == 3) {
+                    } else if (month == 3) {
                         monthName = "MARCH"
                         return monthName
-                    }
-                    else if (month == 4) {
+                    } else if (month == 4) {
                         monthName = "APRIL"
                         return monthName
-                    }
-                    else if (month == 5) {
+                    } else if (month == 5) {
                         monthName = "MAY"
                         return monthName
-                    }
-                    else if (month == 6) {
+                    } else if (month == 6) {
                         monthName = "JUNE"
                         return monthName
-                    }
-                    else if (month == 7) {
+                    } else if (month == 7) {
                         monthName = "JULY"
                         return monthName
-                    }
-                    else if (month == 8) {
+                    } else if (month == 8) {
                         monthName = "AUGUST"
                         return monthName
-                    }
-                    else if (month == 9) {
+                    } else if (month == 9) {
                         monthName = "SEPTEMBER"
                         return monthName
-                    }
-                    else if (month == 10) {
+                    } else if (month == 10) {
                         monthName = "OCTOBER"
                         return monthName
-                    }
-                    else if (month == 11) {
+                    } else if (month == 11) {
                         monthName = "NOVEMBER"
                         return monthName
                     } else if (month == 12) {
@@ -116,20 +119,13 @@ class ClanFramesActivity : BaseActivity() {
                     TopHeaderPlayScreens(
                         modifier = Modifier.fillMaxWidth(),
                         onLeftIconPressed = {
-                            context.startActivity(
-                                Intent(
-                                    context,
-                                    ClanFramesActivity::class.java
-                                ).apply {
-                                    putExtra("clubName", clubName)
-                                })
+                            onHubPressed()
                         },
                         title = {
                             Column(
                                 modifier = Modifier.weight(1f),
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
-                                // Channel name
                                 if (clubName != null) {
                                     Text(
                                         text = clubName,
@@ -139,7 +135,10 @@ class ClanFramesActivity : BaseActivity() {
                             }
                         },
                     )
-                    Row (horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
                         Icon(
                             imageVector = FeatherIcons.ChevronLeft,
                             contentDescription = "last month",

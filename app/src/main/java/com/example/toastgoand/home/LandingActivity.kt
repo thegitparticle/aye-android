@@ -38,6 +38,8 @@ import com.example.toastgoand.auth.settingup.SettingUpViewModel
 import com.example.toastgoand.auth.settingup.SettingUpViewModelFactory
 import com.example.toastgoand.databinding.ActivityLandingBinding
 import com.example.toastgoand.databinding.StartCallDialogBinding
+import com.example.toastgoand.home.aye.TheAyeActivity
+import com.example.toastgoand.home.invitepeopledirectly.InvitePeopleDirectlyActivity
 import com.example.toastgoand.home.myprofile.MyProfileActivity
 import com.example.toastgoand.navigator.Navigator
 import com.example.toastgoand.navigator.Screen
@@ -80,12 +82,23 @@ class LandingActivity: BaseActivity() {
         }
 
         binding.circleImage.setOnClickListener {
-            val intent = Intent(this, MyProfileActivity::class.java).apply{
-//                putExtra("phoneNumber", countryCode + phoneNumber.toString())
-            }
+            val intent = Intent(this, MyProfileActivity::class.java).apply{}
             startActivity(intent)
             Bungee.slideUp(this)
         }
+
+        binding.ayeLogo.setOnClickListener {
+            val intent = Intent(this, TheAyeActivity::class.java).apply{}
+            startActivity(intent)
+            Bungee.slideUp(this)
+        }
+
+        binding.invitePeopleLogo.setOnClickListener {
+            val intent = Intent(this, InvitePeopleDirectlyActivity::class.java).apply{}
+            startActivity(intent)
+            Bungee.slideUp(this)
+        }
+
 
         // below is all code for bottom navigation
         val navView: BottomNavigationView = binding.navView

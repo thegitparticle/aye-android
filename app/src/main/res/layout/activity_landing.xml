@@ -43,7 +43,7 @@
                 android:paddingVertical="10dp">
 
                 <ImageView
-                    android:id="@+id/imageView4"
+                    android:id="@+id/invitePeopleLogo"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_gravity="start"
@@ -53,7 +53,7 @@
                     app:srcCompat="@drawable/ic_invitepeople" />
 
                 <ImageView
-                    android:id="@+id/imageView2"
+                    android:id="@+id/ayeLogo"
                     android:layout_width="45dp"
                     android:layout_height="25dp"
                     android:layout_gravity="center"

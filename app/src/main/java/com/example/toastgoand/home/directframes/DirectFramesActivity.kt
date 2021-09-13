@@ -32,14 +32,17 @@ import com.example.toastgoand.home.clanframes.ClanFramesActivity
 import com.example.toastgoand.home.clanframes.ClanFramesViewModel
 import com.example.toastgoand.home.clanframes.components.AMonth
 import com.example.toastgoand.home.clanframes.components.AStrip
+import com.example.toastgoand.home.clanhub.ClanHubActivity
 import com.example.toastgoand.home.clanhub.components.ClanMetrics
 import com.example.toastgoand.home.clanhub.components.UsersListItem
+import com.example.toastgoand.home.directhub.DirectHubActivity
 import com.example.toastgoand.uibits.TopHeaderPlayScreens
 import com.google.accompanist.appcompattheme.AppCompatTheme
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.ChevronLeft
 import compose.icons.feathericons.ChevronRight
 import kotlinx.datetime.*
+import spencerstudios.com.bungeelib.Bungee
 
 class DirectFramesActivity : BaseActivity() {
     private lateinit var binding: ActivityDirectFramesBinding
@@ -54,6 +57,17 @@ class DirectFramesActivity : BaseActivity() {
             AppCompatTheme() {
                 val otherName = intent.getStringExtra("otherName")
                 val context = LocalContext.current
+
+                fun onHubPressed() {
+                    startActivity(
+                        Intent(
+                            this,
+                            DirectHubActivity::class.java
+                        ).apply {
+                            putExtra("otherName", otherName)
+                        })
+                    Bungee.slideUp(this)
+                }
 
                 val now: Instant = Clock.System.now()
                 val today: LocalDate = now.toLocalDateTime(TimeZone.currentSystemDefault()).date
@@ -124,13 +138,7 @@ class DirectFramesActivity : BaseActivity() {
                     TopHeaderPlayScreens(
                         modifier = Modifier.fillMaxWidth(),
                         onLeftIconPressed = {
-                            context.startActivity(
-                                Intent(
-                                    context,
-                                    ClanFramesActivity::class.java
-                                ).apply {
-                                    putExtra("otherName", otherName)
-                                })
+                           onHubPressed()
                         },
                         title = {
                             Column(
