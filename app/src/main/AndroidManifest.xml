@@ -25,6 +25,9 @@
         android:theme="@style/Theme.ToastgoandN"
         tools:replace="android:appComponentFactory">
         <activity
+            android:name=".home.otherprofile.OtherProfileActivity"
+            android:exported="true" />
+        <activity
             android:name=".home.invitepeopledirectly.InvitePeopleDirectlyActivity"
             android:exported="true" />
         <activity
