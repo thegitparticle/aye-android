@@ -46,6 +46,12 @@ class ClanFramesActivity : BaseActivity() {
         setContent {
             AppCompatTheme() {
                 val clubName = intent.getStringExtra("clubName")
+                val clubid = intent.getIntExtra("clubid", 0)
+                val channelid = intent.getStringExtra("channelid")
+                val ongoingFrame = intent.getBooleanExtra("ongoingFrame", false)
+                val startTime = intent.getStringExtra("startTime")
+                val endTime = intent.getStringExtra("endTime")
+
                 val context = LocalContext.current
 
                 fun onHubPressed() {
@@ -55,6 +61,11 @@ class ClanFramesActivity : BaseActivity() {
                             ClanHubActivity::class.java
                         ).apply {
                             putExtra("clubName", clubName)
+                            putExtra("clubid", clubid)
+                            putExtra("channelid", channelid)
+                            putExtra("ongoingFrame", ongoingFrame)
+                            putExtra("startTime", startTime)
+                            putExtra("endTime", endTime)
                         })
                     Bungee.slideUp(this)
                 }

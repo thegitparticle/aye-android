@@ -38,7 +38,6 @@ class DirectTalkActivity : BaseActivity() {
 
         setContent {
             AppCompatTheme {
-                ClanMetrics(clanHub = DummyClanHub.clanHub)
                 val members = DummyClanHub.clanHub.users
                 val otherName = intent.getStringExtra("otherName")
                 val context = LocalContext.current

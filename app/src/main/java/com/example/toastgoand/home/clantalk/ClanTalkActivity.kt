@@ -45,9 +45,15 @@ class ClanTalkActivity : BaseActivity() {
 
         setContent {
             AppCompatTheme {
-                ClanMetrics(clanHub = DummyClanHub.clanHub)
                 val members = DummyClanHub.clanHub.users
+
                 val clubName = intent.getStringExtra("clubName")
+                val clubid = intent.getIntExtra("clubid", 0)
+                val channelid = intent.getStringExtra("channelid")
+                val ongoingFrame = intent.getBooleanExtra("ongoingFrame", false)
+                val startTime = intent.getStringExtra("startTime")
+                val endTime = intent.getStringExtra("endTime")
+
                 val context = LocalContext.current
 
                 Column(modifier = Modifier.fillMaxSize()) {
@@ -60,6 +66,11 @@ class ClanTalkActivity : BaseActivity() {
                                             ClanFramesActivity::class.java
                                         ).apply {
                                             putExtra("clubName", clubName)
+                                            putExtra("clubid", clubid)
+                                            putExtra("channelid", channelid)
+                                            putExtra("ongoingFrame", ongoingFrame)
+                                            putExtra("startTime", startTime)
+                                            putExtra("endTime", endTime)
                                         })
                         },
                         title = {

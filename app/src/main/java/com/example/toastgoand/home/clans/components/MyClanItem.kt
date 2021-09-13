@@ -49,6 +49,11 @@ private fun DormantClan(myclan: MyClansDataClass) {
     Row (modifier = Modifier.clickable {
         context.startActivity(Intent(context, ClanTalkActivity::class.java).apply {
             putExtra("clubName", myclan.club_name)
+            putExtra("clubid", myclan.club_id)
+            putExtra("channelid", myclan.pn_channel_id)
+            putExtra("ongoingFrame", myclan.ongoing_frame)
+            putExtra("startTime", myclan.start_time)
+            putExtra("endTime", myclan.end_time)
         })
     }) {
         ClanImage(myclan = myclan)
