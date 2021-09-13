@@ -36,10 +36,15 @@ class DirectTalkActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = viewBinding as ActivityDirectTalkBinding
 
+        val otherName = intent.getStringExtra("otherName")
+        val directid = intent.getStringExtra("directid")
+        val ongoingFrame = intent.getBooleanExtra("ongoingFrame", false)
+        val startTime = intent.getStringExtra("startTime")
+        val endTime = intent.getStringExtra("endTime")
+
         setContent {
             AppCompatTheme {
                 val members = DummyClanHub.clanHub.users
-                val otherName = intent.getStringExtra("otherName")
                 val context = LocalContext.current
 
                 Column(modifier = Modifier.fillMaxSize()) {
@@ -52,6 +57,10 @@ class DirectTalkActivity : BaseActivity() {
                                     DirectFramesActivity::class.java
                                 ).apply {
                                     putExtra("otherName", otherName)
+                                    putExtra("directid", directid)
+                                    putExtra("ongoingFrame", ongoingFrame)
+                                    putExtra("startTime", startTime)
+                                    putExtra("endTime", endTime)
                                 })
                         },
                         title = {

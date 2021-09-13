@@ -6,10 +6,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.toastgoand.home.directframes.DirectFrameDataClass
 import com.google.accompanist.appcompattheme.AppCompatTheme
 
 @Composable
-fun AStripDirect(start: Int, end: Int) {
+fun AStripDirect(start: Int, end: Int, framesList: List<DirectFrameDataClass>) {
 
     val datesArray = mutableListOf<Int>()
 
@@ -30,7 +31,7 @@ fun AStripDirect(start: Int, end: Int) {
             )
             Column() {
                 for (date in datesArray) {
-                    ADayDirect(date)
+                    ADayDirect(date, framesList = framesList)
                 }
             }
         }

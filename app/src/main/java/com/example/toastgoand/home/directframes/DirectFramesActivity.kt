@@ -35,6 +35,8 @@ import com.example.toastgoand.home.clanframes.components.AStrip
 import com.example.toastgoand.home.clanhub.ClanHubActivity
 import com.example.toastgoand.home.clanhub.components.ClanMetrics
 import com.example.toastgoand.home.clanhub.components.UsersListItem
+import com.example.toastgoand.home.directframes.components.AMonthDirect
+import com.example.toastgoand.home.directframes.components.AMonthViewModel
 import com.example.toastgoand.home.directhub.DirectHubActivity
 import com.example.toastgoand.uibits.TopHeaderPlayScreens
 import com.google.accompanist.appcompattheme.AppCompatTheme
@@ -52,6 +54,12 @@ class DirectFramesActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = viewBinding as ActivityDirectFramesBinding
+
+        val otherName = intent.getStringExtra("otherName")
+        val directid = intent.getStringExtra("directid")
+        val ongoingFrame = intent.getBooleanExtra("ongoingFrame", false)
+        val startTime = intent.getStringExtra("startTime")
+        val endTime = intent.getStringExtra("endTime")
 
         setContent {
             AppCompatTheme() {
@@ -74,6 +82,7 @@ class DirectFramesActivity : BaseActivity() {
 
                 val todayDate = today.dayOfMonth
                 val currentMonth = today.monthNumber
+
                 var viewMonth by remember { mutableStateOf(currentMonth) }
 
                 fun getMonthName(month: Int): String {
@@ -179,7 +188,9 @@ class DirectFramesActivity : BaseActivity() {
                             }
                         )
                     }
-                    AMonth(viewMonth, currentMonth, todayDate)
+                    if (directid != null) {
+                        AMonthDirect(AMonthViewModel(), directid, viewMonth, currentMonth, todayDate)
+                    }
                 }
             }
         }

@@ -32,6 +32,10 @@ fun DirectItem (directItem: MyDirectsDataClass) {
         Row (modifier = Modifier.clickable {
             context.startActivity(Intent(context, DirectTalkActivity::class.java).apply {
                 putExtra("otherName", directItem.display_guys.full_name)
+                putExtra("directid", directItem.direct_channel_id)
+                putExtra("ongoingFrame", directItem.ongoing_frame)
+                putExtra("startTime", directItem.start_time)
+                putExtra("endTime", directItem.end_time)
             })
         }) {
             DirectImage(directItem = directItem)
