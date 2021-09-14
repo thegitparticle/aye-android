@@ -18,6 +18,56 @@
         <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
     </style>
 
+    <style name="TextAppearance.LargeTitle" parent="TextAppearance.MaterialComponents.Headline1">
+        <item name="android:fontFamily">@font/gotham_rounded_bold</item>
+        <item name="android:textSize">34sp</item>
+    </style>
+
+    <style name="TextAppearance.Title1" parent="TextAppearance.MaterialComponents.Headline2">
+        <item name="android:fontFamily">@font/gotham_rounded_bold</item>
+        <item name="android:textSize">28sp</item>
+    </style>
+
+    <style name="TextAppearance.Title2" parent="TextAppearance.MaterialComponents.Headline3">
+        <item name="android:fontFamily">@font/gotham_rounded_bold</item>
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="TextAppearance.Title3" parent="TextAppearance.MaterialComponents.Headline4">
+        <item name="android:fontFamily">@font/gotham_rounded_bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="TextAppearance.Header" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="android:fontFamily">@font/gotham_rounded_medium</item>
+        <item name="android:textSize">17sp</item>
+    </style>
+
+    <style name="TextAppearance.SubheadMed" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="android:fontFamily">@font/gotham_rounded_medium</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="TextAppearance.Subhead" parent="TextAppearance.MaterialComponents.Subtitle2">
+        <item name="android:fontFamily">@font/gotham_rounded_book</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="TextAppearance.BodyMed" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:fontFamily">@font/gotham_rounded_medium</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="TextAppearance.Body" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="android:fontFamily">@font/gotham_rounded_book</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="TextAppearance.Small" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:fontFamily">@font/gotham_rounded_book</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
     <style name="CustomActivityAnimation" parent="@android:style/Animation.Activity">
         <item name="android:activityOpenEnterAnimation">@anim/slide_from_right</item>
         <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>

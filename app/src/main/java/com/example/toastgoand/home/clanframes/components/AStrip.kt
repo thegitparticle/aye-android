@@ -9,8 +9,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.home.clanframes.ClanFrameDataClass
-import com.google.accompanist.appcompattheme.AppCompatTheme
 
 @Composable
 fun AStrip (start: Int, end: Int, framesList: List<ClanFrameDataClass>) {
@@ -21,7 +21,7 @@ fun AStrip (start: Int, end: Int, framesList: List<ClanFrameDataClass>) {
         datesArray.add(i)
     }
 
-    AppCompatTheme () {
+    AyeTheme () {
         Box() {
             Box(
                 Modifier

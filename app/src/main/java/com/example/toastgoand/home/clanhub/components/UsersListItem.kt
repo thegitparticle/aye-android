@@ -16,13 +16,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
+import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.home.clanhub.User
-import com.google.accompanist.appcompattheme.AppCompatTheme
 import com.google.android.material.composethemeadapter.MdcTheme
 
 @Composable
 fun UsersListItem (user: User) {
-    AppCompatTheme() {
+    AyeTheme() {
         Row() {
             UserDP(user.displayPic)
             Column() {

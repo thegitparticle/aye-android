@@ -24,6 +24,7 @@ import coil.compose.rememberImagePainter
 import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.R
 import com.example.toastgoand.ToastgoApplication
+import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityInvitePeopleDirectlyBinding
 import com.example.toastgoand.databinding.ActivityViewOldFrameBinding
 import com.example.toastgoand.home.myprofile.MyProfileViewModel
@@ -32,7 +33,6 @@ import com.example.toastgoand.home.viewoldframe.ViewOldViewModel
 import com.example.toastgoand.network.userdetails.User
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
 import com.example.toastgoand.uibits.TopHeaderModals
-import com.google.accompanist.appcompattheme.AppCompatTheme
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.ChevronDown
 import spencerstudios.com.bungeelib.Bungee
@@ -57,7 +57,7 @@ class InvitePeopleDirectlyActivity : BaseActivity() {
         }
 
         setContent {
-            AppCompatTheme {
+            AyeTheme {
                 val deetsHere: UserDetailsDataClass by viewModel.deets.observeAsState(
                     UserDetailsDataClass(
                         bio = "", image = "", user = User(

@@ -22,13 +22,13 @@ import androidx.compose.ui.res.colorResource
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.R
+import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityClanFramesBinding
 import com.example.toastgoand.home.clanframes.components.AMonth
 import com.example.toastgoand.home.clanframes.components.AMonthClanViewModel
 import com.example.toastgoand.home.clanframes.components.AStrip
 import com.example.toastgoand.home.clanhub.ClanHubActivity
 import com.example.toastgoand.uibits.TopHeaderPlayScreens
-import com.google.accompanist.appcompattheme.AppCompatTheme
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.ChevronLeft
 import compose.icons.feathericons.ChevronRight
@@ -45,7 +45,7 @@ class ClanFramesActivity : BaseActivity() {
         binding = viewBinding as ActivityClanFramesBinding
 
         setContent {
-            AppCompatTheme() {
+            AyeTheme() {
                 val clubName = intent.getStringExtra("clubName")
                 val clubid = intent.getIntExtra("clubid", 0)
                 val channelid = intent.getStringExtra("channelid")

@@ -14,13 +14,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.home.clanframes.ClanFrameDataClass
 import com.example.toastgoand.home.clanframes.network.ClanFramesListApi
 import com.example.toastgoand.home.directframes.DirectFrameDataClass
 import com.example.toastgoand.home.directframes.components.AMonthDirectX
 import com.example.toastgoand.home.directframes.components.AMonthViewModel
 import com.example.toastgoand.home.directframes.network.DirectFramesListApi
-import com.google.accompanist.appcompattheme.AppCompatTheme
 import kotlinx.coroutines.launch
 import kotlinx.datetime.*
 
@@ -85,7 +85,7 @@ fun AMonth (
 fun AMonthX (clubid: String, viewMonth: Int, currentMonth: Int, currentDate: Int, framesList: List<ClanFrameDataClass>) {
 
     if (viewMonth == currentMonth) {
-        AppCompatTheme () {
+        AyeTheme () {
             if (currentDate <= 10) {
                 Row (horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.CenterVertically) {
                     AStrip(start = 1, end = currentDate, framesList = framesList)
@@ -104,7 +104,7 @@ fun AMonthX (clubid: String, viewMonth: Int, currentMonth: Int, currentDate: Int
             }
         }
     } else {
-        AppCompatTheme () {
+        AyeTheme () {
             Row (horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.CenterVertically) {
                 AStrip(start = 1, end = 10, framesList = framesList)
                 AStrip(start = 11, end = 20, framesList = framesList)

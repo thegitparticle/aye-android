@@ -26,19 +26,19 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
+import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.home.clans.DisplayPhoto
 import com.example.toastgoand.home.clans.MyClanDataClass
 import com.example.toastgoand.network.myclans.DisplayPhotos
 import com.example.toastgoand.network.myclans.MyClansDataClass
 import com.example.toastgoand.utilities.drawColorShadow
-import com.google.accompanist.appcompattheme.AppCompatTheme
 import com.google.android.material.composethemeadapter.MdcTheme
 
 @Composable
 fun LiveClanItem(myclan: MyClansDataClass) {
     val totalMember: Int? = myclan.display_photos?.size
 
-    AppCompatTheme() {
+    AyeTheme() {
         Column() {
             if (totalMember == 2) {
                 OnePerson(displayObject = myclan.display_photos?.get(0))
@@ -60,14 +60,14 @@ fun LiveClanItem(myclan: MyClansDataClass) {
 
 @Composable
 fun OnePerson(displayObject: DisplayPhotos) {
-    AppCompatTheme() {
+    AyeTheme() {
         PersonImage(displayObject.display_pic)
     }
 }
 
 @Composable
 fun TwoPeople(displayItems: List<DisplayPhotos>) {
-    AppCompatTheme() {
+    AyeTheme() {
         Row() {
            PersonImage(imageLink = displayItems[0].display_pic)
             PersonImage(imageLink = displayItems[1].display_pic)
@@ -78,7 +78,7 @@ fun TwoPeople(displayItems: List<DisplayPhotos>) {
 
 @Composable
 fun ThreePeople(displayItems: List<DisplayPhotos>) {
-    AppCompatTheme() {
+    AyeTheme() {
         Column() {
             PersonImage(imageLink = displayItems[0].display_pic)
             Row() {
@@ -91,7 +91,7 @@ fun ThreePeople(displayItems: List<DisplayPhotos>) {
 
 @Composable
 fun ThreePlusPeople(displayItems: List<DisplayPhotos>) {
-    AppCompatTheme() {
+    AyeTheme() {
         Column() {
             PersonImage(imageLink = displayItems[0].display_pic)
             Row() {
@@ -105,7 +105,7 @@ fun ThreePlusPeople(displayItems: List<DisplayPhotos>) {
 
 @Composable
 fun TextPieces(myclan: MyClansDataClass) {
-    AppCompatTheme() {
+    AyeTheme() {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

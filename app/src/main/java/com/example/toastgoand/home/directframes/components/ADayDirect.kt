@@ -14,12 +14,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
+import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.home.directframes.DirectFrameDataClass
-import com.google.accompanist.appcompattheme.AppCompatTheme
 
 @Composable
 fun ADayDirect (date: Int, framesList: List<DirectFrameDataClass>) {
-    AppCompatTheme () {
+    AyeTheme () {
         val checkResult = checkForFrames(date, framesList = framesList)
 
         if (checkResult.size > 0) {

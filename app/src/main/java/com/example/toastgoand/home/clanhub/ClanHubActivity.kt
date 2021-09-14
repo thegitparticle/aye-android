@@ -19,6 +19,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.auth.enterphone.EnterPhoneViewModel
+import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityClanHubBinding
 import com.example.toastgoand.databinding.ActivityLandingBinding
 import com.example.toastgoand.dummy.DummyClanHub
@@ -27,7 +28,6 @@ import com.example.toastgoand.home.clanhub.components.ClanMetrics
 import com.example.toastgoand.home.clanhub.components.UsersListItem
 import com.example.toastgoand.home.clans.ClansViewModel
 import com.example.toastgoand.network.myclans.MyClansDataClass
-import com.google.accompanist.appcompattheme.AppCompatTheme
 import com.google.android.material.composethemeadapter.MdcTheme
 
 class ClanHubActivity : BaseActivity() {
@@ -51,7 +51,7 @@ class ClanHubActivity : BaseActivity() {
         viewModel.getClanDetailsHere(clubid)
 
         setContent {
-            AppCompatTheme {
+            AyeTheme {
                 val clanDeets: ClanDetailsDataClass by viewModel.clubDetails.observeAsState(ClanDetailsDataClass(
 
                         id = 0,

@@ -26,6 +26,7 @@ import androidx.fragment.app.viewModels
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.ToastgoApplication
+import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityMyProfileBinding
 import com.example.toastgoand.databinding.ActivityTheAyeBinding
 import com.example.toastgoand.home.aye.TheAyeViewModel
@@ -38,7 +39,6 @@ import com.example.toastgoand.network.userdetails.User
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
 import com.example.toastgoand.uibits.TopHeaderModals
 import com.example.toastgoand.uibits.TopHeaderPlayScreens
-import com.google.accompanist.appcompattheme.AppCompatTheme
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.ChevronDown
 import spencerstudios.com.bungeelib.Bungee
@@ -65,7 +65,7 @@ class MyProfileActivity : BaseActivity() {
         }
 
         setContent {
-            AppCompatTheme {
+            AyeTheme {
                 val deetsHere: UserDetailsDataClass by viewModel.deets.observeAsState(
                     UserDetailsDataClass(
                         bio = "", image = "", user = User(

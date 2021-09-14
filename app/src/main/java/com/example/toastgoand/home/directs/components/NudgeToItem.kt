@@ -9,28 +9,39 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import androidx.ui.layout.MainAxisAlignment
 import coil.compose.rememberImagePainter
+import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.home.directs.NudgeItemDataClass
 import com.example.toastgoand.network.nudgelist.NudgeToDataClass
-import com.google.accompanist.appcompattheme.AppCompatTheme
 import com.google.android.material.composethemeadapter.MdcTheme
 
 @Composable
-fun NudgeToItem (nudgeItem: NudgeToDataClass) {
-    AppCompatTheme() {
-        Row {
-            NudgeToImage(nudgeItem = nudgeItem)
-            Column(
-                modifier = Modifier
-                    .padding(16.dp)
-                    .fillMaxWidth()
-            ) {
-                Text(text = nudgeItem.name, style = MaterialTheme.typography.subtitle1, color = Color.Black)
+fun NudgeToItem(nudgeItem: NudgeToDataClass) {
+    AyeTheme() {
+        Row(
+            modifier = Modifier.padding(horizontal = 15.dp).fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Row() {
+                NudgeToImage(nudgeItem = nudgeItem)
+                Column(
+                    modifier = Modifier
+                        .padding(16.dp)
+                ) {
+                    Text(
+                        text = nudgeItem.name,
+                        style = MaterialTheme.typography.subtitle1,
+                        color = MaterialTheme.colors.onBackground
+                    )
+                }
             }
             StartButton()
         }
@@ -39,15 +50,24 @@ fun NudgeToItem (nudgeItem: NudgeToDataClass) {
 
 @Composable
 private fun StartButton() {
-    Button(onClick = { /* Do something! */ }, colors = ButtonDefaults.textButtonColors(
-        backgroundColor = Color.Red
-    )) {
-        Text("start")
+    Button(
+        onClick = { /* Do something! */ },
+        modifier = Modifier.alpha(0.25F),
+        colors = ButtonDefaults.textButtonColors(
+            backgroundColor = MaterialTheme.colors.primaryVariant,
+        ),
+        shape = MaterialTheme.shapes.small
+    ) {
+        Text(
+            text = "start",
+            style = MaterialTheme.typography.subtitle2,
+            color = MaterialTheme.colors.onSecondary
+        )
     }
 }
 
 @Composable
-private fun NudgeToImage (nudgeItem: NudgeToDataClass) {
+private fun NudgeToImage(nudgeItem: NudgeToDataClass) {
     val painter = rememberImagePainter(data = nudgeItem.profile_pic)
     Image(
         painter = painter,

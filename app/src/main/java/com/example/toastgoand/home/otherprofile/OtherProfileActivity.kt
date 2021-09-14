@@ -12,10 +12,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
+import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityClanHubBinding
 import com.example.toastgoand.databinding.ActivityOtherProfileBinding
 import com.example.toastgoand.home.otherprofile.components.DetailsOtherProfile
-import com.google.accompanist.appcompattheme.AppCompatTheme
 
 class OtherProfileActivity : BaseActivity() {
     private lateinit var binding: ActivityOtherProfileBinding
@@ -32,7 +32,7 @@ class OtherProfileActivity : BaseActivity() {
         viewModel.getOtherProfileHere(otheruserid = otheruserid)
 
         setContent {
-            AppCompatTheme {
+            AyeTheme {
                 val otherProfile: List<OtherProfileDataClass> by viewModel.otherProfile.observeAsState(
                     listOf(
                         OtherProfileDataClass(

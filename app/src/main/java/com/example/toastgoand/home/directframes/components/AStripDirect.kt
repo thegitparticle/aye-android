@@ -6,8 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.home.directframes.DirectFrameDataClass
-import com.google.accompanist.appcompattheme.AppCompatTheme
 
 @Composable
 fun AStripDirect(start: Int, end: Int, framesList: List<DirectFrameDataClass>) {
@@ -18,7 +18,7 @@ fun AStripDirect(start: Int, end: Int, framesList: List<DirectFrameDataClass>) {
         datesArray.add(i)
     }
 
-    AppCompatTheme () {
+    AyeTheme () {
         Box() {
             Box(
                 Modifier

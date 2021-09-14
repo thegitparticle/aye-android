@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.R
+import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityClanFramesBinding
 import com.example.toastgoand.databinding.ActivityDirectFramesBinding
 import com.example.toastgoand.dummy.DummyClanHub
@@ -39,7 +40,6 @@ import com.example.toastgoand.home.directframes.components.AMonthDirect
 import com.example.toastgoand.home.directframes.components.AMonthViewModel
 import com.example.toastgoand.home.directhub.DirectHubActivity
 import com.example.toastgoand.uibits.TopHeaderPlayScreens
-import com.google.accompanist.appcompattheme.AppCompatTheme
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.ChevronLeft
 import compose.icons.feathericons.ChevronRight
@@ -62,7 +62,7 @@ class DirectFramesActivity : BaseActivity() {
         val endTime = intent.getStringExtra("endTime")
 
         setContent {
-            AppCompatTheme() {
+            AyeTheme() {
                 val otherName = intent.getStringExtra("otherName")
                 val context = LocalContext.current
 

@@ -28,6 +28,7 @@ import coil.compose.rememberImagePainter
 import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.R
 import com.example.toastgoand.ToastgoApplication
+import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityTheAyeBinding
 import com.example.toastgoand.home.invitepeopledirectly.InvitePeopleDirectlyViewModel
 import com.example.toastgoand.home.invitepeopledirectly.InvitePeopleDirectlyViewModelFactory
@@ -35,7 +36,6 @@ import com.example.toastgoand.home.myprofile.components.Details
 import com.example.toastgoand.network.userdetails.User
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
 import com.example.toastgoand.uibits.TopHeaderModals
-import com.google.accompanist.appcompattheme.AppCompatTheme
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.ChevronDown
 import spencerstudios.com.bungeelib.Bungee
@@ -59,7 +59,7 @@ class TheAyeActivity : BaseActivity() {
         }
 
         setContent {
-            AppCompatTheme {
+            AyeTheme() {
                 val deetsHere: UserDetailsDataClass by viewModel.deets.observeAsState(
                     UserDetailsDataClass(
                         bio = "", image = "", user = User(
@@ -119,7 +119,7 @@ class TheAyeActivity : BaseActivity() {
                             Box (
                                 Modifier
                                     .fillMaxWidth()
-                                    .background(Color.Blue )) {
+                                    .background(Color.Blue)) {
                                 Text("talk to founder", modifier = Modifier.align(Alignment.TopStart))
                             }
                         }

@@ -14,14 +14,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
+import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.network.myclans.MyClansDataClass
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
 import com.example.toastgoand.utilities.drawColorShadow
-import com.google.accompanist.appcompattheme.AppCompatTheme
 
 @Composable
 fun Details (userDeets: UserDetailsDataClass) {
-    AppCompatTheme() {
+    AyeTheme() {
         DPImage(deets = userDeets)
         Text(text = userDeets.user.full_name, style = MaterialTheme.typography.subtitle1, color = Color.Black)
         Text(text = userDeets.user.username, style = MaterialTheme.typography.caption, color = Color.Blue)

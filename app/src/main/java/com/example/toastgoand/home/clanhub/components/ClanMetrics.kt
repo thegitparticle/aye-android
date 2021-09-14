@@ -14,14 +14,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.home.clanhub.ClanDetailsDataClass
 import com.example.toastgoand.home.clanhub.ClanHubDataClass
-import com.google.accompanist.appcompattheme.AppCompatTheme
 import com.google.android.material.composethemeadapter.MdcTheme
 
 @Composable
 fun ClanMetrics (clanHub: ClanDetailsDataClass) {
-    AppCompatTheme() {
+    AyeTheme() {
         Box(contentAlignment= Alignment.Center,
             modifier = Modifier
                 .background(Color.Black, shape = CircleShape)

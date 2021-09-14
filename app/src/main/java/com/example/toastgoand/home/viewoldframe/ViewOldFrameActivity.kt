@@ -9,10 +9,10 @@ import androidx.compose.material.Text
 import androidx.compose.ui.graphics.Color
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
+import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityStartClanBinding
 import com.example.toastgoand.databinding.ActivityViewOldFrameBinding
 import com.example.toastgoand.home.startclan.StartClanViewModel
-import com.google.accompanist.appcompattheme.AppCompatTheme
 
 class ViewOldFrameActivity : BaseActivity() {
     private lateinit var binding: ActivityViewOldFrameBinding
@@ -24,7 +24,7 @@ class ViewOldFrameActivity : BaseActivity() {
         binding = viewBinding as ActivityViewOldFrameBinding
 
         setContent {
-            AppCompatTheme {
+            AyeTheme {
                 Button(
                     onClick = { /* Do something! */ }, colors = ButtonDefaults.textButtonColors(
                         backgroundColor = Color.Red

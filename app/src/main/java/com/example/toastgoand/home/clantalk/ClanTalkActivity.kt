@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.R
+import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityClanHubBinding
 import com.example.toastgoand.databinding.ActivityClanTalkBinding
 import com.example.toastgoand.dummy.DummyClanHub
@@ -29,7 +30,6 @@ import com.example.toastgoand.home.clanhub.ClanHubViewModel
 import com.example.toastgoand.home.clanhub.components.ClanMetrics
 import com.example.toastgoand.home.clanhub.components.UsersListItem
 import com.example.toastgoand.uibits.TopHeaderPlayScreens
-import com.google.accompanist.appcompattheme.AppCompatTheme
 import com.google.accompanist.insets.statusBarsPadding
 import com.google.android.material.composethemeadapter.MdcTheme
 
@@ -44,7 +44,7 @@ class ClanTalkActivity : BaseActivity() {
         binding = viewBinding as ActivityClanTalkBinding
 
         setContent {
-            AppCompatTheme {
+            AyeTheme() {
                 val members = DummyClanHub.clanHub.users
 
                 val clubName = intent.getStringExtra("clubName")

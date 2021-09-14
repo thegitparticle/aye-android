@@ -14,12 +14,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
+import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.home.clanframes.ClanFrameDataClass
-import com.google.accompanist.appcompattheme.AppCompatTheme
 
 @Composable
 fun ADay (date: Int, framesList: List<ClanFrameDataClass>) {
-    AppCompatTheme () {
+    AyeTheme () {
         val checkResult = checkForFrames(date, framesList)
 
         if (checkResult.size > 0) {
