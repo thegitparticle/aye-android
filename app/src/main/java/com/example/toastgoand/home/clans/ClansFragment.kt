@@ -3,6 +3,7 @@ package com.example.toastgoand.home.clans
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,17 +26,28 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.getValue
+import androidx.compose.onCommit
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.ui.foundation.VerticalScroller
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.setValue
+import androidx.compose.state
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import androidx.compose.runtime.livedata.observeAsState
 import com.example.toastgoand.R
 import com.example.toastgoand.ToastgoApplication
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.dummy.Dummyclans
+import com.example.toastgoand.home.clans.components.LiveClanItem
 import com.example.toastgoand.home.clantalk.ClanTalkActivity
 import com.example.toastgoand.home.startclan.StartClanActivity
+import com.example.toastgoand.network.directs.MyDirectsDataClass
 import com.example.toastgoand.network.myclans.MyClansDataClass
 import kotlinx.serialization.json.JsonNull.content
 
@@ -48,26 +60,47 @@ class ClansFragment : Fragment() {
         )
     }
 
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
+
         return inflater.inflate(R.layout.clans_fragment, container, false).apply {
             findViewById<ComposeView>(R.id.composeView).setContent {
 
+                @RequiresApi(Build.VERSION_CODES.O)
+                @Composable
+                fun MyClanItem(myclan: MyClansDataClass) {
+                    if (myclan.ongoing_frame == false) {
+                        DormantClan(myclan = myclan)
+                    } else {
+                    }
+                }
 
                 AyeTheme {
-                    val clansHere: List<MyClansDataClass> by viewModel.myClans.observeAsState(listOf<MyClansDataClass>())
-                    Surface(modifier = Modifier.background(MaterialTheme.colors.background)) {
+                    val clansHere: List<MyClansDataClass> by
+                    viewModel.myClans.observeAsState(listOf<MyClansDataClass>())
+
+                    val liveClansHere: MutableList<MyClansDataClass> by
+                    viewModel.liveClans.observeAsState(mutableListOf<MyClansDataClass>())
+
+                    Log.i("liveclans", liveClansHere.toString())
+
+                    Surface(
+                        modifier = Modifier
+                            .background(MaterialTheme.colors.background)
+                            .fillMaxSize()
+                    ) {
                         LazyColumn(
                             modifier = Modifier.background(MaterialTheme.colors.background)
                         ) {
                             items(
-                                items = clansHere,
+                                items = liveClansHere,
                                 itemContent = {
-                                    MyClanItem(myclan = it)
+                                    LiveClanItem(myclan = it)
                                 })
 
                             items(

@@ -37,19 +37,11 @@ import com.example.toastgoand.utilities.drawColorShadow
 import com.google.android.material.internal.ContextUtils.getActivity
 import com.google.android.material.resources.TextAppearance
 
-@RequiresApi(Build.VERSION_CODES.O)
-@Composable
-fun MyClanItem(myclan: MyClansDataClass) {
-    if (myclan.ongoing_frame) {
-        LiveClanItem(myclan = myclan)
-    } else {
-        DormantClan(myclan = myclan)
-    }
-}
+
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-private fun DormantClan(myclan: MyClansDataClass) {
+fun DormantClan(myclan: MyClansDataClass) {
     val context = LocalContext.current
     val isDarkTheme = remember { mutableStateOf(false) }
 
@@ -73,7 +65,7 @@ private fun DormantClan(myclan: MyClansDataClass) {
                 ) {
                     Text(
                         text = myclan.club_name,
-                        style = MaterialTheme.typography.subtitle1,
+                        style = typography.subtitle1,
                         color = MaterialTheme.colors.onBackground
                     )
                     Text(
