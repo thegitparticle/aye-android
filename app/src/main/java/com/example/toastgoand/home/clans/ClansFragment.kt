@@ -87,8 +87,6 @@ class ClansFragment : Fragment() {
                     val liveClansHere: MutableList<MyClansDataClass> by
                     viewModel.liveClans.observeAsState(mutableListOf<MyClansDataClass>())
 
-                    Log.i("liveclans", liveClansHere.toString())
-
                     Surface(
                         modifier = Modifier
                             .background(MaterialTheme.colors.background)
@@ -100,9 +98,11 @@ class ClansFragment : Fragment() {
                             items(
                                 items = liveClansHere,
                                 itemContent = {
-                                    LiveClanItem(myclan = it)
+                                    LiveClanItem(myclan = it, position = liveClansHere.indexOf(it))
                                 })
-
+                            item {
+                                Spacer(Modifier.height(20.dp))
+                            }
                             items(
                                 items = clansHere,
                                 itemContent = {
