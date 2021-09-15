@@ -106,7 +106,7 @@ class DirectTalkActivity : BaseActivity() {
                                         context.startActivity(
                                             Intent(
                                                 context,
-                                                ClanFramesActivity::class.java
+                                                DirectFramesActivity::class.java
                                             ).apply {
                                                 putExtra("otherName", otherName)
                                                 putExtra("directid", directid)

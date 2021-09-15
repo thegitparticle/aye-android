@@ -3,6 +3,7 @@ package com.example.toastgoand.home.directframes.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -19,17 +20,17 @@ fun AStripDirect(start: Int, end: Int, framesList: List<DirectFrameDataClass>) {
     }
 
     AyeTheme () {
-        Box() {
+        Box(Modifier.width(100.dp), contentAlignment = Alignment.TopCenter) {
             Box(
                 Modifier
                     .width(
-                        50.dp
+                        32.dp
                     )
-                    .background(Color.Blue)
+                    .background(Color.Blue.copy(0.5f))
                     .padding(50.dp)
                     .height(400.dp)
             )
-            Column() {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 for (date in datesArray) {
                     ADayDirect(date, framesList = framesList)
                 }

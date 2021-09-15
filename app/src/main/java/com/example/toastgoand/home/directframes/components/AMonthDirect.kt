@@ -3,12 +3,14 @@ package com.example.toastgoand.home.directframes.components
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.getValue
 import androidx.compose.mutableStateOf
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -90,14 +92,16 @@ fun AMonthDirectX(
             if (currentDate <= 10) {
                 Row(
                     horizontalArrangement = Arrangement.SpaceEvenly,
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth()
                 ) {
                     AStripDirect(start = 1, end = currentDate, framesList = framesList)
                 }
             } else if (currentDate in 11..20) {
                 Row(
                     horizontalArrangement = Arrangement.SpaceEvenly,
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth()
                 ) {
                     AStripDirect(start = 1, end = 10, framesList = framesList)
                     AStripDirect(start = 11, end = currentDate, framesList = framesList)
@@ -105,7 +109,8 @@ fun AMonthDirectX(
             } else {
                 Row(
                     horizontalArrangement = Arrangement.SpaceEvenly,
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth()
                 ) {
                     AStripDirect(start = 1, end = 10, framesList = framesList)
                     AStripDirect(start = 11, end = 20, framesList = framesList)
@@ -117,7 +122,7 @@ fun AMonthDirectX(
         AyeTheme() {
             Row(
                 horizontalArrangement = Arrangement.SpaceEvenly,
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()
             ) {
                 AStripDirect(start = 1, end = 10, framesList = framesList)
                 AStripDirect(start = 11, end = 20, framesList = framesList)

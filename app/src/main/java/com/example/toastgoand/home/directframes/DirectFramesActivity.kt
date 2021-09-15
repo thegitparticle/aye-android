@@ -39,10 +39,15 @@ import com.example.toastgoand.home.clanhub.components.UsersListItem
 import com.example.toastgoand.home.directframes.components.AMonthDirect
 import com.example.toastgoand.home.directframes.components.AMonthViewModel
 import com.example.toastgoand.home.directhub.DirectHubActivity
+import com.example.toastgoand.home.directtalk.DirectTalkActivity
+import com.example.toastgoand.uibits.HeaderPlayScreens
 import com.example.toastgoand.uibits.TopHeaderPlayScreens
+import com.google.accompanist.insets.ProvideWindowInsets
+import com.google.accompanist.insets.statusBarsPadding
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.ChevronLeft
 import compose.icons.feathericons.ChevronRight
+import compose.icons.feathericons.Layers
 import kotlinx.datetime.*
 import spencerstudios.com.bungeelib.Bungee
 
@@ -55,15 +60,15 @@ class DirectFramesActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = viewBinding as ActivityDirectFramesBinding
 
-        val otherName = intent.getStringExtra("otherName")
-        val directid = intent.getStringExtra("directid")
-        val ongoingFrame = intent.getBooleanExtra("ongoingFrame", false)
-        val startTime = intent.getStringExtra("startTime")
-        val endTime = intent.getStringExtra("endTime")
+
 
         setContent {
             AyeTheme() {
                 val otherName = intent.getStringExtra("otherName")
+                val directid = intent.getStringExtra("directid")
+                val ongoingFrame = intent.getBooleanExtra("ongoingFrame", false)
+                val startTime = intent.getStringExtra("startTime")
+                val endTime = intent.getStringExtra("endTime")
                 val context = LocalContext.current
 
                 fun onHubPressed() {
@@ -143,53 +148,72 @@ class DirectFramesActivity : BaseActivity() {
 
                 var monthText by remember { mutableStateOf(monthStringRender) }
 
-                Column(modifier = Modifier.fillMaxSize()) {
-                    TopHeaderPlayScreens(
-                        modifier = Modifier.fillMaxWidth(),
-                        onLeftIconPressed = {
-                           onHubPressed()
+                ProvideWindowInsets() {
+                    com.google.accompanist.insets.ui.Scaffold(
+                        topBar = {
+                            if (otherName != null) {
+                                HeaderPlayScreens(
+                                    modifier = Modifier.statusBarsPadding(),
+                                    title = otherName,
+                                    onBackIconPressed = {
+                                        onBackPressed()
+                                    },
+                                    onActionIconPressed = {
+                                        context.startActivity(
+                                            Intent(
+                                                context,
+                                                DirectTalkActivity::class.java
+                                            ).apply {
+
+                                            })
+                                    },
+                                    actionIcon = FeatherIcons.Layers
+                                )
+                            }
                         },
-                        title = {
-                            Column(
-                                modifier = Modifier.weight(1f),
-                                horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Column() {
+                            Spacer(modifier = Modifier.size(100.dp))
+                            Spacer(modifier = Modifier.size(25.dp))
+                            Row(
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                modifier = Modifier.fillMaxWidth()
                             ) {
-                                // Channel name
-                                if (otherName != null) {
-                                    Text(
-                                        text = otherName,
-                                        style = MaterialTheme.typography.subtitle1
-                                    )
-                                }
+                                Icon(
+                                    imageVector = FeatherIcons.ChevronLeft,
+                                    contentDescription = "last month",
+                                    modifier = Modifier.clickable {
+                                        viewMonth -= 1
+                                        monthText = getMonthName(viewMonth)
+                                        Log.i("viewmonth", viewMonth.toString())
+                                    }
+                                )
+                                Text(
+                                    text = monthText,
+                                    style = MaterialTheme.typography.subtitle1
+                                )
+                                Icon(
+                                    imageVector = FeatherIcons.ChevronRight,
+                                    contentDescription = "next month",
+                                    modifier = Modifier.clickable {
+                                        viewMonth += 1
+                                        monthText = getMonthName(viewMonth)
+                                        Log.i("viewmonth", viewMonth.toString())
+                                    }
+                                )
                             }
-                        },
-                    )
-                    Row (horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
-                        Icon(
-                            imageVector = FeatherIcons.ChevronLeft,
-                            contentDescription = "last month",
-                            modifier = Modifier.clickable {
-                                viewMonth -= 1
-                                monthText = getMonthName(viewMonth)
-                                Log.i("viewmonth", viewMonth.toString())
+                            Spacer(modifier = Modifier.size(25.dp))
+                            if (directid != null) {
+                                AMonthDirect(
+                                    AMonthViewModel(),
+                                    directid,
+                                    viewMonth,
+                                    currentMonth,
+                                    todayDate
+                                )
                             }
-                        )
-                        Text(
-                            text = monthText,
-                            style = MaterialTheme.typography.subtitle1
-                        )
-                        Icon(
-                            imageVector = FeatherIcons.ChevronRight,
-                            contentDescription = "next month",
-                            modifier = Modifier.clickable {
-                                viewMonth += 1
-                                monthText = getMonthName(viewMonth)
-                                Log.i("viewmonth", viewMonth.toString())
-                            }
-                        )
-                    }
-                    if (directid != null) {
-                        AMonthDirect(AMonthViewModel(), directid, viewMonth, currentMonth, todayDate)
+                        }
+
                     }
                 }
             }
