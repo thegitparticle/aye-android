@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -29,7 +30,10 @@ import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.navigationBarsHeight
 import com.google.accompanist.insets.statusBarsPadding
 import compose.icons.FeatherIcons
+import compose.icons.feathericons.Camera
 import compose.icons.feathericons.Layers
+import compose.icons.feathericons.PlusCircle
+import compose.icons.feathericons.PlusSquare
 
 class ClanTalkActivity : BaseActivity() {
 
@@ -46,16 +50,16 @@ class ClanTalkActivity : BaseActivity() {
         setContent {
             AyeTheme() {
 
-                    val members = DummyClanHub.clanHub.users
+                val members = DummyClanHub.clanHub.users
 
-                    val clubName = intent.getStringExtra("clubName")
-                    val clubid = intent.getIntExtra("clubid", 0)
-                    val channelid = intent.getStringExtra("channelid")
-                    val ongoingFrame = intent.getBooleanExtra("ongoingFrame", false)
-                    val startTime = intent.getStringExtra("startTime")
-                    val endTime = intent.getStringExtra("endTime")
+                val clubName = intent.getStringExtra("clubName")
+                val clubid = intent.getIntExtra("clubid", 0)
+                val channelid = intent.getStringExtra("channelid")
+                val ongoingFrame = intent.getBooleanExtra("ongoingFrame", false)
+                val startTime = intent.getStringExtra("startTime")
+                val endTime = intent.getStringExtra("endTime")
 
-                    val context = LocalContext.current
+                val context = LocalContext.current
 
                 ProvideWindowInsets {
                     Scaffold(
@@ -65,12 +69,7 @@ class ClanTalkActivity : BaseActivity() {
                                     modifier = Modifier.statusBarsPadding(),
                                     title = clubName,
                                     onBackIconPressed = {
-                                        context.startActivity(
-                                            Intent(
-                                                context,
-                                                LandingActivity::class.java
-                                            )
-                                        )
+                                        onBackPressed()
                                     },
                                     onActionIconPressed = {
                                         context.startActivity(
@@ -91,18 +90,60 @@ class ClanTalkActivity : BaseActivity() {
                             }
                         },
                         floatingActionButton = {
-                            FloatingActionButton(onClick = { /* TODO */ }) {
-                                Icon(
-                                    imageVector = FeatherIcons.Layers,
-                                    contentDescription = "last month",
-                                )
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.Center,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                FloatingActionButton(
+                                    onClick = { /* TODO */ },
+                                    modifier = Modifier
+                                        .padding(horizontal = 25.dp)
+                                        .size(40.dp),
+                                        backgroundColor = MaterialTheme.colors.onBackground,
+                                ) {
+                                    Icon(
+                                        imageVector = FeatherIcons.Camera,
+                                        contentDescription = "last month",
+                                        modifier = Modifier.size(20.dp)
+                                    )
+                                }
+                                FloatingActionButton(
+                                    onClick = { /* TODO */ },
+                                    modifier = Modifier
+                                        .padding(horizontal = 25.dp)
+                                        .size(60.dp),
+                                        backgroundColor = MaterialTheme.colors.onSurface,
+                                ) {
+                                    Icon(
+                                        imageVector = FeatherIcons.PlusSquare,
+                                        contentDescription = "last month",
+                                        modifier = Modifier.size(30.dp)
+                                    )
+                                }
+                                FloatingActionButton(
+                                    onClick = { /* TODO */ },
+                                    modifier = Modifier
+                                        .padding(horizontal = 25.dp)
+                                        .size(40.dp),
+                                        backgroundColor = MaterialTheme.colors.secondary,
+                                ) {
+                                    Icon(
+                                        imageVector = FeatherIcons.Layers,
+                                        contentDescription = "last month",
+                                        modifier = Modifier.size(20.dp)
+                                    )
+                                }
                             }
-                        }
+
+                        },
+                        floatingActionButtonPosition = FabPosition.Center,
                     ) {
                         LazyColumn(
                             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
                             modifier = Modifier
-                                .fillMaxWidth().fillMaxHeight(),
+                                .fillMaxWidth()
+                                .fillMaxHeight(),
                         ) {
                             item {
                                 Spacer(modifier = Modifier.size(100.dp))
@@ -116,7 +157,7 @@ class ClanTalkActivity : BaseActivity() {
 
                     }
                 }
-                }
+            }
 
         }
     }

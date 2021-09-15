@@ -87,8 +87,9 @@ private val DarkColors = darkColors(
     onPrimary = Color(0xFFFFFFFF),
     onSecondary = Color(0xFFFFFFFF),
     onBackground = Color(0xFF15161A),
-    onSurface = Color(0xFF15161A),
-    onError = Color(0xFFFFFFFF)
+    onSurface = Color(0xFF0ACF83),
+    onError = Color(0xFFFFFFFF),
+
 )
 
 private val LightColors = lightColors(

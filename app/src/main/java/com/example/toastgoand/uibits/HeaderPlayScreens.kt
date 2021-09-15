@@ -19,6 +19,7 @@ import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.google.accompanist.insets.statusBarsPadding
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.ChevronLeft
+import compose.icons.feathericons.ChevronRight
 import compose.icons.feathericons.Layers
 
 @Composable
@@ -42,24 +43,18 @@ fun HeaderPlayScreens(
             title = {
                 Row(
                     verticalAlignment = Alignment.Bottom,
-                    modifier = Modifier.fillMaxWidth().padding(top = 40.dp, start = 15.dp, end = 30.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 40.dp, start = 15.dp, end = 30.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Icon(
-                        imageVector = FeatherIcons.ChevronLeft,
-                        contentDescription = "last month",
-                        modifier = Modifier.clickable(onClick = onBackIconPressed).size(16.dp)
-                    )
+                    CircleIcon(iconName = actionIcon, onIconPressed = onActionIconPressed)
                     Text(
                         text = title,
                         style = MaterialTheme.typography.subtitle1,
-                        color = MaterialTheme.colors.onSurface
+                        color = MaterialTheme.colors.onBackground
                     )
-                    Icon(
-                        imageVector = actionIcon,
-                        contentDescription = "last month",
-                        modifier = Modifier.clickable(onClick = onActionIconPressed).size(16.dp)
-                    )
+                    CircleIcon(iconName = FeatherIcons.ChevronRight, onIconPressed = onBackIconPressed)
                 }
             },
             backgroundColor = MaterialTheme.colors.background.copy(alpha = 0.95f),
