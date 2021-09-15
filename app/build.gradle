@@ -5,6 +5,7 @@ plugins {
     id 'dagger.hilt.android.plugin'
     id 'androidx.navigation.safeargs.kotlin'
     id 'org.jetbrains.kotlin.plugin.serialization' version '1.5.30'
+    id 'kotlin-android-extensions'
 }
 
 
@@ -177,4 +178,13 @@ dependencies {
 
     // compose icons
     implementation "br.com.devsrsouza.compose.icons.android:feather:1.0.0"
+
+    // cameraX modules
+    def camerax_version = "1.0.1"
+    // CameraX core library using camera2 implementation
+    implementation "androidx.camera:camera-camera2:$camerax_version"
+    // CameraX Lifecycle Library
+    implementation "androidx.camera:camera-lifecycle:$camerax_version"
+    // CameraX View class
+    implementation "androidx.camera:camera-view:1.0.0-alpha27"
 }
