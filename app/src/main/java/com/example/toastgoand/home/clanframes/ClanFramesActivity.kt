@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.unit.dp
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.R
@@ -28,10 +29,15 @@ import com.example.toastgoand.home.clanframes.components.AMonth
 import com.example.toastgoand.home.clanframes.components.AMonthClanViewModel
 import com.example.toastgoand.home.clanframes.components.AStrip
 import com.example.toastgoand.home.clanhub.ClanHubActivity
+import com.example.toastgoand.home.clantalk.ClanTalkActivity
+import com.example.toastgoand.uibits.HeaderPlayScreens
 import com.example.toastgoand.uibits.TopHeaderPlayScreens
+import com.google.accompanist.insets.ProvideWindowInsets
+import com.google.accompanist.insets.statusBarsPadding
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.ChevronLeft
 import compose.icons.feathericons.ChevronRight
+import compose.icons.feathericons.Layers
 import kotlinx.datetime.*
 import spencerstudios.com.bungeelib.Bungee
 
@@ -127,56 +133,78 @@ class ClanFramesActivity : BaseActivity() {
 
                 var monthText by remember { mutableStateOf(monthStringRender) }
 
-                Column(modifier = Modifier.fillMaxSize()) {
-                    TopHeaderPlayScreens(
-                        modifier = Modifier.fillMaxWidth(),
-                        onLeftIconPressed = {
-                            onHubPressed()
-                        },
-                        title = {
-                            Column(
-                                modifier = Modifier.weight(1f),
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                if (clubName != null) {
-                                    Text(
-                                        text = clubName,
-                                        style = MaterialTheme.typography.subtitle1
-                                    )
-                                }
+                ProvideWindowInsets() {
+                    com.google.accompanist.insets.ui.Scaffold(
+                        topBar = {
+                            if (clubName != null) {
+                                HeaderPlayScreens(
+                                    modifier = Modifier.statusBarsPadding(),
+                                    title = clubName,
+                                    onBackIconPressed = {
+                                        onBackPressed()
+                                    },
+                                    onActionIconPressed = {
+                                        context.startActivity(
+                                            Intent(
+                                                context,
+                                                ClanFramesActivity::class.java
+                                            ).apply {
+                                                putExtra("clubName", clubName)
+                                                putExtra("clubid", clubid)
+                                                putExtra("channelid", channelid)
+                                                putExtra("ongoingFrame", ongoingFrame)
+                                                putExtra("startTime", startTime)
+                                                putExtra("endTime", endTime)
+                                            })
+                                    },
+                                    actionIcon = FeatherIcons.Layers
+                                )
                             }
                         },
-                    )
-                    Row(
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        modifier = Modifier.fillMaxWidth()
                     ) {
-                        Icon(
-                            imageVector = FeatherIcons.ChevronLeft,
-                            contentDescription = "last month",
-                            modifier = Modifier.clickable {
-                                viewMonth -= 1
-                                monthText = getMonthName(viewMonth)
-                                Log.i("viewmonth", viewMonth.toString())
+                        Column() {
+                            Spacer(modifier = Modifier.size(100.dp))
+                            Spacer(modifier = Modifier.size(25.dp))
+                            Row(
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Icon(
+                                    imageVector = FeatherIcons.ChevronLeft,
+                                    contentDescription = "last month",
+                                    modifier = Modifier.clickable {
+                                        viewMonth -= 1
+                                        monthText = getMonthName(viewMonth)
+                                        Log.i("viewmonth", viewMonth.toString())
+                                    }
+                                )
+                                Text(
+                                    text = monthText,
+                                    style = MaterialTheme.typography.subtitle1
+                                )
+                                Icon(
+                                    imageVector = FeatherIcons.ChevronRight,
+                                    contentDescription = "next month",
+                                    modifier = Modifier.clickable {
+                                        viewMonth += 1
+                                        monthText = getMonthName(viewMonth)
+                                        Log.i("viewmonth", viewMonth.toString())
+                                    }
+                                )
                             }
-                        )
-                        Text(
-                            text = monthText,
-                            style = MaterialTheme.typography.subtitle1
-                        )
-                        Icon(
-                            imageVector = FeatherIcons.ChevronRight,
-                            contentDescription = "next month",
-                            modifier = Modifier.clickable {
-                                viewMonth += 1
-                                monthText = getMonthName(viewMonth)
-                                Log.i("viewmonth", viewMonth.toString())
+                            Spacer(modifier = Modifier.size(25.dp))
+                            if (clubid != null) {
+                                AMonth(
+                                    AMonthClanViewModel(),
+                                    clubid.toString(),
+                                    viewMonth,
+                                    currentMonth,
+                                    todayDate
+                                )
                             }
-                        )
+                        }
                     }
-                    if (clubid != null) {
-                        AMonth(AMonthClanViewModel(), clubid.toString(), viewMonth, currentMonth, todayDate)
-                    }
+
                 }
             }
         }

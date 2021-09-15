@@ -16,10 +16,11 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.home.clanframes.ClanFrameDataClass
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 @Composable
-fun ADay (date: Int, framesList: List<ClanFrameDataClass>) {
-    AyeTheme () {
+fun ADay(date: Int, framesList: List<ClanFrameDataClass>) {
+    AyeTheme() {
         val checkResult = checkForFrames(date, framesList)
 
         if (checkResult.size > 0) {
@@ -27,19 +28,26 @@ fun ADay (date: Int, framesList: List<ClanFrameDataClass>) {
                 FrameImage(item.frame_picture_link)
             }
         } else {
-            Text(text = date.toString(), style = MaterialTheme.typography.subtitle1, color = Color.Black)
+            Text(
+                text = date.toString(),
+                style = MaterialTheme.typography.subtitle1,
+                color = MaterialTheme.colors.background.copy(0.5f)
+            )
         }
     }
 }
 
-private fun checkForFrames(date: Int, framesList: List<ClanFrameDataClass>): MutableList<ClanFrameDataClass> {
+private fun checkForFrames(
+    date: Int,
+    framesList: List<ClanFrameDataClass>
+): MutableList<ClanFrameDataClass> {
 
-val framesListHere = framesList
+    val framesListHere = framesList
 
     val datesArray = mutableListOf<ClanFrameDataClass>()
 
     for (item in framesListHere) {
-        if (item.published_date.takeLast(2) == date.toString() || item.published_date.takeLast(1) == date.toString()) {
+        if (item.published_date.takeLast(2) == date.toString() || item.published_date.takeLast(2) == "0$date") {
             datesArray.add(item)
         }
     }
@@ -48,15 +56,14 @@ val framesListHere = framesList
 }
 
 @Composable
-private fun FrameImage (link: String) {
+private fun FrameImage(link: String) {
     val painter = rememberImagePainter(data = link)
     Image(
         painter = painter,
         contentDescription = "clan frame thumbnail",
         contentScale = ContentScale.Crop,
         modifier = Modifier
-            .padding(8.dp)
-            .size(50.dp)
-            .clip(RoundedCornerShape(corner = CornerSize(10.dp)))
+            .size(60.dp)
+            .clip(RoundedCornerShape(corner = CornerSize(12.dp)))
     )
 }

@@ -3,12 +3,14 @@ package com.example.toastgoand.home.clanframes.components
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -47,7 +49,7 @@ class AMonthClanViewModel : ViewModel() {
 }
 
 @Composable
-fun AMonth (
+fun AMonth(
     viewModel: AMonthClanViewModel,
     clubid: String,
     viewMonth: Int,
@@ -82,21 +84,39 @@ fun AMonth (
 
 
 @Composable
-fun AMonthX (clubid: String, viewMonth: Int, currentMonth: Int, currentDate: Int, framesList: List<ClanFrameDataClass>) {
+fun AMonthX(
+    clubid: String,
+    viewMonth: Int,
+    currentMonth: Int,
+    currentDate: Int,
+    framesList: List<ClanFrameDataClass>
+) {
 
     if (viewMonth == currentMonth) {
-        AyeTheme () {
+        AyeTheme() {
             if (currentDate <= 10) {
-                Row (horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.CenterVertically) {
+                Row(
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
                     AStrip(start = 1, end = currentDate, framesList = framesList)
                 }
             } else if (currentDate in 11..20) {
-                Row (horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.CenterVertically) {
+                Row(
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
                     AStrip(start = 1, end = 10, framesList = framesList)
                     AStrip(start = 11, end = currentDate, framesList = framesList)
                 }
             } else {
-                Row (horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.CenterVertically) {
+                Row(
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
                     AStrip(start = 1, end = 10, framesList = framesList)
                     AStrip(start = 11, end = 20, framesList = framesList)
                     AStrip(start = 21, end = currentDate, framesList = framesList)
@@ -104,8 +124,12 @@ fun AMonthX (clubid: String, viewMonth: Int, currentMonth: Int, currentDate: Int
             }
         }
     } else {
-        AyeTheme () {
-            Row (horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.CenterVertically) {
+        AyeTheme() {
+            Row(
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
                 AStrip(start = 1, end = 10, framesList = framesList)
                 AStrip(start = 11, end = 20, framesList = framesList)
                 AStrip(start = 21, end = 31, framesList = framesList)
