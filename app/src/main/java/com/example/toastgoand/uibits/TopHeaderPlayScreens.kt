@@ -40,12 +40,6 @@ fun TopHeaderPlayScreens(
         ) {
             TopAppBar(
                 modifier = modifier.statusBarsPadding(),
-//                contentPadding = rememberInsetsPaddingValues(
-//                    insets = LocalWindowInsets.current.statusBars,
-//                    applyStart = true,
-//                    applyTop = true,
-//                    applyEnd = true,
-//                ),
                 backgroundColor = Color.Transparent,
                 elevation = 0.dp, // No shadow needed
                 contentColor = colorResource(id = R.color.off_dark_splash),

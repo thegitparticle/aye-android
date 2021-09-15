@@ -33,6 +33,257 @@ object DummyClanHub {
                 name = "Bella",
                 displayPic = "https://aye-media-bucket.s3.amazonaws.com/media/profile_pics/IMG_0113.JPG"
             ),
+            User(
+                userID = 81,
+                username = "thegodfather",
+                name = "Aditya Mathur",
+                displayPic = "https://aye-media-bucket.s3.amazonaws.com/media/profile_pics/IMG_0001.JPEG"
+            ),
+            User(
+                userID = 81,
+                username = "san",
+                name = "San",
+                displayPic = "https://aye-media-bucket.s3.amazonaws.com/media/profile_pics/IMG_0032.JPG"
+            ),
+            User(
+                userID = 81,
+                username = "thegirlbella",
+                name = "Bella",
+                displayPic = "https://aye-media-bucket.s3.amazonaws.com/media/profile_pics/IMG_0113.JPG"
+            ),
+            User(
+                userID = 81,
+                username = "thegodfather",
+                name = "Aditya Mathur",
+                displayPic = "https://aye-media-bucket.s3.amazonaws.com/media/profile_pics/IMG_0001.JPEG"
+            ),
+            User(
+                userID = 81,
+                username = "san",
+                name = "San",
+                displayPic = "https://aye-media-bucket.s3.amazonaws.com/media/profile_pics/IMG_0032.JPG"
+            ),
+            User(
+                userID = 81,
+                username = "thegirlbella",
+                name = "Bella",
+                displayPic = "https://aye-media-bucket.s3.amazonaws.com/media/profile_pics/IMG_0113.JPG"
+            ),
+            User(
+                userID = 81,
+                username = "thegodfather",
+                name = "Aditya Mathur",
+                displayPic = "https://aye-media-bucket.s3.amazonaws.com/media/profile_pics/IMG_0001.JPEG"
+            ),
+            User(
+                userID = 81,
+                username = "san",
+                name = "San",
+                displayPic = "https://aye-media-bucket.s3.amazonaws.com/media/profile_pics/IMG_0032.JPG"
+            ),
+            User(
+                userID = 81,
+                username = "thegirlbella",
+                name = "Bella",
+                displayPic = "https://aye-media-bucket.s3.amazonaws.com/media/profile_pics/IMG_0113.JPG"
+            ), User(
+                userID = 81,
+                username = "thegodfather",
+                name = "Aditya Mathur",
+                displayPic = "https://aye-media-bucket.s3.amazonaws.com/media/profile_pics/IMG_0001.JPEG"
+            ),
+            User(
+                userID = 81,
+                username = "san",
+                name = "San",
+                displayPic = "https://aye-media-bucket.s3.amazonaws.com/media/profile_pics/IMG_0032.JPG"
+            ),
+            User(
+                userID = 81,
+                username = "thegirlbella",
+                name = "Bella",
+                displayPic = "https://aye-media-bucket.s3.amazonaws.com/media/profile_pics/IMG_0113.JPG"
+            ), User(
+                userID = 81,
+                username = "thegodfather",
+                name = "Aditya Mathur",
+                displayPic = "https://aye-media-bucket.s3.amazonaws.com/media/profile_pics/IMG_0001.JPEG"
+            ),
+            User(
+                userID = 81,
+                username = "san",
+                name = "San",
+                displayPic = "https://aye-media-bucket.s3.amazonaws.com/media/profile_pics/IMG_0032.JPG"
+            ),
+            User(
+                userID = 81,
+                username = "thegirlbella",
+                name = "Bella",
+                displayPic = "https://aye-media-bucket.s3.amazonaws.com/media/profile_pics/IMG_0113.JPG"
+            ), User(
+                userID = 81,
+                username = "thegodfather",
+                name = "Aditya Mathur",
+                displayPic = "https://aye-media-bucket.s3.amazonaws.com/media/profile_pics/IMG_0001.JPEG"
+            ),
+            User(
+                userID = 81,
+                username = "san",
+                name = "San",
+                displayPic = "https://aye-media-bucket.s3.amazonaws.com/media/profile_pics/IMG_0032.JPG"
+            ),
+            User(
+                userID = 81,
+                username = "thegirlbella",
+                name = "Bella",
+                displayPic = "https://aye-media-bucket.s3.amazonaws.com/media/profile_pics/IMG_0113.JPG"
+            ), User(
+                userID = 81,
+                username = "thegodfather",
+                name = "Aditya Mathur",
+                displayPic = "https://aye-media-bucket.s3.amazonaws.com/media/profile_pics/IMG_0001.JPEG"
+            ),
+            User(
+                userID = 81,
+                username = "san",
+                name = "San",
+                displayPic = "https://aye-media-bucket.s3.amazonaws.com/media/profile_pics/IMG_0032.JPG"
+            ),
+            User(
+                userID = 81,
+                username = "thegirlbella",
+                name = "Bella",
+                displayPic = "https://aye-media-bucket.s3.amazonaws.com/media/profile_pics/IMG_0113.JPG"
+            ), User(
+                userID = 81,
+                username = "thegodfather",
+                name = "Aditya Mathur",
+                displayPic = "https://aye-media-bucket.s3.amazonaws.com/media/profile_pics/IMG_0001.JPEG"
+            ),
+            User(
+                userID = 81,
+                username = "san",
+                name = "San",
+                displayPic = "https://aye-media-bucket.s3.amazonaws.com/media/profile_pics/IMG_0032.JPG"
+            ),
+            User(
+                userID = 81,
+                username = "thegirlbella",
+                name = "Bella",
+                displayPic = "https://aye-media-bucket.s3.amazonaws.com/media/profile_pics/IMG_0113.JPG"
+            ), User(
+                userID = 81,
+                username = "thegodfather",
+                name = "Aditya Mathur",
+                displayPic = "https://aye-media-bucket.s3.amazonaws.com/media/profile_pics/IMG_0001.JPEG"
+            ),
+            User(
+                userID = 81,
+                username = "san",
+                name = "San",
+                displayPic = "https://aye-media-bucket.s3.amazonaws.com/media/profile_pics/IMG_0032.JPG"
+            ),
+            User(
+                userID = 81,
+                username = "thegirlbella",
+                name = "Bella",
+                displayPic = "https://aye-media-bucket.s3.amazonaws.com/media/profile_pics/IMG_0113.JPG"
+            ), User(
+                userID = 81,
+                username = "thegodfather",
+                name = "Aditya Mathur",
+                displayPic = "https://aye-media-bucket.s3.amazonaws.com/media/profile_pics/IMG_0001.JPEG"
+            ),
+            User(
+                userID = 81,
+                username = "san",
+                name = "San",
+                displayPic = "https://aye-media-bucket.s3.amazonaws.com/media/profile_pics/IMG_0032.JPG"
+            ),
+            User(
+                userID = 81,
+                username = "thegirlbella",
+                name = "Bella",
+                displayPic = "https://aye-media-bucket.s3.amazonaws.com/media/profile_pics/IMG_0113.JPG"
+            ), User(
+                userID = 81,
+                username = "thegodfather",
+                name = "Aditya Mathur",
+                displayPic = "https://aye-media-bucket.s3.amazonaws.com/media/profile_pics/IMG_0001.JPEG"
+            ),
+            User(
+                userID = 81,
+                username = "san",
+                name = "San",
+                displayPic = "https://aye-media-bucket.s3.amazonaws.com/media/profile_pics/IMG_0032.JPG"
+            ),
+            User(
+                userID = 81,
+                username = "thegirlbella",
+                name = "Bella",
+                displayPic = "https://aye-media-bucket.s3.amazonaws.com/media/profile_pics/IMG_0113.JPG"
+            ), User(
+                userID = 81,
+                username = "thegodfather",
+                name = "Aditya Mathur",
+                displayPic = "https://aye-media-bucket.s3.amazonaws.com/media/profile_pics/IMG_0001.JPEG"
+            ),
+            User(
+                userID = 81,
+                username = "san",
+                name = "San",
+                displayPic = "https://aye-media-bucket.s3.amazonaws.com/media/profile_pics/IMG_0032.JPG"
+            ),
+            User(
+                userID = 81,
+                username = "thegirlbella",
+                name = "Bella",
+                displayPic = "https://aye-media-bucket.s3.amazonaws.com/media/profile_pics/IMG_0113.JPG"
+            ), User(
+                userID = 81,
+                username = "thegodfather",
+                name = "Aditya Mathur",
+                displayPic = "https://aye-media-bucket.s3.amazonaws.com/media/profile_pics/IMG_0001.JPEG"
+            ),
+            User(
+                userID = 81,
+                username = "san",
+                name = "San",
+                displayPic = "https://aye-media-bucket.s3.amazonaws.com/media/profile_pics/IMG_0032.JPG"
+            ),
+            User(
+                userID = 81,
+                username = "thegirlbella",
+                name = "Bella",
+                displayPic = "https://aye-media-bucket.s3.amazonaws.com/media/profile_pics/IMG_0113.JPG"
+            ), User(
+                userID = 81,
+                username = "thegodfather",
+                name = "Aditya Mathur",
+                displayPic = "https://aye-media-bucket.s3.amazonaws.com/media/profile_pics/IMG_0001.JPEG"
+            ),
+            User(
+                userID = 81,
+                username = "san",
+                name = "San",
+                displayPic = "https://aye-media-bucket.s3.amazonaws.com/media/profile_pics/IMG_0032.JPG"
+            ),
+            User(
+                userID = 81,
+                username = "thegirlbella",
+                name = "Bella",
+                displayPic = "https://aye-media-bucket.s3.amazonaws.com/media/profile_pics/IMG_0113.JPG"
+            ),
+
+
+
+
+
+
+
+
+
+
         )
     )
 }
