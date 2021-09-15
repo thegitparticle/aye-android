@@ -57,7 +57,7 @@ class ClanTalkActivity : BaseActivity() {
 
         val allMessages = ""
 
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+//        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
             AyeTheme() {
@@ -188,9 +188,11 @@ class ClanTalkActivity : BaseActivity() {
                             AnimatedVisibility(visible = showTextInput) {
                                 Surface(elevation = 1.dp) {
                                     TextInput(
-                                        modifier = Modifier.focusRequester(
-                                            focusTextInputRequester
-                                        ).navigationBarsWithImePadding()
+                                        modifier = Modifier
+                                            .focusRequester(
+                                                focusTextInputRequester
+                                            )
+                                            .navigationBarsWithImePadding()
                                     )
 
                                 }
