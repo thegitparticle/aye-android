@@ -6,8 +6,10 @@ import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -28,26 +30,34 @@ import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
+import com.example.toastgoand.ToastgoApplication
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityClanTalkBinding
 import com.example.toastgoand.dummy.DummyClanHub
+import com.example.toastgoand.home.aye.TheAyeViewModel
+import com.example.toastgoand.home.aye.TheAyeViewModelFactory
 import com.example.toastgoand.home.clanframes.ClanFramesActivity
 import com.example.toastgoand.home.clanhub.components.UsersListItem
 import com.example.toastgoand.home.clantalk.camera.CameraActivity
-import com.example.toastgoand.home.clantalk.components.TextInput
+import com.example.toastgoand.home.clantalk.components.TextInputPart
 import com.example.toastgoand.uibits.HeaderPlayScreens
 import com.google.accompanist.insets.*
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.Camera
 import compose.icons.feathericons.Layers
 import compose.icons.feathericons.PlusSquare
+import compose.icons.feathericons.Send
 import kotlinx.android.synthetic.main.start_call_dialog.*
 
 class ClanTalkActivity : BaseActivity() {
 
     private lateinit var binding: ActivityClanTalkBinding
 
-    private lateinit var viewModel: ClanTalkViewModel
+    private val viewModel: ClanTalkViewModel by viewModels {
+        ClanTalkViewModelFactory(
+            (this.application as ToastgoApplication).repository
+        )
+    }
 
     @ExperimentalAnimatedInsets
     @ExperimentalAnimationApi
@@ -120,7 +130,9 @@ class ClanTalkActivity : BaseActivity() {
                             }
                         },
                         floatingActionButton = {
-                            AnimatedVisibility(visible = !showStartClanOverlay) {
+//                            AnimatedVisibility(visible = !showStartClanOverlay) {
+//                                AnimatedVisibility(visible = !showTextInput) {
+                            AnimatedVisibility(visible = true) {
                                 AnimatedVisibility(visible = !showTextInput) {
                                     Row(
                                         modifier = Modifier.fillMaxWidth(),
@@ -186,15 +198,14 @@ class ClanTalkActivity : BaseActivity() {
                         floatingActionButtonPosition = FabPosition.Center,
                         bottomBar = {
                             AnimatedVisibility(visible = showTextInput) {
-                                Surface(elevation = 1.dp) {
-                                    TextInput(
-                                        modifier = Modifier
-                                            .focusRequester(
-                                                focusTextInputRequester
-                                            )
-                                            .navigationBarsWithImePadding()
-                                    )
-
+                                Surface(elevation = 2.dp) {
+                                    if (channelid != null) {
+                                        TextInputPart(
+                                            modifier = Modifier,
+                                            userid = viewModel.deets.value?.user?.id.toString(),
+                                            channelid = channelid
+                                        )
+                                    }
                                 }
                             }
                         }

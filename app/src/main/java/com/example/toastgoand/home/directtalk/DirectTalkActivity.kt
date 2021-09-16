@@ -35,7 +35,7 @@ import com.example.toastgoand.home.clanhub.components.ClanMetrics
 import com.example.toastgoand.home.clanhub.components.UsersListItem
 import com.example.toastgoand.home.clantalk.ClanTalkViewModel
 import com.example.toastgoand.home.clantalk.camera.CameraActivity
-import com.example.toastgoand.home.clantalk.components.TextInput
+import com.example.toastgoand.home.clantalk.components.TextInputPart
 import com.example.toastgoand.home.directframes.DirectFramesActivity
 import com.example.toastgoand.home.directtalk.camera.CameraDirectActivity
 import com.example.toastgoand.home.directtalk.components.TextInputDirect
@@ -59,8 +59,6 @@ class DirectTalkActivity : BaseActivity() {
         binding = viewBinding as ActivityDirectTalkBinding
 
         val allMessages = ""
-
-
 
         setContent {
             AyeTheme {
@@ -193,7 +191,6 @@ class DirectTalkActivity : BaseActivity() {
                                             )
                                             .navigationBarsWithImePadding()
                                     )
-
                                 }
                             }
                         }

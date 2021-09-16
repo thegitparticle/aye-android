@@ -21,13 +21,14 @@ class LoginSetupViewModel(private val repo: UserDetailsRepo): ViewModel() {
         repo.insert(userDetails)
     }
 
-    fun getUserDetailsHere(phone: String) {
+    fun getUserDetailsWhileLoginHere(phone: String) {
         viewModelScope.launch {
             try {
                 val userResult = UserDetailsApi.retrofitService.getUserDetails(phone)
                 var x_here: UserDetailsDataClass = userResult
                 insert(x_here)
                 repo.insert(x_here)
+                Log.i("observer", x_here.toString())
             } catch (e: Exception) {
                 Log.i("LoginSetupViewModel", "API call for user details, Failed! ${e.message}")
             }

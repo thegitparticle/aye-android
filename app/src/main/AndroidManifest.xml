@@ -26,6 +26,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ToastgoandN"
+        android:windowSoftInputMode="adjustResize"
         tools:replace="android:appComponentFactory">
         <activity
             android:name=".auth.loginsetup.LoginSetupActivity"
