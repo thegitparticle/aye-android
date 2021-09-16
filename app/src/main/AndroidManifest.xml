@@ -28,6 +28,9 @@
         android:theme="@style/Theme.ToastgoandN"
         tools:replace="android:appComponentFactory">
         <activity
+            android:name=".auth.loginsetup.LoginSetupActivity"
+            android:exported="true" />
+        <activity
             android:name=".home.directtalk.camera.CameraDirectActivity"
             android:exported="true" />
         <activity

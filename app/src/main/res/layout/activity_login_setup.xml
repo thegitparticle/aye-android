@@ -2,13 +2,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".auth.clancreate.ClanCreatedActivity"
+    tools:context=".auth.loginsetup.LoginSetupActivity"
     xmlns:fancy="http://schemas.android.com/apk/res-auto">
-
     <data>
         <variable
-            name="clanDoneModel"
-            type="com.example.toastgoand.auth.clancreate.ClanCreatedViewModel" />
+            name="loginSetupModel"
+            type="com.example.toastgoand.auth.loginsetup.LoginSetupActivity" />
     </data>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -43,12 +42,12 @@
                 android:textSize="22sp"
                 android:layout_centerInParent="true"
                 android:layout_gravity="center"
-                android:text="setting things up for you..." />
+                android:text="@string/stranger_start_clan_success" />
 
         </LinearLayout>
 
         <mehdi.sakout.fancybuttons.FancyButton
-            android:id="@+id/allowContactsButton"
+            android:id="@+id/openHomeButton"
             android:layout_width="270dp"
             android:layout_height="60dp"
             android:layout_alignParentBottom="true"

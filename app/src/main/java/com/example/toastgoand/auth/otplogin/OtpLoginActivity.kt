@@ -1,5 +1,6 @@
 package com.example.toastgoand.auth.otplogin
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -9,6 +10,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.auth.enterphone.EnterPhoneViewModel
+import com.example.toastgoand.auth.loginsetup.LoginSetupActivity
+import com.example.toastgoand.auth.otpsignup.OtpSignupActivity
 import com.example.toastgoand.databinding.ActivityEnterPhoneBinding
 import com.example.toastgoand.databinding.ActivityOtpLoginBinding
 
@@ -33,9 +36,13 @@ class OtpLoginActivity : BaseActivity() {
 //            Log.i("EnterPhoneViewModelX", response)
 //        })
 //
-//        binding.nextImageButton.setOnClickListener {
-//            viewModel.getUserDetailsHere(countryCode + phoneNumber.toString())
-//        }
+        binding.nextImageButton.setOnClickListener {
+//            intent.getStringExtra("phoneNumber")?.let { it1 -> viewModel.getUserDetailsHere(it1) }
+            val intent = Intent(this, LoginSetupActivity::class.java).apply {
+                putExtra("phoneNumber", intent.getStringExtra("phoneNumber"))
+            }
+            startActivity(intent)
+        }
 
     }
 
