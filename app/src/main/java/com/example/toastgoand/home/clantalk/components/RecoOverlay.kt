@@ -32,13 +32,13 @@ fun RecoOverlay (defaultRecos: List<DefaultRecosDataClass>) {
         modifier = Modifier.background(MaterialTheme.colors.surface),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        LazyRow() {
+//        LazyRow() {
 //            items(
 //                items = defaultRecos[0],
 //                itemContent = {
 //                    RecoImage(it)
 //                })
-        }
+//        }
     }
 
 }

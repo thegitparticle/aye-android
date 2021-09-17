@@ -1,16 +1,12 @@
 package com.example.toastgoand.home.clantalk
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.view.inputmethod.InputMethodManager
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -24,19 +20,15 @@ import com.google.accompanist.insets.ui.Scaffold
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.core.view.WindowCompat
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.ToastgoApplication
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityClanTalkBinding
 import com.example.toastgoand.dummy.DummyClanHub
-import com.example.toastgoand.home.aye.TheAyeViewModel
-import com.example.toastgoand.home.aye.TheAyeViewModelFactory
 import com.example.toastgoand.home.clanframes.ClanFramesActivity
 import com.example.toastgoand.home.clanhub.components.UsersListItem
 import com.example.toastgoand.home.clantalk.camera.CameraActivity
@@ -48,8 +40,6 @@ import compose.icons.FeatherIcons
 import compose.icons.feathericons.Camera
 import compose.icons.feathericons.Layers
 import compose.icons.feathericons.PlusSquare
-import compose.icons.feathericons.Send
-import kotlinx.android.synthetic.main.start_call_dialog.*
 
 class ClanTalkActivity : BaseActivity() {
 
@@ -207,17 +197,14 @@ class ClanTalkActivity : BaseActivity() {
                         bottomBar = {
                             if (ongoingFrame) {
                                 AnimatedVisibility(visible = showTextInput) {
-                                    Surface(elevation = 2.dp) {
                                         if (channelid != null) {
-                                            viewModel.recos.value?.let {
+//                                            viewModel.recos.value?.let {
                                                 TextInputPart(
-                                                    modifier = Modifier,
                                                     userid = viewModel.deets.value?.user?.id.toString(),
                                                     channelid = channelid,
-                                                    defaultRecos = it
+//                                                    defaultRecos = it
                                                 )
-                                            }
-                                        }
+//                                            }
                                     }
                                 }
                             } else {

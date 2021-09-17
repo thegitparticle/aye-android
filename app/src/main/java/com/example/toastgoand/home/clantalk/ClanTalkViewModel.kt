@@ -14,7 +14,8 @@ import com.example.toastgoand.network.userdetails.UserDetailsRepo
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 
-class ClanTalkViewModel(private val repoDeets: UserDetailsRepo, private val repoRecos: DefaultRecosRepo): ViewModel() {
+class ClanTalkViewModel(repoDeets: UserDetailsRepo, private val repoRecos: DefaultRecosRepo) :
+    ViewModel() {
 
     val deets: LiveData<UserDetailsDataClass> = repoDeets.userDetails.asLiveData()
     val recos: LiveData<List<DefaultRecosDataClass>> = repoRecos.defaultRecos.asLiveData()
@@ -24,7 +25,10 @@ class ClanTalkViewModel(private val repoDeets: UserDetailsRepo, private val repo
     }
 
     init {
-        deets.value?.user?.let { getDefaultRecosHere(it.id) }
+        deets.observeForever {
+            deets.value?.user?.let { getDefaultRecosHere(it.id) }
+            Log.i("defaultrecos userid", deets.value?.user?.id.toString())
+        }
     }
 
     fun getDefaultRecosHere(userid: Int) {
@@ -34,17 +38,20 @@ class ClanTalkViewModel(private val repoDeets: UserDetailsRepo, private val repo
                     DefaultRecosApi.retrofitService.getDefaultRecos(userid.toString())
                 var x_here: List<DefaultRecosDataClass> = defaultRecosResult
                 insertDefaultRecos(x_here)
-                Log.i("ClanTalkViewModel", x_here.toString())
+                Log.i("defaultrecos", x_here.toString())
             } catch (e: Exception) {
-                Log.i("ClanTalkViewModel", "API call for user details, Failed! ${e.message}")
+                Log.i("defaultrecos", "API call for default recos, Failed! ${e.message}")
             }
         }
 
     }
-    }
+}
 
-class ClanTalkViewModelFactory (private val repoDeets: UserDetailsRepo, private val repoRecos: DefaultRecosRepo) : ViewModelProvider.Factory {
-    override fun <T: ViewModel> create(modelClass: Class<T>): T {
+class ClanTalkViewModelFactory(
+    private val repoDeets: UserDetailsRepo,
+    private val repoRecos: DefaultRecosRepo
+) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ClanTalkViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
             return ClanTalkViewModel(repoDeets, repoRecos) as T
