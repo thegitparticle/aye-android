@@ -3,10 +3,8 @@ package com.example.toastgoand.home.clantalk.components
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
@@ -19,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import com.example.toastgoand.network.defaultrecos.DefaultRecosDataClass
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.pubnub.api.PNConfiguration
@@ -27,7 +26,7 @@ import compose.icons.FeatherIcons
 import compose.icons.feathericons.Send
 
 @Composable
-fun TextInputPart (modifier: Modifier, userid: String, channelid: String) {
+fun TextInputPart (modifier: Modifier, userid: String, channelid: String, defaultRecos: List<DefaultRecosDataClass>) {
     val typedText = remember { mutableStateOf(TextFieldValue()) }
 
     val pnConfiguration = PNConfiguration().apply {
@@ -42,39 +41,45 @@ fun TextInputPart (modifier: Modifier, userid: String, channelid: String) {
     Log.i("current_typing", typedText.value.text)
 
     ProvideWindowInsets() {
-        Row(
-            modifier = Modifier.background(MaterialTheme.colors.surface),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            OutlinedTextField(
-                modifier = Modifier
+        Column {
+           RecoOverlay(defaultRecos)
+            Row(
+                modifier = Modifier.background(MaterialTheme.colors.surface),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                OutlinedTextField(
+                    modifier = Modifier
 //                    .focusRequester(
 //                        focusTextInputRequester
 //                    )
-                    .navigationBarsWithImePadding()
-                    .fillMaxWidth(0.9F),
-                value = typedText.value,
-                onValueChange = { typedText.value = it },
-                placeholder = { Text(text = "type fun stuff...") },
-            )
-            Icon(
-                imageVector = FeatherIcons.Send,
-                contentDescription = "last month",
-                modifier = Modifier.size(40.dp).clickable {
-                    pubnub.publish(
-                        message = typedText.value.text,
-                        channel = channelid
-                    ).async { result, status ->
-                        if (status.error) {
-                            Log.i("messagesendingfail", status.toString())
-                        } else {
-                            Log.i("messagesendingsuccess", result.toString())
+                        .navigationBarsWithImePadding()
+                        .fillMaxWidth(0.9F),
+                    value = typedText.value,
+                    onValueChange = { typedText.value = it },
+                    placeholder = { Text(text = "type fun stuff...") },
+                )
+                Icon(
+                    imageVector = FeatherIcons.Send,
+                    contentDescription = "last month",
+                    modifier = Modifier
+                        .size(40.dp)
+                        .clickable {
+                            pubnub
+                                .publish(
+                                    message = typedText.value.text,
+                                    channel = channelid
+                                )
+                                .async { result, status ->
+                                    if (status.error) {
+                                        Log.i("messagesendingfail", status.toString())
+                                    } else {
+                                        Log.i("messagesendingsuccess", result.toString())
+                                    }
+                                }
                         }
-                    }
-                }
-            )
+                )
+            }   
         }
-
     }
 }
 

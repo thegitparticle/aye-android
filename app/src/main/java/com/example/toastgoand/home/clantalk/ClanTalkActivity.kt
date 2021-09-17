@@ -57,7 +57,8 @@ class ClanTalkActivity : BaseActivity() {
 
     private val viewModel: ClanTalkViewModel by viewModels {
         ClanTalkViewModelFactory(
-            (this.application as ToastgoApplication).repository
+            (this.application as ToastgoApplication).repository,
+            (this.application as ToastgoApplication).repositoryDefaultRecos
         )
     }
 
@@ -208,11 +209,14 @@ class ClanTalkActivity : BaseActivity() {
                                 AnimatedVisibility(visible = showTextInput) {
                                     Surface(elevation = 2.dp) {
                                         if (channelid != null) {
-                                            TextInputPart(
-                                                modifier = Modifier,
-                                                userid = viewModel.deets.value?.user?.id.toString(),
-                                                channelid = channelid,
-                                            )
+                                            viewModel.recos.value?.let {
+                                                TextInputPart(
+                                                    modifier = Modifier,
+                                                    userid = viewModel.deets.value?.user?.id.toString(),
+                                                    channelid = channelid,
+                                                    defaultRecos = it
+                                                )
+                                            }
                                         }
                                     }
                                 }

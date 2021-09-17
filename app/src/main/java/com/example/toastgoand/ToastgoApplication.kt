@@ -2,6 +2,7 @@ package com.example.toastgoand
 
 import android.app.Application
 import com.example.toastgoand.network.AppRoomDB
+import com.example.toastgoand.network.defaultrecos.DefaultRecosRepo
 import com.example.toastgoand.network.directs.MyDirectsRepo
 import com.example.toastgoand.network.myclans.MyClansRepo
 import com.example.toastgoand.network.myfriends.MyFriendsRepo
@@ -23,4 +24,5 @@ class ToastgoApplication: Application() {
     val repositoryMyDirects by lazy {MyDirectsRepo(database.myDirectsDao())}
     val repositoryNudgeTo by lazy {NudgeToRepo(database.nudgeToDao())}
     val repositoryMyFriends by lazy {MyFriendsRepo(database.myFriendsDao())}
+    val repositoryDefaultRecos by lazy {DefaultRecosRepo(database.defaultRecosDao())}
 }

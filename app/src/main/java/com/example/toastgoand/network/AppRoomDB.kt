@@ -6,6 +6,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.example.toastgoand.network.defaultrecos.DefaultRecosDao
+import com.example.toastgoand.network.defaultrecos.DefaultRecosDataClass
 import com.example.toastgoand.network.directs.MyDirectsDao
 import com.example.toastgoand.network.directs.MyDirectsDataClass
 import com.example.toastgoand.network.myclans.MyClansDao
@@ -18,7 +20,10 @@ import com.example.toastgoand.network.userdetails.UserDetailsDao
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
 import kotlinx.coroutines.CoroutineScope
 
-@Database(entities = [UserDetailsDataClass::class, MyClansDataClass::class, MyDirectsDataClass::class, NudgeToDataClass::class, MyFriendsDataClass::class], version = 1)
+@Database(
+    entities = [UserDetailsDataClass::class, MyClansDataClass::class, MyDirectsDataClass::class, NudgeToDataClass::class, MyFriendsDataClass::class, DefaultRecosDataClass::class],
+    version = 1
+)
 
 @TypeConverters(ConverterGo::class)
 
@@ -30,6 +35,7 @@ abstract class AppRoomDB : RoomDatabase() {
     abstract fun myDirectsDao(): MyDirectsDao
     abstract fun nudgeToDao(): NudgeToDao
     abstract fun myFriendsDao(): MyFriendsDao
+    abstract fun defaultRecosDao(): DefaultRecosDao
 
     companion object {
         @Volatile
@@ -54,7 +60,8 @@ abstract class AppRoomDB : RoomDatabase() {
             }
         }
 
-        private class AppRoomDBCallback (private val scope: CoroutineScope) : RoomDatabase.Callback() {
+        private class AppRoomDBCallback(private val scope: CoroutineScope) :
+            RoomDatabase.Callback() {
             override fun onCreate(db: SupportSQLiteDatabase) {
                 super.onCreate(db)
             }
