@@ -3,6 +3,7 @@ package com.example.toastgoand.home.clantalk
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.compose.setContent
@@ -39,6 +40,7 @@ import com.example.toastgoand.home.aye.TheAyeViewModelFactory
 import com.example.toastgoand.home.clanframes.ClanFramesActivity
 import com.example.toastgoand.home.clanhub.components.UsersListItem
 import com.example.toastgoand.home.clantalk.camera.CameraActivity
+import com.example.toastgoand.home.clantalk.components.StartClanFrame
 import com.example.toastgoand.home.clantalk.components.TextInputPart
 import com.example.toastgoand.uibits.HeaderPlayScreens
 import com.google.accompanist.insets.*
@@ -77,7 +79,7 @@ class ClanTalkActivity : BaseActivity() {
                 val clubName = intent.getStringExtra("clubName")
                 val clubid = intent.getIntExtra("clubid", 0)
                 val channelid = intent.getStringExtra("channelid")
-                val ongoingFrame = intent.getBooleanExtra("ongoingFrame", false)
+                var ongoingFrame = intent.getBooleanExtra("ongoingFrame", false)
                 val startTime = intent.getStringExtra("startTime")
                 val endTime = intent.getStringExtra("endTime")
 
@@ -97,6 +99,11 @@ class ClanTalkActivity : BaseActivity() {
 
                 fun reSetTextInput() {
                     showTextInput = false
+                }
+
+                fun changeFrameLiveStatus() {
+                    ongoingFrame = true
+                    Log.i("startframeapicall", "backwaeds function call worked")
                 }
 
                 val context = LocalContext.current
@@ -197,17 +204,29 @@ class ClanTalkActivity : BaseActivity() {
                         },
                         floatingActionButtonPosition = FabPosition.Center,
                         bottomBar = {
-                            AnimatedVisibility(visible = showTextInput) {
-                                Surface(elevation = 2.dp) {
-                                    if (channelid != null) {
-                                        TextInputPart(
-                                            modifier = Modifier,
-                                            userid = viewModel.deets.value?.user?.id.toString(),
-                                            channelid = channelid
-                                        )
+                            if (ongoingFrame) {
+                                AnimatedVisibility(visible = showTextInput) {
+                                    Surface(elevation = 2.dp) {
+                                        if (channelid != null) {
+                                            TextInputPart(
+                                                modifier = Modifier,
+                                                userid = viewModel.deets.value?.user?.id.toString(),
+                                                channelid = channelid,
+                                            )
+                                        }
                                     }
                                 }
+                            } else {
+                                if (channelid != null) {
+                                    StartClanFrame(
+                                        modifier = Modifier,
+                                        clubid = clubid,
+                                        channelid = channelid,
+                                        changeLiveStatus = ::changeFrameLiveStatus
+                                    )
+                                }
                             }
+
                         }
                     ) { contentPadding ->
                         Column {
