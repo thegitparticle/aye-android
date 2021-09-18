@@ -40,6 +40,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.ui.temputils.delay
 import com.example.toastgoand.R
 import com.example.toastgoand.ToastgoApplication
 import com.example.toastgoand.composestyle.AyeTheme
@@ -54,6 +55,10 @@ import com.example.toastgoand.prefhelpers.Constant
 import com.example.toastgoand.prefhelpers.PrefHelper
 import com.example.toastgoand.uibits.DotsLoader
 import kotlinx.serialization.json.JsonNull.content
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 class ClansFragment : Fragment() {
 
@@ -91,6 +96,7 @@ class ClansFragment : Fragment() {
             }
         }
 
+
         return inflater.inflate(R.layout.clans_fragment, container, false).apply {
             findViewById<ComposeView>(R.id.composeView).setContent {
 
@@ -102,6 +108,8 @@ class ClansFragment : Fragment() {
                     } else {
                     }
                 }
+
+                val isRefreshing by viewModel.isRefreshing.collectAsState()
 
                 AyeTheme {
                     val clansHere: List<MyClansDataClass> by
@@ -115,52 +123,58 @@ class ClansFragment : Fragment() {
                             .background(MaterialTheme.colors.background)
                             .fillMaxSize()
                     ) {
-                        LazyColumn(
-                            modifier = Modifier.background(MaterialTheme.colors.background)
+                        SwipeRefresh(
+                            state = rememberSwipeRefreshState(isRefreshing),
+                            onRefresh = {viewModel.refresh()}
                         ) {
-                            items(
-                                items = liveClansHere,
-                                itemContent = {
-                                    LiveClanItem(myclan = it, position = liveClansHere.indexOf(it))
-                                })
-                            item {
-                                Spacer(Modifier.height(20.dp))
-                            }
-                            item {
-                                DotsLoader(scale = 0.5.toFloat())
-                            }
-                            items(
-                                items = clansHere,
-                                itemContent = {
-                                    MyClanItem(myclan = it)
-                                })
-
-                            item(
-                                key = "footer",
-                                content = {
-                                    Button(
-                                        onClick = {
-                                            context.startActivity(
-                                                Intent(
-                                                    context,
-                                                    StartClanActivity::class.java
-                                                ).apply { })
-                                        }, colors = ButtonDefaults.textButtonColors(
-                                            backgroundColor = MaterialTheme.colors.secondary,
-                                        )
-                                    ) {
-                                        Text(
-                                            "start clan", style = MaterialTheme.typography.body1,
-                                            color = MaterialTheme.colors.onSecondary
-                                        )
-                                    }
+                            LazyColumn(
+                                modifier = Modifier.background(MaterialTheme.colors.background)
+                            ) {
+                                items(
+                                    items = liveClansHere,
+                                    itemContent = {
+                                        LiveClanItem(myclan = it, position = liveClansHere.indexOf(it))
+                                    })
+                                item {
+                                    Spacer(Modifier.height(20.dp))
                                 }
-                            )
-                            item {
-                                Spacer(Modifier.height(200.dp))
-                            }
+                                item {
+                                    DotsLoader(scale = 0.5.toFloat())
+                                }
+                                items(
+                                    items = clansHere,
+                                    itemContent = {
+                                        MyClanItem(myclan = it)
+                                    })
 
+                                item(
+                                    key = "footer",
+                                    content = {
+                                        Button(
+                                            onClick = {
+                                                context.startActivity(
+                                                    Intent(
+                                                        context,
+                                                        StartClanActivity::class.java
+                                                    ).apply { })
+                                            }, colors = ButtonDefaults.textButtonColors(
+                                                backgroundColor = MaterialTheme.colors.secondary,
+                                            )
+                                        ) {
+                                            Text(
+                                                "start clan", style = MaterialTheme.typography.body1,
+                                                color = MaterialTheme.colors.onSecondary
+                                            )
+                                        }
+                                    }
+                                )
+                                item {
+                                    Spacer(Modifier.height(200.dp))
+                                }
+
+                            }
                         }
+
                     }
                 }
             }

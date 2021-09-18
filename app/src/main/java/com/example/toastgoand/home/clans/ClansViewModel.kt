@@ -13,11 +13,29 @@ import com.example.toastgoand.network.userdetails.UserDetailsApi
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
 import com.example.toastgoand.network.userdetails.UserDetailsRepo
 import com.example.toastgoand.prefhelpers.PrefHelper
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 
 class ClansViewModel(private val repo: MyClansRepo, private val repoDeets: UserDetailsRepo) : ViewModel() {
 
+    private val _isRefreshing = MutableStateFlow(false)
+
+    val isRefreshing: StateFlow<Boolean>
+        get() = _isRefreshing.asStateFlow()
+
+    fun refresh() {
+        // This doesn't handle multiple 'refreshing' tasks, don't use this
+        viewModelScope.launch {
+            _isRefreshing.emit(true)
+            deets.value?.user?.let { getMyClansHere(it.id) }
+            delay(2000)
+            _isRefreshing.emit(false)
+        }
+    }
 
     val myClans: LiveData<List<MyClansDataClass>> = repo.myClans.asLiveData()
 

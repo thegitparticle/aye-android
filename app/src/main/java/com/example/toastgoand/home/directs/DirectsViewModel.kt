@@ -10,6 +10,10 @@ import com.example.toastgoand.network.nudgelist.NudgeToDataClass
 import com.example.toastgoand.network.nudgelist.NudgeToRepo
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
 import com.example.toastgoand.network.userdetails.UserDetailsRepo
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class DirectsViewModel(private val repo: MyDirectsRepo, private val repoDeets: UserDetailsRepo, private val repoNudgeTo: NudgeToRepo) : ViewModel() {
@@ -17,6 +21,21 @@ class DirectsViewModel(private val repo: MyDirectsRepo, private val repoDeets: U
     val myDirects: LiveData<List<MyDirectsDataClass>> = repo.myDirects.asLiveData()
     val nudgeTo: LiveData<List<NudgeToDataClass>> = repoNudgeTo.nudgeTo.asLiveData()
     val deets: LiveData<UserDetailsDataClass> = repoDeets.userDetails.asLiveData()
+
+    private val _isRefreshing = MutableStateFlow(false)
+
+    val isRefreshing: StateFlow<Boolean>
+        get() = _isRefreshing.asStateFlow()
+
+    fun refresh() {
+        // This doesn't handle multiple 'refreshing' tasks, don't use this
+        viewModelScope.launch {
+            _isRefreshing.emit(true)
+            deets.value?.user?.let { getMyDirectsHere(it.id); getNudgeToHere(it.id) }
+            delay(2000)
+            _isRefreshing.emit(false)
+        }
+    }
 
     private fun insertDirects(myDirects: List<MyDirectsDataClass>) = viewModelScope.launch {
         repo.insert(myDirects)

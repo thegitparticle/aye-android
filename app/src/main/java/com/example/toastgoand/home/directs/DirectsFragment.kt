@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
@@ -27,6 +28,8 @@ import com.example.toastgoand.home.directs.components.DirectItem
 import com.example.toastgoand.home.directs.components.NudgeToItem
 import com.example.toastgoand.network.directs.MyDirectsDataClass
 import com.example.toastgoand.network.nudgelist.NudgeToDataClass
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 class DirectsFragment : Fragment() {
 
@@ -46,6 +49,8 @@ class DirectsFragment : Fragment() {
         return inflater.inflate(R.layout.directs_fragment, container, false).apply {
             findViewById<ComposeView>(R.id.composeView).setContent {
 
+                val isRefreshing by viewModel.isRefreshing.collectAsState()
+
                 AyeTheme {
                     val directsHere: List<MyDirectsDataClass> by viewModel.myDirects.observeAsState(
                         listOf<MyDirectsDataClass>()
@@ -54,34 +59,38 @@ class DirectsFragment : Fragment() {
                         listOf<NudgeToDataClass>()
                     )
                     Surface(modifier = Modifier.background(MaterialTheme.colors.background)) {
-                        LazyColumn(
-                            modifier = Modifier.background(MaterialTheme.colors.background)
+                        SwipeRefresh(
+                            state = rememberSwipeRefreshState(isRefreshing),
+                            onRefresh = {viewModel.refresh()}
                         ) {
-                            items(
-                                items = directsHere,
-                                itemContent = {
-                                    DirectItem(directItem = it)
-                                })
-                            item {
-                                Spacer(Modifier.height(20.dp))
-                                Divider(
-                                    color = MaterialTheme.colors.onBackground,
-                                    modifier = Modifier.alpha(
-                                        0.1F
+                            LazyColumn(
+                                modifier = Modifier.background(MaterialTheme.colors.background)
+                            ) {
+                                items(
+                                    items = directsHere,
+                                    itemContent = {
+                                        DirectItem(directItem = it)
+                                    })
+                                item {
+                                    Spacer(Modifier.height(20.dp))
+                                    Divider(
+                                        color = MaterialTheme.colors.onBackground,
+                                        modifier = Modifier.alpha(
+                                            0.1F
+                                        ), thickness = 1.dp
                                     )
-                                    , thickness = 1.dp
-                                )
-                                Spacer(Modifier.height(20.dp))
-                            }
-                            items(
-                                items = nudgeToHere,
-                                itemContent = {
-                                    NudgeToItem(it)
-                                })
-                            item {
-                                Spacer(Modifier.height(200.dp))
-                            }
+                                    Spacer(Modifier.height(20.dp))
+                                }
+                                items(
+                                    items = nudgeToHere,
+                                    itemContent = {
+                                        NudgeToItem(it)
+                                    })
+                                item {
+                                    Spacer(Modifier.height(200.dp))
+                                }
 
+                            }
                         }
                     }
 
