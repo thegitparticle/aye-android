@@ -6,6 +6,7 @@ plugins {
     id 'androidx.navigation.safeargs.kotlin'
     id 'org.jetbrains.kotlin.plugin.serialization' version '1.5.30'
     id 'kotlin-android-extensions'
+    id 'com.google.gms.google-services'
 }
 
 
@@ -190,4 +191,9 @@ dependencies {
 
     //pubnub for kotlin
     implementation 'com.pubnub:pubnub-kotlin:6.1.0'
+
+    // firebase
+    implementation platform ('com.google.firebase:firebase-bom:28.4.1')
+    implementation 'com.google.firebase:firebase-common-ktx:20.0.0'
+    implementation 'com.google.firebase:firebase-messaging:20.1.0'
 }

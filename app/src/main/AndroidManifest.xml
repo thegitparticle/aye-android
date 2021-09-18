@@ -137,6 +137,7 @@
                 <action android:name="android.intent.action.screenshare" />
             </intent-filter>
         </service>
+
     </application>
 
 </manifest>

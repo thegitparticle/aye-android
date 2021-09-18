@@ -49,6 +49,9 @@ import com.example.toastgoand.home.clantalk.ClanTalkActivity
 import com.example.toastgoand.home.startclan.StartClanActivity
 import com.example.toastgoand.network.directs.MyDirectsDataClass
 import com.example.toastgoand.network.myclans.MyClansDataClass
+import com.example.toastgoand.network.pnstuff.pushSetupClans
+import com.example.toastgoand.prefhelpers.Constant
+import com.example.toastgoand.prefhelpers.PrefHelper
 import kotlinx.serialization.json.JsonNull.content
 
 class ClansFragment : Fragment() {
@@ -60,13 +63,26 @@ class ClansFragment : Fragment() {
         )
     }
 
+    lateinit var prefHelper: PrefHelper
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
 
+        prefHelper = context?.let { PrefHelper(it) }!!
+
+        viewModel.liveClans.observeForever{
+            viewModel.liveClans.value?.let { it1 ->
+                prefHelper.getString(
+                    Constant.FIREBASE_TOKEN)?.let { it2 ->
+                    pushSetupClans(
+                        it1, viewModel.deets.value?.user?.id.toString(), it2
+                    )
+                }
+            }
+        }
 
         return inflater.inflate(R.layout.clans_fragment, container, false).apply {
             findViewById<ComposeView>(R.id.composeView).setContent {

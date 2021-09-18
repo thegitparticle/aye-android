@@ -12,10 +12,12 @@ import com.example.toastgoand.network.myclans.MyClansRepo
 import com.example.toastgoand.network.userdetails.UserDetailsApi
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
 import com.example.toastgoand.network.userdetails.UserDetailsRepo
+import com.example.toastgoand.prefhelpers.PrefHelper
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 
 class ClansViewModel(private val repo: MyClansRepo, private val repoDeets: UserDetailsRepo) : ViewModel() {
+
 
     val myClans: LiveData<List<MyClansDataClass>> = repo.myClans.asLiveData()
 
