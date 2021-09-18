@@ -14,12 +14,15 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.viewbinding.ViewBinding
+import androidx.viewpager.widget.ViewPager
 import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.R
 import com.example.toastgoand.auth.LoginActivity
 import com.example.toastgoand.databinding.ActivityLandingBinding
 import com.example.toastgoand.databinding.StartCallDialogBinding
 import com.example.toastgoand.home.aye.TheAyeActivity
+import com.example.toastgoand.home.clans.ClansFragment
+import com.example.toastgoand.home.directs.DirectsFragment
 import com.example.toastgoand.home.invitepeopledirectly.InvitePeopleDirectlyActivity
 import com.example.toastgoand.home.myprofile.MyProfileActivity
 import com.example.toastgoand.navigator.Navigator
@@ -31,12 +34,16 @@ import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.material.tabs.TabLayout
 
 
 @AndroidEntryPoint
 class LandingActivity: BaseActivity() {
 
     private lateinit var binding: ActivityLandingBinding
+
+    private lateinit var pager: ViewPager
+    private lateinit var tab: TabLayout
 
     @Inject
     lateinit var navigator: Navigator
@@ -48,12 +55,12 @@ class LandingActivity: BaseActivity() {
 
         binding = viewBinding as ActivityLandingBinding
 
-        // start stream button login
-        binding.floatingActionButton.setOnClickListener{
-            Toast.makeText(this, "start stream", Toast.LENGTH_SHORT).show()
-            showDefaultDialog()
-            binding.navView.visibility = View.GONE
-        }
+//        // start stream button login
+//        binding.floatingActionButton.setOnClickListener{
+//            Toast.makeText(this, "start stream", Toast.LENGTH_SHORT).show()
+//            showDefaultDialog()
+//            binding.navView.visibility = View.GONE
+//        }
 
         binding.logout.setOnClickListener {
             prefHelper = PrefHelper(this)
@@ -82,21 +89,33 @@ class LandingActivity: BaseActivity() {
                 R.anim.slide_out_left)
         }
 
+        pager = binding.viewPager
+        tab = binding.navView
 
-        // below is all code for bottom navigation
-        val navView: BottomNavigationView = binding.navView
+        val adapter = HomePagerAdapter(supportFragmentManager)
 
-        val navController = findNavController(R.id.nav_host_fragment_activity_landing)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_home, R.id.navigation_dashboard,
-            )
-        )
+        adapter.addFragment(ClansFragment(), "CLANS")
+        adapter.addFragment(DirectsFragment(), "DIRECTS")
 
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
+        pager.adapter = adapter
+
+        tab.setupWithViewPager(pager)
+
+
+//        // below is all code for bottom navigation
+//        val navView: TabLayout = binding.navView
+//
+//        val navController = findNavController(R.id.nav_host_fragment_activity_landing)
+//        // Passing each menu ID as a set of Ids because each
+//        // menu should be considered as top level destinations.
+//        val appBarConfiguration = AppBarConfiguration(
+//            setOf(
+//                R.id.navigation_home, R.id.navigation_dashboard,
+//            )
+//        )
+//
+//        setupActionBarWithNavController(navController, appBarConfiguration)
+//        navView.setupWithNavController(navController)
 
         getSupportActionBar()?.hide()
 

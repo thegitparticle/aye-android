@@ -33,6 +33,9 @@
     <string name="stranger_start_clan_starting">clan in the making...</string>
     <string name="stranger_start_clan_success">done</string>
 
+    <string name="home_bar_1">clans</string>
+    <string name="home_bar_2">directs</string>
+
 
     <!--    start stream dialog-->
     <string name="start_sharing">Start Sharing</string>

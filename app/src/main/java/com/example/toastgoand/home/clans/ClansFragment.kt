@@ -138,9 +138,6 @@ class ClansFragment : Fragment() {
                                 item {
                                     Spacer(Modifier.height(20.dp))
                                 }
-                                item {
-                                    DotsLoader(scale = 0.5.toFloat())
-                                }
                                 items(
                                     items = clansHere,
                                     itemContent = {
