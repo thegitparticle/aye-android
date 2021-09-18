@@ -55,7 +55,6 @@ class TheAyeActivity : BaseActivity() {
 
         fun onBackPressedHere() {
             onBackPressed()
-            Bungee.slideDown(this)
         }
 
         setContent {

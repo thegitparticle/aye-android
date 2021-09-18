@@ -2,28 +2,11 @@ package com.example.toastgoand.home
 
 import android.app.AlertDialog
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
-import androidx.activity.viewModels
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.asLiveData
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -31,25 +14,18 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.R
-import com.example.toastgoand.ToastgoApplication
 import com.example.toastgoand.auth.LoginActivity
-import com.example.toastgoand.auth.detailssignup.DetailsSignupActivity
-import com.example.toastgoand.auth.settingup.SettingUpViewModel
-import com.example.toastgoand.auth.settingup.SettingUpViewModelFactory
 import com.example.toastgoand.databinding.ActivityLandingBinding
 import com.example.toastgoand.databinding.StartCallDialogBinding
 import com.example.toastgoand.home.aye.TheAyeActivity
 import com.example.toastgoand.home.invitepeopledirectly.InvitePeopleDirectlyActivity
 import com.example.toastgoand.home.myprofile.MyProfileActivity
-import com.example.toastgoand.home.startclan.StartClanActivity
 import com.example.toastgoand.navigator.Navigator
 import com.example.toastgoand.navigator.Screen
-import com.example.toastgoand.network.userdetails.UserDetailsDataClass
-import com.example.toastgoand.network.userdetails.UserDetailsRepo
 import com.example.toastgoand.prefhelpers.Constant
 import com.example.toastgoand.prefhelpers.PrefHelper
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
-import spencerstudios.com.bungeelib.Bungee
 import javax.inject.Inject
 
 
@@ -84,19 +60,22 @@ class LandingActivity: BaseActivity() {
         binding.circleImage.setOnClickListener {
             val intent = Intent(this, MyProfileActivity::class.java).apply{}
             startActivity(intent)
-            Bungee.slideUp(this)
+            overridePendingTransition(R.anim.slide_up_enter,
+                R.anim.slide_down_exit)
         }
 
         binding.ayeLogo.setOnClickListener {
             val intent = Intent(this, TheAyeActivity::class.java).apply{}
             startActivity(intent)
-            Bungee.slideUp(this)
+            overridePendingTransition(R.anim.slide_from_left,
+                R.anim.slide_out_left)
         }
 
         binding.invitePeopleLogo.setOnClickListener {
-            val intent = Intent(this, StartClanActivity::class.java).apply{}
+            val intent = Intent(this, InvitePeopleDirectlyActivity::class.java).apply{}
             startActivity(intent)
-            Bungee.slideUp(this)
+            overridePendingTransition(R.anim.slide_from_left,
+                R.anim.slide_out_left)
         }
 
 

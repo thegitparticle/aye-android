@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.viewModels
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
+import com.example.toastgoand.R
 import com.example.toastgoand.ToastgoApplication
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityMyProfileBinding
@@ -61,7 +62,8 @@ class MyProfileActivity : BaseActivity() {
 
         fun onBackPressedHere() {
             onBackPressed()
-            Bungee.slideDown(this)
+            overridePendingTransition(R.anim.slide_up_enter,
+                R.anim.slide_down_exit)
         }
 
         setContent {

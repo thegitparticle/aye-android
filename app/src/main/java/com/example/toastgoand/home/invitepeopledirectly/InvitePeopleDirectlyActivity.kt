@@ -53,7 +53,6 @@ class InvitePeopleDirectlyActivity : BaseActivity() {
 
         fun onBackPressedHere() {
             onBackPressed()
-            Bungee.slideDown(this)
         }
 
         setContent {
