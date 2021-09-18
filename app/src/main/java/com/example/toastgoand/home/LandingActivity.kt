@@ -1,8 +1,10 @@
 package com.example.toastgoand.home
 
 import android.app.AlertDialog
+import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
@@ -25,8 +27,10 @@ import com.example.toastgoand.navigator.Screen
 import com.example.toastgoand.prefhelpers.Constant
 import com.example.toastgoand.prefhelpers.PrefHelper
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+import com.google.android.gms.tasks.OnCompleteListener
 
 
 @AndroidEntryPoint
@@ -95,6 +99,23 @@ class LandingActivity: BaseActivity() {
         navView.setupWithNavController(navController)
 
         getSupportActionBar()?.hide()
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(ContentValues.TAG, "Firebase Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            val token = task.result
+
+            Log.d(ContentValues.TAG, "Firebase token: " + token)
+//
+            prefHelper = PrefHelper(this)
+            if (token != null) {
+                prefHelper.put( Constant.FIREBASE_TOKEN , token)
+            }
+
+        })
 
     }
 

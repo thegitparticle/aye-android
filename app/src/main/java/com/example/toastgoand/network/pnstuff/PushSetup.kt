@@ -1,5 +1,6 @@
 package com.example.toastgoand.network.pnstuff
 
+import android.util.Log
 import com.example.toastgoand.network.directs.MyDirectsDataClass
 import com.example.toastgoand.network.myclans.MyClansDataClass
 import com.pubnub.api.PNConfiguration
@@ -23,11 +24,19 @@ fun pushSetupClans(clansHere: MutableList<MyClansDataClass>, userid: String, dev
         Channels.add(item.pn_channel_id)
     }
 
+    Log.i("pnnotif clans", "function called")
+
     pubnub.addPushNotificationsOnChannels(
         pushType = PNPushType.FCM,
         channels = Channels,
         deviceId = deviceid,
-    ).async{result, status ->}
+    ).async{result, status ->
+        if (status.error) {
+            Log.i("pnnotif clans fail", status.statusCode.toString())
+        } else {
+            Log.i("pnnotif clans suc", result.toString() )
+        }
+    }
 }
 
 fun pushSetupDirects(directsHere: MutableList<MyDirectsDataClass>, userid: String, deviceid: String) {

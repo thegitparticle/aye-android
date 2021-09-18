@@ -73,13 +73,19 @@ class ClansFragment : Fragment() {
 
         prefHelper = context?.let { PrefHelper(it) }!!
 
+        Log.i("pnnotif clans", "logging is working")
+        Log.i("pnnotif clans", prefHelper.getString(Constant.FIREBASE_TOKEN).toString())
+
         viewModel.liveClans.observeForever{
+            Log.i("pnnotif clans", "liveclans obserging worked")
             viewModel.liveClans.value?.let { it1 ->
+                Log.i("pnnotif clans", "liveclans value is passed")
                 prefHelper.getString(
                     Constant.FIREBASE_TOKEN)?.let { it2 ->
                     pushSetupClans(
                         it1, viewModel.deets.value?.user?.id.toString(), it2
                     )
+                    Log.i("pnnotif clans", "function being called")
                 }
             }
         }
