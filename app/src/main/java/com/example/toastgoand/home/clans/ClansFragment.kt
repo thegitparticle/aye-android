@@ -52,6 +52,7 @@ import com.example.toastgoand.network.myclans.MyClansDataClass
 import com.example.toastgoand.network.pnstuff.pushSetupClans
 import com.example.toastgoand.prefhelpers.Constant
 import com.example.toastgoand.prefhelpers.PrefHelper
+import com.example.toastgoand.uibits.DotsLoader
 import kotlinx.serialization.json.JsonNull.content
 
 class ClansFragment : Fragment() {
@@ -124,6 +125,9 @@ class ClansFragment : Fragment() {
                                 })
                             item {
                                 Spacer(Modifier.height(20.dp))
+                            }
+                            item {
+                                DotsLoader(scale = 0.5.toFloat())
                             }
                             items(
                                 items = clansHere,
