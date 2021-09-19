@@ -5,11 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
@@ -34,12 +32,15 @@ import com.example.toastgoand.home.aye.TheAyeViewModel
 import com.example.toastgoand.home.clanframes.ClanFramesActivity
 import com.example.toastgoand.home.clans.ClansViewModel
 import com.example.toastgoand.home.clans.ClansViewModelFactory
+import com.example.toastgoand.home.myprofile.components.ButtonsList
 import com.example.toastgoand.home.myprofile.components.Details
 import com.example.toastgoand.network.myclans.MyClansDataClass
 import com.example.toastgoand.network.userdetails.User
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
+import com.example.toastgoand.uibits.HeaderOtherScreens
 import com.example.toastgoand.uibits.TopHeaderModals
 import com.example.toastgoand.uibits.TopHeaderPlayScreens
+import com.google.accompanist.insets.ProvideWindowInsets
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.ChevronDown
 import spencerstudios.com.bungeelib.Bungee
@@ -62,8 +63,10 @@ class MyProfileActivity : BaseActivity() {
 
         fun onBackPressedHere() {
             onBackPressed()
-            overridePendingTransition(R.anim.slide_up_enter,
-                R.anim.slide_down_exit)
+            overridePendingTransition(
+                R.anim.slide_up_enter,
+                R.anim.slide_down_exit
+            )
         }
 
         setContent {
@@ -85,39 +88,29 @@ class MyProfileActivity : BaseActivity() {
                     )
                 )
 
-                Column(modifier = Modifier.fillMaxWidth()) {
-                    TopHeaderModals(
-                        modifier = Modifier.fillMaxWidth(),
-                        title = {
-                            Column(
-                                modifier = Modifier.weight(1f),
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                Text(
-                                    text = "",
-                                    style = MaterialTheme.typography.subtitle1
-                                )
-                            }
-                        },
-                        onLeftIconPressed = {},
-                        actions = {
-                            CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-                                Icon(
-                                    imageVector = FeatherIcons.ChevronDown,
-                                    modifier = Modifier
-                                        .clickable(onClick = { onBackPressedHere() })
-                                        .padding(horizontal = 12.dp, vertical = 16.dp)
-                                        .height(24.dp),
-                                    contentDescription = "go back"
-                                )
-                            }
+                ProvideWindowInsets() {
+                    Scaffold(
+                        topBar = {
+                            HeaderOtherScreens(
+                                modifier = Modifier.fillMaxWidth(),
+                                title = ""
+                            )
                         }
-                    )
-                    Column(modifier = Modifier.fillMaxWidth()) {
-                        Details(userDeets = deetsHere)
+                    ) { contentPadding ->
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(MaterialTheme.colors.background),
+                            verticalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Details(userDeets = deetsHere)
+                            ButtonsList(
+                                clubsNumber = deetsHere.user.number_of_clubs_joined.toString(),
+                                framesNumber = deetsHere.user.total_frames_participation.toString()
+                            )
+                        }
                     }
                 }
-
             }
         }
     }
