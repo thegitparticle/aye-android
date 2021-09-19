@@ -3,6 +3,8 @@ package com.example.toastgoand.home.directs.components
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -26,18 +28,20 @@ import com.example.toastgoand.network.nudgelist.NudgeToDataClass
 import com.example.toastgoand.utilities.drawColorShadow
 import com.google.android.material.composethemeadapter.MdcTheme
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NudgeToItem(nudgeItem: NudgeToDataClass) {
     AyeTheme() {
         Row(
             modifier = Modifier.padding(horizontal = 15.dp).fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Row() {
                 NudgeToImage(nudgeItem = nudgeItem)
                 Column(
                     modifier = Modifier
-                        .padding(16.dp)
+                        .padding(horizontal = 16.dp)
                 ) {
                     Text(
                         text = nudgeItem.name,
@@ -53,18 +57,20 @@ fun NudgeToItem(nudgeItem: NudgeToDataClass) {
 
 @Composable
 private fun StartButton() {
-    Button(
-        onClick = { /* Do something! */ },
-        modifier = Modifier.alpha(0.25F),
-        colors = ButtonDefaults.textButtonColors(
-            backgroundColor = MaterialTheme.colors.primaryVariant,
-        ),
-        shape = MaterialTheme.shapes.small
+    Box(
+        modifier = Modifier
+            .wrapContentWidth()
+            .clip(RoundedCornerShape(15.dp))
+            .background(MaterialTheme.colors.primary.copy(.08f))
+            .clickable { /* Do something! */ }
+            .width(75.dp)
+            .height(30.dp),
+        contentAlignment = Alignment.Center
     ) {
         Text(
             text = "start",
-            style = MaterialTheme.typography.subtitle2,
-            color = MaterialTheme.colors.onSecondary
+            style = MaterialTheme.typography.caption,
+            color = MaterialTheme.colors.primary
         )
     }
 }
