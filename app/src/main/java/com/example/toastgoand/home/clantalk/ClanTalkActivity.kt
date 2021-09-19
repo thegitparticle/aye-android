@@ -3,6 +3,7 @@ package com.example.toastgoand.home.clantalk
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.animation.AnimatedVisibility
@@ -74,13 +75,11 @@ class ClanTalkActivity : BaseActivity() {
                 val startTime = intent.getStringExtra("startTime")
                 val endTime = intent.getStringExtra("endTime")
 
-                var showStartClanOverlay by remember { mutableStateOf(true) }
+
                 var showTextInput by remember { mutableStateOf(false) }
                 val focusTextInputRequester = remember { FocusRequester() }
 
-                if (ongoingFrame) {
-                    showStartClanOverlay = false
-                }
+
 
                 fun setUpTextInput() {
                     showTextInput = true

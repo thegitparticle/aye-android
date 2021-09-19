@@ -197,4 +197,7 @@ dependencies {
     implementation platform ('com.google.firebase:firebase-bom:28.4.1')
     implementation 'com.google.firebase:firebase-common-ktx:20.0.0'
     implementation 'com.google.firebase:firebase-messaging:20.1.0'
+
+    //slide to accept button
+    implementation "com.ncorti:slidetoact:0.9.0"
 }
