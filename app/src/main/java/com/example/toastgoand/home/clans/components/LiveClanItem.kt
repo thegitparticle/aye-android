@@ -32,6 +32,7 @@ import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.home.clantalk.ClanTalkActivity
 import com.example.toastgoand.network.myclans.DisplayPhotos
 import com.example.toastgoand.network.myclans.MyClansDataClass
+import com.example.toastgoand.utilities.drawColorShadow
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.Layers
 
@@ -241,7 +242,7 @@ private fun PersonImage(imageLink: String) {
                     contentDescription = "clan member dp",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
-                        .size(70.dp)
+                        .size(70.dp).drawColorShadow(MaterialTheme.colors.onBackground, offsetY = 4.dp, alpha = 0.5f)
                 )
             }
         }

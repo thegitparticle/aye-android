@@ -1,5 +1,7 @@
 package com.example.toastgoand.home.directs.components
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
@@ -21,6 +23,7 @@ import coil.compose.rememberImagePainter
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.home.directs.NudgeItemDataClass
 import com.example.toastgoand.network.nudgelist.NudgeToDataClass
+import com.example.toastgoand.utilities.drawColorShadow
 import com.google.android.material.composethemeadapter.MdcTheme
 
 @Composable
@@ -66,6 +69,7 @@ private fun StartButton() {
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 private fun NudgeToImage(nudgeItem: NudgeToDataClass) {
     val painter = rememberImagePainter(data = nudgeItem.profile_pic)
@@ -77,5 +81,6 @@ private fun NudgeToImage(nudgeItem: NudgeToDataClass) {
             .padding(8.dp)
             .size(55.dp)
             .clip(RoundedCornerShape(corner = CornerSize(27.5.dp)))
+            .drawColorShadow(MaterialTheme.colors.onBackground, offsetY = 4.dp, alpha = 0.5f)
     )
 }

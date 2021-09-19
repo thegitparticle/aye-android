@@ -1,6 +1,8 @@
 package com.example.toastgoand.home.directs.components
 
 import android.content.Intent
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -76,6 +78,7 @@ fun DirectItem(directItem: MyDirectsDataClass) {
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun DirectImage(directItem: MyDirectsDataClass) {
     val painter = rememberImagePainter(data = directItem.display_guys.profile_picture)
@@ -87,5 +90,6 @@ fun DirectImage(directItem: MyDirectsDataClass) {
             .padding(8.dp)
             .size(55.dp)
             .clip(RoundedCornerShape(corner = CornerSize(27.5.dp)))
+            .drawColorShadow(MaterialTheme.colors.onBackground, offsetY = 4.dp, alpha = 0.5f)
     )
 }
