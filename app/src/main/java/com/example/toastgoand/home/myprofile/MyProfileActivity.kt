@@ -18,6 +18,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.viewModels
@@ -88,12 +89,15 @@ class MyProfileActivity : BaseActivity() {
                     )
                 )
 
+                val context = LocalContext.current
+
                 ProvideWindowInsets() {
                     Scaffold(
                         topBar = {
                             HeaderOtherScreens(
                                 modifier = Modifier.fillMaxWidth(),
-                                title = ""
+                                title = "",
+                                onBackIconPressed = { onBackPressedHere() }
                             )
                         }
                     ) { contentPadding ->
@@ -106,7 +110,17 @@ class MyProfileActivity : BaseActivity() {
                             Details(userDeets = deetsHere)
                             ButtonsList(
                                 clubsNumber = deetsHere.user.number_of_clubs_joined.toString(),
-                                framesNumber = deetsHere.user.total_frames_participation.toString()
+                                framesNumber = deetsHere.user.total_frames_participation.toString(),
+                                editOnPressed = {
+                                    context.startActivity(
+                                        Intent(
+                                            context,
+                                            EditProfileActivity::class.java
+                                        ).apply {
+                                            putExtra("olddp", deetsHere.image)
+                                            putExtra("userid", deetsHere.user.id)
+                                        })
+                                }
                             )
                         }
                     }

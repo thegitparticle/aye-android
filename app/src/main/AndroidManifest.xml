@@ -29,6 +29,9 @@
         android:windowSoftInputMode="adjustResize"
         tools:replace="android:appComponentFactory">
         <activity
+            android:name=".home.myprofile.EditProfileActivity"
+            android:exported="true" />
+        <activity
             android:name=".auth.loginsetup.LoginSetupActivity"
             android:exported="true" />
         <activity
@@ -137,7 +140,6 @@
                 <action android:name="android.intent.action.screenshare" />
             </intent-filter>
         </service>
-
     </application>
 
 </manifest>
