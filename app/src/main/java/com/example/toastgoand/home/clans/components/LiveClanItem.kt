@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -18,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
@@ -30,6 +32,8 @@ import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.home.clantalk.ClanTalkActivity
 import com.example.toastgoand.network.myclans.DisplayPhotos
 import com.example.toastgoand.network.myclans.MyClansDataClass
+import compose.icons.FeatherIcons
+import compose.icons.feathericons.Layers
 
 @Composable
 fun LiveClanItem(myclan: MyClansDataClass, position: Int) {
@@ -184,7 +188,21 @@ fun TextPieces(myclan: MyClansDataClass) {
                 style = MaterialTheme.typography.subtitle1,
                 color = Color.Black
             )
-            Text(text = "new frames", style = MaterialTheme.typography.caption, color = Color.Blue)
+            Row(modifier = Modifier.padding(vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+                Icon(
+                    imageVector = FeatherIcons.Layers,
+                    contentDescription = "frames identifier icon",
+                    modifier = Modifier.size(11.dp)
+                )
+                Text(
+                    text = "live frame",
+                    style = MaterialTheme.typography.caption,
+                    color = MaterialTheme.colors.secondary,
+                    modifier = Modifier.alpha(
+                        0.25F
+                    ).padding(horizontal = 4.dp)
+                )
+            }
         }
 
     }

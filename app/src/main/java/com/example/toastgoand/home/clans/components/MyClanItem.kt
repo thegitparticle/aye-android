@@ -10,12 +10,14 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
@@ -36,7 +38,8 @@ import com.example.toastgoand.network.myclans.MyClansDataClass
 import com.example.toastgoand.utilities.drawColorShadow
 import com.google.android.material.internal.ContextUtils.getActivity
 import com.google.android.material.resources.TextAppearance
-
+import compose.icons.FeatherIcons
+import compose.icons.feathericons.Layers
 
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -68,14 +71,21 @@ fun DormantClan(myclan: MyClansDataClass) {
                         style = typography.subtitle1,
                         color = MaterialTheme.colors.onBackground
                     )
-                    Text(
-                        text = "tap to start new frame",
-                        style = typography.caption,
-                        color = MaterialTheme.colors.onBackground,
-                        modifier = Modifier.alpha(
-                            0.25F
+                    Row(modifier = Modifier.padding(vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            imageVector = FeatherIcons.Layers,
+                            contentDescription = "frames identifier icon",
+                            modifier = Modifier.size(11.dp)
                         )
-                    )
+                        Text(
+                            text = "tap to start new frame",
+                            style = typography.caption,
+                            color = MaterialTheme.colors.onBackground,
+                            modifier = Modifier.alpha(
+                                0.25F
+                            ).padding(horizontal = 4.dp)
+                        )
+                    }
                 }
             }
         }

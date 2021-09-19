@@ -6,9 +6,11 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
@@ -24,6 +26,8 @@ import com.example.toastgoand.home.directtalk.DirectTalkActivity
 import com.example.toastgoand.network.directs.MyDirectsDataClass
 import com.example.toastgoand.utilities.drawColorShadow
 import com.google.android.material.composethemeadapter.MdcTheme
+import compose.icons.FeatherIcons
+import compose.icons.feathericons.Layers
 
 @Composable
 fun DirectItem(directItem: MyDirectsDataClass) {
@@ -51,14 +55,21 @@ fun DirectItem(directItem: MyDirectsDataClass) {
                         style = MaterialTheme.typography.subtitle1,
                         color = MaterialTheme.colors.onBackground
                     )
-                    Text(
-                        text = "tap to start new frame",
-                        style = MaterialTheme.typography.caption,
-                        color = MaterialTheme.colors.onBackground,
-                        modifier = Modifier.alpha(
-                            0.25F
+                    Row(modifier = Modifier.padding(vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            imageVector = FeatherIcons.Layers,
+                            contentDescription = "frames identifier icon",
+                            modifier = Modifier.size(11.dp)
                         )
-                    )
+                        Text(
+                            text = "tap to start new frame",
+                            style = MaterialTheme.typography.caption,
+                            color = MaterialTheme.colors.onBackground,
+                            modifier = Modifier.alpha(
+                                0.25F
+                            ).padding(horizontal = 4.dp)
+                        )
+                    }
                 }
             }
         }
