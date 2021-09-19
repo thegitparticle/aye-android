@@ -25,6 +25,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.getValue
 import androidx.compose.onCommit
@@ -82,12 +83,13 @@ class ClansFragment : Fragment() {
         Log.i("pnnotif clans", "logging is working")
         Log.i("pnnotif clans", prefHelper.getString(Constant.FIREBASE_TOKEN).toString())
 
-        viewModel.liveClans.observeForever{
+        viewModel.liveClans.observeForever {
             Log.i("pnnotif clans", "liveclans obserging worked")
             viewModel.liveClans.value?.let { it1 ->
                 Log.i("pnnotif clans", "liveclans value is passed")
                 prefHelper.getString(
-                    Constant.FIREBASE_TOKEN)?.let { it2 ->
+                    Constant.FIREBASE_TOKEN
+                )?.let { it2 ->
                     pushSetupClans(
                         it1, viewModel.deets.value?.user?.id.toString(), it2
                     )
@@ -125,7 +127,7 @@ class ClansFragment : Fragment() {
                     ) {
                         SwipeRefresh(
                             state = rememberSwipeRefreshState(isRefreshing),
-                            onRefresh = {viewModel.refresh()}
+                            onRefresh = { viewModel.refresh() }
                         ) {
                             LazyColumn(
                                 modifier = Modifier.background(MaterialTheme.colors.background)
@@ -133,7 +135,10 @@ class ClansFragment : Fragment() {
                                 items(
                                     items = liveClansHere,
                                     itemContent = {
-                                        LiveClanItem(myclan = it, position = liveClansHere.indexOf(it))
+                                        LiveClanItem(
+                                            myclan = it,
+                                            position = liveClansHere.indexOf(it)
+                                        )
                                     })
                                 item {
                                     Spacer(Modifier.height(20.dp))
@@ -147,26 +152,38 @@ class ClansFragment : Fragment() {
                                 item(
                                     key = "footer",
                                     content = {
-                                        Button(
-                                            onClick = {
-                                                context.startActivity(
-                                                    Intent(
-                                                        context,
-                                                        StartClanActivity::class.java
-                                                    ).apply { })
-                                            }, colors = ButtonDefaults.textButtonColors(
-                                                backgroundColor = MaterialTheme.colors.secondary,
-                                            )
+                                        Row(
+                                            modifier = Modifier.fillMaxWidth(),
+                                            horizontalArrangement = Arrangement.Center
                                         ) {
-                                            Text(
-                                                "start clan", style = MaterialTheme.typography.body1,
-                                                color = MaterialTheme.colors.onSecondary
-                                            )
+                                            Button(
+                                                onClick = {
+                                                    context.startActivity(
+                                                        Intent(
+                                                            context,
+                                                            StartClanActivity::class.java
+                                                        ).apply { })
+                                                },
+                                                colors = ButtonDefaults.textButtonColors(
+                                                    backgroundColor = MaterialTheme.colors.secondary,
+                                                ),
+                                                shape = RoundedCornerShape(30.dp),
+                                                modifier = Modifier
+                                                    .padding(vertical = 30.dp)
+                                                    .height(60.dp)
+                                                    .width(160.dp),
+                                            ) {
+                                                Text(
+                                                    "start clan",
+                                                    style = MaterialTheme.typography.body1,
+                                                    color = MaterialTheme.colors.onSecondary
+                                                )
+                                            }
                                         }
                                     }
                                 )
                                 item {
-                                    Spacer(Modifier.height(200.dp))
+                                    Spacer(Modifier.height(300.dp))
                                 }
 
                             }
