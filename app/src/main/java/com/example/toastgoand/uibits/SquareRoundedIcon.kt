@@ -19,7 +19,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun SqaureRoundedIcon(iconName: ImageVector, color: Color) {
+fun SqaureRoundedIcon(iconName: ImageVector, color: Color, modifier: Modifier) {
 
     @Composable
     fun BackgroundPlusIcon(shape: Shape) {

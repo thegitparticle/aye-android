@@ -39,7 +39,7 @@ fun OneButtonHere(title: String, icon: ImageVector, color: Color) {
             .padding(vertical = 5.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        SqaureRoundedIcon(icon, color = color)
+        SqaureRoundedIcon(icon, color = color, modifier = Modifier.padding(horizontal = 5.dp))
         Text(
             text = title,
             style = MaterialTheme.typography.subtitle1,
@@ -61,7 +61,7 @@ fun OneButtonHereWithInfo(title: String, icon: ImageVector, color: Color, info: 
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Row (modifier = Modifier, verticalAlignment = Alignment.CenterVertically) {
-            SqaureRoundedIcon(icon, color = color)
+            SqaureRoundedIcon(icon, color = color, modifier = Modifier.padding(horizontal = 5.dp))
             Text(
                 text = title,
                 style = MaterialTheme.typography.subtitle1,
