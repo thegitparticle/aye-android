@@ -1,6 +1,8 @@
 package com.example.toastgoand.home.clans.components
 
 import android.content.Intent
+import androidx.compose.animation.animateColor
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -13,6 +15,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -38,16 +41,17 @@ fun LiveClanItem(myclan: MyClansDataClass, position: Int) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 7.5.dp, horizontal = 5.dp).clickable {
-                    context.startActivity(Intent(context, ClanTalkActivity::class.java).apply {
-                        putExtra("clubName", myclan.club_name)
-                        putExtra("clubid", myclan.club_id)
-                        putExtra("channelid", myclan.pn_channel_id)
-                        putExtra("ongoingFrame", myclan.ongoing_frame)
-                        putExtra("startTime", myclan.start_time)
-                        putExtra("endTime", myclan.end_time)
-                    })
-                },
+                    .padding(vertical = 7.5.dp, horizontal = 5.dp)
+                    .clickable {
+                        context.startActivity(Intent(context, ClanTalkActivity::class.java).apply {
+                            putExtra("clubName", myclan.club_name)
+                            putExtra("clubid", myclan.club_id)
+                            putExtra("channelid", myclan.pn_channel_id)
+                            putExtra("ongoingFrame", myclan.ongoing_frame)
+                            putExtra("startTime", myclan.start_time)
+                            putExtra("endTime", myclan.end_time)
+                        })
+                    },
                 horizontalArrangement = Arrangement.Start
             ) {
                 Column(
@@ -76,7 +80,8 @@ fun LiveClanItem(myclan: MyClansDataClass, position: Int) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 7.5.dp).clickable {
+                    .padding(vertical = 7.5.dp)
+                    .clickable {
                         context.startActivity(Intent(context, ClanTalkActivity::class.java).apply {
                             putExtra("clubName", myclan.club_name)
                             putExtra("clubid", myclan.club_id)
@@ -91,7 +96,8 @@ fun LiveClanItem(myclan: MyClansDataClass, position: Int) {
                 Column(
                     verticalArrangement = Arrangement.Center,
                     modifier = Modifier
-                        .fillMaxWidth(fraction = 0.4f).padding(vertical = 5.dp) ,
+                        .fillMaxWidth(fraction = 0.4f)
+                        .padding(vertical = 5.dp) ,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     if (totalMember == 2) {
@@ -188,6 +194,17 @@ fun TextPieces(myclan: MyClansDataClass) {
 private fun PersonImage(imageLink: String) {
     val painter = rememberImagePainter(data = imageLink)
 
+    val infiniteTransition = rememberInfiniteTransition()
+
+    val sizeofImage by infiniteTransition.animateFloat(
+        initialValue = 0.6f,
+        targetValue = 0.7f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(1000, easing = LinearEasing),
+            repeatMode = RepeatMode.Reverse
+        )
+    )
+
     @Composable
     fun PersonDpBox(shape: Shape) {
         Column(
@@ -196,7 +213,7 @@ private fun PersonImage(imageLink: String) {
         ) {
             Box(
                 modifier = Modifier
-                    .size(60.dp)
+                    .size((100 * sizeofImage).dp)
                     .clip(shape)
                     .background(MaterialTheme.colors.onSurface),
                 contentAlignment = Alignment.Center
