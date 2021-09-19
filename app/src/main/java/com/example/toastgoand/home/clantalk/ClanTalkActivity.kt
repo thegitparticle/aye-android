@@ -106,22 +106,6 @@ class ClanTalkActivity : BaseActivity() {
                                 start = currentMoment * 10000000,
                                 end = startTime.toLong() * 10000000
                             )
-
-//                            pubNub.history(
-//                                channel = channelid,
-//                                reverse = false,
-//                                includeMeta = true,
-//                                start = currentMoment * 10000000,
-//                                end = startTime.toLong() * 10000000
-//                            ).async { result, status ->
-//                                if (status.error) {
-//                                    Log.i("pubnub - get history clans fail", status.statusCode.toString())
-//                                } else {
-//                                    members = result?.messages!!
-//                                    Log.i("pubnub members", members.toString())
-////                                    .get(0)?.let { Log.i("pubnub - get history clans suc", it?.meta.toString() ) }
-//                                }
-//                            }
                         }
                     }
                 }
@@ -168,6 +152,7 @@ class ClanTalkActivity : BaseActivity() {
                                                 putExtra("ongoingFrame", ongoingFrame)
                                                 putExtra("startTime", startTime)
                                                 putExtra("endTime", endTime)
+                                                putExtra("userid", viewModel.deets.value?.user?.id.toString())
                                             })
                                     },
                                     actionIcon = FeatherIcons.Layers

@@ -58,6 +58,7 @@ class ClanFramesActivity : BaseActivity() {
                 val ongoingFrame = intent.getBooleanExtra("ongoingFrame", false)
                 val startTime = intent.getStringExtra("startTime")
                 val endTime = intent.getStringExtra("endTime")
+                val userid = intent.getStringExtra("userid")
 
                 val context = LocalContext.current
 
@@ -73,8 +74,8 @@ class ClanFramesActivity : BaseActivity() {
                             putExtra("ongoingFrame", ongoingFrame)
                             putExtra("startTime", startTime)
                             putExtra("endTime", endTime)
+                            putExtra("userid", userid)
                         })
-                    Bungee.slideUp(this)
                 }
 
                 val now: Instant = Clock.System.now()
@@ -194,13 +195,19 @@ class ClanFramesActivity : BaseActivity() {
                             }
                             Spacer(modifier = Modifier.size(25.dp))
                             if (clubid != null) {
-                                AMonth(
-                                    AMonthClanViewModel(),
-                                    clubid.toString(),
-                                    viewMonth,
-                                    currentMonth,
-                                    todayDate
-                                )
+                                if (clubName != null) {
+                                    if (userid != null) {
+                                        AMonth(
+                                            AMonthClanViewModel(),
+                                            clubid.toString(),
+                                            viewMonth,
+                                            currentMonth,
+                                            todayDate,
+                                            clubName = clubName,
+                                            userid = userid
+                                        )
+                                    }
+                                }
                             }
                         }
                     }
