@@ -1,8 +1,10 @@
 package com.example.toastgoand.home.clantalk.components
 
+import android.content.Intent
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -13,10 +15,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.example.toastgoand.composestyle.AyeTheme
+import com.example.toastgoand.home.clanframes.ClanFramesActivity
 import com.example.toastgoand.network.directs.MyDirectsDataClass
+import com.example.toastgoand.uibits.ViewMediaActivity
 import com.example.toastgoand.utilities.drawColorShadow
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -55,6 +60,8 @@ fun OldPNMessage (message: PNHistoryItemResult) {
 @Composable
 private fun ImageHere(imageLink: String) {
     val painter = rememberImagePainter(data = imageLink)
+    val context = LocalContext.current
+
     Image(
         painter = painter,
         contentDescription = "message image link",
@@ -64,6 +71,15 @@ private fun ImageHere(imageLink: String) {
             .fillMaxWidth()
             .height(250.dp)
             .clip(RoundedCornerShape(corner = CornerSize(15.dp)))
+            .clickable {
+                context.startActivity(
+                    Intent(
+                        context,
+                        ViewMediaActivity::class.java
+                    ).apply {
+                        putExtra("imagelink", imageLink)
+                    })
+            }
     )
 }
 
