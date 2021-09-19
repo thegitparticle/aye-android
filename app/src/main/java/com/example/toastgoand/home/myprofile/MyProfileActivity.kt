@@ -120,6 +120,17 @@ class MyProfileActivity : BaseActivity() {
                                             putExtra("olddp", deetsHere.image)
                                             putExtra("userid", deetsHere.user.id)
                                         })
+                                },
+                                settingsOnPressed = {
+                                    context.startActivity(
+                                        Intent(
+                                            context,
+                                            SettingsActivity::class.java
+                                        ).apply {
+                                            putExtra("olddp", deetsHere.image)
+                                            putExtra("userid", deetsHere.user.id)
+                                        })
+
                                 }
                             )
                         }

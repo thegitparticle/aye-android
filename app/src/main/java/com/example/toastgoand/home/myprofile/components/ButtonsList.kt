@@ -18,7 +18,12 @@ import compose.icons.FeatherIcons
 import compose.icons.feathericons.*
 
 @Composable
-fun ButtonsList(clubsNumber: String, framesNumber: String, editOnPressed: () -> Unit = { }) {
+fun ButtonsList(
+    clubsNumber: String,
+    framesNumber: String,
+    editOnPressed: () -> Unit = { },
+    settingsOnPressed: () -> Unit = {}
+) {
 
     Column(
         modifier = Modifier
@@ -44,7 +49,12 @@ fun ButtonsList(clubsNumber: String, framesNumber: String, editOnPressed: () -> 
             color = MaterialTheme.colors.primary,
             onPressed = editOnPressed
         )
-        OneButtonHere("Logout", FeatherIcons.LogOut, color = MaterialTheme.colors.primary)
+        OneButtonHere(
+            "Settings",
+            FeatherIcons.Settings,
+            color = MaterialTheme.colors.primary,
+            onPressed = settingsOnPressed
+        )
     }
 
 }
@@ -57,7 +67,7 @@ fun OneButtonHere(title: String, icon: ImageVector, color: Color, onPressed: () 
             .height(50.dp)
             .background(MaterialTheme.colors.surface)
             .padding(vertical = 5.dp)
-            .clickable(onClick = onPressed ),
+            .clickable(onClick = onPressed),
         verticalAlignment = Alignment.CenterVertically
     ) {
         SqaureRoundedIcon(icon, color = color, modifier = Modifier.padding(horizontal = 5.dp))
