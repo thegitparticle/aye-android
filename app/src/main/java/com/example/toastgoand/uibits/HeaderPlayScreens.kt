@@ -19,10 +19,8 @@ import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.google.accompanist.insets.statusBarsPadding
 import compose.icons.FeatherIcons
-import compose.icons.feathericons.ChevronLeft
+import compose.icons.feathericons.*
 import compose.icons.feathericons.ChevronRight
-import compose.icons.feathericons.Layers
-import compose.icons.feathericons.X
 
 @Composable
 fun HeaderPlayScreens(
@@ -56,7 +54,7 @@ fun HeaderPlayScreens(
                         style = MaterialTheme.typography.subtitle1,
                         color = MaterialTheme.colors.onBackground
                     )
-                    CircleIcon(iconName = FeatherIcons.ChevronRight, onIconPressed = onBackIconPressed)
+                    CircleIcon(iconName = FeatherIcons.ChevronDown, onIconPressed = onBackIconPressed)
                 }
             },
             backgroundColor = MaterialTheme.colors.background.copy(alpha = 0.95f),

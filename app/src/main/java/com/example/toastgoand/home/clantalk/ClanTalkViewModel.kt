@@ -11,6 +11,11 @@ import com.example.toastgoand.network.directs.MyDirectsDataClass
 import com.example.toastgoand.network.nudgelist.NudgeToDataClass
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
 import com.example.toastgoand.network.userdetails.UserDetailsRepo
+import com.pubnub.api.PubNub
+import com.pubnub.api.models.consumer.history.PNHistoryItemResult
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 
@@ -19,6 +24,11 @@ class ClanTalkViewModel(repoDeets: UserDetailsRepo, private val repoRecos: Defau
 
     val deets: LiveData<UserDetailsDataClass> = repoDeets.userDetails.asLiveData()
     val recos: LiveData<List<DefaultRecosDataClass>> = repoRecos.defaultRecos.asLiveData()
+
+    private var _oldMessages = MutableLiveData<List<PNHistoryItemResult>>()
+
+    val oldMessages: LiveData<List<PNHistoryItemResult>>
+        get() = _oldMessages
 
     private fun insertDefaultRecos(recos: List<DefaultRecosDataClass>) = viewModelScope.launch {
         repoRecos.insert(recos)
@@ -45,6 +55,27 @@ class ClanTalkViewModel(repoDeets: UserDetailsRepo, private val repoRecos: Defau
         }
 
     }
+
+    fun getOldMessages(pubNub: PubNub, channelid: String ,start: Long, end: Long) {
+        viewModelScope.launch {
+            pubNub.history(
+                channel = channelid,
+                reverse = true,
+                includeMeta = true,
+                start = start,
+                end = end
+            ).async { result, status ->
+                if (status.error) {
+                    Log.i("pubnub - get history clans fail", status.statusCode.toString())
+                } else {
+                    _oldMessages.value = result?.messages
+                    Log.i("pubnub members", _oldMessages.toString())
+                }
+            }
+        }
+    }
+
+
 }
 
 class ClanTalkViewModelFactory(

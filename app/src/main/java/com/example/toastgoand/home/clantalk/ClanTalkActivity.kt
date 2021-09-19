@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -31,16 +32,25 @@ import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityClanTalkBinding
 import com.example.toastgoand.dummy.DummyClanHub
 import com.example.toastgoand.home.clanframes.ClanFramesActivity
+import com.example.toastgoand.home.clanhub.ClanDetailsDataClass
+import com.example.toastgoand.home.clanhub.ClanHubDataClass
+import com.example.toastgoand.home.clanhub.User
 import com.example.toastgoand.home.clanhub.components.UsersListItem
 import com.example.toastgoand.home.clantalk.camera.CameraActivity
+import com.example.toastgoand.home.clantalk.components.OldPNMessage
 import com.example.toastgoand.home.clantalk.components.StartClanFrame
 import com.example.toastgoand.home.clantalk.components.TextInputPart
+import com.example.toastgoand.network.myclans.MyClansDataClass
 import com.example.toastgoand.uibits.HeaderPlayScreens
 import com.google.accompanist.insets.*
+import com.pubnub.api.PNConfiguration
+import com.pubnub.api.PubNub
+import com.pubnub.api.models.consumer.history.PNHistoryItemResult
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.Camera
 import compose.icons.feathericons.Layers
 import compose.icons.feathericons.PlusSquare
+import kotlinx.datetime.Clock
 
 class ClanTalkActivity : BaseActivity() {
 
@@ -64,9 +74,9 @@ class ClanTalkActivity : BaseActivity() {
 //        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
-            AyeTheme() {
+            AyeTheme {
 
-                val members = DummyClanHub.clanHub.users
+                val oldMessagesHere: List<PNHistoryItemResult> by viewModel.oldMessages.observeAsState(listOf<PNHistoryItemResult>())
 
                 val clubName = intent.getStringExtra("clubName")
                 val clubid = intent.getIntExtra("clubid", 0)
@@ -75,17 +85,55 @@ class ClanTalkActivity : BaseActivity() {
                 val startTime = intent.getStringExtra("startTime")
                 val endTime = intent.getStringExtra("endTime")
 
+                val pnConfiguration = PNConfiguration().apply {
+                    subscribeKey = "sub-c-d099e214-9bcf-11eb-9adf-f2e9c1644994"
+                    publishKey = "pub-c-a65bb691-5b8a-4c4b-aef5-e2a26677122d"
+                    secure = true
+                    uuid = viewModel.deets.value?.user?.id.toString()
+                }
+
+                val pubNub = PubNub(pnConfiguration)
+
+                val currentMoment: Long = Clock.System.now().epochSeconds
+
+                if (ongoingFrame) {
+                    if (channelid != null) {
+                        if (startTime != null) {
+
+                            viewModel.getOldMessages(
+                                pubNub = pubNub,
+                                channelid = channelid,
+                                start = currentMoment * 10000000,
+                                end = startTime.toLong() * 10000000
+                            )
+
+//                            pubNub.history(
+//                                channel = channelid,
+//                                reverse = false,
+//                                includeMeta = true,
+//                                start = currentMoment * 10000000,
+//                                end = startTime.toLong() * 10000000
+//                            ).async { result, status ->
+//                                if (status.error) {
+//                                    Log.i("pubnub - get history clans fail", status.statusCode.toString())
+//                                } else {
+//                                    members = result?.messages!!
+//                                    Log.i("pubnub members", members.toString())
+////                                    .get(0)?.let { Log.i("pubnub - get history clans suc", it?.meta.toString() ) }
+//                                }
+//                            }
+                        }
+                    }
+                }
+
 
                 var showTextInput by remember { mutableStateOf(false) }
                 val focusTextInputRequester = remember { FocusRequester() }
-
-
 
                 fun setUpTextInput() {
                     showTextInput = true
 //                    focusTextInputRequester.requestFocus()
                 }
-
 
                 fun reSetTextInput() {
                     showTextInput = false
@@ -196,13 +244,13 @@ class ClanTalkActivity : BaseActivity() {
                         bottomBar = {
                             if (ongoingFrame) {
                                 AnimatedVisibility(visible = showTextInput) {
-                                        if (channelid != null) {
+                                    if (channelid != null) {
 //                                            viewModel.recos.value?.let {
-                                                TextInputPart(
-                                                    userid = viewModel.deets.value?.user?.id.toString(),
-                                                    channelid = channelid,
+                                        TextInputPart(
+                                            userid = viewModel.deets.value?.user?.id.toString(),
+                                            channelid = channelid,
 //                                                    defaultRecos = it
-                                                )
+                                        )
 //                                            }
                                     }
                                 }
@@ -221,22 +269,25 @@ class ClanTalkActivity : BaseActivity() {
                     ) { contentPadding ->
                         Column {
                             LazyColumn(
-                                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+                                contentPadding = PaddingValues(vertical = 8.dp),
                                 reverseLayout = true,
                                 modifier = Modifier
                                     .weight(1f)
                                     .nestedScroll(connection = rememberImeNestedScrollConnection())
                                     .clickable { reSetTextInput() }
-                                    .fillMaxWidth()
+                                    .fillMaxWidth(),
+                                horizontalAlignment = Alignment.CenterHorizontally
                             ) {
                                 item {
                                     Spacer(modifier = Modifier.size(100.dp))
                                 }
-                                items(
-                                    items = members,
-                                    itemContent = {
-                                        UsersListItem(user = it)
-                                    })
+                                if (oldMessagesHere.isNotEmpty()) {
+                                    items(
+                                        items = oldMessagesHere,
+                                        itemContent = {
+                                            OldPNMessage(message = it)
+                                        })
+                                }
                                 item {
                                     Spacer(modifier = Modifier.size(100.dp))
                                 }

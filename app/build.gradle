@@ -139,6 +139,7 @@ dependencies {
     //kotlin json parser
     implementation 'com.beust:klaxon:5.5'
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1"
+    implementation 'com.google.code.gson:gson:2.8.8'
 
     // compose things
     // Integration with activities
