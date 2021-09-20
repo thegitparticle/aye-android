@@ -123,7 +123,11 @@ class ViewOldFrameClanActivity : BaseActivity() {
                                 items(
                                     items = oldMessagesHere,
                                     itemContent = {
-                                        OldPNMessage(message = it)
+                                        if (userid != null) {
+                                            if (channelid != null) {
+                                                OldPNMessage(message = it, userid = userid, channelid = channelid)
+                                            }
+                                        }
                                     })
                             }
                             item {

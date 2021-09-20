@@ -10,7 +10,7 @@ import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -25,6 +25,9 @@ import com.example.toastgoand.uibits.ViewMediaActivity
 import com.example.toastgoand.utilities.drawColorShadow
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.pubnub.api.PNConfiguration
+import com.pubnub.api.PubNub
+import com.pubnub.api.models.consumer.files.PNFileUrlResult
 import com.pubnub.api.models.consumer.history.PNHistoryItemResult
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -34,9 +37,93 @@ import kotlinx.serialization.json.decodeFromJsonElement
 @Serializable
 data class MessageMetaData(val image_url: String, val user_dp: String, val type: String)
 
-@Composable
-fun OldPNMessage (message: PNHistoryItemResult) {
+@Serializable
+data class CEntryData(val message: String, val file: CEntryFile)
 
+@Serializable
+data class CEntryFile(val id: String, val name: String)
+
+@Composable
+fun OldPNMessage (message: PNHistoryItemResult, userid: String, channelid: String) {
+
+    AyeTheme() {
+
+        val metaData = Gson().fromJson<MessageMetaData>(message.meta, MessageMetaData::class.java)
+
+        if (metaData.type == "h") {
+            HMessage(message = message)
+        } else if (metaData.type == "c") {
+//            Log.i("oldpnmessage", message.entry.toString())
+            CMessage(message = message, userid = userid, channelid = channelid)
+        }
+    }
+
+}
+
+@Composable
+private fun CMessage(message: PNHistoryItemResult, userid: String, channelid: String) {
+    AyeTheme() {
+
+        val metaData = Gson().fromJson<MessageMetaData>(message.meta, MessageMetaData::class.java)
+        val entryData = Gson().fromJson<CEntryData>(message.entry, CEntryData::class.java)
+
+        val pnConfiguration = PNConfiguration().apply {
+            subscribeKey = "sub-c-d099e214-9bcf-11eb-9adf-f2e9c1644994"
+            publishKey = "pub-c-a65bb691-5b8a-4c4b-aef5-e2a26677122d"
+            secure = true
+            uuid = userid
+        }
+
+        val pubnub = PubNub(pnConfiguration)
+
+//        var name by remember { mutableStateOf("") }
+
+        var urlOfFileHere by remember { mutableStateOf("")}
+        var imageLinkFound by remember {
+            mutableStateOf(false)
+        }
+
+        pubnub.getFileUrl(
+            channel = channelid,
+            fileName = entryData.file.name,
+            fileId = entryData.file.id
+        ).async { result, status ->
+            if (status.error) {
+                Log.i("oldpnmessage", status.error.toString())
+            } else if (result != null) {
+                urlOfFileHere = result.url
+                imageLinkFound = true
+            }
+        }
+
+        if (imageLinkFound) {
+            Box (modifier = Modifier
+                .fillMaxWidth(0.95f)
+                .height(250.dp)
+                .padding(vertical = 5.dp)
+                .clip(RoundedCornerShape(corner = CornerSize(15.dp))),
+                contentAlignment = Alignment.Center
+            ) {
+                ImageHere(imageLink = urlOfFileHere)
+                DPBubble(dplink = metaData.user_dp, text = message.entry.toString())
+            }
+        } else {
+            Box (modifier = Modifier
+                .fillMaxWidth(0.95f)
+                .height(250.dp)
+                .padding(vertical = 5.dp)
+                .clip(RoundedCornerShape(corner = CornerSize(15.dp))),
+                contentAlignment = Alignment.Center
+            ) {
+                DPBubble(dplink = metaData.user_dp, text = message.entry.toString())
+            }
+        }
+
+    }
+}
+
+@Composable
+private fun HMessage(message: PNHistoryItemResult) {
     AyeTheme() {
 
         val metaData = Gson().fromJson<MessageMetaData>(message.meta, MessageMetaData::class.java)
@@ -49,18 +136,18 @@ fun OldPNMessage (message: PNHistoryItemResult) {
             .padding(vertical = 5.dp)
             .clip(RoundedCornerShape(corner = CornerSize(15.dp))),
             contentAlignment = Alignment.Center
-            ) {
+        ) {
             ImageHere(imageLink = metaData.image_url)
             DPBubble(dplink = metaData.user_dp, text = message.entry.toString())
         }
     }
-
 }
 
 @Composable
 private fun ImageHere(imageLink: String) {
     val painter = rememberImagePainter(data = imageLink)
     val context = LocalContext.current
+    Log.i("oldpnmessage", imageLink)
 
     Image(
         painter = painter,

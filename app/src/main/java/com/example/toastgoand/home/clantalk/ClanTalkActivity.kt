@@ -252,11 +252,11 @@ class ClanTalkActivity : BaseActivity() {
                             if (ongoingFrame) {
                                 AnimatedVisibility(visible = showTextInput) {
                                     if (channelid != null) {
-                                            TextInputPart(
-                                                userid = viewModel.deets.value?.user?.id.toString(),
-                                                channelid = channelid,
-                                                defaultRecos = defaultRecos
-                                            )
+                                        TextInputPart(
+                                            userid = viewModel.deets.value?.user?.id.toString(),
+                                            channelid = channelid,
+                                            defaultRecos = defaultRecos
+                                        )
                                     }
                                 }
                             } else {
@@ -290,7 +290,13 @@ class ClanTalkActivity : BaseActivity() {
                                     items(
                                         items = oldMessagesHere,
                                         itemContent = {
-                                            AMessage(message = it)
+                                            if (channelid != null) {
+                                                OldPNMessage(
+                                                    message = it,
+                                                    userid = viewModel.deets.value?.user?.id.toString(),
+                                                    channelid = channelid
+                                                )
+                                            }
                                         })
                                 }
                                 item {

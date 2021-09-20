@@ -12,7 +12,7 @@ fun AMessage (message: PNHistoryItemResult) {
         val metaData = Gson().fromJson<MessageMetaData>(message.meta, MessageMetaData::class.java)
         
         if (metaData.type == "h") {
-            OldPNMessage(message = message)
+//            OldPNMessage(message = message, )
         }
     }
 }
