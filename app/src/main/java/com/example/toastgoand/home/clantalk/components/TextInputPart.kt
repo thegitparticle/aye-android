@@ -24,7 +24,7 @@ import compose.icons.FeatherIcons
 import compose.icons.feathericons.Send
 
 @Composable
-fun TextInputPart (userid: String, channelid: String) {
+fun TextInputPart (userid: String, channelid: String, defaultRecos: List<DefaultRecosDataClass>) {
     val typedText = remember { mutableStateOf(TextFieldValue()) }
 
     val pnConfiguration = PNConfiguration().apply {
@@ -38,7 +38,7 @@ fun TextInputPart (userid: String, channelid: String) {
 
     ProvideWindowInsets() {
         Column {
-//           RecoOverlay(defaultRecos)
+           RecoOverlay(defaultRecos)
             Row(
                 modifier = Modifier.background(MaterialTheme.colors.surface),
                 verticalAlignment = Alignment.CenterVertically

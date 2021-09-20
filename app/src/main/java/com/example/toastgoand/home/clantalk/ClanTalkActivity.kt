@@ -40,6 +40,7 @@ import com.example.toastgoand.home.clantalk.camera.CameraActivity
 import com.example.toastgoand.home.clantalk.components.OldPNMessage
 import com.example.toastgoand.home.clantalk.components.StartClanFrame
 import com.example.toastgoand.home.clantalk.components.TextInputPart
+import com.example.toastgoand.network.defaultrecos.DefaultRecosDataClass
 import com.example.toastgoand.network.myclans.MyClansDataClass
 import com.example.toastgoand.uibits.HeaderPlayScreens
 import com.google.accompanist.insets.*
@@ -76,7 +77,13 @@ class ClanTalkActivity : BaseActivity() {
         setContent {
             AyeTheme {
 
-                val oldMessagesHere: List<PNHistoryItemResult> by viewModel.oldMessages.observeAsState(listOf<PNHistoryItemResult>())
+                val oldMessagesHere: List<PNHistoryItemResult> by viewModel.oldMessages.observeAsState(
+                    listOf<PNHistoryItemResult>()
+                )
+
+                val defaultRecos: List<DefaultRecosDataClass> by viewModel.recos.observeAsState(
+                    listOf<DefaultRecosDataClass>()
+                )
 
                 val clubName = intent.getStringExtra("clubName")
                 val clubid = intent.getIntExtra("clubid", 0)
@@ -152,7 +159,10 @@ class ClanTalkActivity : BaseActivity() {
                                                 putExtra("ongoingFrame", ongoingFrame)
                                                 putExtra("startTime", startTime)
                                                 putExtra("endTime", endTime)
-                                                putExtra("userid", viewModel.deets.value?.user?.id.toString())
+                                                putExtra(
+                                                    "userid",
+                                                    viewModel.deets.value?.user?.id.toString()
+                                                )
                                             })
                                     },
                                     actionIcon = FeatherIcons.Layers
@@ -231,13 +241,13 @@ class ClanTalkActivity : BaseActivity() {
                             if (ongoingFrame) {
                                 AnimatedVisibility(visible = showTextInput) {
                                     if (channelid != null) {
-//                                            viewModel.recos.value?.let {
-                                        TextInputPart(
-                                            userid = viewModel.deets.value?.user?.id.toString(),
-                                            channelid = channelid,
-//                                                    defaultRecos = it
-                                        )
-//                                            }
+                                        viewModel.recos.value?.let {
+                                            TextInputPart(
+                                                userid = viewModel.deets.value?.user?.id.toString(),
+                                                channelid = channelid,
+                                                defaultRecos = it
+                                            )
+                                        }
                                     }
                                 }
                             } else {
