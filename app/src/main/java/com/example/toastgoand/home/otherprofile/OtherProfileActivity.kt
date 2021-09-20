@@ -2,20 +2,27 @@ package com.example.toastgoand.home.otherprofile
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.*
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
+import com.example.toastgoand.R
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityClanHubBinding
 import com.example.toastgoand.databinding.ActivityOtherProfileBinding
 import com.example.toastgoand.home.otherprofile.components.DetailsOtherProfile
+import com.example.toastgoand.uibits.HeaderOtherScreens
+import com.google.accompanist.insets.ProvideWindowInsets
 
 class OtherProfileActivity : BaseActivity() {
     private lateinit var binding: ActivityOtherProfileBinding
@@ -30,6 +37,10 @@ class OtherProfileActivity : BaseActivity() {
         val otheruserid = intent.getIntExtra("otheruserid", 0)
 
         viewModel.getOtherProfileHere(otheruserid = otheruserid)
+
+        fun onBackPressedHere() {
+            onBackPressed()
+        }
 
         setContent {
             AyeTheme {
@@ -55,29 +66,27 @@ class OtherProfileActivity : BaseActivity() {
                     )
                 )
 
-                DetailsOtherProfile(userDeets = otherProfile[0])
-                Row() {
-                    Button(
-                        onClick = { /* Do something! */ }, colors = ButtonDefaults.textButtonColors(
-                            backgroundColor = Color.Blue
-                        )
-                    ) {
-                        Text("add friends")
+                val context = LocalContext.current
+
+                ProvideWindowInsets() {
+                    Scaffold(
+                        topBar = {
+                            HeaderOtherScreens(
+                                modifier = Modifier.fillMaxWidth(),
+                                title = "",
+                                onBackIconPressed = { onBackPressedHere() }
+                            )
+                        }
+                    ) { contentPadding ->
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(MaterialTheme.colors.background),
+                            verticalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            DetailsOtherProfile(userDeets = otherProfile[0])
+                        }
                     }
-                    Button(
-                        onClick = { /* Do something! */ }, colors = ButtonDefaults.textButtonColors(
-                            backgroundColor = Color.Black
-                        )
-                    ) {
-                        Text("invite friends")
-                    }
-                }
-                Button(
-                    onClick = { /* Do something! */ }, colors = ButtonDefaults.textButtonColors(
-                        backgroundColor = Color.Red
-                    )
-                ) {
-                    Text("quit clan")
                 }
             }
         }

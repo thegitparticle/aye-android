@@ -1,13 +1,13 @@
 package com.example.toastgoand.home.otherprofile.components
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -21,9 +21,25 @@ import com.example.toastgoand.network.userdetails.UserDetailsDataClass
 @Composable
 fun DetailsOtherProfile (userDeets: OtherProfileDataClass) {
     AyeTheme() {
-        DPImage(deets = userDeets)
-        Text(text = userDeets.user.full_name, style = MaterialTheme.typography.subtitle1, color = Color.Black)
-        Text(text = userDeets.user.username, style = MaterialTheme.typography.caption, color = Color.Blue)
+        Column(
+            modifier = Modifier.fillMaxHeight(0.5f).fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            DPImage(deets = userDeets)
+            Text(
+                text = userDeets.user.full_name,
+                style = MaterialTheme.typography.subtitle1,
+                color = Color.Black,
+                modifier = Modifier.padding(top = 20.dp, bottom = 5.dp)
+            )
+            Text(
+                text = userDeets.user.username,
+                style = MaterialTheme.typography.caption,
+                color = Color.Blue,
+                modifier = Modifier.padding(top = 5.dp, bottom = 20.dp)
+            )
+        }
     }
 }
 
