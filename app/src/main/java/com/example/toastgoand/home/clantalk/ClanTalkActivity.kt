@@ -37,6 +37,7 @@ import com.example.toastgoand.home.clanhub.ClanHubDataClass
 import com.example.toastgoand.home.clanhub.User
 import com.example.toastgoand.home.clanhub.components.UsersListItem
 import com.example.toastgoand.home.clantalk.camera.CameraActivity
+import com.example.toastgoand.home.clantalk.components.AMessage
 import com.example.toastgoand.home.clantalk.components.OldPNMessage
 import com.example.toastgoand.home.clantalk.components.StartClanFrame
 import com.example.toastgoand.home.clantalk.components.TextInputPart
@@ -165,6 +166,10 @@ class ClanTalkActivity : BaseActivity() {
                                                     "userid",
                                                     viewModel.deets.value?.user?.id.toString()
                                                 )
+                                                putExtra(
+                                                    "userdp",
+                                                    viewModel.deets.value?.image
+                                                )
                                             })
                                     },
                                     actionIcon = FeatherIcons.Layers
@@ -194,6 +199,10 @@ class ClanTalkActivity : BaseActivity() {
                                                             putExtra("ongoingFrame", ongoingFrame)
                                                             putExtra("startTime", startTime)
                                                             putExtra("endTime", endTime)
+                                                            putExtra(
+                                                                "userid",
+                                                                viewModel.deets.value?.user?.id.toString()
+                                                            )
                                                         })
                                                 },
                                                 modifier = Modifier
@@ -281,7 +290,7 @@ class ClanTalkActivity : BaseActivity() {
                                     items(
                                         items = oldMessagesHere,
                                         itemContent = {
-                                            OldPNMessage(message = it)
+                                            AMessage(message = it)
                                         })
                                 }
                                 item {

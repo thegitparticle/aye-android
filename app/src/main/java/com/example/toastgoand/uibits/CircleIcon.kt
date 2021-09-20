@@ -24,7 +24,7 @@ import compose.icons.FeatherIcons
 import compose.icons.feathericons.ChevronRight
 
 @Composable
-fun CircleIcon (onIconPressed: () -> Unit = { }, iconName: ImageVector) {
+fun CircleIcon (onIconPressed: () -> Unit = { }, iconName: ImageVector, modifier: Modifier) {
     
     @Composable
     fun BackgroundPlusIcon (shape: Shape) {

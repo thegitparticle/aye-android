@@ -181,6 +181,7 @@ dependencies {
 
     // compose icons
     implementation "br.com.devsrsouza.compose.icons.android:feather:1.0.0"
+    implementation "br.com.devsrsouza.compose.icons.android:tabler-icons:1.0.0"
 
     // cameraX modules
     def camerax_version = "1.0.1"

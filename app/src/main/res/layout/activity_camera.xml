@@ -6,24 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".home.clantalk.camera.CameraActivity">
 
-    <Button
-        android:id="@+id/camera_capture_button"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:layout_marginBottom="50dp"
-        android:elevation="2dp"
-        android:scaleType="fitCenter"
-        android:text="tap"
-        android:visibility="visible"
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/theBottomButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
-
-    <ImageView
-        android:id="@+id/imageTaken"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="visible" />
+        app:layout_constraintRight_toRightOf="parent"
+        android:elevation="10dp"
+        android:visibility="visible"
+        />
 
     <androidx.camera.view.PreviewView
         android:id="@+id/viewFinder"
@@ -32,4 +24,23 @@
         android:visibility="visible">
 
     </androidx.camera.view.PreviewView>
+
+
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/theSendButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:elevation="10dp"
+        android:visibility="invisible"
+        />
+
+    <ImageView
+        android:id="@+id/imageTaken"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

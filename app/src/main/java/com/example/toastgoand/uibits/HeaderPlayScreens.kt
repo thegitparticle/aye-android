@@ -48,13 +48,13 @@ fun HeaderPlayScreens(
                         .padding(top = 40.dp, start = 15.dp, end = 30.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    CircleIcon(iconName = actionIcon, onIconPressed = onActionIconPressed)
+                    CircleIcon(iconName = actionIcon, onIconPressed = onActionIconPressed, modifier = Modifier)
                     Text(
                         text = title,
                         style = MaterialTheme.typography.subtitle1,
                         color = MaterialTheme.colors.onBackground
                     )
-                    CircleIcon(iconName = FeatherIcons.ChevronDown, onIconPressed = onBackIconPressed)
+                    CircleIcon(iconName = FeatherIcons.ChevronDown, onIconPressed = onBackIconPressed, modifier = Modifier)
                 }
             },
             backgroundColor = MaterialTheme.colors.background.copy(alpha = 0.95f),

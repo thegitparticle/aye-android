@@ -19,9 +19,31 @@ import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.unit.dp
+import androidx.core.net.toFile
+import androidx.core.net.toUri
 import com.example.toastgoand.R
+import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityCameraBinding
 import com.example.toastgoand.databinding.ActivityEnterPhoneBinding
+import com.example.toastgoand.uibits.CircleIcon
+import com.pubnub.api.PNConfiguration
+import com.pubnub.api.PubNub
+import compose.icons.FeatherIcons
+import compose.icons.feathericons.Circle
+import compose.icons.feathericons.File
+import compose.icons.feathericons.RefreshCcw
+import compose.icons.feathericons.X
 import kotlinx.android.synthetic.main.activity_camera.*
 import java.io.File
 import java.text.SimpleDateFormat
@@ -37,12 +59,24 @@ class CameraActivity : BaseActivity() {
     private lateinit var outputDirectory: File
     private lateinit var cameraExecutor: ExecutorService
 
+    // Select back camera as a default
+    var cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+
+    var savedUri: Uri = "".toUri()
+
+    var clubName: String = ""
+    var clubid: Int = 0
+    var channelid : String = ""
+    var ongoingFrame : Boolean = false
+    var startTime : String = ""
+    var endTime : String = ""
+    var userid : String = ""
+    var userdp : String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = viewBinding as ActivityCameraBinding
-//        setContentView(R.layout.activity_camera)
 
         if (allPermissionsGranted()) {
             startCamera()
@@ -52,13 +86,124 @@ class CameraActivity : BaseActivity() {
             )
         }
 
-        binding.cameraCaptureButton.setOnClickListener {
-            takePhoto()
+        outputDirectory = this.getOutputDirectory()
+
+        Log.i("CameraXBasic", "camera opened")
+
+        val bottomButtons = binding.theBottomButtons
+
+        bottomButtons.setContent {
+            AyeTheme {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(0.8f)
+                        .height(100.dp),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    CircleIcon(iconName = FeatherIcons.File, modifier = Modifier)
+                    Icon(
+                        imageVector = FeatherIcons.Circle,
+                        modifier = Modifier
+                            .size(60.dp)
+                            .clickable { takePhoto() },
+                        contentDescription = "take pic icon"
+                    )
+                    Row(
+                        modifier = Modifier
+                            .size(40.dp)
+                            .clickable {
+                                cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA
+                                Log.i("CameraXBasic", "clicked on cam change")
+                            }
+                    ) {
+                        CircleIcon(
+                            iconName = FeatherIcons.RefreshCcw,
+                            modifier = Modifier.clickable {
+                                cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA
+                                Log.i("CameraXBasic", "clicked on cam change")
+                            })
+                    }
+                }
+            }
         }
 
-        // Determine the output directory
-        outputDirectory = this.getOutputDirectory()
-//        cameraExecutor = Executors.newSingleThreadExecutor()
+        val sendButtons = binding.theSendButtons
+
+        sendButtons.setContent {
+            AyeTheme {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(0.8f)
+                        .height(100.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    CircleIcon(iconName = FeatherIcons.X, modifier = Modifier.size(40.dp))
+                    Box(
+                        modifier = Modifier
+                            .wrapContentWidth()
+                            .clip(RoundedCornerShape(20.dp))
+                            .background(MaterialTheme.colors.surface)
+                            .clickable { sendCameraMessage() }
+                            .width(75.dp)
+                            .height(40.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "send",
+                            style = MaterialTheme.typography.caption,
+                            color = MaterialTheme.colors.onSurface
+                        )
+                    }
+                }
+            }
+        }
+
+        clubName = intent.getStringExtra("clubName").toString()
+        clubid = intent.getIntExtra("clubid", 0)
+        channelid = intent.getStringExtra("channelid").toString()
+        ongoingFrame = intent.getBooleanExtra("ongoingFrame", false)
+        startTime = intent.getStringExtra("startTime").toString()
+        endTime = intent.getStringExtra("endTime").toString()
+        userid = intent.getStringExtra("userid").toString()
+        userdp = intent.getStringExtra("userdp").toString()
+    }
+
+    private fun sendCameraMessage() {
+        val pnConfiguration = PNConfiguration().apply {
+            subscribeKey = "sub-c-d099e214-9bcf-11eb-9adf-f2e9c1644994"
+            publishKey = "pub-c-a65bb691-5b8a-4c4b-aef5-e2a26677122d"
+            secure = true
+            if (userid != null) {
+                uuid = userid
+            }
+        }
+
+        val pubnub = PubNub(pnConfiguration)
+
+        data class metaHere (
+            val type: String,
+            val user_dp: String,
+                )
+
+        if (channelid != null) {
+            pubnub.sendFile(
+                channel = channelid,
+                fileName = "galgalgal",
+                inputStream =  savedUri.toFile().inputStream(),
+                message = null,
+                meta = userdp?.let { metaHere(type = "c", user_dp = it) },
+                shouldStore = true
+                ).async { result, status ->
+                if (status.error) {
+                    Log.i("CameraXBasic", status.error.toString())
+                } else {
+                    Log.i("CameraXBasic", "sending message worked")
+                }
+            }
+        }
+
     }
 
 
@@ -86,21 +231,21 @@ class CameraActivity : BaseActivity() {
             ContextCompat.getMainExecutor(this),
             object : ImageCapture.OnImageSavedCallback {
                 override fun onError(exc: ImageCaptureException) {
-                    Log.e(TAG, "CameraXBasic Photo capture failed: ${exc.message}", exc)
+                    Log.i("CameraXBasic Photo capture failed:", "${exc.message}")
                 }
 
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
-                    val savedUri = Uri.fromFile(photoFile)
+                    savedUri = Uri.fromFile(photoFile)
                     val msg = "CameraXBasic Photo capture succeeded: $savedUri"
                     binding.imageTaken.setImageURI(Uri.parse(savedUri.toString()))
-//                    binding.viewFinder.visibility = View.INVISIBLE
-                    binding.cameraCaptureButton.visibility = View.INVISIBLE
+                    binding.viewFinder.visibility = View.INVISIBLE
+                    binding.theBottomButtons.visibility = View.INVISIBLE
                     binding.imageTaken.visibility = View.VISIBLE
-//                    findViewById<ImageView>(R.id.imageTaken).setImageURI(savedUri)
-//                    viewFinder.visibility = View.INVISIBLE
-//                    camera_capture_button.visibility = View.INVISIBLE
+                    binding.theSendButtons.visibility = View.VISIBLE
+                    findViewById<ImageView>(R.id.imageTaken).setImageURI(savedUri)
+                    viewFinder.visibility = View.INVISIBLE
                     Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
-                    Log.d(TAG, msg)
+                    Log.i("CameraXBasic Photo capture", msg)
                 }
             })
     }
@@ -123,9 +268,6 @@ class CameraActivity : BaseActivity() {
             imageCapture = ImageCapture.Builder()
                 .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
                 .build()
-
-            // Select back camera as a default
-            val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
             try {
                 // Unbind use cases before rebinding
