@@ -4,20 +4,21 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
+import com.example.toastgoand.R
 import com.example.toastgoand.auth.enterphone.EnterPhoneViewModel
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityClanHubBinding
@@ -28,6 +29,8 @@ import com.example.toastgoand.home.clanhub.components.ClanMetrics
 import com.example.toastgoand.home.clanhub.components.UsersListItem
 import com.example.toastgoand.home.clans.ClansViewModel
 import com.example.toastgoand.network.myclans.MyClansDataClass
+import com.example.toastgoand.uibits.HeaderOtherScreens
+import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.android.material.composethemeadapter.MdcTheme
 
 class ClanHubActivity : BaseActivity() {
@@ -50,10 +53,15 @@ class ClanHubActivity : BaseActivity() {
 
         viewModel.getClanDetailsHere(clubid)
 
+
+        fun onBackPressedHere() {
+            onBackPressed()
+        }
+
         setContent {
             AyeTheme {
-                val clanDeets: ClanDetailsDataClass by viewModel.clubDetails.observeAsState(ClanDetailsDataClass(
-
+                val clanDeets: ClanDetailsDataClass by viewModel.clubDetails.observeAsState(
+                    ClanDetailsDataClass(
                         id = 0,
                         name = "",
                         member_count = 0,
@@ -63,44 +71,90 @@ class ClanHubActivity : BaseActivity() {
                         members = "",
                         admin_leader = "",
                         users = listOf(
-                        ClanMember(
-                            user_id = 0,
-                            username = "",
-                            name = "",
-                            display_pic = ""
+                            ClanMember(
+                                user_id = 0,
+                                username = "",
+                                name = "",
+                                display_pic = ""
+                            )
                         )
-                )))
+                    )
+                )
 
-                ClanMetrics(clanDeets)
-                val members = clanHub.users
-                Surface() {
-                    LazyColumn(
-                        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-                        modifier = Modifier.fillMaxHeight()
-                    ) {
-                        items(
-                            items = members,
-                            itemContent = {
-                                UsersListItem(user = it)
-                            })
+                ProvideWindowInsets() {
+                    Scaffold(
+                        topBar = {
+                            HeaderOtherScreens(
+                                modifier = Modifier.fillMaxWidth(),
+                                title = "",
+                                onBackIconPressed = { onBackPressedHere() }
+                            )
+                        }
+                    ) { contentPadding ->
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(MaterialTheme.colors.background),
+                            verticalArrangement = Arrangement.SpaceBetween,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Spacer(modifier = Modifier.size(30.dp))
+                            ClanMetrics(clanDeets)
+                            val members = clanDeets.users
+                            LazyColumn(
+                                contentPadding = PaddingValues(horizontal = 16.dp),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 30.dp),
+                            ) {
+                                items(
+                                    items = members,
+                                    itemContent = {
+                                        UsersListItem(user = it)
+                                    })
+                            }
+                            Row(
+                                modifier = Modifier.fillMaxWidth(0.9f),
+                                horizontalArrangement = Arrangement.SpaceEvenly
+                            ) {
+                                Button(
+                                    onClick = { /* Do something! */ },
+                                    colors = ButtonDefaults.textButtonColors(
+                                        backgroundColor = MaterialTheme.colors.secondary
+                                    )
+                                ) {
+                                    Text(
+                                        "add friends",
+                                        color = MaterialTheme.colors.onSecondary,
+                                        style = MaterialTheme.typography.caption,
+                                    )
+                                }
+                                OutlinedButton(
+                                    onClick = { /* Do something! */ },
+                                    colors = ButtonDefaults.textButtonColors(
+                                    )
+                                ) {
+                                    Text(
+                                        "invite friends",
+                                        color = MaterialTheme.colors.onSecondary,
+                                        style = MaterialTheme.typography.caption,
+                                    )
+                                }
+                            }
+                            Spacer(modifier = Modifier.size(30.dp))
+                            OutlinedButton(
+                                onClick = { /* Do something! */ },
+                                colors = ButtonDefaults.textButtonColors(
+                                ),
+                            ) {
+                                Text(
+                                    "quit clan",
+                                    color = MaterialTheme.colors.error,
+                                    style = MaterialTheme.typography.caption
+                                )
+                            }
+                        }
                     }
-                }
-               Row () {
-                   Button(onClick = { /* Do something! */ }, colors = ButtonDefaults.textButtonColors(
-                       backgroundColor = Color.Blue
-                   )) {
-                       Text("add friends")
-                   }
-                   Button(onClick = { /* Do something! */ }, colors = ButtonDefaults.textButtonColors(
-                       backgroundColor = Color.Black
-                   )) {
-                       Text("invite friends")
-                   }
-               }
-                Button(onClick = { /* Do something! */ }, colors = ButtonDefaults.textButtonColors(
-                    backgroundColor = Color.Red
-                )) {
-                    Text("quit clan")
                 }
             }
         }

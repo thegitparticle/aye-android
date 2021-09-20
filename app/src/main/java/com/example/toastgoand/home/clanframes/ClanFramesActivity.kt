@@ -38,6 +38,7 @@ import compose.icons.FeatherIcons
 import compose.icons.feathericons.ChevronLeft
 import compose.icons.feathericons.ChevronRight
 import compose.icons.feathericons.Layers
+import compose.icons.feathericons.Users
 import kotlinx.datetime.*
 import spencerstudios.com.bungeelib.Bungee
 
@@ -148,7 +149,7 @@ class ClanFramesActivity : BaseActivity() {
                                         context.startActivity(
                                             Intent(
                                                 context,
-                                                ClanFramesActivity::class.java
+                                                ClanHubActivity::class.java
                                             ).apply {
                                                 putExtra("clubName", clubName)
                                                 putExtra("clubid", clubid)
@@ -158,7 +159,7 @@ class ClanFramesActivity : BaseActivity() {
                                                 putExtra("endTime", endTime)
                                             })
                                     },
-                                    actionIcon = FeatherIcons.Layers
+                                    actionIcon = FeatherIcons.Users
                                 )
                             }
                         },

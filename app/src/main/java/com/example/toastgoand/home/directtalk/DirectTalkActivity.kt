@@ -211,7 +211,7 @@ class DirectTalkActivity : BaseActivity() {
                                 items(
                                     items = members,
                                     itemContent = {
-                                        UsersListItem(user = it)
+//                                        UsersListItem(user = it)
                                     })
                                 item {
                                     Spacer(modifier = Modifier.size(100.dp))
