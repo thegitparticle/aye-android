@@ -160,66 +160,67 @@ class ClanTalkActivity : BaseActivity() {
                             }
                         },
                         floatingActionButton = {
-//                            AnimatedVisibility(visible = !showStartClanOverlay) {
+                            AnimatedVisibility(visible = ongoingFrame) {
 //                                AnimatedVisibility(visible = !showTextInput) {
-                            AnimatedVisibility(visible = true) {
-                                AnimatedVisibility(visible = !showTextInput) {
-                                    Row(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        horizontalArrangement = Arrangement.Center,
-                                        verticalAlignment = Alignment.CenterVertically
-                                    ) {
-                                        FloatingActionButton(
-                                            onClick = {
-                                                context.startActivity(
-                                                    Intent(
-                                                        context,
-                                                        CameraActivity::class.java
-                                                    ).apply {
-                                                        putExtra("clubName", clubName)
-                                                        putExtra("clubid", clubid)
-                                                        putExtra("channelid", channelid)
-                                                        putExtra("ongoingFrame", ongoingFrame)
-                                                        putExtra("startTime", startTime)
-                                                        putExtra("endTime", endTime)
-                                                    })
-                                            },
-                                            modifier = Modifier
-                                                .padding(horizontal = 25.dp)
-                                                .size(40.dp),
-                                            backgroundColor = MaterialTheme.colors.onBackground,
+                                AnimatedVisibility(visible = true) {
+                                    AnimatedVisibility(visible = !showTextInput) {
+                                        Row(
+                                            modifier = Modifier.fillMaxWidth(),
+                                            horizontalArrangement = Arrangement.Center,
+                                            verticalAlignment = Alignment.CenterVertically
                                         ) {
-                                            Icon(
-                                                imageVector = FeatherIcons.Camera,
-                                                contentDescription = "last month",
-                                                modifier = Modifier.size(20.dp)
-                                            )
-                                        }
-                                        FloatingActionButton(
-                                            onClick = { /* TODO */ },
-                                            modifier = Modifier
-                                                .padding(horizontal = 25.dp)
-                                                .size(60.dp),
-                                            backgroundColor = MaterialTheme.colors.onSurface,
-                                        ) {
-                                            Icon(
-                                                imageVector = FeatherIcons.PlusSquare,
-                                                contentDescription = "last month",
-                                                modifier = Modifier.size(30.dp)
-                                            )
-                                        }
-                                        FloatingActionButton(
-                                            onClick = { setUpTextInput() },
-                                            modifier = Modifier
-                                                .padding(horizontal = 25.dp)
-                                                .size(40.dp),
-                                            backgroundColor = MaterialTheme.colors.secondary,
-                                        ) {
-                                            Icon(
-                                                imageVector = FeatherIcons.Layers,
-                                                contentDescription = "last month",
-                                                modifier = Modifier.size(20.dp)
-                                            )
+                                            FloatingActionButton(
+                                                onClick = {
+                                                    context.startActivity(
+                                                        Intent(
+                                                            context,
+                                                            CameraActivity::class.java
+                                                        ).apply {
+                                                            putExtra("clubName", clubName)
+                                                            putExtra("clubid", clubid)
+                                                            putExtra("channelid", channelid)
+                                                            putExtra("ongoingFrame", ongoingFrame)
+                                                            putExtra("startTime", startTime)
+                                                            putExtra("endTime", endTime)
+                                                        })
+                                                },
+                                                modifier = Modifier
+                                                    .padding(horizontal = 25.dp)
+                                                    .size(40.dp),
+                                                backgroundColor = MaterialTheme.colors.onBackground,
+                                            ) {
+                                                Icon(
+                                                    imageVector = FeatherIcons.Camera,
+                                                    contentDescription = "last month",
+                                                    modifier = Modifier.size(20.dp)
+                                                )
+                                            }
+                                            FloatingActionButton(
+                                                onClick = { /* TODO */ },
+                                                modifier = Modifier
+                                                    .padding(horizontal = 25.dp)
+                                                    .size(60.dp),
+                                                backgroundColor = MaterialTheme.colors.onSurface,
+                                            ) {
+                                                Icon(
+                                                    imageVector = FeatherIcons.PlusSquare,
+                                                    contentDescription = "last month",
+                                                    modifier = Modifier.size(30.dp)
+                                                )
+                                            }
+                                            FloatingActionButton(
+                                                onClick = { setUpTextInput() },
+                                                modifier = Modifier
+                                                    .padding(horizontal = 25.dp)
+                                                    .size(40.dp),
+                                                backgroundColor = MaterialTheme.colors.secondary,
+                                            ) {
+                                                Icon(
+                                                    imageVector = FeatherIcons.Layers,
+                                                    contentDescription = "last month",
+                                                    modifier = Modifier.size(20.dp)
+                                                )
+                                            }
                                         }
                                     }
                                 }
@@ -245,7 +246,7 @@ class ClanTalkActivity : BaseActivity() {
                                         modifier = Modifier,
                                         clubid = clubid,
                                         channelid = channelid,
-                                        changeLiveStatus = ::changeFrameLiveStatus
+                                        changeLiveStatus = ::changeFrameLiveStatus,
                                     )
                                 }
                             }

@@ -10,5 +10,12 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class DefaultRecosDataClass(
-    @PrimaryKey val recoset: List<String>
+    @PrimaryKey val a: String,
+    val b: String,
+    val c: String,
+    val d: String,
+    val e: String,
+    val f: String,
+    val g: String
 )
+
