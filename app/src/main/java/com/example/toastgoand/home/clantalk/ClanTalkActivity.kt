@@ -137,6 +137,8 @@ class ClanTalkActivity : BaseActivity() {
 
                 val context = LocalContext.current
 
+                Log.i("recos", defaultRecos.toString())
+
                 ProvideWindowInsets() {
                     Scaffold(
                         topBar = {
@@ -241,13 +243,11 @@ class ClanTalkActivity : BaseActivity() {
                             if (ongoingFrame) {
                                 AnimatedVisibility(visible = showTextInput) {
                                     if (channelid != null) {
-                                        viewModel.recos.value?.let {
                                             TextInputPart(
                                                 userid = viewModel.deets.value?.user?.id.toString(),
                                                 channelid = channelid,
-                                                defaultRecos = it
+                                                defaultRecos = defaultRecos
                                             )
-                                        }
                                     }
                                 }
                             } else {
