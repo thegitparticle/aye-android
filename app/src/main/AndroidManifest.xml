@@ -29,6 +29,9 @@
         android:windowSoftInputMode="stateHidden"
         tools:replace="android:appComponentFactory">
         <activity
+            android:name=".home.clanhub.clanaddpeople.ClanAddPeopleActivity"
+            android:exported="true" />
+        <activity
             android:name=".home.clanframes.ViewOldFrameClanActivity"
             android:exported="true" />
         <activity
@@ -73,8 +76,7 @@
         <activity
             android:name=".home.clantalk.ClanTalkActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustResize"
-            />
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".home.clanframes.ClanFramesActivity"
             android:exported="true" />
