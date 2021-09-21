@@ -5,19 +5,28 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import com.example.toastgoand.home.aye.TheAyeViewModel
+import com.example.toastgoand.network.myfriends.MyFriendsDataClass
+import com.example.toastgoand.network.myfriends.MyFriendsRepo
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
 import com.example.toastgoand.network.userdetails.UserDetailsRepo
 import java.lang.IllegalArgumentException
 
-class InvitePeopleDirectlyViewModel(private val repoDeets: UserDetailsRepo): ViewModel() {
+class InvitePeopleDirectlyViewModel(
+    private val repoDeets: UserDetailsRepo,
+    private val repositoryMyFriends: MyFriendsRepo
+) : ViewModel() {
+
     val deets: LiveData<UserDetailsDataClass> = repoDeets.userDetails.asLiveData()
+
+    val myfriends: LiveData<List<MyFriendsDataClass>> = repositoryMyFriends.myFriends.asLiveData()
 }
 
-class InvitePeopleDirectlyViewModelFactory (private val repoDeets: UserDetailsRepo) : ViewModelProvider.Factory {
-    override fun <T: ViewModel> create(modelClass: Class<T>): T {
+class InvitePeopleDirectlyViewModelFactory(private val repoDeets: UserDetailsRepo, private val repositoryMyFriends: MyFriendsRepo) :
+    ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(InvitePeopleDirectlyViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return InvitePeopleDirectlyViewModel(repoDeets) as T
+            return InvitePeopleDirectlyViewModel(repoDeets, repositoryMyFriends) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

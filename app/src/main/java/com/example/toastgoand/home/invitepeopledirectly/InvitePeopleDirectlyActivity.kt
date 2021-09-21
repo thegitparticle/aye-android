@@ -2,21 +2,30 @@ package com.example.toastgoand.home.invitepeopledirectly
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.ui.res.imageResource
 import androidx.viewbinding.ViewBinding
@@ -27,13 +36,22 @@ import com.example.toastgoand.ToastgoApplication
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityInvitePeopleDirectlyBinding
 import com.example.toastgoand.databinding.ActivityViewOldFrameBinding
+import com.example.toastgoand.home.clantalk.components.CEntryFile
+import com.example.toastgoand.home.clantalk.components.MessageMetaData
+import com.example.toastgoand.home.directs.components.DirectItem
 import com.example.toastgoand.home.myprofile.MyProfileViewModel
 import com.example.toastgoand.home.myprofile.MyProfileViewModelFactory
 import com.example.toastgoand.network.userdetails.User
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
+import com.example.toastgoand.uibits.HeaderOtherScreens
 import com.example.toastgoand.uibits.TopHeaderModals
+import com.google.accompanist.insets.ProvideWindowInsets
+import com.google.gson.Gson
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.ChevronDown
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import spencerstudios.com.bungeelib.Bungee
 
 class InvitePeopleDirectlyActivity : BaseActivity() {
@@ -41,9 +59,13 @@ class InvitePeopleDirectlyActivity : BaseActivity() {
 
     private val viewModel: InvitePeopleDirectlyViewModel by viewModels {
         InvitePeopleDirectlyViewModelFactory(
-            (this.application as ToastgoApplication).repository
+            (this.application as ToastgoApplication).repository,
+            (this.application as ToastgoApplication).repositoryMyFriends
         )
     }
+
+    @Serializable
+    data class ContactItem(val name: String, val phone: String)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,53 +95,80 @@ class InvitePeopleDirectlyActivity : BaseActivity() {
                     )
                 )
 
-                Column(modifier = Modifier.fillMaxWidth()) {
-                    TopHeaderModals(
-                        modifier = Modifier.fillMaxWidth(),
-                        title = {
-                            Column(
-                                modifier = Modifier.weight(1f),
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                Text(
-                                    text = "",
-                                    style = MaterialTheme.typography.subtitle1
-                                )
-                            }
-                        },
-                        onLeftIconPressed = {},
-                        actions = {
-                            CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-                                Icon(
-                                    imageVector = FeatherIcons.ChevronDown,
-                                    modifier = Modifier
-                                        .clickable(onClick = { onBackPressedHere() })
-                                        .padding(horizontal = 12.dp, vertical = 16.dp)
-                                        .height(24.dp),
-                                    contentDescription = "go back"
-                                )
-                            }
+                val textState = remember { mutableStateOf(TextFieldValue()) }
+
+
+                ProvideWindowInsets() {
+                    Scaffold(
+                        topBar = {
+                            HeaderOtherScreens(
+                                modifier = Modifier.fillMaxWidth(),
+                                title = "",
+                                onBackIconPressed = { onBackPressedHere() }
+                            )
                         }
-                    )
-                    Column(modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.SpaceBetween) {
-                        val painter = painterResource(id = R.drawable.aye_logo)
-                        Image(
-                            painter = painter,
-                            contentDescription = "aye logo",
-                            contentScale = ContentScale.Crop,
+                    ) { contentPadding ->
+                        Column(
                             modifier = Modifier
-                                .padding(8.dp)
-                                .size(100.dp)
-                        )
-                        Column(modifier = Modifier.fillMaxWidth()) {
-                            Box (
-                                Modifier
-                                    .fillMaxWidth()
-                                    .background(Color.Blue )) {
-                                Text("talk to founder", modifier = Modifier.align(Alignment.TopStart))
+                                .fillMaxWidth()
+                                .background(MaterialTheme.colors.background),
+                            verticalArrangement = Arrangement.SpaceBetween, horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            TextField(
+                                modifier = Modifier
+                                    .background(MaterialTheme.colors.surface)
+                                    .clip(
+                                        RoundedCornerShape(corner = CornerSize(10.dp))
+                                    )
+                                    .padding(vertical = 10.dp).fillMaxWidth(0.9f),
+                                value = textState.value,
+                                onValueChange = { textState.value = it },
+                                textStyle = MaterialTheme.typography.body2,
+                                singleLine = true,
+                                placeholder = {
+                                    Text(
+                                        text = "",
+                                        style = MaterialTheme.typography.body2
+                                    )
+                                },
+                            )
+                            Text("The textfield has this text: " + textState.value.text)
+                            LazyColumn(modifier = Modifier.background(MaterialTheme.colors.background)) {
+//                                val contactsParsed = Gson().fromJson<List<ContactItem>>(
+//                                    deetsHere.user.contact_list,
+//                                    ContactItem::class.java
+//                                )
+
+//                                val simpleContactsString =
+//                                    deetsHere.user.contact_list.drop(1).dropLast(1)
+
+                                val contactsString: String = deetsHere.user.contact_list
+
+                                if (contactsString.length > 10) {
+                                    Log.i("invitepeople", contactsString?.slice(0..10))
+//                                    val parserHere = Json {
+//                                        isLenient = true; ignoreUnknownKeys = true; encodeDefaults =
+//                                        false;
+//                                    }
+//                                    val contactsListHere =
+//                                        parserHere.decodeFromString<ArrayList<ContactItem>>(
+//                                            contactsString
+//                                        )
+//                                    decodeFromString<ArrayList<ContactItem>>(deetsHere.user.contact_list)
+//                                    Log.i("invitepeople list", contactsListHere.toString())
+                                }
+
+                                Log.i("invitepeople", contactsString)
+
+//                                items(
+//                                    items = contactsListHere,
+//                                    itemContent = {
+//                                        ContactItemRender(Json.decodeFromString(it))
+//                                    })
                             }
                         }
                     }
+
                 }
 
             }

@@ -78,15 +78,15 @@ class LandingActivity: BaseActivity() {
         binding.ayeLogo.setOnClickListener {
             val intent = Intent(this, TheAyeActivity::class.java).apply{}
             startActivity(intent)
-            overridePendingTransition(R.anim.slide_from_left,
-                R.anim.slide_out_left)
+            overridePendingTransition(R.anim.slide_up_enter,
+                R.anim.slide_down_exit)
         }
 
         binding.invitePeopleLogo.setOnClickListener {
             val intent = Intent(this, InvitePeopleDirectlyActivity::class.java).apply{}
             startActivity(intent)
-            overridePendingTransition(R.anim.slide_from_left,
-                R.anim.slide_out_left)
+            overridePendingTransition(R.anim.slide_up_enter,
+                R.anim.slide_down_exit)
         }
 
         pager = binding.viewPager
