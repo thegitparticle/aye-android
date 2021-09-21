@@ -1,9 +1,7 @@
 package com.example.toastgoand.home.clantalk.components
 
 import android.util.Log
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CornerSize
@@ -54,8 +52,9 @@ fun TextInputPart(userid: String, channelid: String, defaultRecos: List<DefaultR
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .padding(8.dp)
-                .size(width = 50.dp, height = 30.dp)
-                .clip(RoundedCornerShape(corner = CornerSize(5.dp)))
+                .size(width = 100.dp, height = 50.dp)
+                .clip(RoundedCornerShape(corner = CornerSize(10.dp)))
+                .clickable {Log.i("defaultreocs", "image selected") }
         )
     }
 
@@ -65,7 +64,9 @@ fun TextInputPart(userid: String, channelid: String, defaultRecos: List<DefaultR
         Log.i("defaultrecos", defaultRecos.toString())
 
         Row(
-            modifier = Modifier.background(MaterialTheme.colors.surface),
+            modifier = Modifier
+                .background(MaterialTheme.colors.surface)
+                .horizontalScroll(enabled = true, state = rememberScrollState()),
             verticalAlignment = Alignment.CenterVertically
         ) {
             if (defaultRecos.isNotEmpty()) {
@@ -86,7 +87,9 @@ fun TextInputPart(userid: String, channelid: String, defaultRecos: List<DefaultR
 
 
     ProvideWindowInsets() {
-        Column {
+        Column(
+//            modifier = Modifier.navigationBarsWithImePadding()
+        ) {
             RecoOverlay(defaultRecos)
             Row(
                 modifier = Modifier.background(MaterialTheme.colors.surface),

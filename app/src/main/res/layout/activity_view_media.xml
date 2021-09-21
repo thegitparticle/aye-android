@@ -12,10 +12,10 @@
         android:layout_height="match_parent"
         android:fillViewport="true">
 
-        <ImageView
-            android:id="@+id/imageView2"
+        <androidx.compose.ui.platform.ComposeView
+            android:id="@+id/composeView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content"/>
+
     </androidx.core.widget.NestedScrollView>
 </app.futured.hauler.HaulerView>

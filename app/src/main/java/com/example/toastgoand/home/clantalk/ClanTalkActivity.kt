@@ -25,6 +25,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.core.view.WindowCompat
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.ToastgoApplication
@@ -73,7 +74,7 @@ class ClanTalkActivity : BaseActivity() {
 
         val allMessages = ""
 
-//        WindowCompat.setDecorFitsSystemWindows(window, false)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
             AyeTheme {
@@ -140,7 +141,7 @@ class ClanTalkActivity : BaseActivity() {
 
                 Log.i("recos", defaultRecos.toString())
 
-                ProvideWindowInsets() {
+                ProvideWindowInsets(windowInsetsAnimationsEnabled = true) {
                     Scaffold(
                         topBar = {
                             if (clubName != null) {

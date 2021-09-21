@@ -56,9 +56,6 @@
             android:name=".home.invitepeopledirectly.InvitePeopleDirectlyActivity"
             android:exported="true" />
         <activity
-            android:name=".home.viewoldframe.ViewOldFrameActivity"
-            android:exported="true" />
-        <activity
             android:name=".home.startclan.StartClanActivity"
             android:exported="true" />
         <activity
@@ -75,7 +72,9 @@
             android:exported="true" />
         <activity
             android:name=".home.clantalk.ClanTalkActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize"
+            />
         <activity
             android:name=".home.clanframes.ClanFramesActivity"
             android:exported="true" />
