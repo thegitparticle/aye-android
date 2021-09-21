@@ -8,7 +8,9 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-private const val BASE_URL = "https://apisayepirates.life/api/"
+//private const val BASE_URL = "https://apisayepirates.life/api/"
+
+private const val BASE_URL = "https://run.mocky.io/v3/"
 
 private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
@@ -21,8 +23,10 @@ private val retrofit =
         .build()
 
 interface DefaultRecosApiInterface {
-    @GET("users/recommend_images/{userid}/fun/False/")
-    suspend fun getDefaultRecos(@Path("userid") userid: String): List<DefaultRecosDataClass>
+//    @GET("users/recommend_images/{userid}/fun/False/")
+    @GET("274ff2b6-5f3a-487f-8419-b6bc35da7d99")
+//    suspend fun getDefaultRecos(@Path("userid") userid: String): List<DefaultRecosDataClass>
+    suspend fun getDefaultRecos(): List<DefaultRecosDataClass>
 }
 
 object DefaultRecosApi {

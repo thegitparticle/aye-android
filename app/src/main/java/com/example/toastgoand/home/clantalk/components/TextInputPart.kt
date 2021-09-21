@@ -70,13 +70,13 @@ fun TextInputPart(userid: String, channelid: String, defaultRecos: List<DefaultR
         ) {
             if (defaultRecos.isNotEmpty()) {
                 Row(modifier = Modifier.fillMaxWidth()) {
-                    RecoImage(defaultRecos[0].a)
-                    RecoImage(defaultRecos[0].b)
-                    RecoImage(defaultRecos[0].c)
-                    RecoImage(defaultRecos[0].d)
-                    RecoImage(defaultRecos[0].e)
-                    RecoImage(defaultRecos[0].f)
-                    RecoImage(defaultRecos[0].g)
+                    RecoImage(defaultRecos[0].links[0])
+                    RecoImage(defaultRecos[0].links[1])
+                    RecoImage(defaultRecos[0].links[2])
+                    RecoImage(defaultRecos[0].links[3])
+                    RecoImage(defaultRecos[0].links[4])
+                    RecoImage(defaultRecos[0].links[5])
+                    RecoImage(defaultRecos[0].links[6])
                 }
             }
         }

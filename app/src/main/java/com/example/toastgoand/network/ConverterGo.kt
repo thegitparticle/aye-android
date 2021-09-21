@@ -11,6 +11,12 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import com.google.gson.Gson
+
+import com.google.gson.reflect.TypeToken
+
+
+
 
 @Serializable
 class ConverterGo {
@@ -37,4 +43,5 @@ class ConverterGo {
 
     @TypeConverter
     fun toListDefaultRecosList(value: String) = Json.decodeFromString<List<String>>(value)
+
 }

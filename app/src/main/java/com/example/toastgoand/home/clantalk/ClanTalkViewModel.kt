@@ -45,7 +45,8 @@ class ClanTalkViewModel(repoDeets: UserDetailsRepo, private val repoRecos: Defau
         viewModelScope.launch {
             try {
                 val defaultRecosResult =
-                    DefaultRecosApi.retrofitService.getDefaultRecos(userid.toString())
+//                    DefaultRecosApi.retrofitService.getDefaultRecos(userid.toString())
+                DefaultRecosApi.retrofitService.getDefaultRecos()
                 var x_here: List<DefaultRecosDataClass> = defaultRecosResult
                 insertDefaultRecos(x_here)
                 Log.i("defaultrecos", x_here.toString())
