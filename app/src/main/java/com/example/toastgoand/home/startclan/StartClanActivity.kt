@@ -1,46 +1,43 @@
 package com.example.toastgoand.home.startclan
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import androidx.ui.res.imageResource
+import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import androidx.viewbinding.ViewBinding
-import coil.compose.rememberImagePainter
 import com.example.toastgoand.BaseActivity
-import com.example.toastgoand.R
 import com.example.toastgoand.ToastgoApplication
 import com.example.toastgoand.composestyle.AyeTheme
-import com.example.toastgoand.databinding.ActivityMyProfileBinding
 import com.example.toastgoand.databinding.ActivityStartClanBinding
-import com.example.toastgoand.home.aye.TheAyeViewModel
-import com.example.toastgoand.home.aye.TheAyeViewModelFactory
-import com.example.toastgoand.home.directs.components.DirectItem
-import com.example.toastgoand.home.directs.components.NudgeToItem
-import com.example.toastgoand.home.myprofile.MyProfileViewModel
-import com.example.toastgoand.home.startclan.components.FriendsListItem
+import com.example.toastgoand.home.clanhub.components.MyFriendItem
+import com.example.toastgoand.home.invitepeopledirectly.InvitePeopleDirectlyActivity
 import com.example.toastgoand.network.myfriends.MyFriendsDataClass
-import com.example.toastgoand.network.nudgelist.NudgeToDataClass
 import com.example.toastgoand.network.userdetails.User
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
-import com.example.toastgoand.uibits.TopHeaderModals
+import com.example.toastgoand.uibits.HeaderOtherScreens
+import com.google.accompanist.insets.ProvideWindowInsets
 import compose.icons.FeatherIcons
+import compose.icons.feathericons.ArrowRight
 import compose.icons.feathericons.ChevronDown
+import compose.icons.feathericons.PlusSquare
 import spencerstudios.com.bungeelib.Bungee
 
 class StartClanActivity : BaseActivity() {
@@ -64,81 +61,324 @@ class StartClanActivity : BaseActivity() {
 
         setContent {
             AyeTheme {
-            val deetsHere: UserDetailsDataClass by viewModel.deets.observeAsState(
-                UserDetailsDataClass(
-                    bio = "", image = "", user = User(
-                        phone = "",
-                        full_name = "",
-                        id = 0,
-                        clubs_joined_by_user = "",
-                        number_of_clubs_joined = 0,
-                        contact_list = "",
-                        total_frames_participation = 0,
-                        country_code_of_user = "",
-                        contact_list_sync_status = false,
-                        username = ""
-                    ), id = 0
+                val deetsHere: UserDetailsDataClass by viewModel.deets.observeAsState(
+                    UserDetailsDataClass(
+                        bio = "", image = "", user = User(
+                            phone = "",
+                            full_name = "",
+                            id = 0,
+                            clubs_joined_by_user = "",
+                            number_of_clubs_joined = 0,
+                            contact_list = "",
+                            total_frames_participation = 0,
+                            country_code_of_user = "",
+                            contact_list_sync_status = false,
+                            username = ""
+                        ), id = 0
+                    )
                 )
-            )
 
-            val myFriendsListHere: List<MyFriendsDataClass> by viewModel.friendsList.observeAsState(
-                listOf<MyFriendsDataClass>()
-            )
+                val myFriendsListHere: List<MyFriendsDataClass> by viewModel.friendsList.observeAsState(
+                    listOf<MyFriendsDataClass>()
+                )
 
-            Column(modifier = Modifier.fillMaxWidth()) {
-                TopHeaderModals(
-                    modifier = Modifier.fillMaxWidth(),
-                    title = {
-                        Column(
-                            modifier = Modifier.weight(1f),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Text(
-                                text = "",
-                                style = MaterialTheme.typography.subtitle1
-                            )
-                        }
+                val navController = rememberNavController()
+
+                NavHost(navController = navController, startDestination = "profile") {
+                    composable("friendslist") {
+                        FriendsListPage(
+                            friendsList = myFriendsListHere,
+                            backHandle = onBackPressedHere(),
+                            navController = navController
+                        )
+                    }
+                    composable("contactslist") {
+                        ContactsListPage(
+                            contactsList = deetsHere.user.contact_list,
+                            backHandle = onBackPressedHere(),
+                            navController = navController
+                        )
+                    }
+                    composable("nameclan") {
+                        NameClanPage(
+                            backHandle = onBackPressedHere(),
+                            navController = navController
+                        )
+                    }
+                    composable("makingclan") {
+                        MakingClanPage(
+                            backHandle = onBackPressedHere(),
+                            navController = navController
+                        )
+                    }
+                }
+
+            }
+        }
+    }
+
+    @Composable
+    fun FriendsListPage(friendsList: List<MyFriendsDataClass>, backHandle: Unit, navController: NavController) {
+        val textState = remember { mutableStateOf(TextFieldValue()) }
+
+        AyeTheme() {
+
+            ProvideWindowInsets() {
+                Scaffold(
+                    topBar = {
+                        HeaderOtherScreens(
+                            modifier = Modifier.fillMaxWidth(),
+                            title = "",
+                            onBackIconPressed = { backHandle }
+                        )
                     },
-                    onLeftIconPressed = {},
-                    actions = {
-                        CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
+                    floatingActionButtonPosition = FabPosition.Center,
+                    floatingActionButton = {
+                        FloatingActionButton(
+                            onClick = { navController.navigate("contactslist") },
+                            modifier = Modifier
+                                .padding(horizontal = 25.dp)
+                                .size(60.dp),
+                            backgroundColor = Color.Cyan,
+                        ) {
                             Icon(
-                                imageVector = FeatherIcons.ChevronDown,
-                                modifier = Modifier
-                                    .clickable(onClick = { onBackPressedHere() })
-                                    .padding(horizontal = 12.dp, vertical = 16.dp)
-                                    .height(24.dp),
-                                contentDescription = "go back"
+                                imageVector = FeatherIcons.ArrowRight,
+                                contentDescription = "last month",
+                                modifier = Modifier.size(30.dp)
                             )
                         }
                     }
-                )
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Column(modifier = Modifier.fillMaxWidth()) {
-                        Box(
-                            Modifier
-                                .fillMaxWidth()
-                                .background(Color.Blue)
-                        ) {
-                            Text("talk to founder", modifier = Modifier.align(Alignment.TopStart))
-                            LazyColumn(
-                                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-                                modifier = Modifier.fillMaxSize()
-                            ) {
-                                items(
-                                    items = myFriendsListHere,
-                                    itemContent = {
-                                        FriendsListItem(it)
-                                    })
-                            }
+                ) { contentPadding ->
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(MaterialTheme.colors.background),
+                        verticalArrangement = Arrangement.SpaceBetween,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        TextField(
+                            modifier = Modifier
+                                .background(MaterialTheme.colors.surface)
+                                .clip(
+                                    RoundedCornerShape(corner = CornerSize(10.dp))
+                                )
+                                .padding(vertical = 10.dp)
+                                .fillMaxWidth(0.9f),
+                            value = textState.value,
+                            onValueChange = { textState.value = it },
+                            textStyle = MaterialTheme.typography.body2,
+                            singleLine = true,
+                            placeholder = {
+                                Text(
+                                    text = "",
+                                    style = MaterialTheme.typography.body2
+                                )
+                            },
+                        )
+                        Text("The textfield has this text: " + textState.value.text)
+                        LazyColumn(modifier = Modifier.background(MaterialTheme.colors.background)) {
+
+                            items(
+                                items = friendsList,
+                                itemContent = {
+                                    MyFriendItem(it)
+                                })
                         }
                     }
                 }
             }
         }
+    }
+
+    @Composable
+    fun ContactsListPage(contactsList: String, backHandle: Unit, navController: NavController) {
+        val textState = remember { mutableStateOf(TextFieldValue()) }
+
+        AyeTheme() {
+            ProvideWindowInsets() {
+                Scaffold(
+                    topBar = {
+                        HeaderOtherScreens(
+                            modifier = Modifier.fillMaxWidth(),
+                            title = "",
+                            onBackIconPressed = { backHandle }
+                        )
+                    },
+                    floatingActionButtonPosition = FabPosition.Center,
+                    floatingActionButton = {
+                        FloatingActionButton(
+                            onClick = { navController.navigate("nameclan") },
+                            modifier = Modifier
+                                .padding(horizontal = 25.dp)
+                                .size(60.dp),
+                            backgroundColor = Color.Cyan,
+                        ) {
+                            Icon(
+                                imageVector = FeatherIcons.ArrowRight,
+                                contentDescription = "last month",
+                                modifier = Modifier.size(30.dp)
+                            )
+                        }
+                    }
+                ) { contentPadding ->
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(MaterialTheme.colors.background),
+                        verticalArrangement = Arrangement.SpaceBetween,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        TextField(
+                            modifier = Modifier
+                                .background(MaterialTheme.colors.surface)
+                                .clip(
+                                    RoundedCornerShape(corner = CornerSize(10.dp))
+                                )
+                                .padding(vertical = 10.dp)
+                                .fillMaxWidth(0.9f),
+                            value = textState.value,
+                            onValueChange = { textState.value = it },
+                            textStyle = MaterialTheme.typography.body2,
+                            singleLine = true,
+                            placeholder = {
+                                Text(
+                                    text = "",
+                                    style = MaterialTheme.typography.body2
+                                )
+                            },
+                        )
+                        Text("The textfield has this text: " + textState.value.text)
+                        LazyColumn(modifier = Modifier.background(MaterialTheme.colors.background)) {
+//                                val contactsParsed = Gson().fromJson<List<ContactItem>>(
+//                                    deetsHere.user.contact_list,
+//                                    ContactItem::class.java
+//                                )
+
+//                                val simpleContactsString =
+//                                    deetsHere.user.contact_list.drop(1).dropLast(1)
+
+//                        if (contactsString.length > 10) {
+//                            Log.i("invitepeople", contactsString?.slice(0..10))
+////                                    val parserHere = Json {
+////                                        isLenient = true; ignoreUnknownKeys = true; encodeDefaults =
+////                                        false;
+////                                    }
+////                                    val contactsListHere =
+////                                        parserHere.decodeFromString<ArrayList<ContactItem>>(
+////                                            contactsString
+////                                        )
+////                                    decodeFromString<ArrayList<ContactItem>>(deetsHere.user.contact_list)
+////                                    Log.i("invitepeople list", contactsListHere.toString())
+//                        }
+//
+//                        Log.i("invitepeople", contactsString)
+//
+////                                items(
+////                                    items = contactsListHere,
+////                                    itemContent = {
+////                                        ContactItemRender(Json.decodeFromString(it))
+////                                    })
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @Composable
+    fun NameClanPage(backHandle: Unit, navController: NavController) {
+        val textState = remember { mutableStateOf(TextFieldValue()) }
+
+        AyeTheme() {
+
+            ProvideWindowInsets() {
+                Scaffold(
+                    topBar = {
+                        HeaderOtherScreens(
+                            modifier = Modifier.fillMaxWidth(),
+                            title = "",
+                            onBackIconPressed = { backHandle }
+                        )
+                    },
+                    floatingActionButtonPosition = FabPosition.Center,
+                    floatingActionButton = {
+                        FloatingActionButton(
+                            onClick = { navController.navigate("makingclan") },
+                            modifier = Modifier
+                                .padding(horizontal = 25.dp)
+                                .size(60.dp),
+                            backgroundColor = Color.Cyan,
+                        ) {
+                            Icon(
+                                imageVector = FeatherIcons.ArrowRight,
+                                contentDescription = "last month",
+                                modifier = Modifier.size(30.dp)
+                            )
+                        }
+                    }
+                ) { contentPadding ->
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(MaterialTheme.colors.background),
+                        verticalArrangement = Arrangement.SpaceBetween,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        TextField(
+                            modifier = Modifier
+                                .background(MaterialTheme.colors.surface)
+                                .clip(
+                                    RoundedCornerShape(corner = CornerSize(10.dp))
+                                )
+                                .padding(vertical = 10.dp)
+                                .fillMaxWidth(0.9f),
+                            value = textState.value,
+                            onValueChange = { textState.value = it },
+                            textStyle = MaterialTheme.typography.body2,
+                            singleLine = true,
+                            placeholder = {
+                                Text(
+                                    text = "",
+                                    style = MaterialTheme.typography.body2
+                                )
+                            },
+                        )
+                        Text("The textfield has this text: " + textState.value.text)
+
+                    }
+                }
+            }
+        }
+    }
+
+    @Composable
+    fun MakingClanPage(backHandle: Unit, navController: NavController) {
+
+        AyeTheme() {
+
+            ProvideWindowInsets() {
+                Scaffold(
+                    topBar = {
+                        HeaderOtherScreens(
+                            modifier = Modifier.fillMaxWidth(),
+                            title = "",
+                            onBackIconPressed = { backHandle }
+                        )
+                    }
+                ) { contentPadding ->
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(MaterialTheme.colors.background),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+
+                        Text("making the clan")
+
+                    }
+                }
+            }
         }
     }
 
