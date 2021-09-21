@@ -25,13 +25,13 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 @Composable
 fun ADay(date: Int, framesList: List<ClanFrameDataClass>,  clubName: String,
-         userid: String) {
+         userid: String, channelid: String) {
     AyeTheme() {
         val checkResult = checkForFrames(date, framesList)
 
         if (checkResult.size > 0) {
             for (item in checkResult) {
-                FrameImage(item, clubName, userid)
+                FrameImage(item, clubName, userid, channelid)
             }
         } else {
             Text(
@@ -63,7 +63,7 @@ private fun checkForFrames(
 
 @Composable
 private fun FrameImage(item: ClanFrameDataClass,  clubName: String,
-                       userid: String) {
+                       userid: String, channelid: String) {
     val painter = rememberImagePainter(data = item.frame_picture_link)
     val context = LocalContext.current
 
@@ -84,6 +84,7 @@ private fun FrameImage(item: ClanFrameDataClass,  clubName: String,
                         putExtra("endTime", item.end_time)
                         putExtra("userid", userid)
                         putExtra("clubName", clubName)
+                        putExtra("channelid", channelid)
                     })
             }
     )

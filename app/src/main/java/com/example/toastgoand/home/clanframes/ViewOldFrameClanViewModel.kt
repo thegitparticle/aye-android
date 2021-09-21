@@ -26,10 +26,10 @@ class ViewOldFrameClanViewModel: ViewModel() {
                 end = end
             ).async { result, status ->
                 if (status.error) {
-                    Log.i("pubnub - get history clans fail", status.statusCode.toString())
+                    Log.i("oldframeabab - pn call get history clans fail", status.statusCode.toString())
                 } else {
                     _oldMessages.value = result?.messages
-                    Log.i("pubnub members", _oldMessages.toString())
+                    Log.i("oldframeabab - pn call members", result.toString())
                 }
             }
         }

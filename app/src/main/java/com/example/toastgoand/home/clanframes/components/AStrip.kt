@@ -15,7 +15,7 @@ import com.example.toastgoand.home.clanframes.ClanFrameDataClass
 
 @Composable
 fun AStrip (start: Int, end: Int, framesList: List<ClanFrameDataClass>,  clubName: String,
-            userid: String) {
+            userid: String, channelid: String) {
 
     val datesArray = mutableListOf<Int>()
 
@@ -36,7 +36,7 @@ fun AStrip (start: Int, end: Int, framesList: List<ClanFrameDataClass>,  clubNam
             )
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 for (date in datesArray) {
-                    ADay(date, framesList, clubName = clubName, userid = userid)
+                    ADay(date, framesList, clubName = clubName, userid = userid, channelid = channelid)
                 }
             }
         }

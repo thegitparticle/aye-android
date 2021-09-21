@@ -3,6 +3,7 @@ package com.example.toastgoand.home.clanframes
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
@@ -61,8 +62,12 @@ class ViewOldFrameClanActivity : BaseActivity() {
         }
 
         setContent {
-            AyeTheme () {
-                val oldMessagesHere: List<PNHistoryItemResult> by viewModel.oldMessages.observeAsState(listOf<PNHistoryItemResult>())
+            AyeTheme() {
+                val oldMessagesHere: List<PNHistoryItemResult> by viewModel.oldMessages.observeAsState(
+                    listOf<PNHistoryItemResult>()
+                )
+
+                Log.i("oldframeabab messages in activity", oldMessagesHere.toString())
 
                 val clubName = intent.getStringExtra("clubName")
                 val channelid = intent.getStringExtra("channelid")
@@ -83,15 +88,15 @@ class ViewOldFrameClanActivity : BaseActivity() {
 
                 val pubNub = PubNub(pnConfiguration)
 
+
                 if (channelid != null) {
                     if (startTime != null) {
-
-                        endTime?.toLong()?.times(1000000)?.let {
+                        if (endTime != null) {
                             viewModel.getOldMessages(
                                 pubNub = pubNub,
                                 channelid = channelid,
-                                start = startTime.toLong() * 1000000,
-                                end = it
+                                start = startTime.toLong() * 10000000,
+                                end = endTime.toLong() * 10000000
                             )
                         }
                     }
@@ -125,7 +130,11 @@ class ViewOldFrameClanActivity : BaseActivity() {
                                     itemContent = {
                                         if (userid != null) {
                                             if (channelid != null) {
-                                                OldPNMessage(message = it, userid = userid, channelid = channelid)
+                                                OldPNMessage(
+                                                    message = it,
+                                                    userid = userid,
+                                                    channelid = channelid
+                                                )
                                             }
                                         }
                                     })

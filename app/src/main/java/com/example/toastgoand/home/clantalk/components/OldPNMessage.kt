@@ -50,6 +50,7 @@ fun OldPNMessage (message: PNHistoryItemResult, userid: String, channelid: Strin
 
         val metaData = Gson().fromJson<MessageMetaData>(message.meta, MessageMetaData::class.java)
 
+
         if (metaData.type == "h") {
             HMessage(message = message)
         } else if (metaData.type == "c") {

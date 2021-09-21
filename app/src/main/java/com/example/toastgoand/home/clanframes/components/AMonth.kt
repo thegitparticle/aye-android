@@ -56,7 +56,7 @@ fun AMonth(
     currentMonth: Int,
     currentDate: Int,
     clubName: String,
-    userid: String
+    userid: String, channelid: String
 ) {
     viewModel.getFramesListMonthlyHere(clubid, viewMonth)
     val framesHere: List<ClanFrameDataClass> by viewModel.framesListMonthly.observeAsState(
@@ -76,7 +76,7 @@ fun AMonth(
     )
 
     AMonthX(
-        clubid = clubid,
+        channelid = channelid,
         viewMonth = viewMonth,
         currentMonth = currentMonth,
         currentDate = currentDate,
@@ -88,7 +88,7 @@ fun AMonth(
 
 @Composable
 fun AMonthX(
-    clubid: String,
+    channelid: String,
     viewMonth: Int,
     currentMonth: Int,
     currentDate: Int,
@@ -105,7 +105,7 @@ fun AMonthX(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    AStrip(start = 1, end = currentDate, framesList = framesList, clubName = clubName, userid = userid)
+                    AStrip(start = 1, end = currentDate, framesList = framesList, clubName = clubName, userid = userid, channelid = channelid)
                 }
             } else if (currentDate in 11..20) {
                 Row(
@@ -113,8 +113,8 @@ fun AMonthX(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    AStrip(start = 1, end = 10, framesList = framesList, clubName, userid)
-                    AStrip(start = 11, end = currentDate, framesList = framesList, clubName = clubName, userid = userid)
+                    AStrip(start = 1, end = 10, framesList = framesList, clubName, userid, channelid = channelid)
+                    AStrip(start = 11, end = currentDate, framesList = framesList, clubName = clubName, userid = userid, channelid = channelid)
                 }
             } else {
                 Row(
@@ -122,9 +122,9 @@ fun AMonthX(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    AStrip(start = 1, end = 10, framesList = framesList, clubName = clubName, userid = userid)
-                    AStrip(start = 11, end = 20, framesList = framesList, clubName = clubName, userid = userid)
-                    AStrip(start = 21, end = currentDate, framesList = framesList, clubName = clubName, userid = userid)
+                    AStrip(start = 1, end = 10, framesList = framesList, clubName = clubName, userid = userid, channelid = channelid)
+                    AStrip(start = 11, end = 20, framesList = framesList, clubName = clubName, userid = userid, channelid = channelid)
+                    AStrip(start = 21, end = currentDate, framesList = framesList, clubName = clubName, userid = userid, channelid = channelid)
                 }
             }
         }
@@ -135,9 +135,9 @@ fun AMonthX(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                AStrip(start = 1, end = 10, framesList = framesList, clubName = clubName, userid = userid)
-                AStrip(start = 11, end = 20, framesList = framesList, clubName = clubName, userid = userid)
-                AStrip(start = 21, end = 31, framesList = framesList, clubName = clubName, userid = userid)
+                AStrip(start = 1, end = 10, framesList = framesList, clubName = clubName, userid = userid, channelid = channelid)
+                AStrip(start = 11, end = 20, framesList = framesList, clubName = clubName, userid = userid, channelid = channelid)
+                AStrip(start = 21, end = 31, framesList = framesList, clubName = clubName, userid = userid, channelid = channelid)
             }
         }
     }

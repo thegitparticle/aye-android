@@ -198,15 +198,18 @@ class ClanFramesActivity : BaseActivity() {
                             if (clubid != null) {
                                 if (clubName != null) {
                                     if (userid != null) {
-                                        AMonth(
-                                            AMonthClanViewModel(),
-                                            clubid.toString(),
-                                            viewMonth,
-                                            currentMonth,
-                                            todayDate,
-                                            clubName = clubName,
-                                            userid = userid
-                                        )
+                                        if (channelid != null) {
+                                            AMonth(
+                                                AMonthClanViewModel(),
+                                                clubid.toString(),
+                                                viewMonth,
+                                                currentMonth,
+                                                todayDate,
+                                                clubName = clubName,
+                                                userid = userid,
+                                                channelid = channelid
+                                            )
+                                        }
                                     }
                                 }
                             }
