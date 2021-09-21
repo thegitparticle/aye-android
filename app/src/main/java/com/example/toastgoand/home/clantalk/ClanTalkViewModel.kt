@@ -11,8 +11,13 @@ import com.example.toastgoand.network.directs.MyDirectsDataClass
 import com.example.toastgoand.network.nudgelist.NudgeToDataClass
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
 import com.example.toastgoand.network.userdetails.UserDetailsRepo
+import com.pubnub.api.PNConfiguration
 import com.pubnub.api.PubNub
+import com.pubnub.api.callbacks.SubscribeCallback
+import com.pubnub.api.enums.PNReconnectionPolicy
+import com.pubnub.api.models.consumer.PNStatus
 import com.pubnub.api.models.consumer.history.PNHistoryItemResult
+import com.pubnub.api.models.consumer.pubsub.PNMessageResult
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -30,6 +35,11 @@ class ClanTalkViewModel(repoDeets: UserDetailsRepo, private val repoRecos: Defau
     val oldMessages: LiveData<List<PNHistoryItemResult>>
         get() = _oldMessages
 
+    private var _newMessages = MutableLiveData<MutableList<PNMessageResult>>()
+
+    val newMessages: LiveData<MutableList<PNMessageResult>>
+        get() = _newMessages
+
     private fun insertDefaultRecos(recos: List<DefaultRecosDataClass>) = viewModelScope.launch {
         repoRecos.insert(recos)
     }
@@ -37,7 +47,34 @@ class ClanTalkViewModel(repoDeets: UserDetailsRepo, private val repoRecos: Defau
     init {
         deets.observeForever {
             deets.value?.user?.let { getDefaultRecosHere(it.id) }
-            Log.i("defaultrecos userid", deets.value?.user?.id.toString())
+            Log.i("livemessage", deets.value?.user?.id.toString())
+        }
+
+    }
+
+    fun watchLiveMessages(pubnub: PubNub, channelid: String, start: Long, end: Long) {
+        viewModelScope.launch {
+            pubnub.addListener(object : SubscribeCallback() {
+                override fun status(pubnub: PubNub, status: PNStatus) {
+//                    Log.i("livemessage", "Status category: ${status.category}")
+//                    // PNConnectedCategory, PNReconnectedCategory, PNDisconnectedCategory
+//                    Log.i("livemessage", "Status operation: ${status.operation}")
+//                    // PNSubscribeOperation, PNHeartbeatOperation
+//
+//                    Log.i("livemessage", "Status error: ${status.error}")
+//                    // true or false
+                }
+
+                override fun message(pubnub: PubNub, pnMessageResult: PNMessageResult) {
+                    Log.i("livemessage", "Message payload: ${pnMessageResult}")
+                    _newMessages.value?.add(pnMessageResult)
+                    _newMessages.value?.get(0)
+                        ?.let { Log.i("livemessage - inside message listener", it.toString()) }
+//                    Log.i("livemessage", "Message channel: ${pnMessageResult.channel}")
+//                    Log.i("livemessage","Message publisher: ${pnMessageResult.publisher}")
+//                    Log.i("livemessage","Message timetoken: ${pnMessageResult.timetoken}")
+                }
+            })
         }
     }
 
@@ -61,7 +98,7 @@ class ClanTalkViewModel(repoDeets: UserDetailsRepo, private val repoRecos: Defau
         viewModelScope.launch {
             pubNub.history(
                 channel = channelid,
-                reverse = true,
+                reverse = false,
                 includeMeta = true,
                 start = start,
                 end = end

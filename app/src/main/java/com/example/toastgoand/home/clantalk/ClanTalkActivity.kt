@@ -1,6 +1,7 @@
 package com.example.toastgoand.home.clantalk
 
 import android.content.Intent
+import android.media.browse.MediaBrowser
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -38,7 +39,6 @@ import com.example.toastgoand.home.clanhub.ClanHubDataClass
 import com.example.toastgoand.home.clanhub.User
 import com.example.toastgoand.home.clanhub.components.UsersListItem
 import com.example.toastgoand.home.clantalk.camera.CameraActivity
-import com.example.toastgoand.home.clantalk.components.AMessage
 import com.example.toastgoand.home.clantalk.components.OldPNMessage
 import com.example.toastgoand.home.clantalk.components.StartClanFrame
 import com.example.toastgoand.home.clantalk.components.TextInputPart
@@ -48,12 +48,18 @@ import com.example.toastgoand.uibits.HeaderPlayScreens
 import com.google.accompanist.insets.*
 import com.pubnub.api.PNConfiguration
 import com.pubnub.api.PubNub
+import com.pubnub.api.callbacks.SubscribeCallback
+import com.pubnub.api.enums.PNReconnectionPolicy
+import com.pubnub.api.models.consumer.PNStatus
 import com.pubnub.api.models.consumer.history.PNHistoryItemResult
+import com.pubnub.api.models.consumer.pubsub.PNMessageResult
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.Camera
 import compose.icons.feathericons.Layers
 import compose.icons.feathericons.PlusSquare
 import kotlinx.datetime.Clock
+import androidx.compose.runtime.mutableStateListOf
+import com.example.toastgoand.home.clantalk.components.NewPNMessage
 
 class ClanTalkActivity : BaseActivity() {
 
@@ -83,6 +89,12 @@ class ClanTalkActivity : BaseActivity() {
                     listOf<PNHistoryItemResult>()
                 )
 
+                val newMessagesHere: List<PNMessageResult> by viewModel.newMessages.observeAsState(
+                    listOf<PNMessageResult>()
+                )
+
+                Log.i("livemessage", newMessagesHere.toString())
+
                 val defaultRecos: List<DefaultRecosDataClass> by viewModel.recos.observeAsState(
                     listOf<DefaultRecosDataClass>()
                 )
@@ -99,22 +111,33 @@ class ClanTalkActivity : BaseActivity() {
                     publishKey = "pub-c-a65bb691-5b8a-4c4b-aef5-e2a26677122d"
                     secure = true
                     uuid = viewModel.deets.value?.user?.id.toString()
+                    reconnectionPolicy = PNReconnectionPolicy.LINEAR
                 }
 
                 val pubNub = PubNub(pnConfiguration)
+
+                pubNub.subscribe(
+                    channels = listOf(channelid) as List<String>
+                )
 
                 val currentMoment: Long = Clock.System.now().epochSeconds
 
                 if (ongoingFrame) {
                     if (channelid != null) {
                         if (startTime != null) {
-
+                            viewModel.watchLiveMessages(
+                                pubnub = pubNub,
+                                channelid = channelid,
+                                start = currentMoment * 10000000,
+                                end = startTime.toLong() * 10000000
+                            )
                             viewModel.getOldMessages(
                                 pubNub = pubNub,
                                 channelid = channelid,
                                 start = currentMoment * 10000000,
                                 end = startTime.toLong() * 10000000
                             )
+
                         }
                     }
                 }
@@ -297,6 +320,18 @@ class ClanTalkActivity : BaseActivity() {
                                                     userid = viewModel.deets.value?.user?.id.toString(),
                                                     channelid = channelid
                                                 )
+                                            }
+                                        })
+                                    items(
+                                        items = newMessagesHere,
+                                        itemContent = {
+                                            if (channelid != null) {
+                                                NewPNMessage(
+                                                    message = it,
+                                                    userid = viewModel.deets.value?.user?.id.toString(),
+                                                    channelid = channelid
+                                                )
+                                                Log.i("livemessage", "new pn message called")
                                             }
                                         })
                                 }
