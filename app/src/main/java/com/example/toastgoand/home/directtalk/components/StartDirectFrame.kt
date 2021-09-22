@@ -104,6 +104,9 @@ fun StartDirectFrame(
                         innerColor = sliderColor.hashCode()
                         textAppearance = slideText.hashCode()
                         text = "slide to start frame"
+                        setOnClickListener {
+                            startFrameHere()
+                        }
                     }
                 }
             )

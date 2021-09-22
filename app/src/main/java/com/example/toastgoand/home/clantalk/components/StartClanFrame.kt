@@ -54,8 +54,10 @@ fun StartClanFrame(
 
     val listener: ((SlideToActView.OnSlideCompleteListener))? = null
 
-    fun startFrameHere(): Boolean {
+    fun startFrameHere() {
+        Log.i("startframeapicall", "start frame called")
         composableScope.launch {
+            Log.i("startframeapicall", "inside composable Scope")
             try {
                 var responseStartFrame =
                     NewClanFrameApi.retrofitService.startNewClanFrame(newFrameInfo)
@@ -65,7 +67,6 @@ fun StartClanFrame(
                 Log.i("startframeapicall", e.toString())
             }
         }
-        return true
     }
 
     val context = LocalContext.current
@@ -105,11 +106,25 @@ fun StartClanFrame(
 
             AndroidView(
                 factory = { ctx ->
+                    fun setUpSlideCallBacks(){
+                        val slideToActView :SlideToActView = SlideToActView(context)
+                        slideToActView.onSlideCompleteListener = object : SlideToActView.OnSlideCompleteListener{
+                            override fun onSlideComplete(view: SlideToActView) {
+                                startFrameHere()
+                            }
+                        }
+                    }
+
                     SlideToActView(ctx).apply {
                         layoutParams = LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
                         innerColor = sliderColor.hashCode()
                         textAppearance = slideText.hashCode()
                         text = "slide to start frame"
+                        setOnClickListener {
+                            startFrameHere()
+                        }
+//                        onSlideToActAnimationEventListener = setUpSlideCallBacks()
+
                     }
                 }
             )
