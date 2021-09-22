@@ -1,6 +1,7 @@
 package com.example.toastgoand.home.directs.components
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -13,6 +14,7 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -24,16 +26,20 @@ import androidx.ui.layout.MainAxisAlignment
 import coil.compose.rememberImagePainter
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.home.directs.NudgeItemDataClass
+import com.example.toastgoand.home.directs.network.NudgeToStartDirectApi
 import com.example.toastgoand.network.nudgelist.NudgeToDataClass
 import com.example.toastgoand.utilities.drawColorShadow
 import com.google.android.material.composethemeadapter.MdcTheme
+import kotlinx.coroutines.launch
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun NudgeToItem(nudgeItem: NudgeToDataClass) {
+fun NudgeToItem(nudgeItem: NudgeToDataClass, currentuserid: String) {
     AyeTheme() {
         Row(
-            modifier = Modifier.padding(horizontal = 15.dp).fillMaxWidth(),
+            modifier = Modifier
+                .padding(horizontal = 15.dp)
+                .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -50,19 +56,33 @@ fun NudgeToItem(nudgeItem: NudgeToDataClass) {
                     )
                 }
             }
-            StartButton()
+            StartButton(nudgeItem = nudgeItem, currentuserid = currentuserid)
         }
     }
 }
 
 @Composable
-private fun StartButton() {
+private fun StartButton(nudgeItem: NudgeToDataClass, currentuserid: String) {
+    val composableScope = rememberCoroutineScope()
+
     Box(
         modifier = Modifier
             .wrapContentWidth()
             .clip(RoundedCornerShape(15.dp))
             .background(MaterialTheme.colors.primary.copy(.08f))
-            .clickable { /* Do something! */ }
+            .clickable {
+                composableScope.launch {
+                    try {
+                        NudgeToStartDirectApi.retrofitService.startANewDirect(
+                            mainuserid = currentuserid,
+                            otheruserid = nudgeItem.id.toString(),
+                            directid = currentuserid + "_" + nudgeItem.id.toString() + "_" + "d"
+                        )
+                    } catch (e: Exception) {
+                        Log.i("startdirect", e.toString())
+                    }
+                }
+            }
             .width(75.dp)
             .height(30.dp),
         contentAlignment = Alignment.Center

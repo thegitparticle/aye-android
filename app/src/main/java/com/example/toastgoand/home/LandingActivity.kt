@@ -101,22 +101,6 @@ class LandingActivity: BaseActivity() {
 
         tab.setupWithViewPager(pager)
 
-
-//        // below is all code for bottom navigation
-//        val navView: TabLayout = binding.navView
-//
-//        val navController = findNavController(R.id.nav_host_fragment_activity_landing)
-//        // Passing each menu ID as a set of Ids because each
-//        // menu should be considered as top level destinations.
-//        val appBarConfiguration = AppBarConfiguration(
-//            setOf(
-//                R.id.navigation_home, R.id.navigation_dashboard,
-//            )
-//        )
-//
-//        setupActionBarWithNavController(navController, appBarConfiguration)
-//        navView.setupWithNavController(navController)
-
         getSupportActionBar()?.hide()
 
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
@@ -128,7 +112,6 @@ class LandingActivity: BaseActivity() {
             val token = task.result
 
             Log.d(ContentValues.TAG, "Firebase token: " + token)
-//
             prefHelper = PrefHelper(this)
             if (token != null) {
                 prefHelper.put( Constant.FIREBASE_TOKEN , token)

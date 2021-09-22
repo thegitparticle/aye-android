@@ -91,7 +91,7 @@ class DirectsFragment : Fragment() {
                                 items(
                                     items = nudgeToHere,
                                     itemContent = {
-                                        NudgeToItem(it)
+                                        viewModel.deets.value?.user?.id?.toString()?.let { it1 -> NudgeToItem(it, currentuserid = it1) }
                                     })
                                 item {
                                     Spacer(Modifier.height(200.dp))
