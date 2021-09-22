@@ -31,21 +31,24 @@ import com.google.android.material.composethemeadapter.MdcTheme
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.Layers
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun DirectItem(directItem: MyDirectsDataClass) {
     AyeTheme() {
         val context = LocalContext.current
 
-        Row(modifier = Modifier.padding(vertical = 7.5.dp).clickable {
-            context.startActivity(Intent(context, DirectTalkActivity::class.java).apply {
-                putExtra("otherName", directItem.display_guys.full_name)
-                putExtra("directid", directItem.direct_channel_id)
-                putExtra("ongoingFrame", directItem.ongoing_frame)
-                putExtra("startTime", directItem.start_time)
-                putExtra("endTime", directItem.end_time)
-            })
-        }) {
-            Row (modifier = Modifier.padding(horizontal = 15.dp)) {
+        Row(modifier = Modifier
+            .padding(vertical = 7.5.dp)
+            .clickable {
+                context.startActivity(Intent(context, DirectTalkActivity::class.java).apply {
+                    putExtra("otherName", directItem.display_guys.full_name)
+                    putExtra("directid", directItem.direct_channel_id)
+                    putExtra("ongoingFrame", directItem.ongoing_frame)
+                    putExtra("startTime", directItem.start_time)
+                    putExtra("endTime", directItem.end_time)
+                })
+            }) {
+            Row(modifier = Modifier.padding(horizontal = 15.dp)) {
                 DirectImage(directItem = directItem)
                 Column(
                     modifier = Modifier
@@ -57,19 +60,28 @@ fun DirectItem(directItem: MyDirectsDataClass) {
                         style = MaterialTheme.typography.subtitle1,
                         color = MaterialTheme.colors.onBackground
                     )
-                    Row(modifier = Modifier.padding(vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Row(
+                        modifier = Modifier.padding(vertical = 4.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
                         Icon(
                             imageVector = FeatherIcons.Layers,
                             contentDescription = "frames identifier icon",
                             modifier = Modifier.size(11.dp)
                         )
                         Text(
-                            text = "tap to start new frame",
+                            text = if (directItem.ongoing_frame) {
+                                "frame going on"
+                            } else {
+                                "tap to start new frame"
+                            },
                             style = MaterialTheme.typography.caption,
                             color = MaterialTheme.colors.onBackground,
-                            modifier = Modifier.alpha(
-                                0.25F
-                            ).padding(horizontal = 4.dp)
+                            modifier = Modifier
+                                .alpha(
+                                    0.25F
+                                )
+                                .padding(horizontal = 4.dp)
                         )
                     }
                 }
