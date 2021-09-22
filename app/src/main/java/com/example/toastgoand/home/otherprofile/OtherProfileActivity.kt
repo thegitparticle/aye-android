@@ -1,6 +1,7 @@
 package com.example.toastgoand.home.otherprofile
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -36,7 +37,11 @@ class OtherProfileActivity : BaseActivity() {
 
         val otheruserid = intent.getIntExtra("otheruserid", 0)
 
-        viewModel.getOtherProfileHere(otheruserid = otheruserid)
+        Log.i("otherprofileviewing", otheruserid.toString())
+
+        if (otheruserid > 0) {
+            viewModel.getOtherProfileHere(otheruserid = otheruserid)
+        }
 
         fun onBackPressedHere() {
             onBackPressed()

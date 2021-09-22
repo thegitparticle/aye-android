@@ -40,6 +40,7 @@ import com.example.toastgoand.home.directframes.components.AMonthDirect
 import com.example.toastgoand.home.directframes.components.AMonthViewModel
 import com.example.toastgoand.home.directhub.DirectHubActivity
 import com.example.toastgoand.home.directtalk.DirectTalkActivity
+import com.example.toastgoand.home.otherprofile.OtherProfileActivity
 import com.example.toastgoand.uibits.HeaderPlayScreens
 import com.example.toastgoand.uibits.TopHeaderPlayScreens
 import com.google.accompanist.insets.ProvideWindowInsets
@@ -48,6 +49,7 @@ import compose.icons.FeatherIcons
 import compose.icons.feathericons.ChevronLeft
 import compose.icons.feathericons.ChevronRight
 import compose.icons.feathericons.Layers
+import compose.icons.feathericons.User
 import kotlinx.datetime.*
 import spencerstudios.com.bungeelib.Bungee
 
@@ -73,25 +75,26 @@ class DirectFramesActivity : BaseActivity() {
                 val context = LocalContext.current
 
                 fun onHubPressed() {
-                    startActivity(
-                        Intent(
-                            this,
-                            DirectHubActivity::class.java
-                        ).apply {
-                            putExtra("otherName", otherName)
-                            putExtra("directid", directid)
-                            putExtra("ongoingFrame", ongoingFrame)
-                            putExtra("startTime", startTime)
-                            putExtra("endTime", endTime)
-                            putExtra(
-                                "userid",
-                                userid
-                            )
-                            putExtra(
-                                "userdp",
-                                userdp
-                            )
-                        })
+
+                    val splitChannelID = directid?.split("_")?.map {it.trim()}
+
+                    var otherIdHere: Int = 0
+
+                    if (userid?.toInt() == splitChannelID?.get(0)?.toInt()) {
+                        otherIdHere = splitChannelID?.get(1)?.toInt()!!
+                    } else {
+                        otherIdHere = splitChannelID?.get(0)?.toInt()!!
+                    }
+
+                    if (otherIdHere > 0) {
+                        startActivity(
+                            Intent(
+                                this,
+                                OtherProfileActivity::class.java
+                            ).apply {
+                                putExtra("otheruserid", otherIdHere)
+                            })
+                    }
                 }
 
                 val now: Instant = Clock.System.now()
@@ -164,7 +167,7 @@ class DirectFramesActivity : BaseActivity() {
                                     onActionIconPressed = {
                                         onHubPressed()
                                     },
-                                    actionIcon = FeatherIcons.Layers
+                                    actionIcon = FeatherIcons.User
                                 )
                             }
                         },

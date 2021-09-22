@@ -20,12 +20,12 @@ class OtherProfileViewModel: ViewModel() {
     fun getOtherProfileHere(otheruserid: Int) {
         viewModelScope.launch {
             try {
-                val userResult = OtherProfileApi.retrofitService.getOtherProfile(otheruserid.toString())
+                val userResult = OtherProfileApi.retrofitService.getOtherProfile("", otheruserid.toString())
                 var x_here: List<OtherProfileDataClass> = userResult
                 _otherProfile.value = x_here
-                Log.i("clanHubViewModel", _otherProfile.value!!.toString())
+                Log.i("otherprofileviewing", _otherProfile.value!!.toString())
             } catch (e: Exception) {
-                Log.i("clanHubViewModel", "API call for user details, Failed! ${e.message}")
+                Log.i("otherprofileviewing", "API call for user details, Failed! ${e.message}")
             }
         }
     }

@@ -8,6 +8,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 private const val BASE_URL = "https://apisayepirates.life/api/"
 
@@ -22,8 +23,8 @@ private val retrofit =
         .build()
 
 interface OtherProfileApiInterface {
-    @GET("users/profile-update/?id=&user={otheruserid}")
-    suspend fun getOtherProfile(@Path("otheruserid") phone: String): List<OtherProfileDataClass>
+    @GET("users/profile-update/")
+    suspend fun getOtherProfile(@Query("id") id: String, @Query("user") otheruserid: String): List<OtherProfileDataClass>
 }
 
 object OtherProfileApi {
