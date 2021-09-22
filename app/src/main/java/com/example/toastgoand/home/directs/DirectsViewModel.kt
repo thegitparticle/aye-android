@@ -5,6 +5,7 @@ import androidx.lifecycle.*
 import com.example.toastgoand.network.directs.MyDirectsApi
 import com.example.toastgoand.network.directs.MyDirectsDataClass
 import com.example.toastgoand.network.directs.MyDirectsRepo
+import com.example.toastgoand.network.directs.MyDirectsTriggerApi
 import com.example.toastgoand.network.nudgelist.NudgeToApi
 import com.example.toastgoand.network.nudgelist.NudgeToDataClass
 import com.example.toastgoand.network.nudgelist.NudgeToRepo
@@ -54,6 +55,7 @@ class DirectsViewModel(private val repo: MyDirectsRepo, private val repoDeets: U
     fun getMyDirectsHere(userid: Int) {
         viewModelScope.launch {
             try {
+                val myDirectsTriggerResult = MyDirectsTriggerApi.retrofitService.getMyDirectsTrigger(userid.toString())
                 val myDirectsResult = MyDirectsApi.retrofitService.getMyDirects(userid.toString())
                 var x_here: List<MyDirectsDataClass> = myDirectsResult
                 insertDirects(x_here)

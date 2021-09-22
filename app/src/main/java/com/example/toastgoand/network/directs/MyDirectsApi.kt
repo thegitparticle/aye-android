@@ -19,6 +19,17 @@ private val retrofit =
         .baseUrl(BASE_URL)
         .build()
 
+interface MyDirectsTriggerApiInterface {
+    @GET("users/my_directs_trigger/{userid}/")
+    suspend fun getMyDirectsTrigger(@Path("userid") userid: String)
+}
+
+object MyDirectsTriggerApi {
+    val retrofitService: MyDirectsTriggerApiInterface by lazy {
+        retrofit.create(MyDirectsTriggerApiInterface::class.java)
+    }
+}
+
 interface MyDirectsApiInterface {
     @GET("users/my_directs/{userid}")
     suspend fun getMyDirects(@Path("userid") userid: String): List<MyDirectsDataClass>
