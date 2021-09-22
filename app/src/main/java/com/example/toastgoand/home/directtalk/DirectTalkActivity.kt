@@ -279,12 +279,16 @@ class DirectTalkActivity : BaseActivity() {
                             if (ongoingFrame) {
                                 AnimatedVisibility(visible = showTextInputDirect) {
                                     if (directid != null) {
-                                        TextInputDirect(
-                                            userid = viewModel.deets.value?.user?.id.toString(),
-                                            channelid = directid,
-                                            defaultRecos = defaultRecos,
-                                            modifier = Modifier
-                                        )
+                                        if (otherName != null) {
+                                            TextInputDirect(
+                                                userid = viewModel.deets.value?.user?.id.toString(),
+                                                channelid = directid,
+                                                defaultRecos = defaultRecos,
+                                                modifier = Modifier,
+                                                otherName = otherName,
+                                                myName = viewModel.deets.value?.user?.full_name.toString()
+                                            )
+                                        }
                                     }
                                 }
                             } else {

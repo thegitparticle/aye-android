@@ -21,7 +21,7 @@ fun pushSetupClans(clansHere: MutableList<MyClansDataClass>, userid: String, dev
     var Channels: MutableList<String> = mutableListOf()
 
     for (item in clansHere) {
-        Channels.add(item.pn_channel_id)
+        Channels.add(item.pn_channel_id + "_push")
     }
 
     Log.i("pnnotif clans", "function called")

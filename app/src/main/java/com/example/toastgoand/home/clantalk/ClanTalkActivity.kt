@@ -276,11 +276,14 @@ class ClanTalkActivity : BaseActivity() {
                             if (ongoingFrame) {
                                 AnimatedVisibility(visible = showTextInput) {
                                     if (channelid != null) {
-                                        TextInputPart(
-                                            userid = viewModel.deets.value?.user?.id.toString(),
-                                            channelid = channelid,
-                                            defaultRecos = defaultRecos
-                                        )
+                                        if (clubName != null) {
+                                            TextInputPart(
+                                                userid = viewModel.deets.value?.user?.id.toString(),
+                                                channelid = channelid,
+                                                defaultRecos = defaultRecos,
+                                                clubName = clubName
+                                            )
+                                        }
                                     }
                                 }
                             } else {

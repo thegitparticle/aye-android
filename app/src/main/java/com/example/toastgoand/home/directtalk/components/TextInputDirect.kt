@@ -37,7 +37,8 @@ fun TextInputDirect(
     userid: String,
     channelid: String,
     defaultRecos: List<DefaultRecosDataClass>,
-    otherName: String
+    otherName: String,
+    myName: String
 ) {
     val typedText = remember { mutableStateOf(TextFieldValue()) }
 
@@ -95,7 +96,7 @@ fun TextInputDirect(
 
     val channelData1: ChannelDataNewMessage = ChannelDataNewMessage(channel = channelid)
     val notificationData1: NotificationDataNewMessage = NotificationDataNewMessage(
-        title = otherName,
+        title = myName,
         body = "new message for you",
         sound = "default"
     )
