@@ -19,6 +19,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
+import com.example.toastgoand.home.notifications.ChannelDataNewMessage
+import com.example.toastgoand.home.notifications.NewMessageNotifPayloadDataClass
+import com.example.toastgoand.home.notifications.NotificationDataNewMessage
+import com.example.toastgoand.home.notifications.PayloadNewMessage
 import com.example.toastgoand.network.defaultrecos.DefaultRecosDataClass
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.navigationBarsWithImePadding
@@ -28,7 +32,13 @@ import compose.icons.FeatherIcons
 import compose.icons.feathericons.Send
 
 @Composable
-fun TextInputDirect (modifier: Modifier, userid: String, channelid: String, defaultRecos: List<DefaultRecosDataClass>) {
+fun TextInputDirect(
+    modifier: Modifier,
+    userid: String,
+    channelid: String,
+    defaultRecos: List<DefaultRecosDataClass>,
+    otherName: String
+) {
     val typedText = remember { mutableStateOf(TextFieldValue()) }
 
     val pnConfiguration = PNConfiguration().apply {
@@ -53,7 +63,7 @@ fun TextInputDirect (modifier: Modifier, userid: String, channelid: String, defa
                 .padding(8.dp)
                 .size(width = 100.dp, height = 50.dp)
                 .clip(RoundedCornerShape(corner = CornerSize(10.dp)))
-                .clickable {Log.i("defaultreocs", "image selected") }
+                .clickable { Log.i("defaultreocs", "image selected") }
         )
     }
 
@@ -82,6 +92,18 @@ fun TextInputDirect (modifier: Modifier, userid: String, channelid: String, defa
         }
 
     }
+
+    val channelData1: ChannelDataNewMessage = ChannelDataNewMessage(channel = channelid)
+    val notificationData1: NotificationDataNewMessage = NotificationDataNewMessage(
+        title = otherName,
+        body = "new message for you",
+        sound = "default"
+    )
+
+    val p1: PayloadNewMessage =
+        PayloadNewMessage(data = channelData1, notification = notificationData1)
+
+    val payloadHere: NewMessageNotifPayloadDataClass = NewMessageNotifPayloadDataClass(pc_gcm = p1)
 
     ProvideWindowInsets() {
         Column(
@@ -115,6 +137,24 @@ fun TextInputDirect (modifier: Modifier, userid: String, channelid: String, defa
                                     if (status.error) {
                                         Log.i("messagesendingfail", status.toString())
                                     } else {
+                                        pubnub
+                                            .publish(
+                                                message = payloadHere,
+                                                channel = channelid + "_push"
+                                            )
+                                            .async { result, status ->
+                                                if (!status.error) {
+                                                    Log.i(
+                                                        "messagesendingapicall notif",
+                                                        "notif it worked"
+                                                    )
+                                                } else {
+                                                    Log.i(
+                                                        "messagesendingapicall notif",
+                                                        status.toString()
+                                                    )
+                                                }
+                                            }
                                         Log.i("messagesendingsuccess", result.toString())
                                     }
                                 }
