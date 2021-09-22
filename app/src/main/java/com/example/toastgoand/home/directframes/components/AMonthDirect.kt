@@ -51,7 +51,9 @@ fun AMonthDirect(
     directid: String,
     viewMonth: Int,
     currentMonth: Int,
-    currentDate: Int
+    currentDate: Int,
+    otherName: String,
+    userid: String,
 ) {
     viewModel.getFramesListMonthlyHere(directid, viewMonth)
     val framesHere: List<DirectFrameDataClass> by viewModel.framesListMonthly.observeAsState(
@@ -74,7 +76,9 @@ fun AMonthDirect(
         viewMonth = viewMonth,
         currentMonth = currentMonth,
         currentDate = currentDate,
-        framesList = framesHere
+        framesList = framesHere,
+        otherName = otherName,
+        userid = userid
     )
 }
 
@@ -84,7 +88,9 @@ fun AMonthDirectX(
     viewMonth: Int,
     currentMonth: Int,
     currentDate: Int,
-    framesList: List<DirectFrameDataClass>
+    framesList: List<DirectFrameDataClass>,
+    otherName: String,
+    userid: String,
 ) {
 
     if (viewMonth == currentMonth) {
@@ -95,7 +101,14 @@ fun AMonthDirectX(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    AStripDirect(start = 1, end = currentDate, framesList = framesList)
+                    AStripDirect(
+                        start = 1,
+                        end = currentDate,
+                        framesList = framesList,
+                        directid = directid,
+                        otherName = otherName,
+                        userid = userid
+                    )
                 }
             } else if (currentDate in 11..20) {
                 Row(
@@ -103,8 +116,12 @@ fun AMonthDirectX(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    AStripDirect(start = 1, end = 10, framesList = framesList)
-                    AStripDirect(start = 11, end = currentDate, framesList = framesList)
+                    AStripDirect(start = 1, end = 10, framesList = framesList, directid = directid,
+                        otherName = otherName,
+                        userid = userid)
+                    AStripDirect(start = 11, end = currentDate, framesList = framesList, directid = directid,
+                        otherName = otherName,
+                        userid = userid)
                 }
             } else {
                 Row(
@@ -112,9 +129,15 @@ fun AMonthDirectX(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    AStripDirect(start = 1, end = 10, framesList = framesList)
-                    AStripDirect(start = 11, end = 20, framesList = framesList)
-                    AStripDirect(start = 21, end = currentDate, framesList = framesList)
+                    AStripDirect(start = 1, end = 10, framesList = framesList, directid = directid,
+                        otherName = otherName,
+                        userid = userid)
+                    AStripDirect(start = 11, end = 20, framesList = framesList, directid = directid,
+                        otherName = otherName,
+                        userid = userid)
+                    AStripDirect(start = 21, end = currentDate, framesList = framesList, directid = directid,
+                        otherName = otherName,
+                        userid = userid)
                 }
             }
         }
@@ -124,9 +147,15 @@ fun AMonthDirectX(
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()
             ) {
-                AStripDirect(start = 1, end = 10, framesList = framesList)
-                AStripDirect(start = 11, end = 20, framesList = framesList)
-                AStripDirect(start = 21, end = 31, framesList = framesList)
+                AStripDirect(start = 1, end = 10, framesList = framesList, directid = directid,
+                    otherName = otherName,
+                    userid = userid)
+                AStripDirect(start = 11, end = 20, framesList = framesList, directid = directid,
+                    otherName = otherName,
+                    userid = userid)
+                AStripDirect(start = 21, end = 31, framesList = framesList, directid = directid,
+                    otherName = otherName,
+                    userid = userid)
             }
         }
     }

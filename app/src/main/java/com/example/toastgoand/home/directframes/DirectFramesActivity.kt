@@ -60,8 +60,6 @@ class DirectFramesActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = viewBinding as ActivityDirectFramesBinding
 
-
-
         setContent {
             AyeTheme() {
                 val otherName = intent.getStringExtra("otherName")
@@ -69,6 +67,9 @@ class DirectFramesActivity : BaseActivity() {
                 val ongoingFrame = intent.getBooleanExtra("ongoingFrame", false)
                 val startTime = intent.getStringExtra("startTime")
                 val endTime = intent.getStringExtra("endTime")
+                val userid = intent.getStringExtra("userid")
+                val userdp = intent.getStringExtra("userdp")
+
                 val context = LocalContext.current
 
                 fun onHubPressed() {
@@ -78,8 +79,19 @@ class DirectFramesActivity : BaseActivity() {
                             DirectHubActivity::class.java
                         ).apply {
                             putExtra("otherName", otherName)
+                            putExtra("directid", directid)
+                            putExtra("ongoingFrame", ongoingFrame)
+                            putExtra("startTime", startTime)
+                            putExtra("endTime", endTime)
+                            putExtra(
+                                "userid",
+                                userid
+                            )
+                            putExtra(
+                                "userdp",
+                                userdp
+                            )
                         })
-                    Bungee.slideUp(this)
                 }
 
                 val now: Instant = Clock.System.now()
@@ -98,40 +110,31 @@ class DirectFramesActivity : BaseActivity() {
                     } else if (month == 2) {
                         monthName = "FEBRUARY"
                         return monthName
-                    }
-                    else if (month == 3) {
+                    } else if (month == 3) {
                         monthName = "MARCH"
                         return monthName
-                    }
-                    else if (month == 4) {
+                    } else if (month == 4) {
                         monthName = "APRIL"
                         return monthName
-                    }
-                    else if (month == 5) {
+                    } else if (month == 5) {
                         monthName = "MAY"
                         return monthName
-                    }
-                    else if (month == 6) {
+                    } else if (month == 6) {
                         monthName = "JUNE"
                         return monthName
-                    }
-                    else if (month == 7) {
+                    } else if (month == 7) {
                         monthName = "JULY"
                         return monthName
-                    }
-                    else if (month == 8) {
+                    } else if (month == 8) {
                         monthName = "AUGUST"
                         return monthName
-                    }
-                    else if (month == 9) {
+                    } else if (month == 9) {
                         monthName = "SEPTEMBER"
                         return monthName
-                    }
-                    else if (month == 10) {
+                    } else if (month == 10) {
                         monthName = "OCTOBER"
                         return monthName
-                    }
-                    else if (month == 11) {
+                    } else if (month == 11) {
                         monthName = "NOVEMBER"
                         return monthName
                     } else if (month == 12) {
@@ -159,13 +162,7 @@ class DirectFramesActivity : BaseActivity() {
                                         onBackPressed()
                                     },
                                     onActionIconPressed = {
-                                        context.startActivity(
-                                            Intent(
-                                                context,
-                                                DirectTalkActivity::class.java
-                                            ).apply {
-
-                                            })
+                                        onHubPressed()
                                     },
                                     actionIcon = FeatherIcons.Layers
                                 )
@@ -204,13 +201,19 @@ class DirectFramesActivity : BaseActivity() {
                             }
                             Spacer(modifier = Modifier.size(25.dp))
                             if (directid != null) {
-                                AMonthDirect(
-                                    AMonthViewModel(),
-                                    directid,
-                                    viewMonth,
-                                    currentMonth,
-                                    todayDate
-                                )
+                                if (otherName != null) {
+                                    if (userid != null) {
+                                        AMonthDirect(
+                                            AMonthViewModel(),
+                                            directid,
+                                            viewMonth,
+                                            currentMonth,
+                                            todayDate,
+                                            otherName = otherName,
+                                            userid = userid,
+                                        )
+                                    }
+                                }
                             }
                         }
 

@@ -1,60 +1,44 @@
-package com.example.toastgoand.home.clanframes
+package com.example.toastgoand.home.directframes
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Text
+import androidx.compose.material.Scaffold
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
-import com.example.toastgoand.R
 import com.example.toastgoand.composestyle.AyeTheme
-import com.example.toastgoand.databinding.ActivityClanFramesBinding
-import com.example.toastgoand.databinding.ActivityViewOldFrameClanBinding
+import com.example.toastgoand.databinding.ActivityViewOldFrameDirectBinding
 import com.example.toastgoand.home.clantalk.components.OldPNMessage
-import com.example.toastgoand.network.pnstuff.pubNub
 import com.example.toastgoand.uibits.HeaderOtherScreens
-import com.example.toastgoand.uibits.HeaderPlayScreens
 import com.google.accompanist.insets.ProvideWindowInsets
-import com.google.accompanist.insets.rememberImeNestedScrollConnection
-import com.google.accompanist.insets.statusBarsPadding
-import com.google.accompanist.insets.ui.Scaffold
 import com.pubnub.api.PNConfiguration
 import com.pubnub.api.PubNub
 import com.pubnub.api.models.consumer.history.PNHistoryItemResult
-import compose.icons.FeatherIcons
-import compose.icons.feathericons.Layers
 
-class ViewOldFrameClanActivity : BaseActivity() {
+class ViewOldFrameDirectActivity: BaseActivity() {
 
-    private lateinit var binding: ActivityViewOldFrameClanBinding
+    private lateinit var binding: ActivityViewOldFrameDirectBinding
 
-    private lateinit var viewModel: ViewOldFrameClanViewModel
+    private lateinit var viewModel: ViewOldFrameDirectViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = viewBinding as ActivityViewOldFrameClanBinding
+        binding = viewBinding as ActivityViewOldFrameDirectBinding
 
-        viewModel = ViewModelProvider(this).get(ViewOldFrameClanViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(ViewOldFrameDirectViewModel::class.java)
 
         fun onBackPressedHere() {
             onBackPressed()
@@ -68,8 +52,8 @@ class ViewOldFrameClanActivity : BaseActivity() {
 
                 Log.i("oldframeabab messages in activity", oldMessagesHere.toString())
 
-                val clubName = intent.getStringExtra("clubName")
-                val channelid = intent.getStringExtra("channelid")
+                val otherName = intent.getStringExtra("otherName")
+                val directid = intent.getStringExtra("directid")
                 val startTime = intent.getStringExtra("startTime")
                 val endTime = intent.getStringExtra("endTime")
                 val userid = intent.getStringExtra("userid")
@@ -87,13 +71,12 @@ class ViewOldFrameClanActivity : BaseActivity() {
 
                 val pubNub = PubNub(pnConfiguration)
 
-
-                if (channelid != null) {
+                if (directid != null) {
                     if (startTime != null) {
                         if (endTime != null) {
                             viewModel.getOldMessages(
                                 pubNub = pubNub,
-                                channelid = channelid,
+                                channelid = directid,
                                 start = startTime.toLong() * 10000000,
                                 end = endTime.toLong() * 10000000
                             )
@@ -104,10 +87,10 @@ class ViewOldFrameClanActivity : BaseActivity() {
                 ProvideWindowInsets() {
                     Scaffold(
                         topBar = {
-                            if (clubName != null) {
+                            if (otherName != null) {
                                 HeaderOtherScreens(
                                     modifier = Modifier.fillMaxWidth(),
-                                    title = clubName,
+                                    title = otherName,
                                     onBackIconPressed = { onBackPressedHere() }
                                 )
                             }
@@ -128,11 +111,11 @@ class ViewOldFrameClanActivity : BaseActivity() {
                                     items = oldMessagesHere,
                                     itemContent = {
                                         if (userid != null) {
-                                            if (channelid != null) {
+                                            if (directid != null) {
                                                 OldPNMessage(
                                                     message = it,
                                                     userid = userid,
-                                                    channelid = channelid
+                                                    channelid = directid
                                                 )
                                             }
                                         }
@@ -146,10 +129,10 @@ class ViewOldFrameClanActivity : BaseActivity() {
                 }
             }
         }
+
     }
 
     override fun binding(): ViewBinding {
-        return ActivityViewOldFrameClanBinding.inflate(layoutInflater)
+        return ActivityViewOldFrameDirectBinding.inflate(layoutInflater)
     }
-
 }

@@ -35,7 +35,6 @@ import com.example.toastgoand.R
 import com.example.toastgoand.ToastgoApplication
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityInvitePeopleDirectlyBinding
-import com.example.toastgoand.databinding.ActivityViewOldFrameBinding
 import com.example.toastgoand.home.clantalk.components.CEntryFile
 import com.example.toastgoand.home.clantalk.components.MessageMetaData
 import com.example.toastgoand.home.directs.components.DirectItem

@@ -11,7 +11,8 @@ import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.home.directframes.DirectFrameDataClass
 
 @Composable
-fun AStripDirect(start: Int, end: Int, framesList: List<DirectFrameDataClass>) {
+fun AStripDirect(start: Int, end: Int, framesList: List<DirectFrameDataClass>,  otherName: String,
+                 userid: String, directid: String) {
 
     val datesArray = mutableListOf<Int>()
 
@@ -32,7 +33,9 @@ fun AStripDirect(start: Int, end: Int, framesList: List<DirectFrameDataClass>) {
             )
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 for (date in datesArray) {
-                    ADayDirect(date, framesList = framesList)
+                    ADayDirect(date, framesList = framesList,  directid = directid,
+                        otherName = otherName,
+                        userid = userid)
                 }
             }
         }

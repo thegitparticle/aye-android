@@ -35,6 +35,9 @@
             android:name=".home.clanframes.ViewOldFrameClanActivity"
             android:exported="true" />
         <activity
+            android:name=".home.directframes.ViewOldFrameDirectActivity"
+            android:exported="true" />
+        <activity
             android:name=".uibits.ViewMediaActivity"
             android:exported="true" />
         <activity
