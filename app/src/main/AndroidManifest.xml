@@ -145,7 +145,8 @@
         <service
             android:name=".quick.callactivity.impl.ScreenSharingService"
             android:foregroundServiceType="mediaProjection"
-            android:process=":screensharingsvc">
+            android:process=":screensharingsvc"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.screenshare" />
             </intent-filter>

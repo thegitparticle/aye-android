@@ -2,6 +2,7 @@ package com.example.toastgoand.home.directs
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -61,6 +62,9 @@ class DirectsFragment : Fragment() {
                     val nudgeToHere: List<NudgeToDataClass> by viewModel.nudgeTo.observeAsState(
                         listOf<NudgeToDataClass>()
                     )
+
+                    Log.i("directdebug", directsHere.toString())
+
                     Surface(modifier = Modifier.background(MaterialTheme.colors.background)) {
                         SwipeRefresh(
                             state = rememberSwipeRefreshState(isRefreshing),

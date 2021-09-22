@@ -13,8 +13,8 @@ data class MyDirectsDataClass (
     val display_guys : DisplayGuys,
     val frame_total : Int,
     val ongoing_frame : Boolean,
-    val start_time : Boolean,
-    val end_time : Boolean
+    val start_time : String,
+    val end_time : String
         )
 
 @Serializable

@@ -84,7 +84,7 @@ class StartClanActivity : BaseActivity() {
 
                 val navController = rememberNavController()
 
-                NavHost(navController = navController, startDestination = "profile") {
+                NavHost(navController = navController, startDestination = "friendslist") {
                     composable("friendslist") {
                         FriendsListPage(
                             friendsList = myFriendsListHere,

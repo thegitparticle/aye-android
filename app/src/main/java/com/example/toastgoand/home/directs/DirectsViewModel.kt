@@ -57,9 +57,9 @@ class DirectsViewModel(private val repo: MyDirectsRepo, private val repoDeets: U
                 val myDirectsResult = MyDirectsApi.retrofitService.getMyDirects(userid.toString())
                 var x_here: List<MyDirectsDataClass> = myDirectsResult
                 insertDirects(x_here)
-                Log.i("DirectsViewModel", x_here.toString())
+                Log.i("directdebug", x_here.toString())
             } catch (e: Exception) {
-                Log.i("DirectsViewModel", "API call for user details, Failed! ${e.message}")
+                Log.i("directdebug", "API call for user details, Failed! ${e.message}")
             }
         }
     }

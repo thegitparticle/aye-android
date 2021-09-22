@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.clickable
@@ -13,6 +14,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -24,8 +26,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.core.view.WindowCompat
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
+import com.example.toastgoand.ToastgoApplication
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityClanTalkBinding
 import com.example.toastgoand.databinding.ActivityDirectTalkBinding
@@ -35,22 +39,38 @@ import com.example.toastgoand.home.clanhub.components.ClanMetrics
 import com.example.toastgoand.home.clanhub.components.UsersListItem
 import com.example.toastgoand.home.clantalk.ClanTalkViewModel
 import com.example.toastgoand.home.clantalk.camera.CameraActivity
+import com.example.toastgoand.home.clantalk.components.NewPNMessage
+import com.example.toastgoand.home.clantalk.components.OldPNMessage
 import com.example.toastgoand.home.clantalk.components.TextInputPart
 import com.example.toastgoand.home.directframes.DirectFramesActivity
 import com.example.toastgoand.home.directtalk.camera.CameraDirectActivity
+import com.example.toastgoand.home.directtalk.components.StartDirectFrame
 import com.example.toastgoand.home.directtalk.components.TextInputDirect
+import com.example.toastgoand.network.defaultrecos.DefaultRecosDataClass
 import com.example.toastgoand.uibits.HeaderPlayScreens
 import com.example.toastgoand.uibits.TopHeaderPlayScreens
 import com.google.accompanist.insets.*
+import com.pubnub.api.PNConfiguration
+import com.pubnub.api.PubNub
+import com.pubnub.api.enums.PNReconnectionPolicy
+import com.pubnub.api.models.consumer.history.PNHistoryItemResult
+import com.pubnub.api.models.consumer.pubsub.PNMessageResult
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.Camera
 import compose.icons.feathericons.Layers
 import compose.icons.feathericons.PlusSquare
+import kotlinx.datetime.Clock
 
 class DirectTalkActivity : BaseActivity() {
     private lateinit var binding: ActivityDirectTalkBinding
 
-    private lateinit var viewModel: DirectTalkViewModel
+    private val viewModel: DirectTalkViewModel by viewModels {
+        DirectTalkViewModelFactory(
+            (this.application as ToastgoApplication).repository,
+            (this.application as ToastgoApplication).repositoryDefaultRecos
+        )
+    }
+
 
     @ExperimentalAnimationApi
     @ExperimentalAnimatedInsets
@@ -60,13 +80,66 @@ class DirectTalkActivity : BaseActivity() {
 
         val allMessages = ""
 
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
         setContent {
             AyeTheme {
+
+                val oldMessagesHere: List<PNHistoryItemResult> by viewModel.oldMessages.observeAsState(
+                    listOf<PNHistoryItemResult>()
+                )
+
+                val newMessagesHere: List<PNMessageResult> by viewModel.newMessages.observeAsState(
+                    listOf<PNMessageResult>()
+                )
+
+                Log.i("livemessage", newMessagesHere.toString())
+
+                val defaultRecos: List<DefaultRecosDataClass> by viewModel.recos.observeAsState(
+                    listOf<DefaultRecosDataClass>()
+                )
+
                 val otherName = intent.getStringExtra("otherName")
                 val directid = intent.getStringExtra("directid")
-                val ongoingFrame = intent.getBooleanExtra("ongoingFrame", false)
+                var ongoingFrame = intent.getBooleanExtra("ongoingFrame", false)
                 val startTime = intent.getStringExtra("startTime")
                 val endTime = intent.getStringExtra("endTime")
+
+                val pnConfiguration = PNConfiguration().apply {
+                    subscribeKey = "sub-c-d099e214-9bcf-11eb-9adf-f2e9c1644994"
+                    publishKey = "pub-c-a65bb691-5b8a-4c4b-aef5-e2a26677122d"
+                    secure = true
+                    uuid = viewModel.deets.value?.user?.id.toString()
+                    reconnectionPolicy = PNReconnectionPolicy.LINEAR
+                }
+
+                val pubNub = PubNub(pnConfiguration)
+
+                pubNub.subscribe(
+                    channels = listOf(directid) as List<String>
+                )
+
+                val currentMoment: Long = Clock.System.now().epochSeconds
+
+                if (ongoingFrame) {
+                    if (directid != null) {
+                        if (startTime != null) {
+                            viewModel.watchLiveMessages(
+                                pubnub = pubNub,
+                                channelid = directid,
+                                start = currentMoment * 10000000,
+                                end = startTime.toLong() * 10000000
+                            )
+                            viewModel.getOldMessages(
+                                pubNub = pubNub,
+                                channelid = directid,
+                                start = currentMoment * 10000000,
+                                end = startTime.toLong() * 10000000
+                            )
+
+                        }
+                    }
+                }
 
                 val members = DummyClanHub.clanHub.users
                 val context = LocalContext.current
@@ -90,7 +163,12 @@ class DirectTalkActivity : BaseActivity() {
                     showTextInputDirect = false
                 }
 
-                ProvideWindowInsets() {
+                fun changeFrameLiveStatus() {
+                    ongoingFrame = true
+                    Log.i("startframeapicall", "backwaeds function call worked")
+                }
+
+                ProvideWindowInsets(windowInsetsAnimationsEnabled = true) {
                     com.google.accompanist.insets.ui.Scaffold(
                         topBar = {
                             if (otherName != null) {
@@ -111,6 +189,14 @@ class DirectTalkActivity : BaseActivity() {
                                                 putExtra("ongoingFrame", ongoingFrame)
                                                 putExtra("startTime", startTime)
                                                 putExtra("endTime", endTime)
+                                                putExtra(
+                                                    "userid",
+                                                    viewModel.deets.value?.user?.id.toString()
+                                                )
+                                                putExtra(
+                                                    "userdp",
+                                                    viewModel.deets.value?.image
+                                                )
                                             })
                                     },
                                     actionIcon = FeatherIcons.Layers
@@ -137,6 +223,14 @@ class DirectTalkActivity : BaseActivity() {
                                                         putExtra("ongoingFrame", ongoingFrame)
                                                         putExtra("startTime", startTime)
                                                         putExtra("endTime", endTime)
+                                                        putExtra(
+                                                            "userid",
+                                                            viewModel.deets.value?.user?.id.toString()
+                                                        )
+                                                        putExtra(
+                                                            "userdp",
+                                                            viewModel.deets.value?.image
+                                                        )
                                                     })
                                             },
                                             modifier = Modifier
@@ -182,14 +276,23 @@ class DirectTalkActivity : BaseActivity() {
                         },
                         floatingActionButtonPosition = FabPosition.Center,
                         bottomBar = {
-                            AnimatedVisibility(visible = showTextInputDirect) {
-                                Surface(elevation = 1.dp) {
-                                    TextInputDirect(
-                                        modifier = Modifier
-                                            .focusRequester(
-                                                focusTextInputRequester
-                                            )
-                                            .navigationBarsWithImePadding()
+                            if (ongoingFrame) {
+                                AnimatedVisibility(visible = showTextInputDirect) {
+                                    if (directid != null) {
+                                        TextInputDirect(
+                                            userid = viewModel.deets.value?.user?.id.toString(),
+                                            channelid = directid,
+                                            defaultRecos = defaultRecos,
+                                            modifier = Modifier
+                                        )
+                                    }
+                                }
+                            } else {
+                                if (directid != null) {
+                                    StartDirectFrame(
+                                        modifier = Modifier,
+                                        directid = directid,
+                                        changeLiveStatus = ::changeFrameLiveStatus,
                                     )
                                 }
                             }
@@ -208,11 +311,31 @@ class DirectTalkActivity : BaseActivity() {
                                 item {
                                     Spacer(modifier = Modifier.size(100.dp))
                                 }
-                                items(
-                                    items = members,
-                                    itemContent = {
-//                                        UsersListItem(user = it)
-                                    })
+                                if (oldMessagesHere.isNotEmpty()) {
+                                    items(
+                                        items = oldMessagesHere,
+                                        itemContent = {
+                                            if (directid != null) {
+                                                OldPNMessage(
+                                                    message = it,
+                                                    userid = viewModel.deets.value?.user?.id.toString(),
+                                                    channelid = directid
+                                                )
+                                            }
+                                        })
+                                    items(
+                                        items = newMessagesHere,
+                                        itemContent = {
+                                            if (directid != null) {
+                                                NewPNMessage(
+                                                    message = it,
+                                                    userid = viewModel.deets.value?.user?.id.toString(),
+                                                    channelid = directid
+                                                )
+                                                Log.i("livemessage", "new pn message called")
+                                            }
+                                        })
+                                }
                                 item {
                                     Spacer(modifier = Modifier.size(100.dp))
                                 }
