@@ -20,7 +20,12 @@ import com.example.toastgoand.home.clantalk.network.NewClanFrameApi
 import com.example.toastgoand.home.clantalk.network.NewClanFrameDataClass
 import com.example.toastgoand.home.directtalk.network.NewDirectFrameApi
 import com.example.toastgoand.home.directtalk.network.NewDirectFrameDataClass
+import com.example.toastgoand.home.notifications.ChannelData
+import com.example.toastgoand.home.notifications.NotificationData
+import com.example.toastgoand.home.notifications.Payload
+import com.example.toastgoand.home.notifications.StartFrameNotifPayloadDataClass
 import com.ncorti.slidetoact.SlideToActView
+import com.pubnub.api.PubNub
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 
@@ -29,6 +34,8 @@ fun StartDirectFrame(
     modifier: Modifier,
     directid: String,
     changeLiveStatus: () -> Unit,
+    pubNub: PubNub,
+    myName: String
 ) {
 
     val currentMoment: Long = Clock.System.now().epochSeconds
@@ -48,12 +55,27 @@ fun StartDirectFrame(
 
     val listener: ((SlideToActView.OnSlideCompleteListener))? = null
 
+    val channel1: ChannelData = ChannelData(channel = directid)
+    val notification1: NotificationData =
+        NotificationData(title = myName, body = "new frame started", sound = "default")
+    val p1: Payload = Payload(data = channel1, notification = notification1)
+
+    val payloadHere: StartFrameNotifPayloadDataClass = StartFrameNotifPayloadDataClass(pc_gcm = p1)
+
     fun startFrameHere(): Boolean {
         composableScope.launch {
             try {
                 var responseStartFrame =
                     NewDirectFrameApi.retrofitService.startNewDirectFrame(newFrameInfo)
                 changeLiveStatus()
+                pubNub.publish(message = payloadHere, channel = directid + "_push")
+                    .async { result, status ->
+                        if (!status.error) {
+                            Log.i("startframeapicall notif", "notif it worked")
+                        } else {
+                            Log.i("startframeapicall notif", status.toString())
+                        }
+                    }
                 Log.i("startframeapicall", "it worked")
             } catch (e: Exception) {
                 Log.i("startframeapicall", e.toString())

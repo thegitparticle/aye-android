@@ -293,6 +293,8 @@ class DirectTalkActivity : BaseActivity() {
                                         modifier = Modifier,
                                         directid = directid,
                                         changeLiveStatus = ::changeFrameLiveStatus,
+                                        pubNub = pubNub,
+                                        myName = viewModel.deets.value?.user?.full_name.toString()
                                     )
                                 }
                             }

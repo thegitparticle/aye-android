@@ -27,7 +27,12 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.alpha
 import com.example.toastgoand.home.clantalk.network.NewClanFrameApi
 import com.example.toastgoand.home.clantalk.network.NewClanFrameDataClass
+import com.example.toastgoand.home.notifications.ChannelData
+import com.example.toastgoand.home.notifications.NotificationData
+import com.example.toastgoand.home.notifications.Payload
+import com.example.toastgoand.home.notifications.StartFrameNotifPayloadDataClass
 import com.ncorti.slidetoact.SlideToActView
+import com.pubnub.api.PubNub
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 
@@ -38,6 +43,8 @@ fun StartClanFrame(
     clubid: Int,
     channelid: String,
     changeLiveStatus: () -> Unit,
+    pubNub: PubNub,
+    clubName: String
 ) {
     val currentMoment: Long = Clock.System.now().epochSeconds
 
@@ -54,6 +61,13 @@ fun StartClanFrame(
 
     val listener: ((SlideToActView.OnSlideCompleteListener))? = null
 
+    val channel1: ChannelData = ChannelData(channel = channelid)
+    val notification1: NotificationData =
+        NotificationData(title = clubName, body = "new frame started", sound = "default")
+    val p1: Payload = Payload(data = channel1, notification = notification1)
+
+    val payloadHere: StartFrameNotifPayloadDataClass = StartFrameNotifPayloadDataClass(pc_gcm = p1)
+
     fun startFrameHere() {
         Log.i("startframeapicall", "start frame called")
         composableScope.launch {
@@ -62,6 +76,14 @@ fun StartClanFrame(
                 var responseStartFrame =
                     NewClanFrameApi.retrofitService.startNewClanFrame(newFrameInfo)
                 changeLiveStatus()
+                pubNub.publish(message = payloadHere, channel = channelid + "_push")
+                    .async { result, status ->
+                        if (!status.error) {
+                            Log.i("startframeapicall notif", "notif it worked")
+                        } else {
+                            Log.i("startframeapicall notif", status.toString())
+                        }
+                    }
                 Log.i("startframeapicall", "it worked")
             } catch (e: Exception) {
                 Log.i("startframeapicall", e.toString())
@@ -106,14 +128,14 @@ fun StartClanFrame(
 
             AndroidView(
                 factory = { ctx ->
-                    fun setUpSlideCallBacks(){
-                        val slideToActView :SlideToActView = SlideToActView(context)
-                        slideToActView.onSlideCompleteListener = object : SlideToActView.OnSlideCompleteListener{
-                            override fun onSlideComplete(view: SlideToActView) {
-                                startFrameHere()
-                            }
-                        }
-                    }
+//                    fun setUpSlideCallBacks(){
+//                        val slideToActView :SlideToActView = SlideToActView(context)
+//                        slideToActView.onSlideCompleteListener = object : SlideToActView.OnSlideCompleteListener{
+//                            override fun onSlideComplete(view: SlideToActView) {
+//                                startFrameHere()
+//                            }
+//                        }
+//                    }
 
                     SlideToActView(ctx).apply {
                         layoutParams = LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
@@ -123,8 +145,6 @@ fun StartClanFrame(
                         setOnClickListener {
                             startFrameHere()
                         }
-//                        onSlideToActAnimationEventListener = setUpSlideCallBacks()
-
                     }
                 }
             )

@@ -285,12 +285,16 @@ class ClanTalkActivity : BaseActivity() {
                                 }
                             } else {
                                 if (channelid != null) {
-                                    StartClanFrame(
-                                        modifier = Modifier,
-                                        clubid = clubid,
-                                        channelid = channelid,
-                                        changeLiveStatus = ::changeFrameLiveStatus,
-                                    )
+                                    if (clubName != null) {
+                                        StartClanFrame(
+                                            modifier = Modifier,
+                                            clubid = clubid,
+                                            channelid = channelid,
+                                            changeLiveStatus = ::changeFrameLiveStatus,
+                                            pubNub = pubNub,
+                                            clubName = clubName
+                                        )
+                                    }
                                 }
                             }
 
