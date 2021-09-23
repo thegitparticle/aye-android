@@ -29,6 +29,9 @@
         android:windowSoftInputMode="stateHidden"
         tools:replace="android:appComponentFactory">
         <activity
+            android:name=".quick.StreamCameraActivity"
+            android:exported="true" />
+        <activity
             android:name=".home.clanhub.clanaddpeople.ClanAddPeopleActivity"
             android:exported="true" />
         <activity
@@ -147,9 +150,9 @@
 
         <service
             android:name=".quick.callactivity.impl.ScreenSharingService"
+            android:exported="true"
             android:foregroundServiceType="mediaProjection"
-            android:process=":screensharingsvc"
-            android:exported="true">
+            android:process=":screensharingsvc">
             <intent-filter>
                 <action android:name="android.intent.action.screenshare" />
             </intent-filter>

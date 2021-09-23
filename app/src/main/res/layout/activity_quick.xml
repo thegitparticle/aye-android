@@ -4,17 +4,59 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".quick.QuickActivity">
 
+    <data>
+        <variable
+            name="quickViewModel"
+            type="com.example.toastgoand.quick.QuickViewModel" />
+    </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
 
-    <fragment
-        android:id="@+id/fragmentContainerView"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:defaultNavHost="true"
-        app:navGraph="@navigation/quick_navigation"/>
+        <FrameLayout
+            android:id="@+id/cameraContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <androidx.camera.view.PreviewView
+                android:id="@+id/previewView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/cameraText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/gotham_rounded_medium"
+                    android:text="tap to stream from camera"
+                    android:textColor="#FFFFFF"
+                    android:textSize="17sp" />
+
+            </androidx.camera.view.PreviewView>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/appStreamContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/appStreamText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/gotham_rounded_medium"
+                android:text="tap to stream from some app"
+                android:textColor="#FFFFFF"
+                android:textSize="17sp" />
+
+        </FrameLayout>
     </LinearLayout>
 </layout>

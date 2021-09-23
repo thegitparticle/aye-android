@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,7 +11,9 @@
         android:id="@+id/fl_local"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/ll_join" />
+        android:layout_above="@+id/ll_join" >
+
+    </FrameLayout>
 
     <FrameLayout
         android:id="@+id/fl_remote"
@@ -25,23 +28,47 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="visible">
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/et_channel"
+            android:visibility="invisible"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_height="0dp"
             android:hint="@string/channel_id"
             android:digits="@string/chanel_support_char"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_join"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text=""
+            android:visibility="invisible"/>
+
+        <ImageButton
+            android:id="@+id/mute_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/join" />
+            android:layout_weight="1"
+            android:src="@drawable/ic_cancel" />
+
+        <ImageButton
+            android:id="@+id/cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_cancel" />
+
+        <ImageButton
+            android:id="@+id/flip_camera_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_cancel" />
 
     </LinearLayout>
+
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/screenShare"
