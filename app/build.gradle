@@ -208,4 +208,5 @@ dependencies {
     //swipable activity
     implementation "app.futured.hauler:hauler:5.0.0"
     implementation "app.futured.hauler:databinding:5.0.0"
+
 }

@@ -60,6 +60,8 @@ import compose.icons.feathericons.PlusSquare
 import kotlinx.datetime.Clock
 import androidx.compose.runtime.mutableStateListOf
 import com.example.toastgoand.home.clantalk.components.NewPNMessage
+import com.example.toastgoand.home.startclan.StartClanActivity
+import com.example.toastgoand.quick.QuickActivity
 
 class ClanTalkActivity : BaseActivity() {
 
@@ -241,7 +243,13 @@ class ClanTalkActivity : BaseActivity() {
                                                 )
                                             }
                                             FloatingActionButton(
-                                                onClick = { /* TODO */ },
+                                                onClick = {
+                                                    context.startActivity(
+                                                        Intent(
+                                                            context,
+                                                            QuickActivity::class.java
+                                                        ).apply { })
+                                                },
                                                 modifier = Modifier
                                                     .padding(horizontal = 25.dp)
                                                     .size(60.dp),

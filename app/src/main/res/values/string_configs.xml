@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="agora_app_id" translatable="false">5de5dd821ca244599496505f2481b447</string>
-    <string name="agora_access_token" translatable="false">0065de5dd821ca244599496505f2481b447IAD8WnxXDDZqLTE4PgArzfKU2Cq4mrg0no71yhWozMEJ0tAL/5gAAAAAEAA8nW45m8QsYQEAAQCaxCxh</string>
+    <string name="agora_app_id" translatable="false">fc35d7acb9d94e7e9eb4be42749544eb</string>
+    <string name="agora_access_token" translatable="false">0063203805757c54ff4a384e53869cc1888IAAziEPsXr5VODdCUZYRW/MDZdcA6FhXRUUvpyNJUxDuskeO+aIAAAAAEAAh3GK8vORMYQEAAQC75Exh</string>
 </resources>

@@ -37,7 +37,9 @@ import io.agora.rtc.models.ChannelMediaOptions;
 import io.agora.rtc.video.VideoCanvas;
 import io.agora.rtc.video.VideoEncoderConfiguration;
 
-/**This demo demonstrates how to make a one-to-one video call*/
+/**
+ * This demo demonstrates how to make a one-to-one video call
+ */
 @Example(
         index = 6,
         group = ADVANCED,
@@ -45,8 +47,7 @@ import io.agora.rtc.video.VideoEncoderConfiguration;
         actionId = R.id.action_groundFragment_to_multiProcess,
         tipsId = R.string.multiProcessScreenShare
 )
-public class MultiProcess extends BaseFragment implements View.OnClickListener
-{
+public class MultiProcess extends BaseFragment implements View.OnClickListener {
     private static final String TAG = MultiProcess.class.getSimpleName();
     private static final Integer SCREEN_SHARE_UID = 10000;
 
@@ -74,15 +75,13 @@ public class MultiProcess extends BaseFragment implements View.OnClickListener
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
-    {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_two_process_screen_share, container, false);
         return view;
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
-    {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         join = view.findViewById(R.id.btn_join);
         screenShare = view.findViewById(R.id.screenShare);
@@ -95,17 +94,14 @@ public class MultiProcess extends BaseFragment implements View.OnClickListener
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState)
-    {
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         // Check if the context is valid
         Context context = getContext();
-        if (context == null)
-        {
+        if (context == null) {
             return;
         }
-        try
-        {
+        try {
             /**Creates an RtcEngine instance.
              * @param context The context of Android Activity
              * @param appId The App ID issued to you by Agora. See <a href="https://docs.agora.io/en/Agora%20Platform/token#get-an-app-id">
@@ -117,21 +113,17 @@ public class MultiProcess extends BaseFragment implements View.OnClickListener
             // Initialize Screen Share Client
             mSSClient = ScreenSharingClient.getInstance();
             mSSClient.setListener(mListener);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             getActivity().onBackPressed();
         }
     }
 
     @Override
-    public void onDestroy()
-    {
+    public void onDestroy() {
         super.onDestroy();
         /**leaveChannel and Destroy the RtcEngine instance*/
-        if(engine != null)
-        {
+        if (engine != null) {
             engine.leaveChannel();
         }
         if (isSharing) {
@@ -142,18 +134,14 @@ public class MultiProcess extends BaseFragment implements View.OnClickListener
     }
 
     @Override
-    public void onClick(View v)
-    {
-        if (v.getId() == R.id.btn_join)
-        {
-            if (!joined)
-            {
+    public void onClick(View v) {
+        if (v.getId() == R.id.btn_join) {
+            if (!joined) {
                 CommonUtil.hideInputBoard(getActivity(), et_channel);
                 // call when join button hit
                 String channelId = et_channel.getText().toString();
                 // Check permission
-                if (AndPermission.hasPermissions(this, Permission.Group.STORAGE, Permission.Group.MICROPHONE, Permission.Group.CAMERA))
-                {
+                if (AndPermission.hasPermissions(this, Permission.Group.STORAGE, Permission.Group.MICROPHONE, Permission.Group.CAMERA)) {
                     joinChannel(channelId);
                     return;
                 }
@@ -167,9 +155,7 @@ public class MultiProcess extends BaseFragment implements View.OnClickListener
                     // Permissions Granted
                     joinChannel(channelId);
                 }).start();
-            }
-            else
-            {
+            } else {
                 joined = false;
                 /**After joining a channel, the user must call the leaveChannel method to end the
                  * call before joining another channel. This method returns 0 if the user leaves the
@@ -195,8 +181,7 @@ public class MultiProcess extends BaseFragment implements View.OnClickListener
                 screenShare.setEnabled(false);
                 isSharing = false;
             }
-        }
-        else if (v.getId() == R.id.screenShare){
+        } else if (v.getId() == R.id.screenShare) {
             String channelId = et_channel.getText().toString();
             if (!isSharing) {
                 mSSClient.start(getContext(), getResources().getString(R.string.agora_app_id), null,
@@ -216,26 +201,23 @@ public class MultiProcess extends BaseFragment implements View.OnClickListener
         }
     }
 
-    private VideoEncoderConfiguration.VideoDimensions getScreenDimensions(){
+    private VideoEncoderConfiguration.VideoDimensions getScreenDimensions() {
         WindowManager manager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics outMetrics = new DisplayMetrics();
         manager.getDefaultDisplay().getMetrics(outMetrics);
         return new VideoEncoderConfiguration.VideoDimensions(outMetrics.widthPixels / 2, outMetrics.heightPixels / 2);
     }
 
-    private void joinChannel(String channelId)
-    {
+    private void joinChannel(String channelId) {
         // Check if the context is valid
         Context context = getContext();
-        if (context == null)
-        {
+        if (context == null) {
             return;
         }
 
         // Create render view by RtcEngine
         SurfaceView surfaceView = RtcEngine.CreateRendererView(context);
-        if(fl_local.getChildCount() > 0)
-        {
+        if (fl_local.getChildCount() > 0) {
             fl_local.removeAllViews();
         }
         // Add to the local container
@@ -261,7 +243,7 @@ public class MultiProcess extends BaseFragment implements View.OnClickListener
 
         VideoEncoderConfiguration configuration = new VideoEncoderConfiguration(
                 VideoEncoderConfiguration.VD_640x360,
-                VideoEncoderConfiguration.FRAME_RATE.FRAME_RATE_FPS_15,
+                FRAME_RATE_FPS_30,
                 VideoEncoderConfiguration.STANDARD_BITRATE,
                 VideoEncoderConfiguration.ORIENTATION_MODE.ORIENTATION_MODE_FIXED_PORTRAIT
         );
@@ -286,8 +268,7 @@ public class MultiProcess extends BaseFragment implements View.OnClickListener
          * A token generated at the server. This applies to scenarios with high-security requirements. For details, see
          *      https://docs.agora.io/en/cloud-recording/token_server_java?platform=Java*/
         String accessToken = getString(R.string.agora_access_token);
-        if (TextUtils.equals(accessToken, "") || TextUtils.equals(accessToken, "<#YOUR ACCESS TOKEN#>"))
-        {
+        if (TextUtils.equals(accessToken, "") || TextUtils.equals(accessToken, "<#YOUR ACCESS TOKEN#>")) {
             accessToken = null;
         }
         /** Allows a user to join a channel.
@@ -297,8 +278,7 @@ public class MultiProcess extends BaseFragment implements View.OnClickListener
         option.autoSubscribeAudio = false;
         option.autoSubscribeVideo = false;
         int res = engine.joinChannel(accessToken, channelId, "Extra Optional Data", 0, option);
-        if (res != 0)
-        {
+        if (res != 0) {
             // Usually happens with invalid parameters
             // Error code description can be found at:
             // en: https://docs.agora.io/en/Voice/API%20Reference/java/classio_1_1agora_1_1rtc_1_1_i_rtc_engine_event_handler_1_1_error_code.html
@@ -314,21 +294,18 @@ public class MultiProcess extends BaseFragment implements View.OnClickListener
      * IRtcEngineEventHandler is an abstract class providing default implementation.
      * The SDK uses this class to report to the app on SDK runtime events.
      */
-    private final IRtcEngineEventHandler iRtcEngineEventHandler = new IRtcEngineEventHandler()
-    {
+    private final IRtcEngineEventHandler iRtcEngineEventHandler = new IRtcEngineEventHandler() {
         /**Reports a warning during SDK runtime.
          * Warning code: https://docs.agora.io/en/Voice/API%20Reference/java/classio_1_1agora_1_1rtc_1_1_i_rtc_engine_event_handler_1_1_warn_code.html*/
         @Override
-        public void onWarning(int warn)
-        {
+        public void onWarning(int warn) {
             Log.w(TAG, String.format("onWarning code %d message %s", warn, RtcEngine.getErrorDescription(warn)));
         }
 
         /**Reports an error during SDK runtime.
          * Error code: https://docs.agora.io/en/Voice/API%20Reference/java/classio_1_1agora_1_1rtc_1_1_i_rtc_engine_event_handler_1_1_error_code.html*/
         @Override
-        public void onError(int err)
-        {
+        public void onError(int err) {
             Log.e(TAG, String.format("onError code %d message %s", err, RtcEngine.getErrorDescription(err)));
             showAlert(String.format("onError code %d message %s", err, RtcEngine.getErrorDescription(err)));
         }
@@ -337,8 +314,7 @@ public class MultiProcess extends BaseFragment implements View.OnClickListener
          * @param stats With this callback, the application retrieves the channel information,
          *              such as the call duration and statistics.*/
         @Override
-        public void onLeaveChannel(RtcStats stats)
-        {
+        public void onLeaveChannel(RtcStats stats) {
             super.onLeaveChannel(stats);
             Log.i(TAG, String.format("local user %d leaveChannel!", myUid));
             showLongToast(String.format("local user %d leaveChannel!", myUid));
@@ -351,17 +327,14 @@ public class MultiProcess extends BaseFragment implements View.OnClickListener
          * @param uid User ID
          * @param elapsed Time elapsed (ms) from the user calling joinChannel until this callback is triggered*/
         @Override
-        public void onJoinChannelSuccess(String channel, int uid, int elapsed)
-        {
+        public void onJoinChannelSuccess(String channel, int uid, int elapsed) {
             Log.i(TAG, String.format("onJoinChannelSuccess channel %s uid %d", channel, uid));
             showLongToast(String.format("onJoinChannelSuccess channel %s uid %d", channel, uid));
             myUid = uid;
             joined = true;
-            handler.post(new Runnable()
-            {
+            handler.post(new Runnable() {
                 @Override
-                public void run()
-                {
+                public void run() {
                     join.setEnabled(true);
                     join.setText(getString(R.string.leave));
                     screenShare.setEnabled(true);
@@ -402,8 +375,7 @@ public class MultiProcess extends BaseFragment implements View.OnClickListener
          * @param elapsed Time elapsed (ms) from the local user calling the joinChannel method
          *                  until the SDK triggers this callback.*/
         @Override
-        public void onRemoteAudioStateChanged(int uid, int state, int reason, int elapsed)
-        {
+        public void onRemoteAudioStateChanged(int uid, int state, int reason, int elapsed) {
             super.onRemoteAudioStateChanged(uid, state, reason, elapsed);
             Log.i(TAG, "onRemoteAudioStateChanged->" + uid + ", state->" + state + ", reason->" + reason);
         }
@@ -446,8 +418,7 @@ public class MultiProcess extends BaseFragment implements View.OnClickListener
          * @param elapsed Time elapsed (ms) from the local user calling the joinChannel method until
          *               the SDK triggers this callback.*/
         @Override
-        public void onRemoteVideoStateChanged(int uid, int state, int reason, int elapsed)
-        {
+        public void onRemoteVideoStateChanged(int uid, int state, int reason, int elapsed) {
             super.onRemoteVideoStateChanged(uid, state, reason, elapsed);
             Log.i(TAG, "onRemoteVideoStateChanged->" + uid + ", state->" + state + ", reason->" + reason);
         }
@@ -457,13 +428,12 @@ public class MultiProcess extends BaseFragment implements View.OnClickListener
          * @param elapsed Time delay (ms) from the local user calling joinChannel/setClientRole
          *                until this callback is triggered.*/
         @Override
-        public void onUserJoined(int uid, int elapsed)
-        {
+        public void onUserJoined(int uid, int elapsed) {
             super.onUserJoined(uid, elapsed);
             Log.i(TAG, "onUserJoined->" + uid);
             showLongToast(String.format("user %d joined!", uid));
             // don't render screen sharing view
-            if (SCREEN_SHARE_UID == uid){
+            if (SCREEN_SHARE_UID == uid) {
                 return;
             }
             /**Check if the context is correct*/
@@ -475,8 +445,7 @@ public class MultiProcess extends BaseFragment implements View.OnClickListener
             {
                 /**Display remote video stream*/
                 SurfaceView surfaceView = null;
-                if (fl_remote.getChildCount() > 0)
-                {
+                if (fl_remote.getChildCount() > 0) {
                     fl_remote.removeAllViews();
                 }
                 // Create render view by RtcEngine
@@ -501,11 +470,10 @@ public class MultiProcess extends BaseFragment implements View.OnClickListener
          *   USER_OFFLINE_BECOME_AUDIENCE(2): (Live broadcast only.) The client role switched from
          *               the host to the audience.*/
         @Override
-        public void onUserOffline(int uid, int reason)
-        {
+        public void onUserOffline(int uid, int reason) {
             Log.i(TAG, String.format("user %d offline! reason:%d", uid, reason));
             showLongToast(String.format("user %d offline! reason:%d", uid, reason));
-            if (SCREEN_SHARE_UID == uid){
+            if (SCREEN_SHARE_UID == uid) {
                 return;
             }
             handler.post(new Runnable() {
