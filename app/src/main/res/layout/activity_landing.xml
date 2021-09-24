@@ -6,94 +6,88 @@
     android:layout_height="match_parent"
     android:paddingTop="0dp">
 
-    <com.h6ah4i.android.materialshadowninepatch.MaterialShadowContainerView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/shadow_item_container"
-        style="@style/ms9_DefaultShadowStyle"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:ms9_shadowElevation="4dp"
-        app:ms9_shadowTranslationZ="20dp"
-        app:ms9_spotShadowDrawablesList="@array/ms9_spot_shadow_drawables_z18"
-        app:ms9_ambientShadowDrawablesList="@array/ms9_ambient_shadow_drawables_z18"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        android:background="@color/light_splash"
+        android:paddingTop="0dp"
+        android:shadowRadius="40"
+        android:translationZ="20dp"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/app_bar"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/light_splash"
-            android:paddingTop="0dp"
-            android:shadowRadius="40"
-            android:translationZ="20dp"
-            app:layout_constraintTop_toTopOf="parent">
+            android:shadowRadius="40" />
 
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbar"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical"
+            android:paddingVertical="10dp">
+
+            <androidx.compose.ui.platform.ComposeView
+                android:id="@+id/headerButtons"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:shadowRadius="40" />
+                android:layout_height="match_parent"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="horizontal"
-                android:paddingVertical="10dp">
+            <ImageView
+                android:id="@+id/invitePeopleLogo"
+                android:visibility="gone"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="start"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="0.1"
+                app:srcCompat="@drawable/ic_invitepeople" />
 
-                <ImageView
-                    android:id="@+id/invitePeopleLogo"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_gravity="start"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_weight="0.1"
-                    app:srcCompat="@drawable/ic_invitepeople" />
-
-                <ImageView
-                    android:id="@+id/ayeLogo"
-                    android:layout_width="45dp"
-                    android:layout_height="25dp"
-                    android:layout_gravity="center"
-                    android:layout_weight="0.5"
-                    app:srcCompat="@drawable/aye_pink_gradient" />
+            <ImageView
+                android:id="@+id/ayeLogo"
+                android:visibility="gone"
+                android:layout_width="45dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                app:srcCompat="@drawable/aye_pink_gradient" />
 
 
-                <com.jackandphantom.circularimageview.CircleImage
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/sample_dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_gravity="start"
-                    android:layout_weight="0.1"
-                    app:border_width="3dp"
-                    app:border_color="#ed2e2e"
-                    app:add_shadow="true"
-                    app:shadow_color="#a10909"
-                    app:shadow_radius="20"
-                    android:id="@+id/circleImage" />
+            <com.jackandphantom.circularimageview.CircleImage
+                android:id="@+id/circleImage"
+                android:visibility="gone"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="start"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="0.1"
+                android:src="@drawable/sample_dp"
+                app:add_shadow="true"
+                app:border_color="#ed2e2e"
+                app:border_width="3dp"
+                app:shadow_color="#a10909"
+                app:shadow_radius="20" />
 
-            </LinearLayout>
+        </LinearLayout>
 
-        </com.google.android.material.appbar.AppBarLayout>
-
-    </com.h6ah4i.android.materialshadowninepatch.MaterialShadowContainerView>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager.widget.ViewPager
+
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/shadow_item_container"
-        app:layout_constraintVertical_bias="0.0"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" >
+        app:layout_constraintTop_toBottomOf="@+id/app_bar"
+        app:layout_constraintVertical_bias="0.0">
 
     </androidx.viewpager.widget.ViewPager>
 
@@ -106,26 +100,24 @@
         android:layout_marginEnd="0dp"
         android:background="@drawable/float_nav_bar_bg"
         app:elevation="16dp"
+        app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:menu="@menu/bottom_nav_menu"
-        app:labelVisibilityMode="unlabeled">
-    </com.google.android.material.tabs.TabLayout>
+        app:menu="@menu/bottom_nav_menu"></com.google.android.material.tabs.TabLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:background="@color/red_splash"
-        app:elevation="26dp"
         android:layout_marginVertical="30dp"
-        app:srcCompat="@drawable/ic_caretright"
+        android:background="@color/red_splash"
+        android:clickable="true"
+        app:elevation="26dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        />
+        app:srcCompat="@drawable/ic_caretright" />
 
 
     <Button

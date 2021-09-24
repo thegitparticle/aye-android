@@ -1,6 +1,7 @@
 package com.example.toastgoand.home
 
 import android.app.AlertDialog
+import android.app.PendingIntent.getActivity
 import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
@@ -8,37 +9,58 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.unit.dp
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.ui.layout.fillMaxWidth
 import androidx.viewbinding.ViewBinding
 import androidx.viewpager.widget.ViewPager
+import coil.compose.rememberImagePainter
 import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.R
+import com.example.toastgoand.ToastgoApplication
 import com.example.toastgoand.auth.LoginActivity
+import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityLandingBinding
 import com.example.toastgoand.databinding.StartCallDialogBinding
 import com.example.toastgoand.home.aye.TheAyeActivity
 import com.example.toastgoand.home.clans.ClansFragment
 import com.example.toastgoand.home.directs.DirectsFragment
+import com.example.toastgoand.home.directs.DirectsViewModel
+import com.example.toastgoand.home.directs.DirectsViewModelFactory
 import com.example.toastgoand.home.invitepeopledirectly.InvitePeopleDirectlyActivity
 import com.example.toastgoand.home.myprofile.MyProfileActivity
 import com.example.toastgoand.navigator.Navigator
 import com.example.toastgoand.navigator.Screen
 import com.example.toastgoand.prefhelpers.Constant
 import com.example.toastgoand.prefhelpers.PrefHelper
+import com.example.toastgoand.uibits.CircleIcon
+import com.example.toastgoand.utilities.drawColorShadow
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.tabs.TabLayout
+import compose.icons.FeatherIcons
+import compose.icons.feathericons.UserPlus
 
 
 @AndroidEntryPoint
-class LandingActivity: BaseActivity() {
+class LandingActivity : BaseActivity() {
 
     private lateinit var binding: ActivityLandingBinding
 
@@ -49,6 +71,12 @@ class LandingActivity: BaseActivity() {
     lateinit var navigator: Navigator
 
     lateinit var prefHelper: PrefHelper
+
+    private val viewModel: LandingViewModel by viewModels {
+        LandingViewModelFactory(
+            (this.getApplication() as ToastgoApplication).repository,
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,29 +92,68 @@ class LandingActivity: BaseActivity() {
 
         binding.logout.setOnClickListener {
             prefHelper = PrefHelper(this)
-            prefHelper.put( Constant.PREF_IS_LOGIN, false)
+            prefHelper.put(Constant.PREF_IS_LOGIN, false)
             startActivity(Intent(this, LoginActivity::class.java))
         }
 
         binding.circleImage.setOnClickListener {
-            val intent = Intent(this, MyProfileActivity::class.java).apply{}
+            val intent = Intent(this, MyProfileActivity::class.java).apply {}
             startActivity(intent)
-            overridePendingTransition(R.anim.slide_up_enter,
-                R.anim.slide_down_exit)
+            overridePendingTransition(
+                R.anim.slide_up_enter,
+                R.anim.slide_down_exit
+            )
         }
 
         binding.ayeLogo.setOnClickListener {
-            val intent = Intent(this, TheAyeActivity::class.java).apply{}
+            val intent = Intent(this, TheAyeActivity::class.java).apply {}
             startActivity(intent)
-            overridePendingTransition(R.anim.slide_up_enter,
-                R.anim.slide_down_exit)
+            overridePendingTransition(
+                R.anim.slide_up_enter,
+                R.anim.slide_down_exit
+            )
         }
 
         binding.invitePeopleLogo.setOnClickListener {
-            val intent = Intent(this, InvitePeopleDirectlyActivity::class.java).apply{}
+            val intent = Intent(this, InvitePeopleDirectlyActivity::class.java).apply {}
             startActivity(intent)
-            overridePendingTransition(R.anim.slide_up_enter,
-                R.anim.slide_down_exit)
+            overridePendingTransition(
+                R.anim.slide_up_enter,
+                R.anim.slide_down_exit
+            )
+        }
+
+        val composePart = binding.headerButtons
+        composePart.setContent {
+            AyeTheme() {
+                val painterAye = rememberImagePainter(data = R.drawable.aye_logo)
+                val painterDp = rememberImagePainter(data = viewModel.deets.value?.image)
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    CircleIcon(iconName = FeatherIcons.UserPlus, modifier = Modifier.padding(8.dp))
+                    Image(
+                        painter = painterAye,
+                        contentDescription = "aye logo",
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .width(55.dp)
+                            .height(30.dp)
+                    )
+                    Image(
+                        painter = painterDp,
+                        contentDescription = "user dp",
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .size(30.dp)
+                            .clip(RoundedCornerShape(corner = CornerSize(15.dp)))
+                    )
+                }
+            }
         }
 
         pager = binding.viewPager
@@ -105,7 +172,11 @@ class LandingActivity: BaseActivity() {
 
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
-                Log.w(ContentValues.TAG, "Firebase Fetching FCM registration token failed", task.exception)
+                Log.w(
+                    ContentValues.TAG,
+                    "Firebase Fetching FCM registration token failed",
+                    task.exception
+                )
                 return@OnCompleteListener
             }
 
@@ -114,7 +185,7 @@ class LandingActivity: BaseActivity() {
             Log.d(ContentValues.TAG, "Firebase token: " + token)
             prefHelper = PrefHelper(this)
             if (token != null) {
-                prefHelper.put( Constant.FIREBASE_TOKEN , token)
+                prefHelper.put(Constant.FIREBASE_TOKEN, token)
             }
 
         })
@@ -147,7 +218,7 @@ class LandingActivity: BaseActivity() {
             navigator.navigateTo(Screen.QUICK)
         }
 
-        dialogBinding?.backImageButton?.setOnClickListener{
+        dialogBinding?.backImageButton?.setOnClickListener {
             customDialog.dismiss()
             binding.navView.visibility = View.VISIBLE
         }
