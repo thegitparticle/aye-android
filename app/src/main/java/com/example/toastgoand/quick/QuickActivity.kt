@@ -66,13 +66,15 @@ class QuickActivity : BaseActivity() {
             bindPreview(cameraProvider)
         }, ContextCompat.getMainExecutor(this))
 
-        binding.appStreamContainer.setOnClickListener {
-
-//            findNavController().navigate(GroundFragmentDirections.actionGroundFragmentToMultiProcess())
-        }
-
         binding.cameraContainer.setOnClickListener {
             val intent = Intent(this, StreamCameraActivity::class.java).apply {
+//                putExtra("phoneNumber", intent.getStringExtra("phoneNumber"))
+            }
+            startActivity(intent)
+        }
+
+        binding.appStreamContainer.setOnClickListener {
+            val intent = Intent(this, StreamMultiActivity::class.java).apply {
 //                putExtra("phoneNumber", intent.getStringExtra("phoneNumber"))
             }
             startActivity(intent)

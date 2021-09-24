@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".quick.StreamMultiActivity">
+
+    <data>
+
+        <variable
+            name="streamMultiActivity"
+            type="com.example.toastgoand.quick.StreamMultiViewModel" />
+    </data>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp"
+            android:text="stream happens here"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            />
+
+    </LinearLayout>
+
+</layout>
