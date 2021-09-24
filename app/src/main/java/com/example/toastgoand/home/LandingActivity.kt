@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -18,6 +19,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
@@ -129,11 +131,24 @@ class LandingActivity : BaseActivity() {
                 val painterAye = rememberImagePainter(data = R.drawable.aye_logo)
                 val painterDp = rememberImagePainter(data = viewModel.deets.value?.image)
 
+                val context = LocalContext.current
+
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    CircleIcon(iconName = FeatherIcons.UserPlus, modifier = Modifier.padding(8.dp))
+                    CircleIcon(
+                        iconName = FeatherIcons.UserPlus,
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .clickable {
+                                val intent =
+                                    Intent(
+                                        context,
+                                        InvitePeopleDirectlyActivity::class.java
+                                    ).apply {}
+                                startActivity(intent)
+                            })
                     Image(
                         painter = painterAye,
                         contentDescription = "aye logo",
@@ -142,6 +157,10 @@ class LandingActivity : BaseActivity() {
                             .padding(8.dp)
                             .width(55.dp)
                             .height(30.dp)
+                            .clickable {
+                                val intent = Intent(context, TheAyeActivity::class.java).apply {}
+                                startActivity(intent)
+                            }
                     )
                     Image(
                         painter = painterDp,
@@ -151,6 +170,10 @@ class LandingActivity : BaseActivity() {
                             .padding(8.dp)
                             .size(30.dp)
                             .clip(RoundedCornerShape(corner = CornerSize(15.dp)))
+                            .clickable {
+                                val intent = Intent(context, MyProfileActivity::class.java).apply {}
+                                startActivity(intent)
+                            }
                     )
                 }
             }
