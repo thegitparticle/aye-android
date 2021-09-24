@@ -12,26 +12,76 @@
     </data>
 
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
         android:layout_centerInParent="true"
         android:layout_gravity="center"
         android:orientation="vertical"
         >
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
+
+        <FrameLayout
+            android:id="@+id/fl_local"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_above="@+id/ll_join" >
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_remote"
+            android:layout_width="150dp"
+            android:layout_height="200dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:visibility="invisible"/>
+
+        <LinearLayout
+            android:id="@+id/ll_join"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/lato"
-            android:textColor="#FFFFFF"
-            android:textSize="22sp"
-            android:text="stream happens here"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
+            android:layout_alignParentBottom="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:visibility="invisible">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_channel"
+                android:visibility="invisible"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:hint="@string/channel_id"
+                android:digits="@string/chanel_support_char"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_join"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text=""
+                android:visibility="invisible"/>
+
+        </LinearLayout>
+
+        <androidx.compose.ui.platform.ComposeView
+            android:id="@+id/compose_view"
+            android:layout_width="match_parent"
+            android:layout_height="100.dp"
+            android:layout_alignParentBottom="true"
             />
 
-    </LinearLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/screenShare"
+            android:visibility="invisible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/ll_join"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="24dp"
+            android:enabled="false"
+            android:text="@string/screenshare" />
+
+    </RelativeLayout>
 
 </layout>
