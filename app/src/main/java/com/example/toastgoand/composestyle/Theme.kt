@@ -88,16 +88,16 @@ private val DarkColors = TheAyeColors(
     appLead = Color(0xFF1ABCFE),
     appLeadVariant = Color(0xFF008CCB),
     uiBackground = Color(0xFFFFFFFF),
-    uiSurface = Color(0xFFF5FAFC),
+    uiSurface = Color(0xFFF2F2F3),
     error = Color(0xFFF32013),
-    textPrimary = Color(0xFFFFFFFF),
-    textSecondary = Color(0xFFFFFFFF),
-    textSpecial = Color(0xFF15161A),
-    textLink = Color(0xFF0ACF83),
-    iconBackground = Color(0xFFFFFFFF),
-    iconVector = Color(0xFFFFFFFF),
-    success = Color(0xFFFFFFFF),
-    notification = Color(0xFFFFFFFF),
+    textPrimary = Color(0xFF050505),
+    textSecondary = Color(0xFF161616),
+    textSpecial = Color(0xFFEF4F2B),
+    textLink = Color(0xFF1ABCFE),
+    iconBackground = Color(0xFFF2F2F3),
+    iconVector = Color(0xFF161616),
+    success = Color(0xFF0ACF83),
+    notification = Color(0xFFA259FF),
     gradient1_1 = listOf(Rose3, Ocean3),
     isDark = true
 )
@@ -108,16 +108,16 @@ private val LightColors = TheAyeColors(
     appLead = Color(0xFF1ABCFE),
     appLeadVariant = Color(0xFF008CCB),
     uiBackground = Color(0xFFFFFFFF),
-    uiSurface = Color(0xFFF7F8FA),
+    uiSurface = Color(0xFFF2F2F3),
     error = Color(0xFFF32013),
-    textPrimary = Color(0xFFFFFFFF),
-    textSecondary = Color(0xFFFFFFFF),
-    textSpecial = Color(0xFF15161A),
-    textLink = Color(0xFF15161A),
-    iconBackground = Color(0xFFFFFFFF),
-    iconVector = Color(0xFFFFFFFF),
-    success = Color(0xFFFFFFFF),
-    notification = Color(0xFFFFFFFF),
+    textPrimary = Color(0xFF050505),
+    textSecondary = Color(0xFF161616),
+    textSpecial = Color(0xFFEF4F2B),
+    textLink = Color(0xFF1ABCFE),
+    iconBackground = Color(0xFFF2F2F3),
+    iconVector = Color(0xFF161616),
+    success = Color(0xFF0ACF83),
+    notification = Color(0xFFA259FF),
     gradient1_1 = listOf(Rose3, Ocean3),
     isDark = false
 )
@@ -138,6 +138,12 @@ fun ProvideAyeColors(
 
 private val LocalAyeColors = staticCompositionLocalOf<TheAyeColors> {
     error("No JetsnackColorPalette provided")
+}
+
+object AyeTheme {
+    val colors: TheAyeColors
+        @Composable
+        get() = LocalAyeColors.current
 }
 
 @Composable

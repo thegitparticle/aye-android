@@ -137,8 +137,8 @@ class LandingActivity : BaseActivity() {
                 val context = LocalContext.current
 
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
+                    modifier = Modifier.fillMaxWidth().background(color = AyeTheme.colors.uiBackground),
+                    horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
                     CircleIcon(
                         iconName = FeatherIcons.UserPlus,

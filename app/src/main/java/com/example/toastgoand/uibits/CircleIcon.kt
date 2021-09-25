@@ -2,10 +2,7 @@ package com.example.toastgoand.uibits
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.defaultMinSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -20,6 +17,8 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.example.toastgoand.composestyle.AyeTheme
+import com.example.toastgoand.composestyle.TheAyeColors
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.ChevronRight
 
@@ -30,18 +29,24 @@ fun CircleIcon (onIconPressed: () -> Unit = { }, iconName: ImageVector, modifier
     fun BackgroundPlusIcon (shape: Shape) {
         Box(
             modifier = Modifier
-                .size(30.dp)
-                .clip(shape)
-                .background(MaterialTheme.colors.onBackground.copy(0.1f))
-                .alpha(0.1f)
+                .width(70.dp)
+                .background( AyeTheme.colors.iconBackground.copy(0.0f))
                 .clickable(onClick = onIconPressed),
             contentAlignment = Alignment.Center
         ) {
-            Icon(
-                imageVector = iconName,
-                contentDescription = "last month",
-                modifier = Modifier.size(17.dp)
-            )
+            Box(
+                modifier = Modifier
+                    .size(35.dp)
+                    .clip(shape)
+                    .background(AyeTheme.colors.iconBackground),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = iconName,
+                    contentDescription = "last month",
+                    modifier = Modifier.size(17.dp)
+                )
+            }
         }
     }
     
