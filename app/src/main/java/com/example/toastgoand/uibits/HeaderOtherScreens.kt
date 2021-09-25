@@ -1,5 +1,6 @@
 package com.example.toastgoand.uibits
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -49,7 +50,7 @@ fun HeaderOtherScreens (
                     CircleIcon(iconName = FeatherIcons.X, onIconPressed = onBackIconPressed, modifier = Modifier)
                 }
             },
-            backgroundColor = AyeTheme.colors.uiBackground.copy(alpha = 0.95f),
+            backgroundColor = AyeTheme.colors.uiBackground.copy(alpha = 1f),
 //            elevation = 4.dp
         )
     }

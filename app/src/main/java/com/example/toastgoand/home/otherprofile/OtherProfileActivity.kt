@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
@@ -19,6 +20,7 @@ import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityOtherProfileBinding
 import com.example.toastgoand.home.otherprofile.components.DetailsOtherProfile
+import com.example.toastgoand.home.otherprofile.components.ExtrasOtherProfile
 import com.example.toastgoand.uibits.HeaderOtherScreens
 import com.google.accompanist.insets.ProvideWindowInsets
 
@@ -82,11 +84,15 @@ class OtherProfileActivity : BaseActivity() {
                     ) { contentPadding ->
                         Column(
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .background(MaterialTheme.colors.background),
+                                .fillMaxWidth().fillMaxHeight()
+                                .background(AyeTheme.colors.uiBackground),
                             verticalArrangement = Arrangement.SpaceBetween
                         ) {
                             DetailsOtherProfile(userDeets = otherProfile[0])
+                            ExtrasOtherProfile(
+                                clubsNumber = otherProfile[0].user.number_of_clubs_joined.toString(),
+                                framesNumber = otherProfile[0].user.total_frames_participation.toString()
+                            )
                         }
                     }
                 }

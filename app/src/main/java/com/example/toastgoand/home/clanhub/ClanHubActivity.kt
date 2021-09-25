@@ -4,7 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -15,18 +17,23 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.R
+import com.example.toastgoand.ToastgoApplication
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityClanHubBinding
 import com.example.toastgoand.home.clanhub.clanaddpeople.ClanAddPeopleActivity
 import com.example.toastgoand.home.clanhub.components.ClanMetrics
 import com.example.toastgoand.home.clanhub.components.UsersListItem
 import com.example.toastgoand.home.clanhub.network.QuitClanApi
+import com.example.toastgoand.home.clans.ClansViewModel
+import com.example.toastgoand.home.clans.ClansViewModelFactory
 import com.example.toastgoand.home.invitepeopledirectly.InvitePeopleDirectlyActivity
 import com.example.toastgoand.uibits.HeaderOtherScreens
 import com.google.accompanist.insets.ProvideWindowInsets
@@ -36,12 +43,15 @@ class ClanHubActivity : BaseActivity() {
 
     private lateinit var binding: ActivityClanHubBinding
 
-    private lateinit var viewModel: ClanHubViewModel
+    private val viewModel: ClanHubViewModel by viewModels {
+        ClanHubViewModelFactory(
+            (this.getApplication() as ToastgoApplication).repository
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = viewBinding as ActivityClanHubBinding
-        viewModel = ViewModelProvider(this).get(ClanHubViewModel::class.java)
 
         val clubName = intent.getStringExtra("clubName")
         val clubid = intent.getIntExtra("clubid", 0)
@@ -162,13 +172,17 @@ class ClanHubActivity : BaseActivity() {
                                         )
                                     },
                                     colors = ButtonDefaults.textButtonColors(
-                                        backgroundColor = AyeTheme.colors.appLead,
                                     ),
                                     shape = RoundedCornerShape(25.dp),
                                     modifier = Modifier
                                         .padding(vertical = 25.dp)
                                         .height(50.dp)
-                                        .width(160.dp),
+                                        .width(160.dp)
+                                        .border(
+                                            1.dp,
+                                            AyeTheme.colors.appLead,
+                                            shape = RoundedCornerShape(25.dp)
+                                        ),
                                 ) {
                                     Text(
                                         "invite friends",
@@ -194,13 +208,17 @@ class ClanHubActivity : BaseActivity() {
                                     }
                                 },
                                 colors = ButtonDefaults.textButtonColors(
-                                    backgroundColor = AyeTheme.colors.error,
                                 ),
                                 shape = RoundedCornerShape(25.dp),
                                 modifier = Modifier
                                     .padding(vertical = 25.dp)
                                     .height(50.dp)
-                                    .width(160.dp),
+                                    .width(160.dp)
+                                    .border(
+                                        1.dp,
+                                        AyeTheme.colors.error,
+                                        shape = RoundedCornerShape(25.dp)
+                                    ),
                             ) {
                                 Text(
                                     "quit clan",
