@@ -5,10 +5,7 @@ import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -92,13 +89,13 @@ class InvitePeopleDirectlyActivity : BaseActivity() {
                     ) { contentPadding ->
                         Column(
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .background(MaterialTheme.colors.background),
+                                .fillMaxWidth().fillMaxHeight()
+                                .background(AyeTheme.colors.uiBackground),
                             verticalArrangement = Arrangement.SpaceBetween, horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             TextField(
                                 modifier = Modifier
-                                    .background(MaterialTheme.colors.surface)
+                                    .background(AyeTheme.colors.uiBackground)
                                     .clip(
                                         RoundedCornerShape(corner = CornerSize(10.dp))
                                     )
@@ -115,7 +112,7 @@ class InvitePeopleDirectlyActivity : BaseActivity() {
                                 },
                             )
                             Text("The textfield has this text: " + textState.value.text)
-                            LazyColumn(modifier = Modifier.background(MaterialTheme.colors.background)) {
+                            LazyColumn(modifier = Modifier.background(AyeTheme.colors.uiBackground)) {
 //                                val contactsParsed = Gson().fromJson<List<ContactItem>>(
 //                                    deetsHere.user.contact_list,
 //                                    ContactItem::class.java
