@@ -12,7 +12,10 @@ import com.pubnub.api.callbacks.SubscribeCallback
 import com.pubnub.api.models.consumer.PNStatus
 import com.pubnub.api.models.consumer.history.PNHistoryItemResult
 import com.pubnub.api.models.consumer.pubsub.PNMessageResult
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ClanTalkViewModel(repoDeets: UserDetailsRepo, private val repoRecos: DefaultRecosRepo) :
     ViewModel() {
@@ -21,13 +24,11 @@ class ClanTalkViewModel(repoDeets: UserDetailsRepo, private val repoRecos: Defau
     val recos: LiveData<List<DefaultRecosDataClass>> = repoRecos.defaultRecos.asLiveData()
 
     private var _oldMessages = MutableLiveData<List<PNHistoryItemResult>>()
-
     val oldMessages: LiveData<List<PNHistoryItemResult>>
         get() = _oldMessages
 
-    private var _newMessages = MutableLiveData<MutableList<PNMessageResult>>()
-
-    val newMessages: LiveData<MutableList<PNMessageResult>>
+    private var _newMessages = MutableLiveData<List<PNMessageResult>>()
+    val newMessages: LiveData<List<PNMessageResult>>
         get() = _newMessages
 
     private fun insertDefaultRecos(recos: List<DefaultRecosDataClass>) = viewModelScope.launch {
@@ -40,29 +41,36 @@ class ClanTalkViewModel(repoDeets: UserDetailsRepo, private val repoRecos: Defau
             Log.i("livemessage", deets.value?.user?.id.toString())
         }
 
+        _newMessages.observeForever{
+            Log.i("livemessage observe in vm", _newMessages.toString())
+        }
     }
 
     fun watchLiveMessages(pubnub: PubNub, channelid: String, start: Long, end: Long) {
         viewModelScope.launch {
             pubnub.addListener(object : SubscribeCallback() {
                 override fun status(pubnub: PubNub, status: PNStatus) {
-//                    Log.i("livemessage", "Status category: ${status.category}")
-//                    // PNConnectedCategory, PNReconnectedCategory, PNDisconnectedCategory
-//                    Log.i("livemessage", "Status operation: ${status.operation}")
-//                    // PNSubscribeOperation, PNHeartbeatOperation
-//
-//                    Log.i("livemessage", "Status error: ${status.error}")
-//                    // true or false
+                    Log.i("livemessage", "Status category: ${status.category}")
+                    // PNConnectedCategory, PNReconnectedCategory, PNDisconnectedCategory
+                    Log.i("livemessage", "Status operation: ${status.operation}")
+                    // PNSubscribeOperation, PNHeartbeatOperation
+
+                    Log.i("livemessage", "Status error: ${status.error}")
+                    // true or false
                 }
 
                 override fun message(pubnub: PubNub, pnMessageResult: PNMessageResult) {
                     Log.i("livemessage", "Message payload: ${pnMessageResult}")
-                    _newMessages.value?.add(pnMessageResult)
-                    _newMessages.value?.get(0)
-                        ?.let { Log.i("livemessage - inside message listener", it.toString()) }
-//                    Log.i("livemessage", "Message channel: ${pnMessageResult.channel}")
-//                    Log.i("livemessage","Message publisher: ${pnMessageResult.publisher}")
-//                    Log.i("livemessage","Message timetoken: ${pnMessageResult.timetoken}")
+//                    _newMessages.value?.add(pnMessageResult)
+                    _newMessages.postValue(_newMessages.value?.plus(listOf(pnMessageResult)))
+//                    GlobalScope.launch {
+//                        withContext(Dispatchers.Main) {_newMessages.value = _newMessages.value?.plus(pnMessageResult)}
+//                    }
+//                    _newMessages.value?.get(0)
+//                        ?.let { Log.i("livemessage - inside message listener", it.toString()) }
+                    Log.i("livemessage", "Message channel: ${pnMessageResult.channel}")
+                    Log.i("livemessage","Message publisher: ${pnMessageResult.publisher}")
+                    Log.i("livemessage","Message timetoken: ${pnMessageResult.timetoken}")
                 }
             })
         }

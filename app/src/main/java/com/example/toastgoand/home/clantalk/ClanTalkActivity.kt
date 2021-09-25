@@ -89,7 +89,7 @@ class ClanTalkActivity : BaseActivity() {
                     listOf<PNMessageResult>()
                 )
 
-                Log.i("livemessage", newMessagesHere.toString())
+                Log.i("livemessage in activity", newMessagesHere.toString())
 
                 val defaultRecos: List<DefaultRecosDataClass> by viewModel.recos.observeAsState(
                     listOf<DefaultRecosDataClass>()
