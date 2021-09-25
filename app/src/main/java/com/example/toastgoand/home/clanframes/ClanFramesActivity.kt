@@ -1,46 +1,36 @@
 package com.example.toastgoand.home.clanframes
 
-import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
-import com.example.toastgoand.R
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityClanFramesBinding
 import com.example.toastgoand.home.clanframes.components.AMonth
 import com.example.toastgoand.home.clanframes.components.AMonthClanViewModel
-import com.example.toastgoand.home.clanframes.components.AStrip
 import com.example.toastgoand.home.clanhub.ClanHubActivity
-import com.example.toastgoand.home.clantalk.ClanTalkActivity
 import com.example.toastgoand.uibits.HeaderPlayScreens
-import com.example.toastgoand.uibits.TopHeaderPlayScreens
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.statusBarsPadding
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.ChevronLeft
 import compose.icons.feathericons.ChevronRight
-import compose.icons.feathericons.Layers
 import compose.icons.feathericons.Users
 import kotlinx.datetime.*
-import spencerstudios.com.bungeelib.Bungee
 
 class ClanFramesActivity : BaseActivity() {
     private lateinit var binding: ActivityClanFramesBinding

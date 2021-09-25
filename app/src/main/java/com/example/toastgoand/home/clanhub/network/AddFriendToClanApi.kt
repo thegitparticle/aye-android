@@ -1,11 +1,11 @@
 package com.example.toastgoand.home.clanhub.network
 
-import com.example.toastgoand.home.directtalk.network.NewDirectFrameDataClass
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.http.*
+import retrofit2.http.GET
+import retrofit2.http.Path
 
 private const val BASE_URL = "https://apisayepirates.life/api/"
 

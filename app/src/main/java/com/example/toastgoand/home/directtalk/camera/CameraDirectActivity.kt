@@ -3,7 +3,6 @@ package com.example.toastgoand.home.directtalk.camera
 import android.Manifest
 import android.content.pm.PackageManager
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -18,7 +17,6 @@ import androidx.core.content.ContextCompat
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.R
-import com.example.toastgoand.databinding.ActivityCameraBinding
 import com.example.toastgoand.databinding.ActivityCameraDirectBinding
 import kotlinx.android.synthetic.main.activity_camera.*
 import java.io.File

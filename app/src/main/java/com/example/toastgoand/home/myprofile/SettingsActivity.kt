@@ -1,6 +1,5 @@
 package com.example.toastgoand.home.myprofile
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -14,8 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.composestyle.AyeTheme
-import com.example.toastgoand.databinding.ActivityEditProfileBinding
-import com.example.toastgoand.databinding.ActivitySettingUpBinding
 import com.example.toastgoand.databinding.ActivitySettingsBinding
 import com.example.toastgoand.home.myprofile.components.SettingsButtons
 import com.example.toastgoand.uibits.HeaderOtherScreens

@@ -1,12 +1,9 @@
 package com.example.toastgoand.home.myprofile
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -19,13 +16,8 @@ import androidx.compose.ui.unit.dp
 import androidx.viewbinding.ViewBinding
 import coil.compose.rememberImagePainter
 import com.example.toastgoand.BaseActivity
-import com.example.toastgoand.R
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityEditProfileBinding
-import com.example.toastgoand.databinding.ActivityMyProfileBinding
-import com.example.toastgoand.home.myprofile.components.ButtonsList
-import com.example.toastgoand.home.myprofile.components.Details
-import com.example.toastgoand.home.startclan.StartClanActivity
 import com.example.toastgoand.uibits.HeaderOtherScreens
 import com.example.toastgoand.uibits.SqaureRoundedIcon
 import com.google.accompanist.insets.ProvideWindowInsets

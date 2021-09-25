@@ -1,24 +1,17 @@
 package com.example.toastgoand.home.clans
 
-import android.app.PendingIntent.getActivity
 import android.util.Log
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.lifecycle.*
-import com.example.toastgoand.home.clanhub.ClanDetailsDataClass
-import com.example.toastgoand.network.directs.MyDirectsDataClass
 import com.example.toastgoand.network.myclans.MyClansApi
 import com.example.toastgoand.network.myclans.MyClansDataClass
 import com.example.toastgoand.network.myclans.MyClansRepo
-import com.example.toastgoand.network.userdetails.UserDetailsApi
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
 import com.example.toastgoand.network.userdetails.UserDetailsRepo
-import com.example.toastgoand.prefhelpers.PrefHelper
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import java.lang.IllegalArgumentException
 
 class ClansViewModel(private val repo: MyClansRepo, private val repoDeets: UserDetailsRepo) : ViewModel() {
 

@@ -1,6 +1,5 @@
 package com.example.toastgoand.home.directtalk.network
 
-import com.example.toastgoand.home.clantalk.network.NewClanFrameDataClass
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit

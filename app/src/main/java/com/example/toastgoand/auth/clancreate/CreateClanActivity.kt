@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.R
-import com.example.toastgoand.auth.invitedby.InvitedByActivity
 import com.example.toastgoand.databinding.ActivityCreateClanBinding
 import java.util.*
 

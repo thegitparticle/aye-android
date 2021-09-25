@@ -1,23 +1,12 @@
 package com.example.toastgoand.auth.strangerintro
 
-import android.R.id
-import android.app.PendingIntent.getActivity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.auth.clancreate.CreateClanActivity
-import com.example.toastgoand.auth.invitedby.InvitedByViewModel
-import com.example.toastgoand.auth.otpsignup.OtpSignupActivity
-import com.example.toastgoand.databinding.ActivityInvitedByBinding
 import com.example.toastgoand.databinding.ActivityStrangerIntroBinding
-import java.util.*
-import kotlin.concurrent.schedule
-import android.R.id.button1
-import android.os.Handler
 
 
 class StrangerIntroActivity : BaseActivity() {

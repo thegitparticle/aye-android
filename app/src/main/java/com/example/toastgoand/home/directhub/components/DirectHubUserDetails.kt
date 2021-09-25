@@ -17,8 +17,6 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.home.directhub.DirectHubDataClass
-import com.example.toastgoand.utilities.drawColorShadow
-import com.google.android.material.composethemeadapter.MdcTheme
 
 @Composable
 fun DirectHubUserDetails (userProfile: DirectHubDataClass) {

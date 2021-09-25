@@ -1,20 +1,21 @@
 package com.example.toastgoand.home.invitepeopledirectly
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
-import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
+import androidx.compose.material.TextField
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -22,36 +23,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import androidx.ui.res.imageResource
 import androidx.viewbinding.ViewBinding
-import coil.compose.rememberImagePainter
 import com.example.toastgoand.BaseActivity
-import com.example.toastgoand.R
 import com.example.toastgoand.ToastgoApplication
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityInvitePeopleDirectlyBinding
-import com.example.toastgoand.home.clantalk.components.CEntryFile
-import com.example.toastgoand.home.clantalk.components.MessageMetaData
-import com.example.toastgoand.home.directs.components.DirectItem
-import com.example.toastgoand.home.myprofile.MyProfileViewModel
-import com.example.toastgoand.home.myprofile.MyProfileViewModelFactory
 import com.example.toastgoand.network.userdetails.User
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
 import com.example.toastgoand.uibits.HeaderOtherScreens
-import com.example.toastgoand.uibits.TopHeaderModals
 import com.google.accompanist.insets.ProvideWindowInsets
-import com.google.gson.Gson
-import compose.icons.FeatherIcons
-import compose.icons.feathericons.ChevronDown
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
-import spencerstudios.com.bungeelib.Bungee
 
 class InvitePeopleDirectlyActivity : BaseActivity() {
     private lateinit var binding: ActivityInvitePeopleDirectlyBinding

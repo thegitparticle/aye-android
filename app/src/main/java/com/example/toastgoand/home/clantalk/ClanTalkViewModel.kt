@@ -2,27 +2,17 @@ package com.example.toastgoand.home.clantalk
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.toastgoand.home.aye.TheAyeViewModel
 import com.example.toastgoand.network.defaultrecos.DefaultRecosApi
 import com.example.toastgoand.network.defaultrecos.DefaultRecosDataClass
 import com.example.toastgoand.network.defaultrecos.DefaultRecosRepo
-import com.example.toastgoand.network.directs.MyDirectsApi
-import com.example.toastgoand.network.directs.MyDirectsDataClass
-import com.example.toastgoand.network.nudgelist.NudgeToDataClass
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
 import com.example.toastgoand.network.userdetails.UserDetailsRepo
-import com.pubnub.api.PNConfiguration
 import com.pubnub.api.PubNub
 import com.pubnub.api.callbacks.SubscribeCallback
-import com.pubnub.api.enums.PNReconnectionPolicy
 import com.pubnub.api.models.consumer.PNStatus
 import com.pubnub.api.models.consumer.history.PNHistoryItemResult
 import com.pubnub.api.models.consumer.pubsub.PNMessageResult
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import java.lang.IllegalArgumentException
 
 class ClanTalkViewModel(repoDeets: UserDetailsRepo, private val repoRecos: DefaultRecosRepo) :
     ViewModel() {

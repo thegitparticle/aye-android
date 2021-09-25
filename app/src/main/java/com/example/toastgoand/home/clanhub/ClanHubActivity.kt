@@ -1,9 +1,7 @@
 package com.example.toastgoand.home.clanhub
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -14,28 +12,20 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.R
-import com.example.toastgoand.auth.enterphone.EnterPhoneViewModel
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityClanHubBinding
-import com.example.toastgoand.databinding.ActivityLandingBinding
-import com.example.toastgoand.dummy.DummyClanHub
-import com.example.toastgoand.dummy.DummyClanHub.clanHub
 import com.example.toastgoand.home.clanhub.clanaddpeople.ClanAddPeopleActivity
 import com.example.toastgoand.home.clanhub.components.ClanMetrics
 import com.example.toastgoand.home.clanhub.components.UsersListItem
-import com.example.toastgoand.home.clans.ClansViewModel
 import com.example.toastgoand.home.invitepeopledirectly.InvitePeopleDirectlyActivity
-import com.example.toastgoand.network.myclans.MyClansDataClass
 import com.example.toastgoand.uibits.HeaderOtherScreens
 import com.google.accompanist.insets.ProvideWindowInsets
-import com.google.android.material.composethemeadapter.MdcTheme
 
 class ClanHubActivity : BaseActivity() {
 

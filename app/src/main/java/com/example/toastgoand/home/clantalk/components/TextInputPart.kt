@@ -3,7 +3,6 @@ package com.example.toastgoand.home.clantalk.components
 import android.util.Log
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
@@ -25,7 +24,6 @@ import com.example.toastgoand.home.notifications.NewMessageNotifPayloadDataClass
 import com.example.toastgoand.home.notifications.NotificationDataNewMessage
 import com.example.toastgoand.home.notifications.PayloadNewMessage
 import com.example.toastgoand.network.defaultrecos.DefaultRecosDataClass
-import com.example.toastgoand.network.pnstuff.pubNub
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.pubnub.api.PNConfiguration

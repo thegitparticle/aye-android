@@ -2,16 +2,12 @@ package com.example.toastgoand.home.clanhub.clanaddpeople
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.toastgoand.home.invitepeopledirectly.InvitePeopleDirectlyViewModel
 import com.example.toastgoand.network.myfriends.MyFriendsApi
 import com.example.toastgoand.network.myfriends.MyFriendsDataClass
 import com.example.toastgoand.network.myfriends.MyFriendsRepo
-import com.example.toastgoand.network.nudgelist.NudgeToApi
-import com.example.toastgoand.network.nudgelist.NudgeToDataClass
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
 import com.example.toastgoand.network.userdetails.UserDetailsRepo
 import kotlinx.coroutines.launch
-import java.lang.IllegalArgumentException
 
 class ClanAddPeopleViewModel(private val repoDeets: UserDetailsRepo, private val repositoryMyFriends: MyFriendsRepo): ViewModel() {
     val deets: LiveData<UserDetailsDataClass> = repoDeets.userDetails.asLiveData()

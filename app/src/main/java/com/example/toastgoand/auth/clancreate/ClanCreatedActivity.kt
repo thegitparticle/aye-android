@@ -1,18 +1,11 @@
 package com.example.toastgoand.auth.clancreate
 
-import android.Manifest
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
-import com.example.toastgoand.auth.invitedby.InvitedByActivity
-import com.example.toastgoand.auth.settingup.SettingUpViewModel
 import com.example.toastgoand.databinding.ActivityClanCreatedBinding
-import com.example.toastgoand.databinding.ActivitySettingUpBinding
 import com.example.toastgoand.home.LandingActivity
 import com.example.toastgoand.prefhelpers.Constant
 import com.example.toastgoand.prefhelpers.PrefHelper

@@ -1,14 +1,11 @@
 package com.example.toastgoand.auth.otpsignup
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
-import com.example.toastgoand.auth.otplogin.OtpLoginViewModel
 import com.example.toastgoand.auth.settingup.SettingUpActivity
-import com.example.toastgoand.databinding.ActivityOtpLoginBinding
 import com.example.toastgoand.databinding.ActivityOtpSignupBinding
 
 class OtpSignupActivity : BaseActivity() {

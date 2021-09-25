@@ -1,17 +1,10 @@
 package com.example.toastgoand.auth.clancreate
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
-import com.example.toastgoand.auth.enterphone.EnterPhoneViewModel
-import com.example.toastgoand.auth.strangerintro.StrangerIntroActivity
-import com.example.toastgoand.auth.welcome.WelcomeActivity
-import com.example.toastgoand.databinding.ActivityEnterPhoneBinding
 import com.example.toastgoand.databinding.ActivityNameClanBinding
 
 class NameClanActivity : BaseActivity() {

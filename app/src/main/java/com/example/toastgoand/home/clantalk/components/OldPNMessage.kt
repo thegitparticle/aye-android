@@ -19,20 +19,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.example.toastgoand.composestyle.AyeTheme
-import com.example.toastgoand.home.clanframes.ClanFramesActivity
-import com.example.toastgoand.network.directs.MyDirectsDataClass
 import com.example.toastgoand.uibits.ViewMediaActivity
-import com.example.toastgoand.utilities.drawColorShadow
 import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import com.pubnub.api.PNConfiguration
 import com.pubnub.api.PubNub
-import com.pubnub.api.models.consumer.files.PNFileUrlResult
 import com.pubnub.api.models.consumer.history.PNHistoryItemResult
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.decodeFromJsonElement
 
 @Serializable
 data class MessageMetaData(val image_url: String, val user_dp: String, val type: String)

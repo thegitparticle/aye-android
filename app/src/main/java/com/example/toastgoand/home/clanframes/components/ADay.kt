@@ -3,7 +3,6 @@ package com.example.toastgoand.home.clanframes.components
 import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -12,7 +11,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -20,8 +18,6 @@ import coil.compose.rememberImagePainter
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.home.clanframes.ClanFrameDataClass
 import com.example.toastgoand.home.clanframes.ViewOldFrameClanActivity
-import com.example.toastgoand.uibits.ViewMediaActivity
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 @Composable
 fun ADay(date: Int, framesList: List<ClanFrameDataClass>,  clubName: String,

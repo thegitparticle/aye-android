@@ -4,10 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
-import com.example.toastgoand.home.myprofile.MyProfileViewModel
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
 import com.example.toastgoand.network.userdetails.UserDetailsRepo
-import java.lang.IllegalArgumentException
 
 class TheAyeViewModel(private val repoDeets: UserDetailsRepo): ViewModel() {
 

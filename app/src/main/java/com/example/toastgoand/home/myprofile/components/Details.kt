@@ -15,9 +15,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.example.toastgoand.composestyle.AyeTheme
-import com.example.toastgoand.network.myclans.MyClansDataClass
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
-import com.example.toastgoand.utilities.drawColorShadow
 
 @Composable
 fun Details(userDeets: UserDetailsDataClass) {

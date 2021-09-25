@@ -1,11 +1,12 @@
 package com.example.toastgoand.auth.otplogin
 
 import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.toastgoand.network.phonecheck.PhoneCheckApi
 import com.example.toastgoand.network.phonecheck.PhoneCheckDataClass
-import com.example.toastgoand.network.userdetails.UserDetailsDataClass
-import com.example.toastgoand.network.userdetails.UserDetailsRepo
 import kotlinx.coroutines.launch
 
 class OtpLoginViewModel(): ViewModel() {

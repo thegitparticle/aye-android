@@ -5,8 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.toastgoand.home.clanhub.ClanDetailsDataClass
-import com.example.toastgoand.home.clanhub.network.ClanDetailsApi
 import com.example.toastgoand.home.otherprofile.network.OtherProfileApi
 import kotlinx.coroutines.launch
 

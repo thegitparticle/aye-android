@@ -16,8 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import com.example.toastgoand.home.clantalk.network.NewClanFrameApi
-import com.example.toastgoand.home.clantalk.network.NewClanFrameDataClass
 import com.example.toastgoand.home.directtalk.network.NewDirectFrameApi
 import com.example.toastgoand.home.directtalk.network.NewDirectFrameDataClass
 import com.example.toastgoand.home.notifications.ChannelData

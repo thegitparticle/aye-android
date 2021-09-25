@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.home.otherprofile.OtherProfileDataClass
-import com.example.toastgoand.network.userdetails.UserDetailsDataClass
 
 @Composable
 fun DetailsOtherProfile (userDeets: OtherProfileDataClass) {

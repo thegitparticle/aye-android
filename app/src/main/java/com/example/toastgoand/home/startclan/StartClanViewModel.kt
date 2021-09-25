@@ -1,17 +1,13 @@
 package com.example.toastgoand.home.startclan
 
-import android.provider.SyncStateContract.Helpers.insert
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.toastgoand.network.myclans.MyClansApi
-import com.example.toastgoand.network.myclans.MyClansDataClass
 import com.example.toastgoand.network.myfriends.MyFriendsApi
 import com.example.toastgoand.network.myfriends.MyFriendsDataClass
 import com.example.toastgoand.network.myfriends.MyFriendsRepo
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
 import com.example.toastgoand.network.userdetails.UserDetailsRepo
 import kotlinx.coroutines.launch
-import java.lang.IllegalArgumentException
 
 class StartClanViewModel(private val repoFriends: MyFriendsRepo, private val repoDeets: UserDetailsRepo): ViewModel() {
 

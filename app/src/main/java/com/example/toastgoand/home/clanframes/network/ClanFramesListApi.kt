@@ -1,7 +1,6 @@
 package com.example.toastgoand.home.clanframes.network
 
 import com.example.toastgoand.home.clanframes.ClanFrameDataClass
-import com.example.toastgoand.home.directframes.DirectFrameDataClass
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit

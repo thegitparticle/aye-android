@@ -1,6 +1,7 @@
 package com.example.toastgoand.home.clans
 
-import com.beust.klaxon.*
+import com.beust.klaxon.Json
+import com.beust.klaxon.Klaxon
 
 private val klaxon = Klaxon()
 

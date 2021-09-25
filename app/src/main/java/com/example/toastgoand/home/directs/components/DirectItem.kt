@@ -14,20 +14,15 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.example.toastgoand.composestyle.AyeTheme
-import com.example.toastgoand.home.clantalk.ClanTalkActivity
-import com.example.toastgoand.home.directs.MyDirectDataClass
 import com.example.toastgoand.home.directtalk.DirectTalkActivity
 import com.example.toastgoand.network.directs.MyDirectsDataClass
 import com.example.toastgoand.utilities.drawColorShadow
-import com.google.android.material.composethemeadapter.MdcTheme
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.Layers
 

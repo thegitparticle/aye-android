@@ -14,6 +14,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.toastgoand.composestyle.AyeTheme
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
@@ -57,14 +58,8 @@ fun HeaderPlayScreens(
                     CircleIcon(iconName = FeatherIcons.ChevronDown, onIconPressed = onBackIconPressed, modifier = Modifier)
                 }
             },
-            backgroundColor = MaterialTheme.colors.background.copy(alpha = 0.95f),
+            backgroundColor = AyeTheme.colors.uiBackground.copy(alpha = 0.95f),
             elevation = 4.dp
         )
     }
 }
-
-//@Preview
-//@Composable
-//fun showHeader () {
-//    HeaderPlayScreens(title = "kjdjkfk", actionIcon = FeatherIcons.X, modifier = Modifier)
-//}

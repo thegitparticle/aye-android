@@ -1,15 +1,9 @@
 package com.example.toastgoand.home.clantalk.camera
 
-import android.content.pm.PackageManager
-import android.os.Bundle
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.viewbinding.ViewBinding
-import com.example.toastgoand.BaseActivity
 import android.Manifest
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
@@ -30,12 +24,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.net.toFile
 import androidx.core.net.toUri
+import androidx.viewbinding.ViewBinding
+import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.R
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityCameraBinding
-import com.example.toastgoand.databinding.ActivityEnterPhoneBinding
 import com.example.toastgoand.uibits.CircleIcon
 import com.pubnub.api.PNConfiguration
 import com.pubnub.api.PubNub
@@ -49,7 +46,6 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
 
 class CameraActivity : BaseActivity() {
     private var imageCapture: ImageCapture? = null

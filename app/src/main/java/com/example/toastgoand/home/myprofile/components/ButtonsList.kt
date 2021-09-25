@@ -1,6 +1,5 @@
 package com.example.toastgoand.home.myprofile.components
 
-import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -12,10 +11,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import com.example.toastgoand.home.directhub.DirectHubActivity
 import com.example.toastgoand.uibits.SqaureRoundedIcon
 import compose.icons.FeatherIcons
-import compose.icons.feathericons.*
+import compose.icons.feathericons.Edit
+import compose.icons.feathericons.Home
+import compose.icons.feathericons.Layers
+import compose.icons.feathericons.Settings
 
 @Composable
 fun ButtonsList(

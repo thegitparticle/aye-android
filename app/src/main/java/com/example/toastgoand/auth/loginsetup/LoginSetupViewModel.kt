@@ -2,7 +2,6 @@ package com.example.toastgoand.auth.loginsetup
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.toastgoand.auth.settingup.SettingUpViewModel
 import com.example.toastgoand.network.userdetails.UserDetailsApi
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
 import com.example.toastgoand.network.userdetails.UserDetailsRepo

@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.home.directhub.DirectHubDataClass
-import com.google.android.material.composethemeadapter.MdcTheme
 
 @Composable
 fun DirectHubUserMetrics (userProfile: DirectHubDataClass) {

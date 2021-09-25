@@ -8,9 +8,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
-import com.example.toastgoand.auth.detailssignup.DetailsSignupActivity
 import com.example.toastgoand.auth.otplogin.OtpLoginActivity
-import com.example.toastgoand.auth.strangerintro.StrangerIntroActivity
 import com.example.toastgoand.databinding.ActivityEnterPhoneBinding
 import com.hbb20.CountryCodePicker.OnCountryChangeListener
 

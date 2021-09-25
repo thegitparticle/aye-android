@@ -1,25 +1,25 @@
 package com.example.toastgoand.home.clantalk
 
 import android.content.Intent
-import android.media.browse.MediaBrowser
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.*
+import androidx.compose.material.FabPosition
+import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.Icon
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.google.accompanist.insets.ui.Scaffold
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -32,25 +32,23 @@ import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.ToastgoApplication
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityClanTalkBinding
-import com.example.toastgoand.dummy.DummyClanHub
 import com.example.toastgoand.home.clanframes.ClanFramesActivity
-import com.example.toastgoand.home.clanhub.ClanDetailsDataClass
-import com.example.toastgoand.home.clanhub.ClanHubDataClass
-import com.example.toastgoand.home.clanhub.User
-import com.example.toastgoand.home.clanhub.components.UsersListItem
 import com.example.toastgoand.home.clantalk.camera.CameraActivity
+import com.example.toastgoand.home.clantalk.components.NewPNMessage
 import com.example.toastgoand.home.clantalk.components.OldPNMessage
 import com.example.toastgoand.home.clantalk.components.StartClanFrame
 import com.example.toastgoand.home.clantalk.components.TextInputPart
 import com.example.toastgoand.network.defaultrecos.DefaultRecosDataClass
-import com.example.toastgoand.network.myclans.MyClansDataClass
+import com.example.toastgoand.quick.QuickActivity
 import com.example.toastgoand.uibits.HeaderPlayScreens
-import com.google.accompanist.insets.*
+import com.google.accompanist.insets.ExperimentalAnimatedInsets
+import com.google.accompanist.insets.ProvideWindowInsets
+import com.google.accompanist.insets.rememberImeNestedScrollConnection
+import com.google.accompanist.insets.statusBarsPadding
+import com.google.accompanist.insets.ui.Scaffold
 import com.pubnub.api.PNConfiguration
 import com.pubnub.api.PubNub
-import com.pubnub.api.callbacks.SubscribeCallback
 import com.pubnub.api.enums.PNReconnectionPolicy
-import com.pubnub.api.models.consumer.PNStatus
 import com.pubnub.api.models.consumer.history.PNHistoryItemResult
 import com.pubnub.api.models.consumer.pubsub.PNMessageResult
 import compose.icons.FeatherIcons
@@ -58,10 +56,6 @@ import compose.icons.feathericons.Camera
 import compose.icons.feathericons.Layers
 import compose.icons.feathericons.PlusSquare
 import kotlinx.datetime.Clock
-import androidx.compose.runtime.mutableStateListOf
-import com.example.toastgoand.home.clantalk.components.NewPNMessage
-import com.example.toastgoand.home.startclan.StartClanActivity
-import com.example.toastgoand.quick.QuickActivity
 
 class ClanTalkActivity : BaseActivity() {
 
@@ -234,7 +228,7 @@ class ClanTalkActivity : BaseActivity() {
                                                 modifier = Modifier
                                                     .padding(horizontal = 25.dp)
                                                     .size(40.dp),
-                                                backgroundColor = MaterialTheme.colors.onBackground,
+                                                backgroundColor = AyeTheme.colors.textSecondary,
                                             ) {
                                                 Icon(
                                                     imageVector = FeatherIcons.Camera,
@@ -253,7 +247,7 @@ class ClanTalkActivity : BaseActivity() {
                                                 modifier = Modifier
                                                     .padding(horizontal = 25.dp)
                                                     .size(60.dp),
-                                                backgroundColor = MaterialTheme.colors.onSurface,
+                                                backgroundColor = AyeTheme.colors.success,
                                             ) {
                                                 Icon(
                                                     imageVector = FeatherIcons.PlusSquare,
@@ -266,7 +260,7 @@ class ClanTalkActivity : BaseActivity() {
                                                 modifier = Modifier
                                                     .padding(horizontal = 25.dp)
                                                     .size(40.dp),
-                                                backgroundColor = MaterialTheme.colors.secondary,
+                                                backgroundColor = AyeTheme.colors.appLead,
                                             ) {
                                                 Icon(
                                                     imageVector = FeatherIcons.Layers,
@@ -309,7 +303,8 @@ class ClanTalkActivity : BaseActivity() {
                                 }
                             }
 
-                        }
+                        },
+                        modifier = Modifier.background(AyeTheme.colors.uiBackground)
                     ) { contentPadding ->
                         Column {
                             LazyColumn(
@@ -319,7 +314,8 @@ class ClanTalkActivity : BaseActivity() {
                                     .weight(1f)
                                     .nestedScroll(connection = rememberImeNestedScrollConnection())
                                     .clickable { reSetTextInput() }
-                                    .fillMaxWidth(),
+                                    .fillMaxWidth()
+                                    .background(AyeTheme.colors.uiBackground),
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
                                 item {

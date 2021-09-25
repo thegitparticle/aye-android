@@ -4,12 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
-import com.example.toastgoand.home.aye.TheAyeViewModel
 import com.example.toastgoand.network.myfriends.MyFriendsDataClass
 import com.example.toastgoand.network.myfriends.MyFriendsRepo
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
 import com.example.toastgoand.network.userdetails.UserDetailsRepo
-import java.lang.IllegalArgumentException
 
 class InvitePeopleDirectlyViewModel(
     private val repoDeets: UserDetailsRepo,

@@ -21,8 +21,6 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.home.clanhub.ClanMember
-import com.example.toastgoand.home.clanhub.User
-import com.google.android.material.composethemeadapter.MdcTheme
 
 @Composable
 fun UsersListItem(user: ClanMember, removeUser: () -> Unit = { }) {

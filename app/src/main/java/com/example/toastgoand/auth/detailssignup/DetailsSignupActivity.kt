@@ -1,15 +1,12 @@
 package com.example.toastgoand.auth.detailssignup
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
-import com.example.toastgoand.auth.otplogin.OtpLoginViewModel
 import com.example.toastgoand.auth.otpsignup.OtpSignupActivity
 import com.example.toastgoand.databinding.ActivityDetailsSignupBinding
-import com.example.toastgoand.databinding.ActivityOtpLoginBinding
 
 class DetailsSignupActivity : BaseActivity() {
     private lateinit var binding: ActivityDetailsSignupBinding

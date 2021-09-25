@@ -1,7 +1,9 @@
 package com.example.toastgoand.home.clanhub.components
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Checkbox
@@ -17,8 +19,6 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.network.myfriends.MyFriendsDataClass
-import com.example.toastgoand.network.nudgelist.NudgeToDataClass
-import com.example.toastgoand.utilities.drawColorShadow
 
 @Composable
 fun MyFriendItem (friendItem: MyFriendsDataClass) {

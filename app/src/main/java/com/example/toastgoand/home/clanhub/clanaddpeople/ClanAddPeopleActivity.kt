@@ -1,8 +1,6 @@
 package com.example.toastgoand.home.clanhub.clanaddpeople
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.background
@@ -33,12 +31,7 @@ import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.ToastgoApplication
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityClanAddPeopleBinding
-import com.example.toastgoand.databinding.ActivityClanTalkBinding
-import com.example.toastgoand.databinding.ActivityInvitePeopleDirectlyBinding
 import com.example.toastgoand.home.clanhub.components.MyFriendItem
-import com.example.toastgoand.home.invitepeopledirectly.InvitePeopleDirectlyViewModel
-import com.example.toastgoand.home.invitepeopledirectly.InvitePeopleDirectlyViewModelFactory
-import com.example.toastgoand.network.directs.MyDirectsDataClass
 import com.example.toastgoand.network.myfriends.MyFriendsDataClass
 import com.example.toastgoand.network.userdetails.User
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
