@@ -93,11 +93,11 @@ class LandingActivity : BaseActivity() {
 //            binding.navView.visibility = View.GONE
 //        }
 
-        binding.logout.setOnClickListener {
-            prefHelper = PrefHelper(this)
-            prefHelper.put(Constant.PREF_IS_LOGIN, false)
-            startActivity(Intent(this, LoginActivity::class.java))
-        }
+//        binding.logout.setOnClickListener {
+//            prefHelper = PrefHelper(this)
+//            prefHelper.put(Constant.PREF_IS_LOGIN, false)
+//            startActivity(Intent(this, LoginActivity::class.java))
+//        }
 
         binding.circleImage.setOnClickListener {
             val intent = Intent(this, MyProfileActivity::class.java).apply {}
