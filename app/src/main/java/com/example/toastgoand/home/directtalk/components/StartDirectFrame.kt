@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.home.directtalk.network.NewDirectFrameApi
 import com.example.toastgoand.home.directtalk.network.NewDirectFrameDataClass
 import com.example.toastgoand.home.notifications.ChannelData
@@ -89,7 +90,7 @@ fun StartDirectFrame(
             modifier = Modifier
                 .fillMaxHeight(0.3f)
                 .fillMaxWidth()
-                .background(MaterialTheme.colors.onBackground),
+                .background(AyeTheme.colors.textSecondary),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceEvenly
         ) {
@@ -97,30 +98,32 @@ fun StartDirectFrame(
                 modifier = Modifier
                     .fillMaxHeight(0.3f)
                     .fillMaxWidth()
-                    .background(MaterialTheme.colors.onBackground),
+                    .background(AyeTheme.colors.textSecondary),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Text(
                     text = "start frame to get talking",
                     style = MaterialTheme.typography.subtitle1,
-                    color = MaterialTheme.colors.background,
+                    color = AyeTheme.colors.uiBackground,
                     modifier = Modifier.padding(vertical = 5.dp)
                 )
                 Text(
                     text = "a frame lasts 12 hours",
                     style = MaterialTheme.typography.caption,
-                    color = MaterialTheme.colors.background,
+                    color = AyeTheme.colors.uiSurface.copy(0.75f),
                     modifier = Modifier.padding(vertical = 5.dp)
                 )
             }
 
-            val sliderColor = MaterialTheme.colors.primary
+            val sliderColor = AyeTheme.colors.uiBackground
+            var sliderOuterColor =  AyeTheme.colors.appLead
             val slideText = MaterialTheme.typography.subtitle2
 
             AndroidView(
                 factory = { ctx ->
                     SlideToActView(ctx).apply {
                         layoutParams = LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
+                        outerColor = sliderOuterColor.hashCode()
                         innerColor = sliderColor.hashCode()
                         textAppearance = slideText.hashCode()
                         text = "slide to start frame"

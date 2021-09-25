@@ -8,6 +8,10 @@ import androidx.compose.ui.graphics.Color
 
 class TheAyeColors(
     gradient1_1: List<Color>,
+    background: Color,
+    surface: Color,
+    onBackground: Color,
+    onSurface: Color,
     brand: Color,
     brandVariant: Color,
     appLead: Color,
@@ -23,7 +27,7 @@ class TheAyeColors(
     error: Color,
     success: Color,
     notification: Color,
-    isDark: Boolean
+    isDark: Boolean,
 ) {
     var gradient1_1 by mutableStateOf(gradient1_1)
         private set
@@ -57,6 +61,14 @@ class TheAyeColors(
         private set
     var notification by mutableStateOf(notification)
         private set
+    var background by mutableStateOf(background)
+        private set
+    var surface by mutableStateOf(surface)
+        private set
+    var onSurface by mutableStateOf(onSurface)
+        private set
+    var onBackground by mutableStateOf(onBackground)
+        private set
     var isDark by mutableStateOf(isDark)
         private set
 
@@ -78,6 +90,10 @@ class TheAyeColors(
         error = other.error
         notification = other.notification
         isDark = other.isDark
+        onBackground = other.onBackground
+        onSurface = other.onSurface
+        surface = other.surface
+        background = other.background
     }
 
     fun copy(): TheAyeColors = TheAyeColors(
@@ -98,5 +114,9 @@ class TheAyeColors(
         error = error,
         notification = notification,
         isDark = isDark,
+        onBackground = onBackground,
+        onSurface = onSurface,
+        surface = surface,
+        background = background
     )
 }

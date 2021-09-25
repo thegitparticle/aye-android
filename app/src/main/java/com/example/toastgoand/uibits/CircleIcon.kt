@@ -15,6 +15,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.toastgoand.composestyle.AyeTheme
@@ -30,7 +31,7 @@ fun CircleIcon (onIconPressed: () -> Unit = { }, iconName: ImageVector, modifier
         Box(
             modifier = Modifier
                 .width(70.dp)
-                .background( AyeTheme.colors.iconBackground.copy(0.0f))
+                .background(AyeTheme.colors.iconBackground.copy(0.0f))
                 .clickable(onClick = onIconPressed),
             contentAlignment = Alignment.Center
         ) {
@@ -44,7 +45,7 @@ fun CircleIcon (onIconPressed: () -> Unit = { }, iconName: ImageVector, modifier
                 Icon(
                     imageVector = iconName,
                     contentDescription = "last month",
-                    modifier = Modifier.size(17.dp)
+                    modifier = Modifier.size(17.dp),
                 )
             }
         }
@@ -61,7 +62,7 @@ fun CircleIconSmall (onIconPressed: () -> Unit = { }, iconName: ImageVector, mod
         Box(
             modifier = Modifier
                 .width(50.dp)
-                .background( AyeTheme.colors.iconBackground.copy(0.0f))
+                .background(AyeTheme.colors.iconBackground.copy(0.0f))
                 .clickable(onClick = onIconPressed),
             contentAlignment = Alignment.Center
         ) {

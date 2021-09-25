@@ -1,6 +1,7 @@
 package com.example.toastgoand.home.clanframes.components
 
 import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -95,7 +96,7 @@ fun AMonthX(
                 Row(
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth().background(AyeTheme.colors.uiBackground)
                 ) {
                     AStrip(start = 1, end = currentDate, framesList = framesList, clubName = clubName, userid = userid, channelid = channelid)
                 }
@@ -103,7 +104,7 @@ fun AMonthX(
                 Row(
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth().background(AyeTheme.colors.uiBackground)
                 ) {
                     AStrip(start = 1, end = 10, framesList = framesList, clubName, userid, channelid = channelid)
                     AStrip(start = 11, end = currentDate, framesList = framesList, clubName = clubName, userid = userid, channelid = channelid)
@@ -112,7 +113,7 @@ fun AMonthX(
                 Row(
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth().background(AyeTheme.colors.uiBackground)
                 ) {
                     AStrip(start = 1, end = 10, framesList = framesList, clubName = clubName, userid = userid, channelid = channelid)
                     AStrip(start = 11, end = 20, framesList = framesList, clubName = clubName, userid = userid, channelid = channelid)
@@ -125,7 +126,7 @@ fun AMonthX(
             Row(
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth().background(AyeTheme.colors.uiBackground)
             ) {
                 AStrip(start = 1, end = 10, framesList = framesList, clubName = clubName, userid = userid, channelid = channelid)
                 AStrip(start = 11, end = 20, framesList = framesList, clubName = clubName, userid = userid, channelid = channelid)

@@ -6,8 +6,10 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
+import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.prefhelpers.Constant
 import com.example.toastgoand.prefhelpers.PrefHelper
 import com.google.android.gms.tasks.OnCompleteListener
@@ -25,6 +27,7 @@ abstract class BaseActivity: AppCompatActivity() {
         setContentView(viewBinding.root)
 
         getSupportActionBar()?.hide()
+
 
     }
 

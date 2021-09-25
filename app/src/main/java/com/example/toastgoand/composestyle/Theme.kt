@@ -99,6 +99,10 @@ private val DarkColors = TheAyeColors(
     success = Color(0xFF0ACF83),
     notification = Color(0xFFA259FF),
     gradient1_1 = listOf(Rose3, Ocean3),
+    background = Color(0xFFFFFFFF),
+    surface = Color(0xFFF5FAFC),
+    onBackground = Color(0xFF15161A),
+    onSurface = Color(0xFF0ACF83),
     isDark = true
 )
 
@@ -119,6 +123,10 @@ private val LightColors = TheAyeColors(
     success = Color(0xFF0ACF83),
     notification = Color(0xFFA259FF),
     gradient1_1 = listOf(Rose3, Ocean3),
+    background = Color(0xFFFFFFFF),
+    surface = Color(0xFFF5FAFC),
+    onBackground = Color(0xFF15161A),
+    onSurface = Color(0xFF0ACF83),
     isDark = false
 )
 

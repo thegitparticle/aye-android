@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
@@ -154,7 +155,7 @@ class ClanFramesActivity : BaseActivity() {
                             }
                         },
                     ) {
-                        Column() {
+                        Column( modifier = Modifier.background(AyeTheme.colors.uiBackground).fillMaxSize()) {
                             Spacer(modifier = Modifier.size(100.dp))
                             Spacer(modifier = Modifier.size(25.dp))
                             Row(
