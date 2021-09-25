@@ -201,9 +201,7 @@ fun TextPieces(myclan: MyClansDataClass) {
                     text = "live frame",
                     style = MaterialTheme.typography.caption,
                     color = AyeTheme.colors.appLead,
-                    modifier = Modifier.alpha(
-                        0.25F
-                    ).padding(horizontal = 4.dp)
+                    modifier = Modifier.padding(horizontal = 4.dp)
                 )
             }
         }

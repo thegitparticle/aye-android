@@ -76,11 +76,12 @@ fun DirectItem(directItem: MyDirectsDataClass) {
                                 "tap to start new frame"
                             },
                             style = MaterialTheme.typography.caption,
-                            color = AyeTheme.colors.textSecondary,
+                            color = if (directItem.ongoing_frame) {
+                                AyeTheme.colors.appLead
+                            } else {
+                                AyeTheme.colors.textSecondary.copy(0.25f)
+                            },
                             modifier = Modifier
-                                .alpha(
-                                    0.25F
-                                )
                                 .padding(horizontal = 4.dp)
                         )
                     }
