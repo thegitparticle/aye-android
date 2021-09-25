@@ -52,7 +52,7 @@ fun NudgeToItem(nudgeItem: NudgeToDataClass, currentuserid: String) {
                     Text(
                         text = nudgeItem.name,
                         style = MaterialTheme.typography.subtitle1,
-                        color = MaterialTheme.colors.onBackground
+                        color = AyeTheme.colors.textPrimary
                     )
                 }
             }
@@ -69,7 +69,7 @@ private fun StartButton(nudgeItem: NudgeToDataClass, currentuserid: String) {
         modifier = Modifier
             .wrapContentWidth()
             .clip(RoundedCornerShape(15.dp))
-            .background(MaterialTheme.colors.primary.copy(.08f))
+            .background(AyeTheme.colors.success.copy(.08f))
             .clickable {
                 composableScope.launch {
                     try {
@@ -90,7 +90,7 @@ private fun StartButton(nudgeItem: NudgeToDataClass, currentuserid: String) {
         Text(
             text = "start",
             style = MaterialTheme.typography.caption,
-            color = MaterialTheme.colors.primary
+            color = AyeTheme.colors.success
         )
     }
 }

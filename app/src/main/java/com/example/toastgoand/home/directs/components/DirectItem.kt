@@ -58,7 +58,7 @@ fun DirectItem(directItem: MyDirectsDataClass) {
                     Text(
                         text = directItem.display_guys.full_name,
                         style = MaterialTheme.typography.subtitle1,
-                        color = MaterialTheme.colors.onBackground
+                        color = AyeTheme.colors.textPrimary
                     )
                     Row(
                         modifier = Modifier.padding(vertical = 4.dp),
@@ -76,7 +76,7 @@ fun DirectItem(directItem: MyDirectsDataClass) {
                                 "tap to start new frame"
                             },
                             style = MaterialTheme.typography.caption,
-                            color = MaterialTheme.colors.onBackground,
+                            color = AyeTheme.colors.textSecondary,
                             modifier = Modifier
                                 .alpha(
                                     0.25F

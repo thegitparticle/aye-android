@@ -65,13 +65,13 @@ class DirectsFragment : Fragment() {
 
                     Log.i("directdebug", directsHere.toString())
 
-                    Surface(modifier = Modifier.background(MaterialTheme.colors.background)) {
+                    Surface(modifier = Modifier.background(AyeTheme.colors.uiBackground)) {
                         SwipeRefresh(
                             state = rememberSwipeRefreshState(isRefreshing),
                             onRefresh = {viewModel.refresh()}
                         ) {
                             LazyColumn(
-                                modifier = Modifier.background(MaterialTheme.colors.background)
+                                modifier = Modifier.background(AyeTheme.colors.uiBackground)
                             ) {
                                 items(
                                     items = directsHere,
@@ -81,7 +81,7 @@ class DirectsFragment : Fragment() {
                                 item {
                                     Spacer(Modifier.height(20.dp))
                                     Divider(
-                                        color = MaterialTheme.colors.onBackground,
+                                        color = AyeTheme.colors.textSecondary,
                                         modifier = Modifier.alpha(
                                             0.1F
                                         ), thickness = 1.dp
