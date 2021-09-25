@@ -1,5 +1,6 @@
 package com.example.toastgoand.home.aye
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -7,16 +8,21 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -33,11 +39,18 @@ import com.example.toastgoand.databinding.ActivityTheAyeBinding
 import com.example.toastgoand.home.invitepeopledirectly.InvitePeopleDirectlyViewModel
 import com.example.toastgoand.home.invitepeopledirectly.InvitePeopleDirectlyViewModelFactory
 import com.example.toastgoand.home.myprofile.components.Details
+import com.example.toastgoand.home.startclan.StartClanActivity
 import com.example.toastgoand.network.userdetails.User
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
+import com.example.toastgoand.uibits.CircleIcon
+import com.example.toastgoand.uibits.HeaderOtherScreens
 import com.example.toastgoand.uibits.TopHeaderModals
+import com.google.accompanist.insets.LocalWindowInsets
+import com.google.accompanist.insets.ProvideWindowInsets
+import com.google.accompanist.insets.rememberInsetsPaddingValues
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.ChevronDown
+import compose.icons.feathericons.X
 import spencerstudios.com.bungeelib.Bungee
 
 class TheAyeActivity : BaseActivity() {
@@ -76,50 +89,73 @@ class TheAyeActivity : BaseActivity() {
                     )
                 )
 
-                Column(modifier = Modifier.fillMaxWidth()) {
-                    TopHeaderModals(
-                        modifier = Modifier.fillMaxWidth(),
-                        title = {
+                ProvideWindowInsets() {
+                    Scaffold(
+//                        topBar = {
+//                            HeaderOtherScreensHere(
+//                                modifier = Modifier
+//                                    .fillMaxWidth()
+//                                    .background(MaterialTheme.colors.surface.copy(0.0f)),
+//                                title = "",
+//                                onBackIconPressed = { onBackPressedHere() }
+//                            )
+//                        }
+                    ) { contentPadding ->
+                        Box(modifier = Modifier.fillMaxWidth()) {
+                            val painter = painterResource(id = R.drawable.aye_bg_1)
+                            Image(
+                                painter = painter,
+                                contentDescription = "background image",
+                                contentScale = ContentScale.FillBounds,
+                                modifier = Modifier.fillMaxSize()
+                            )
                             Column(
-                                modifier = Modifier.weight(1f),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .fillMaxHeight(),
+                                verticalArrangement = Arrangement.SpaceBetween,
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
-                                Text(
-                                    text = "",
-                                    style = MaterialTheme.typography.subtitle1
-                                )
-                            }
-                        },
-                        onLeftIconPressed = {},
-                        actions = {
-                            CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-                                Icon(
-                                    imageVector = FeatherIcons.ChevronDown,
+                                Row(
                                     modifier = Modifier
-                                        .clickable(onClick = { onBackPressedHere() })
-                                        .padding(horizontal = 12.dp, vertical = 16.dp)
-                                        .height(24.dp),
-                                    contentDescription = "go back"
+                                        .fillMaxWidth()
+                                        .padding(horizontal = 20.dp, vertical = 50.dp),
+                                    horizontalArrangement = Arrangement.End
+                                ) {
+                                    CircleIconHere(
+                                        iconName = FeatherIcons.X,
+                                        onIconPressed = { onBackPressed() },
+                                        modifier = Modifier
+                                    )
+                                }
+                                val painter = painterResource(id = R.drawable.aye_logo)
+                                Image(
+                                    painter = painter,
+                                    contentDescription = "aye logo",
+                                    contentScale = ContentScale.Crop,
+                                    modifier = Modifier
+                                        .padding(8.dp)
+                                        .size(200.dp)
                                 )
-                            }
-                        }
-                    )
-                    Column(modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.SpaceBetween) {
-                        val painter = painterResource(id = R.drawable.aye_logo)
-                        Image(
-                            painter = painter,
-                            contentDescription = "aye logo",
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier
-                                .padding(8.dp)
-                                .size(100.dp)
-                        )
-                        Column(modifier = Modifier.fillMaxWidth()) {
-                            Box (
-                                Modifier
-                                    .fillMaxWidth()
-                                    .background(Color.Blue)) {
-                                Text("talk to founder", modifier = Modifier.align(Alignment.TopStart))
+                                Button(
+                                    onClick = {
+                                        onBackPressed()
+                                    },
+                                    colors = ButtonDefaults.textButtonColors(
+                                        backgroundColor = MaterialTheme.colors.primary.copy(0.5f),
+                                    ),
+                                    shape = RoundedCornerShape(30.dp),
+                                    modifier = Modifier
+                                        .padding(vertical = 25.dp)
+                                        .height(50.dp)
+                                        .width(200.dp),
+                                ) {
+                                    Text(
+                                        "talk to founder",
+                                        style = MaterialTheme.typography.subtitle1,
+                                        color = MaterialTheme.colors.background
+                                    )
+                                }
                             }
                         }
                     }
@@ -132,4 +168,29 @@ class TheAyeActivity : BaseActivity() {
     override fun binding(): ViewBinding {
         return ActivityTheAyeBinding.inflate(layoutInflater)
     }
+
+    @Composable
+    private fun CircleIconHere (onIconPressed: () -> Unit = { }, iconName: ImageVector, modifier: Modifier) {
+
+        @Composable
+        fun BackgroundPlusIcon (shape: Shape) {
+            Box(
+                modifier = Modifier
+                    .size(30.dp)
+                    .clip(shape)
+                    .background(MaterialTheme.colors.background.copy(0.3f))
+                    .clickable(onClick = onIconPressed),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = iconName,
+                    contentDescription = "last month",
+                    modifier = Modifier.size(17.dp)
+                )
+            }
+        }
+
+        BackgroundPlusIcon(shape = CircleShape)
+    }
+
 }
