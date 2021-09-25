@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
@@ -131,6 +132,8 @@ class LandingActivity : BaseActivity() {
                 val painterAye = rememberImagePainter(data = R.drawable.aye_logo)
                 val painterDp = rememberImagePainter(data = viewModel.deets.value?.image)
 
+                Log.i("landingactlogging", painterDp.toString())
+
                 val context = LocalContext.current
 
                 Row(
@@ -140,7 +143,7 @@ class LandingActivity : BaseActivity() {
                     CircleIcon(
                         iconName = FeatherIcons.UserPlus,
                         modifier = Modifier
-                            .padding(8.dp)
+                            .padding(horizontal = 20.dp)
                             .clickable {
                                 val intent =
                                     Intent(
@@ -154,7 +157,7 @@ class LandingActivity : BaseActivity() {
                         contentDescription = "aye logo",
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
-                            .padding(8.dp)
+                            .padding(horizontal = 20.dp)
                             .width(55.dp)
                             .height(30.dp)
                             .clickable {
@@ -167,13 +170,14 @@ class LandingActivity : BaseActivity() {
                         contentDescription = "user dp",
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
-                            .padding(8.dp)
+                            .padding(horizontal = 20.dp)
                             .size(30.dp)
                             .clip(RoundedCornerShape(corner = CornerSize(15.dp)))
                             .clickable {
                                 val intent = Intent(context, MyProfileActivity::class.java).apply {}
                                 startActivity(intent)
                             }
+                            .background(MaterialTheme.colors.onSurface.copy(0.25f))
                     )
                 }
             }
