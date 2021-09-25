@@ -1,6 +1,7 @@
 package com.example.toastgoand.uibits
 
 import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
@@ -35,8 +36,7 @@ fun HeaderPlayScreens(
         TopAppBar(
             modifier = modifier
                 .fillMaxWidth()
-                .height(100.dp)
-            ,
+                .height(100.dp),
             contentPadding = rememberInsetsPaddingValues(
                 LocalWindowInsets.current.statusBars,
                 applyBottom = false,
@@ -46,16 +46,24 @@ fun HeaderPlayScreens(
                     verticalAlignment = Alignment.Bottom,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 40.dp, start = 15.dp, end = 30.dp),
+                        .padding(top = 40.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    CircleIcon(iconName = actionIcon, onIconPressed = onActionIconPressed, modifier = Modifier)
+                    CircleIconSmall(
+                        iconName = actionIcon,
+                        onIconPressed = onActionIconPressed,
+                        modifier = Modifier
+                    )
                     Text(
                         text = title,
                         style = MaterialTheme.typography.subtitle1,
-                        color = MaterialTheme.colors.onBackground
+                        color = AyeTheme.colors.textPrimary
                     )
-                    CircleIcon(iconName = FeatherIcons.ChevronDown, onIconPressed = onBackIconPressed, modifier = Modifier)
+                    CircleIcon(
+                        iconName = FeatherIcons.ChevronDown,
+                        onIconPressed = onBackIconPressed,
+                        modifier = Modifier
+                    )
                 }
             },
             backgroundColor = AyeTheme.colors.uiBackground.copy(alpha = 0.95f),

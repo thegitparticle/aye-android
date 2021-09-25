@@ -52,3 +52,34 @@ fun CircleIcon (onIconPressed: () -> Unit = { }, iconName: ImageVector, modifier
     
     BackgroundPlusIcon(shape = CircleShape)
 }
+
+@Composable
+fun CircleIconSmall (onIconPressed: () -> Unit = { }, iconName: ImageVector, modifier: Modifier) {
+
+    @Composable
+    fun BackgroundPlusIcon (shape: Shape) {
+        Box(
+            modifier = Modifier
+                .width(50.dp)
+                .background( AyeTheme.colors.iconBackground.copy(0.0f))
+                .clickable(onClick = onIconPressed),
+            contentAlignment = Alignment.Center
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(35.dp)
+                    .clip(shape)
+                    .background(AyeTheme.colors.iconBackground),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = iconName,
+                    contentDescription = "last month",
+                    modifier = Modifier.size(17.dp)
+                )
+            }
+        }
+    }
+
+    BackgroundPlusIcon(shape = CircleShape)
+}

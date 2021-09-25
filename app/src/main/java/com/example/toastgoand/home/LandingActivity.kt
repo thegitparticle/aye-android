@@ -137,21 +137,24 @@ class LandingActivity : BaseActivity() {
                 val context = LocalContext.current
 
                 Row(
-                    modifier = Modifier.fillMaxWidth().background(color = AyeTheme.colors.uiBackground),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(color = AyeTheme.colors.uiBackground),
                     horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
                     CircleIcon(
                         iconName = FeatherIcons.UserPlus,
                         modifier = Modifier
-                            .padding(horizontal = 20.dp)
-                            .clickable {
-                                val intent =
-                                    Intent(
-                                        context,
-                                        InvitePeopleDirectlyActivity::class.java
-                                    ).apply {}
-                                startActivity(intent)
-                            })
+                            .padding(horizontal = 20.dp),
+                        onIconPressed =
+                        {
+                            val intent =
+                                Intent(
+                                    context,
+                                    InvitePeopleDirectlyActivity::class.java
+                                ).apply {}
+                            startActivity(intent)
+                        })
                     Image(
                         painter = painterAye,
                         contentDescription = "aye logo",

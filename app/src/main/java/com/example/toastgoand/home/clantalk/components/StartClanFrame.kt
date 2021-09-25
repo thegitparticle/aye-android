@@ -115,13 +115,15 @@ fun StartClanFrame(
                 )
             }
 
-            val sliderColor = AyeTheme.colors.appLeadVariant
+            val sliderColor = AyeTheme.colors.uiBackground
+            var sliderOuterColor =  AyeTheme.colors.appLead
             val slideText = MaterialTheme.typography.subtitle2
 
             AndroidView(
                 factory = { ctx ->
                     SlideToActView(ctx).apply {
                         layoutParams = LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
+                        outerColor = sliderOuterColor.hashCode()
                         innerColor = sliderColor.hashCode()
                         textAppearance = slideText.hashCode()
                         text = "slide to start frame"
