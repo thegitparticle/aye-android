@@ -3,6 +3,9 @@ package com.example.toastgoand.composestyle
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -76,36 +79,66 @@ val typography = Typography(
     ),
 )
 
-private val DarkColors = darkColors(
-    primary = Color(0xFFF0421F),
-    primaryVariant = Color(0xFFFF774C),
-    secondary = Color(0xFF1ABCFE),
-    secondaryVariant = Color(0xFF008CCB),
-    background = Color(0xFFFFFFFF),
-    surface = Color(0xFFF5FAFC),
-    error = Color(0xFFF32013),
-    onPrimary = Color(0xFFFFFFFF),
-    onSecondary = Color(0xFFFFFFFF),
-    onBackground = Color(0xFF15161A),
-    onSurface = Color(0xFF0ACF83),
-    onError = Color(0xFFFFFFFF),
+val Rose3 = Color(0xfff985aa)
+val Ocean3 = Color(0xff86f7fa)
 
+private val DarkColors = TheAyeColors(
+    brand = Color(0xFFF0421F),
+    brandVariant = Color(0xFFFF774C),
+    appLead = Color(0xFF1ABCFE),
+    appLeadVariant = Color(0xFF008CCB),
+    uiBackground = Color(0xFFFFFFFF),
+    uiSurface = Color(0xFFF5FAFC),
+    error = Color(0xFFF32013),
+    textPrimary = Color(0xFFFFFFFF),
+    textSecondary = Color(0xFFFFFFFF),
+    textSpecial = Color(0xFF15161A),
+    textLink = Color(0xFF0ACF83),
+    iconBackground = Color(0xFFFFFFFF),
+    iconVector = Color(0xFFFFFFFF),
+    success = Color(0xFFFFFFFF),
+    notification = Color(0xFFFFFFFF),
+    gradient1_1 = listOf(Rose3, Ocean3),
+    isDark = true
 )
 
-private val LightColors = lightColors(
-    primary = Color(0xFFF0421F),
-    primaryVariant = Color(0xFFFF774C),
-    secondary = Color(0xFF1ABCFE),
-    secondaryVariant = Color(0xFF008CCB),
-    background = Color(0xFFFFFFFF),
-    surface = Color(0xFFF7F8FA),
+private val LightColors = TheAyeColors(
+    brand = Color(0xFFF0421F),
+    brandVariant = Color(0xFFFF774C),
+    appLead = Color(0xFF1ABCFE),
+    appLeadVariant = Color(0xFF008CCB),
+    uiBackground = Color(0xFFFFFFFF),
+    uiSurface = Color(0xFFF7F8FA),
     error = Color(0xFFF32013),
-    onPrimary = Color(0xFFFFFFFF),
-    onSecondary = Color(0xFFFFFFFF),
-    onBackground = Color(0xFF15161A),
-    onSurface = Color(0xFF15161A),
-    onError = Color(0xFFFFFFFF)
+    textPrimary = Color(0xFFFFFFFF),
+    textSecondary = Color(0xFFFFFFFF),
+    textSpecial = Color(0xFF15161A),
+    textLink = Color(0xFF15161A),
+    iconBackground = Color(0xFFFFFFFF),
+    iconVector = Color(0xFFFFFFFF),
+    success = Color(0xFFFFFFFF),
+    notification = Color(0xFFFFFFFF),
+    gradient1_1 = listOf(Rose3, Ocean3),
+    isDark = false
 )
+
+@Composable
+fun ProvideAyeColors(
+    colorsHere: TheAyeColors,
+    content: @Composable () -> Unit
+) {
+    val colorPalette = remember {
+        // Explicitly creating a new object here so we don't mutate the initial [colors]
+        // provided, and overwrite the values set in it.
+        colorsHere.copy()
+    }
+    colorPalette.update(colorsHere)
+    CompositionLocalProvider(LocalAyeColors provides colorPalette, content = content)
+}
+
+private val LocalAyeColors = staticCompositionLocalOf<TheAyeColors> {
+    error("No JetsnackColorPalette provided")
+}
 
 @Composable
 fun AyeTheme(
@@ -118,9 +151,30 @@ fun AyeTheme(
         LightColors
     }
 
-    MaterialTheme(
-        colors = colors,
-        typography = typography,
-        content = content
-    )
+    ProvideAyeColors(colorsHere = colors) {
+        MaterialTheme(
+            colors = debugColors(darkTheme),
+            typography = typography,
+            content = content
+        )
+    }
 }
+
+fun debugColors(
+    darkTheme: Boolean,
+    debugColor: Color = Color.Magenta
+) = Colors(
+    primary = debugColor,
+    primaryVariant = debugColor,
+    secondary = debugColor,
+    secondaryVariant = debugColor,
+    background = debugColor,
+    surface = debugColor,
+    error = debugColor,
+    onPrimary = debugColor,
+    onSecondary = debugColor,
+    onBackground = debugColor,
+    onSurface = debugColor,
+    onError = debugColor,
+    isLight = !darkTheme
+)
