@@ -72,7 +72,7 @@ fun DormantClan(myclan: MyClansDataClass) {
                     Text(
                         text = myclan.club_name,
                         style = typography.subtitle1,
-                        color = MaterialTheme.colors.onBackground
+                        color = AyeTheme.colors.textPrimary
                     )
                     Row(modifier = Modifier.padding(vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
                         Icon(
@@ -83,7 +83,7 @@ fun DormantClan(myclan: MyClansDataClass) {
                         Text(
                             text = "tap to start new frame",
                             style = typography.caption,
-                            color = MaterialTheme.colors.onBackground,
+                            color = AyeTheme.colors.textSecondary,
                             modifier = Modifier.alpha(
                                 0.25F
                             ).padding(horizontal = 4.dp)

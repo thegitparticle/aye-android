@@ -159,7 +159,7 @@ class LandingActivity : BaseActivity() {
                         modifier = Modifier
                             .padding(horizontal = 20.dp)
                             .width(55.dp)
-                            .height(30.dp)
+                            .height(35.dp)
                             .clickable {
                                 val intent = Intent(context, TheAyeActivity::class.java).apply {}
                                 startActivity(intent)

@@ -1,6 +1,8 @@
 package com.example.toastgoand.home.clans.components
 
 import android.content.Intent
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
@@ -187,7 +189,7 @@ fun TextPieces(myclan: MyClansDataClass) {
             Text(
                 text = myclan.club_name,
                 style = MaterialTheme.typography.subtitle1,
-                color = Color.Black
+                color = AyeTheme.colors.textPrimary
             )
             Row(modifier = Modifier.padding(vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
                 Icon(
@@ -198,7 +200,7 @@ fun TextPieces(myclan: MyClansDataClass) {
                 Text(
                     text = "live frame",
                     style = MaterialTheme.typography.caption,
-                    color = MaterialTheme.colors.secondary,
+                    color = AyeTheme.colors.appLead,
                     modifier = Modifier.alpha(
                         0.25F
                     ).padding(horizontal = 4.dp)
@@ -224,6 +226,7 @@ private fun PersonImage(imageLink: String) {
         )
     )
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @Composable
     fun PersonDpBox(shape: Shape) {
         Column(
@@ -242,7 +245,7 @@ private fun PersonImage(imageLink: String) {
                     contentDescription = "clan member dp",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
-                        .size(70.dp).drawColorShadow(MaterialTheme.colors.onBackground, offsetY = 4.dp, alpha = 0.5f)
+                        .size(70.dp).drawColorShadow(AyeTheme.colors.textSecondary, offsetY = 4.dp, alpha = 0.5f)
                 )
             }
         }

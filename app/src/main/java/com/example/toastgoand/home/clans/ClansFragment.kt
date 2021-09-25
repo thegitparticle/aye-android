@@ -122,7 +122,7 @@ class ClansFragment : Fragment() {
 
                     Surface(
                         modifier = Modifier
-                            .background(MaterialTheme.colors.background)
+                            .background(AyeTheme.colors.uiBackground)
                             .fillMaxSize()
                     ) {
                         SwipeRefresh(
@@ -130,7 +130,7 @@ class ClansFragment : Fragment() {
                             onRefresh = { viewModel.refresh() }
                         ) {
                             LazyColumn(
-                                modifier = Modifier.background(MaterialTheme.colors.background)
+                                modifier = Modifier.background(AyeTheme.colors.uiBackground)
                             ) {
                                 items(
                                     items = liveClansHere,
@@ -165,7 +165,7 @@ class ClansFragment : Fragment() {
                                                         ).apply { })
                                                 },
                                                 colors = ButtonDefaults.textButtonColors(
-                                                    backgroundColor = MaterialTheme.colors.secondary,
+                                                    backgroundColor = AyeTheme.colors.appLead,
                                                 ),
                                                 shape = RoundedCornerShape(30.dp),
                                                 modifier = Modifier
@@ -175,8 +175,8 @@ class ClansFragment : Fragment() {
                                             ) {
                                                 Text(
                                                     "start clan",
-                                                    style = MaterialTheme.typography.body1,
-                                                    color = MaterialTheme.colors.onSecondary
+                                                    style = MaterialTheme.typography.subtitle1,
+                                                    color = AyeTheme.colors.uiBackground
                                                 )
                                             }
                                         }
