@@ -2,6 +2,7 @@ package com.example.toastgoand.home.aye
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.Image
@@ -16,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -36,6 +38,7 @@ import com.example.toastgoand.R
 import com.example.toastgoand.ToastgoApplication
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityTheAyeBinding
+import com.example.toastgoand.home.directs.network.NudgeToStartDirectApi
 import com.example.toastgoand.home.invitepeopledirectly.InvitePeopleDirectlyViewModel
 import com.example.toastgoand.home.invitepeopledirectly.InvitePeopleDirectlyViewModelFactory
 import com.example.toastgoand.home.myprofile.components.Details
@@ -51,7 +54,9 @@ import com.google.accompanist.insets.rememberInsetsPaddingValues
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.ChevronDown
 import compose.icons.feathericons.X
+import kotlinx.coroutines.launch
 import spencerstudios.com.bungeelib.Bungee
+import kotlin.random.Random
 
 class TheAyeActivity : BaseActivity() {
     private lateinit var binding: ActivityTheAyeBinding
@@ -89,17 +94,10 @@ class TheAyeActivity : BaseActivity() {
                     )
                 )
 
+                val composableScope = rememberCoroutineScope()
+
                 ProvideWindowInsets() {
                     Scaffold(
-//                        topBar = {
-//                            HeaderOtherScreensHere(
-//                                modifier = Modifier
-//                                    .fillMaxWidth()
-//                                    .background(MaterialTheme.colors.surface.copy(0.0f)),
-//                                title = "",
-//                                onBackIconPressed = { onBackPressedHere() }
-//                            )
-//                        }
                     ) { contentPadding ->
                         Box(modifier = Modifier.fillMaxWidth()) {
                             val painter = painterResource(id = R.drawable.aye_bg_1)
@@ -139,6 +137,20 @@ class TheAyeActivity : BaseActivity() {
                                 )
                                 Button(
                                     onClick = {
+                                        val randomValue = Random.nextInt(1, 3)
+                                        val teamuserid = if (randomValue == 1) {"81"} else {"82"}
+
+                                        composableScope.launch {
+                                            try {
+                                                NudgeToStartDirectApi.retrofitService.startANewDirect(
+                                                    mainuserid = deetsHere.user.id.toString(),
+                                                    otheruserid = teamuserid,
+                                                    directid = deetsHere.user.id.toString() + "_" + teamuserid + "_" + "d"
+                                                )
+                                            } catch (e: Exception) {
+                                                Log.i("startdirect", e.toString())
+                                            }
+                                        }
                                         onBackPressed()
                                     },
                                     colors = ButtonDefaults.textButtonColors(
