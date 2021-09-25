@@ -2,14 +2,17 @@ package com.example.toastgoand.home.clanhub
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -23,9 +26,11 @@ import com.example.toastgoand.databinding.ActivityClanHubBinding
 import com.example.toastgoand.home.clanhub.clanaddpeople.ClanAddPeopleActivity
 import com.example.toastgoand.home.clanhub.components.ClanMetrics
 import com.example.toastgoand.home.clanhub.components.UsersListItem
+import com.example.toastgoand.home.clanhub.network.QuitClanApi
 import com.example.toastgoand.home.invitepeopledirectly.InvitePeopleDirectlyActivity
 import com.example.toastgoand.uibits.HeaderOtherScreens
 import com.google.accompanist.insets.ProvideWindowInsets
+import kotlinx.coroutines.launch
 
 class ClanHubActivity : BaseActivity() {
 
@@ -77,6 +82,8 @@ class ClanHubActivity : BaseActivity() {
                     )
                 )
 
+                val composableScope = rememberCoroutineScope()
+
                 ProvideWindowInsets() {
                     Scaffold(
                         topBar = {
@@ -90,18 +97,19 @@ class ClanHubActivity : BaseActivity() {
                         Column(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .background(MaterialTheme.colors.background),
-                            verticalArrangement = Arrangement.SpaceBetween,
+                                .fillMaxSize()
+                                .background(AyeTheme.colors.uiBackground),
+                            verticalArrangement = Arrangement.Top,
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             Spacer(modifier = Modifier.size(30.dp))
                             ClanMetrics(clanDeets)
                             val members = clanDeets.users
                             LazyColumn(
-                                contentPadding = PaddingValues(horizontal = 16.dp),
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(vertical = 30.dp),
+                                    .padding(vertical = 30.dp, horizontal = 20.dp),
+                                horizontalAlignment = Alignment.Start
                             ) {
                                 items(
                                     items = members,
@@ -114,23 +122,30 @@ class ClanHubActivity : BaseActivity() {
                                 horizontalArrangement = Arrangement.SpaceEvenly
                             ) {
                                 Button(
-                                    onClick = {  val intent = Intent(
-                                        context,
-                                        ClanAddPeopleActivity::class.java
-                                    ).apply {
-                                    }
+                                    onClick = {
+                                        val intent = Intent(
+                                            context,
+                                            ClanAddPeopleActivity::class.java
+                                        ).apply {
+                                        }
                                         startActivity(intent)
                                         overridePendingTransition(
                                             R.anim.slide_up_enter,
                                             R.anim.slide_down_exit
-                                        ) },
+                                        )
+                                    },
                                     colors = ButtonDefaults.textButtonColors(
-                                        backgroundColor = MaterialTheme.colors.secondary
-                                    )
+                                        backgroundColor = AyeTheme.colors.appLead,
+                                    ),
+                                    shape = RoundedCornerShape(25.dp),
+                                    modifier = Modifier
+                                        .padding(vertical = 25.dp)
+                                        .height(50.dp)
+                                        .width(160.dp),
                                 ) {
                                     Text(
                                         "add friends",
-                                        color = MaterialTheme.colors.onSecondary,
+                                        color = AyeTheme.colors.uiBackground,
                                         style = MaterialTheme.typography.caption,
                                     )
                                 }
@@ -147,25 +162,50 @@ class ClanHubActivity : BaseActivity() {
                                         )
                                     },
                                     colors = ButtonDefaults.textButtonColors(
-                                    )
+                                        backgroundColor = AyeTheme.colors.appLead,
+                                    ),
+                                    shape = RoundedCornerShape(25.dp),
+                                    modifier = Modifier
+                                        .padding(vertical = 25.dp)
+                                        .height(50.dp)
+                                        .width(160.dp),
                                 ) {
                                     Text(
                                         "invite friends",
-                                        color = MaterialTheme.colors.onSecondary,
+                                        color = AyeTheme.colors.appLead,
                                         style = MaterialTheme.typography.caption,
                                     )
                                 }
                             }
                             Spacer(modifier = Modifier.size(30.dp))
                             OutlinedButton(
-                                onClick = { /* Do something! */ },
+                                onClick = {
+                                    composableScope.launch {
+                                        try {
+                                            viewModel.deets.value?.id?.toString()?.let {
+                                                QuitClanApi.retrofitService.quitClan(
+                                                    it,
+                                                    clubid.toString()
+                                                )
+                                            }
+                                        } catch (e: Exception) {
+                                            Log.i("startdirect", e.toString())
+                                        }
+                                    }
+                                },
                                 colors = ButtonDefaults.textButtonColors(
+                                    backgroundColor = AyeTheme.colors.error,
                                 ),
+                                shape = RoundedCornerShape(25.dp),
+                                modifier = Modifier
+                                    .padding(vertical = 25.dp)
+                                    .height(50.dp)
+                                    .width(160.dp),
                             ) {
                                 Text(
                                     "quit clan",
-                                    color = MaterialTheme.colors.error,
-                                    style = MaterialTheme.typography.caption
+                                    color = AyeTheme.colors.error,
+                                    style = MaterialTheme.typography.caption,
                                 )
                             }
                         }

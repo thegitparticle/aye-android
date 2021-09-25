@@ -24,7 +24,7 @@ fun ClanMetrics (clanHub: ClanDetailsDataClass) {
                 .background(MaterialTheme.colors.primary.copy(.08f))
                 .width(100.dp)
                 .height(50.dp)
-                .padding(vertical = 15.dp),
+                ,
             contentAlignment = Alignment.Center
         ) {
             Text(

@@ -1,14 +1,15 @@
 package com.example.toastgoand.home.clanhub
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.toastgoand.home.clanhub.network.ClanDetailsApi
+import com.example.toastgoand.network.userdetails.UserDetailsDataClass
+import com.example.toastgoand.network.userdetails.UserDetailsRepo
 import kotlinx.coroutines.launch
 
-class ClanHubViewModel: ViewModel() {
+class ClanHubViewModel(private val repoDeets: UserDetailsRepo): ViewModel() {
+
+    val deets: LiveData<UserDetailsDataClass> = repoDeets.userDetails.asLiveData()
 
     private val _clubDetails = MutableLiveData<ClanDetailsDataClass>()
     val clubDetails: LiveData<ClanDetailsDataClass>

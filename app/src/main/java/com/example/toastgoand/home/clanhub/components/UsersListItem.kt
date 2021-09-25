@@ -29,7 +29,7 @@ fun UsersListItem(user: ClanMember, removeUser: () -> Unit = { }) {
 
         Row(
             modifier = Modifier.clickable { openOptionsDialog.value = true }.fillMaxWidth(0.9f),
-            horizontalArrangement = Arrangement.Center,
+            horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically
         ) {
             UserDP(user.display_pic)

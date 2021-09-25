@@ -8,6 +8,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import com.example.toastgoand.composestyle.AyeTheme
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
@@ -37,7 +38,7 @@ fun HeaderOtherScreens (
                     verticalAlignment = Alignment.Bottom,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 40.dp, start = 15.dp, end = 30.dp),
+                        .padding(top = 40.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
@@ -48,7 +49,7 @@ fun HeaderOtherScreens (
                     CircleIcon(iconName = FeatherIcons.X, onIconPressed = onBackIconPressed, modifier = Modifier)
                 }
             },
-            backgroundColor = MaterialTheme.colors.background.copy(alpha = 0.95f),
+            backgroundColor = AyeTheme.colors.uiBackground.copy(alpha = 0.95f),
 //            elevation = 4.dp
         )
     }
