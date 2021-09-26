@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -20,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -27,6 +29,7 @@ import com.example.toastgoand.R
 import com.example.toastgoand.ToastgoApplication
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.home.clans.components.LiveClanItem
+import com.example.toastgoand.home.clans.components.StartClanButton
 import com.example.toastgoand.home.startclan.StartClanActivity
 import com.example.toastgoand.network.myclans.MyClansDataClass
 import com.example.toastgoand.network.pnstuff.pushSetupClans
@@ -94,6 +97,8 @@ class ClansFragment : Fragment() {
                     val liveClansHere: MutableList<MyClansDataClass> by
                     viewModel.liveClans.observeAsState(mutableListOf<MyClansDataClass>())
 
+                    val contextHere = LocalContext.current
+
                     Surface(
                         modifier = Modifier
                             .background(AyeTheme.colors.uiBackground)
@@ -126,34 +131,7 @@ class ClansFragment : Fragment() {
                                 item(
                                     key = "footer",
                                     content = {
-                                        Row(
-                                            modifier = Modifier.fillMaxWidth(),
-                                            horizontalArrangement = Arrangement.Center
-                                        ) {
-                                            Button(
-                                                onClick = {
-                                                    context.startActivity(
-                                                        Intent(
-                                                            context,
-                                                            StartClanActivity::class.java
-                                                        ).apply { })
-                                                },
-                                                colors = ButtonDefaults.textButtonColors(
-                                                    backgroundColor = AyeTheme.colors.appLead,
-                                                ),
-                                                shape = RoundedCornerShape(30.dp),
-                                                modifier = Modifier
-                                                    .padding(vertical = 30.dp)
-                                                    .height(60.dp)
-                                                    .width(160.dp),
-                                            ) {
-                                                Text(
-                                                    "start clan",
-                                                    style = MaterialTheme.typography.subtitle1,
-                                                    color = AyeTheme.colors.uiBackground
-                                                )
-                                            }
-                                        }
+                                       StartClanButton()
                                     }
                                 )
                                 item {

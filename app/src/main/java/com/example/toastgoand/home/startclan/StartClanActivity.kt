@@ -152,7 +152,8 @@ class StartClanActivity : BaseActivity() {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(MaterialTheme.colors.background),
+                            .fillMaxHeight()
+                            .background(AyeTheme.colors.uiBackground),
                         verticalArrangement = Arrangement.SpaceBetween,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
@@ -224,7 +225,8 @@ class StartClanActivity : BaseActivity() {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(MaterialTheme.colors.background),
+                            .fillMaxHeight()
+                            .background(AyeTheme.colors.uiBackground),
                         verticalArrangement = Arrangement.SpaceBetween,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
@@ -320,7 +322,8 @@ class StartClanActivity : BaseActivity() {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(MaterialTheme.colors.background),
+                            .fillMaxHeight()
+                            .background(AyeTheme.colors.uiBackground),
                         verticalArrangement = Arrangement.SpaceBetween,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
