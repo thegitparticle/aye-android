@@ -1,5 +1,9 @@
 package com.example.toastgoand.home.clantalk.components
 
+import android.annotation.SuppressLint
+import android.content.ClipData
+import android.content.Context
+//import android.content.ClipboardManager
 import android.util.Log
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -30,7 +34,28 @@ import com.pubnub.api.PNConfiguration
 import com.pubnub.api.PubNub
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.Send
+import android.widget.Toast
 
+import android.content.ClipboardManager
+import android.content.Context.CLIPBOARD_SERVICE
+import android.graphics.Color
+import android.view.View
+import android.view.View.inflate
+import androidx.compose.foundation.text.selection.SelectionContainer
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.compose.ui.viewinterop.AndroidViewBinding
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.graphics.alpha
+import com.example.toastgoand.composestyle.AyeTheme
+import com.example.toastgoand.databinding.TalktypeBinding
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
+
+
+@SuppressLint("ServiceCast")
 @Composable
 fun TextInputPart(
     userid: String,
@@ -104,6 +129,25 @@ fun TextInputPart(
 
     val payloadHere: NewMessageNotifPayloadDataClass = NewMessageNotifPayloadDataClass(pc_gcm = p1)
 
+    val context = LocalContext.current
+
+    var clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+
+    Log.i("textinput", clipboard.getText().toString())
+
+//    val clipboardManager: ClipboardManager = ClipboardManager
+//    var x_here = clipboardManager.getText()
+
+//    val clipboardManager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+//    var clipData: ClipData
+
+
+//    addPrimaryClipChangedListener(object : android.content.ClipboardManager.OnPrimaryClipChangedListener() {
+//        fun onPrimaryClipChanged() {
+//            val a: String = clipboard.getText().toString()
+//            Toast.makeText(context, "Copy:\n$a", Toast.LENGTH_LONG).show()
+//        }
+//    })
 
 
     ProvideWindowInsets() {
@@ -112,56 +156,109 @@ fun TextInputPart(
         ) {
             RecoOverlay(defaultRecos)
             Row(
-                modifier = Modifier.background(MaterialTheme.colors.surface),
+                modifier = Modifier
+                    .background(MaterialTheme.colors.surface)
+                    .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                OutlinedTextField(
-                    modifier = Modifier
-//                    .focusRequester(
-//                        focusTextInputRequester
+//                SelectionContainer {
+//                    OutlinedTextField(
+//                        modifier = Modifier
+////                    .focusRequester(
+////                        focusTextInputRequester
+////                    )
+//                            .navigationBarsWithImePadding()
+//                            .fillMaxWidth(0.9F),
+//                        value = typedText.value,
+//                        onValueChange = { typedText.value = it },
+//                        placeholder = { Text(text = "type fun stuff...") },
 //                    )
-                        .navigationBarsWithImePadding()
-                        .fillMaxWidth(0.9F),
-                    value = typedText.value,
-                    onValueChange = { typedText.value = it },
-                    placeholder = { Text(text = "type fun stuff...") },
-                )
+//                }
+
+
+//                AndroidView(
+//                    factory = { cxt ->
+//                        TextInputLayout(cxt).apply {
+//                            id = "messageInputBar"
+//                            boxBackgroundColor = Color.GRAY
+//                            placeholderText = "type fun stuff"
+//                        }
+//                    }
+//                )
+
+                var typedTextEdit = remember { mutableStateOf("") }
+
+                var textInputTextHere: TextInputLayout = TextInputLayout(context)
+
+                val selectedReco: String = ""
+
+//                Log.i("textinput", "text selected on long press")
+
+
+                AndroidViewBinding(TalktypeBinding::inflate) {
+                    textInputTextHere = textInputTalk
+
+                    textInputTextHere.setOnLongClickListener(
+                        object : View.OnLongClickListener {
+                            override fun onLongClick(v: View?): Boolean {
+                                Log.i("textinput", "text selected on long press")
+                                Toast.makeText(context, "selected", Toast.LENGTH_SHORT)
+                                return false
+                            }
+                        }
+                    )
+
+//                    textInputTalkHere.setOnLongClickListener(object : View.OnLongClickListener {
+//                        override fun onLongClick(v: View?): Boolean {
+//                            Log.i("textinput", "text selected on long press")
+//                            Toast.makeText(context, "selected", Toast.LENGTH_SHORT)
+//                            return false
+//                        }
+//                    })
+
+//                    textInputTalk.setBackgroundColor(Color.GRAY)
+//                    typedTextEdit.value = textInputTalk.editText?.text.toString()
+                }
+
                 Icon(
                     imageVector = FeatherIcons.Send,
                     contentDescription = "last month",
                     modifier = Modifier
                         .size(40.dp)
+                        .background(color = AyeTheme.colors.brand)
                         .clickable {
-                            pubnub
-                                .publish(
-                                    message = typedText.value.text,
-                                    channel = channelid
-                                )
-                                .async { result, status ->
-                                    if (status.error) {
-                                        Log.i("messagesendingfail", status.toString())
-                                    } else {
-                                        pubnub
-                                            .publish(
-                                                message = payloadHere,
-                                                channel = channelid + "_push"
-                                            )
-                                            .async { result, status ->
-                                                if (!status.error) {
-                                                    Log.i(
-                                                        "messagesendingapicall notif",
-                                                        "notif it worked"
-                                                    )
-                                                } else {
-                                                    Log.i(
-                                                        "messagesendingapicall notif",
-                                                        status.toString()
-                                                    )
-                                                }
-                                            }
-                                        Log.i("messagesendingsuccess", result.toString())
-                                    }
-                                }
+                            Log.i("textinput", textInputTextHere.editText?.text.toString())
+                            Log.i("textinput", "got clicked")
+//                            pubnub
+//                                .publish(
+//                                    message = typedText.value.text,
+//                                    channel = channelid
+//                                )
+//                                .async { result, status ->
+//                                    if (status.error) {
+//                                        Log.i("messagesendingfail", status.toString())
+//                                    } else {
+//                                        pubnub
+//                                            .publish(
+//                                                message = payloadHere,
+//                                                channel = channelid + "_push"
+//                                            )
+//                                            .async { result, status ->
+//                                                if (!status.error) {
+//                                                    Log.i(
+//                                                        "messagesendingapicall notif",
+//                                                        "notif it worked"
+//                                                    )
+//                                                } else {
+//                                                    Log.i(
+//                                                        "messagesendingapicall notif",
+//                                                        status.toString()
+//                                                    )
+//                                                }
+//                                            }
+//                                        Log.i("messagesendingsuccess", result.toString())
+//                                    }
+//                                }
                         }
                 )
             }

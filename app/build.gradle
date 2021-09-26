@@ -160,6 +160,8 @@ dependencies {
     implementation "androidx.compose.runtime:runtime-livedata:1.0.1"
     // navigation for compose
     implementation "androidx.navigation:navigation-compose:2.4.0-alpha07"
+    // compose view binding
+    implementation "androidx.compose.ui:ui-viewbinding:1.0.1"
     //more accompanist stuff
     implementation "com.google.accompanist:accompanist-insets:0.18.0"
     implementation "com.google.accompanist:accompanist-insets-ui:0.18.0"
