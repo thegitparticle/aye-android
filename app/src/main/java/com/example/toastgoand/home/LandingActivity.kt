@@ -46,6 +46,8 @@ import com.example.toastgoand.home.directs.DirectsViewModel
 import com.example.toastgoand.home.directs.DirectsViewModelFactory
 import com.example.toastgoand.home.invitepeopledirectly.InvitePeopleDirectlyActivity
 import com.example.toastgoand.home.myprofile.MyProfileActivity
+import com.example.toastgoand.home.startclan.SampleComposeActivity
+import com.example.toastgoand.home.startclan.StartClanActivity
 import com.example.toastgoand.navigator.Navigator
 import com.example.toastgoand.navigator.Screen
 import com.example.toastgoand.prefhelpers.Constant
@@ -109,7 +111,7 @@ class LandingActivity : BaseActivity() {
         }
 
         binding.ayeLogo.setOnClickListener {
-            val intent = Intent(this, TheAyeActivity::class.java).apply {}
+            val intent = Intent(this, StartClanActivity::class.java).apply {}
             startActivity(intent)
             overridePendingTransition(
                 R.anim.slide_up_enter,
@@ -164,7 +166,7 @@ class LandingActivity : BaseActivity() {
                             .width(55.dp)
                             .height(35.dp)
                             .clickable {
-                                val intent = Intent(context, TheAyeActivity::class.java).apply {}
+                                val intent = Intent(context, SampleComposeActivity::class.java).apply {}
                                 startActivity(intent)
                             }
                     )
@@ -177,7 +179,7 @@ class LandingActivity : BaseActivity() {
                             .size(30.dp)
                             .clip(RoundedCornerShape(corner = CornerSize(15.dp)))
                             .clickable {
-                                val intent = Intent(context, MyProfileActivity::class.java).apply {}
+                                val intent = Intent(context, StartClanActivity::class.java).apply {}
                                 startActivity(intent)
                             }
                             .background(MaterialTheme.colors.onSurface.copy(0.25f))

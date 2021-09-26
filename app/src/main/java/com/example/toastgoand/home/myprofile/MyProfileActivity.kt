@@ -30,9 +30,6 @@ import com.google.accompanist.insets.ProvideWindowInsets
 class MyProfileActivity : BaseActivity() {
     private lateinit var binding: ActivityMyProfileBinding
 
-    private lateinit var viewModel2: MyProfileViewModel
-
-
     private val viewModel: MyProfileViewModel by viewModels {
         MyProfileViewModelFactory(
             (this.application as ToastgoApplication).repository

@@ -15,7 +15,7 @@
         <!-- Customize your theme here. -->
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
-<!--        activity transitions-->
+        <!--        activity transitions-->
         <item name="android:windowContentTransitions">true</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
         <item name="android:windowContentOverlay">@null</item>
@@ -74,5 +74,14 @@
         <item name="android:fontFamily">@font/gotham_rounded_book</item>
         <item name="android:textSize">12sp</item>
     </style>
+
+    <style name="Theme.ToastgoandN.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.ToastgoandN.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.ToastgoandN.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>
