@@ -134,7 +134,7 @@ class TheAyeActivity : BaseActivity() {
                                         onBackPressed()
                                     },
                                     colors = ButtonDefaults.textButtonColors(
-                                        backgroundColor = MaterialTheme.colors.primary.copy(0.5f),
+                                        backgroundColor = AyeTheme.colors.brand.copy(0.5f),
                                     ),
                                     shape = RoundedCornerShape(30.dp),
                                     modifier = Modifier
@@ -145,7 +145,7 @@ class TheAyeActivity : BaseActivity() {
                                     Text(
                                         "talk to founder",
                                         style = MaterialTheme.typography.subtitle1,
-                                        color = MaterialTheme.colors.background
+                                        color = AyeTheme.colors.uiBackground
                                     )
                                 }
                             }
