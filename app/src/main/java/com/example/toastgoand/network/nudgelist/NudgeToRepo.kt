@@ -13,4 +13,10 @@ class NudgeToRepo (private val nudgeToDao: NudgeToDao) {
     suspend fun insert(nudgeTo: List<NudgeToDataClass>) {
         nudgeToDao.insert(nudgeTo = nudgeTo)
     }
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun deleteAll() {
+        nudgeToDao.deleteAll()
+    }
 }

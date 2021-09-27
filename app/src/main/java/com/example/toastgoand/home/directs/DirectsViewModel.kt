@@ -43,6 +43,7 @@ class DirectsViewModel(private val repo: MyDirectsRepo, private val repoDeets: U
     }
 
     private fun insertNudgeTo(nudgeTo: List<NudgeToDataClass>) = viewModelScope.launch {
+        repoNudgeTo.deleteAll()
         repoNudgeTo.insert(nudgeTo)
     }
 

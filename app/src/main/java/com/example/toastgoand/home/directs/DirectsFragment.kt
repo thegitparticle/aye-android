@@ -62,7 +62,7 @@ class DirectsFragment : Fragment() {
                         listOf<NudgeToDataClass>()
                     )
 
-                    Log.i("directdebug", directsHere.toString())
+                    Log.i("DirectsViewModelNudge", nudgeToHere.toString())
 
                     Surface(modifier = Modifier.background(AyeTheme.colors.uiBackground)) {
                         SwipeRefresh(
