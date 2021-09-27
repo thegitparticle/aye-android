@@ -3,6 +3,7 @@ package com.example.toastgoand.home.clanframes.components
 import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -31,6 +32,7 @@ fun ADay(date: Int, framesList: List<ClanFrameDataClass>,  clubName: String,
             }
         } else {
             Text(
+                modifier = Modifier.padding(vertical = 20.dp),
                 text = date.toString(),
                 style = MaterialTheme.typography.subtitle1,
                 color = MaterialTheme.colors.background.copy(0.5f)
@@ -68,6 +70,7 @@ private fun FrameImage(item: ClanFrameDataClass,  clubName: String,
         contentDescription = "clan frame thumbnail",
         contentScale = ContentScale.Crop,
         modifier = Modifier
+            .padding(vertical = 20.dp )
             .size(60.dp)
             .clip(RoundedCornerShape(corner = CornerSize(12.dp)))
             .clickable {

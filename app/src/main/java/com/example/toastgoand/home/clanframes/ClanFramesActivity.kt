@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -212,16 +213,24 @@ class ClanFramesActivity : BaseActivity() {
                                 if (clubName != null) {
                                     if (userid != null) {
                                         if (channelid != null) {
-                                            AMonth(
-                                                AMonthClanViewModel(),
-                                                clubid.toString(),
-                                                viewMonth,
-                                                currentMonth,
-                                                todayDate,
-                                                clubName = clubName,
-                                                userid = userid,
-                                                channelid = channelid
-                                            )
+                                            LazyColumn(
+                                                modifier = Modifier
+                                                    .fillMaxSize()
+                                                    .background(AyeTheme.colors.uiBackground),
+                                            ) {
+                                                item {
+                                                    AMonth(
+                                                        AMonthClanViewModel(),
+                                                        clubid.toString(),
+                                                        viewMonth,
+                                                        currentMonth,
+                                                        todayDate,
+                                                        clubName = clubName,
+                                                        userid = userid,
+                                                        channelid = channelid
+                                                    )
+                                                }
+                                            }
                                         }
                                     }
                                 }

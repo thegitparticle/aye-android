@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -56,7 +57,7 @@ class DirectFramesActivity : BaseActivity() {
 
                 fun onHubPressed() {
 
-                    val splitChannelID = directid?.split("_")?.map {it.trim()}
+                    val splitChannelID = directid?.split("_")?.map { it.trim() }
 
                     var otherIdHere: Int = 0
 
@@ -152,7 +153,11 @@ class DirectFramesActivity : BaseActivity() {
                             }
                         },
                     ) {
-                        Column(modifier = Modifier.background(AyeTheme.colors.uiBackground).fillMaxSize()) {
+                        Column(
+                            modifier = Modifier
+                                .background(AyeTheme.colors.uiBackground)
+                                .fillMaxSize()
+                        ) {
                             Spacer(modifier = Modifier.size(100.dp))
                             Spacer(modifier = Modifier.size(25.dp))
                             Row(
@@ -186,15 +191,24 @@ class DirectFramesActivity : BaseActivity() {
                             if (directid != null) {
                                 if (otherName != null) {
                                     if (userid != null) {
-                                        AMonthDirect(
-                                            AMonthViewModel(),
-                                            directid,
-                                            viewMonth,
-                                            currentMonth,
-                                            todayDate,
-                                            otherName = otherName,
-                                            userid = userid,
-                                        )
+                                        LazyColumn(
+                                            modifier = Modifier
+                                                .fillMaxSize()
+                                                .background(AyeTheme.colors.uiBackground),
+                                        ) {
+                                            item {
+                                                AMonthDirect(
+                                                    AMonthViewModel(),
+                                                    directid,
+                                                    viewMonth,
+                                                    currentMonth,
+                                                    todayDate,
+                                                    otherName = otherName,
+                                                    userid = userid,
+                                                )
+                                            }
+
+                                        }
                                     }
                                 }
                             }

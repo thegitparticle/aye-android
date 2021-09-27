@@ -39,6 +39,7 @@ fun ADayDirect(
             }
         } else {
             Text(
+                modifier = Modifier.padding(vertical = 20.dp),
                 text = date.toString(),
                 style = MaterialTheme.typography.subtitle1,
                 color = MaterialTheme.colors.background.copy(0.5f)
@@ -78,7 +79,7 @@ private fun FrameImage(
         contentDescription = "direct frame thumbnail",
         contentScale = ContentScale.Crop,
         modifier = Modifier
-            .padding(8.dp)
+            .padding(vertical = 20.dp )
             .size(60.dp)
             .clip(RoundedCornerShape(corner = CornerSize(12.dp)))
             .clickable {

@@ -28,7 +28,7 @@ fun AStripDirect(start: Int, end: Int, framesList: List<DirectFrameDataClass>,  
                         32.dp
                     )
                     .background(Color.Blue.copy(0.5f))
-                    .padding(50.dp)
+                    .padding(horizontal = 50.dp)
                     .height(400.dp)
             )
             Column(horizontalAlignment = Alignment.CenterHorizontally) {

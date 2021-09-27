@@ -3,6 +3,7 @@ package com.example.toastgoand.home.directframes.components
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.getValue
 import androidx.compose.mutableStateOf
@@ -99,7 +100,7 @@ fun AMonthDirectX(
                 Row(
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth().fillMaxHeight()
                 ) {
                     AStripDirect(
                         start = 1,
@@ -114,7 +115,7 @@ fun AMonthDirectX(
                 Row(
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth().fillMaxHeight()
                 ) {
                     AStripDirect(start = 1, end = 10, framesList = framesList, directid = directid,
                         otherName = otherName,
@@ -127,7 +128,7 @@ fun AMonthDirectX(
                 Row(
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth().fillMaxHeight()
                 ) {
                     AStripDirect(start = 1, end = 10, framesList = framesList, directid = directid,
                         otherName = otherName,
@@ -145,7 +146,7 @@ fun AMonthDirectX(
         AyeTheme() {
             Row(
                 horizontalArrangement = Arrangement.SpaceEvenly,
-                verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()
+                verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth().fillMaxHeight()
             ) {
                 AStripDirect(start = 1, end = 10, framesList = framesList, directid = directid,
                     otherName = otherName,
