@@ -20,6 +20,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.example.toastgoand.composestyle.AyeTheme
+import com.example.toastgoand.home.clantalk.ClanTalkActivity
 import com.example.toastgoand.home.directtalk.DirectTalkActivity
 import com.example.toastgoand.network.directs.MyDirectsDataClass
 import com.example.toastgoand.utilities.drawColorShadow
@@ -35,12 +36,13 @@ fun DirectItem(directItem: MyDirectsDataClass) {
         Row(modifier = Modifier
             .padding(vertical = 7.5.dp)
             .clickable {
-                context.startActivity(Intent(context, DirectTalkActivity::class.java).apply {
-                    putExtra("otherName", directItem.display_guys.full_name)
-                    putExtra("directid", directItem.direct_channel_id)
+                context.startActivity(Intent(context, ClanTalkActivity::class.java).apply {
+                    putExtra("clubName", directItem.display_guys.full_name)
+                    putExtra("channelid", directItem.direct_channel_id)
                     putExtra("ongoingFrame", directItem.ongoing_frame)
                     putExtra("startTime", directItem.start_time)
                     putExtra("endTime", directItem.end_time)
+                    putExtra("directornot", true)
                 })
             }) {
             Row(modifier = Modifier.padding(horizontal = 15.dp)) {

@@ -24,12 +24,14 @@ import com.example.toastgoand.databinding.ActivityClanFramesBinding
 import com.example.toastgoand.home.clanframes.components.AMonth
 import com.example.toastgoand.home.clanframes.components.AMonthClanViewModel
 import com.example.toastgoand.home.clanhub.ClanHubActivity
+import com.example.toastgoand.home.otherprofile.OtherProfileActivity
 import com.example.toastgoand.uibits.HeaderPlayScreens
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.statusBarsPadding
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.ChevronLeft
 import compose.icons.feathericons.ChevronRight
+import compose.icons.feathericons.User
 import compose.icons.feathericons.Users
 import kotlinx.datetime.*
 
@@ -51,24 +53,32 @@ class ClanFramesActivity : BaseActivity() {
                 val startTime = intent.getStringExtra("startTime")
                 val endTime = intent.getStringExtra("endTime")
                 val userid = intent.getStringExtra("userid")
+                val directornot = intent.getBooleanExtra("directornot", false)
+
+                fun onDirectHubPressed() {
+
+                    val splitChannelID = channelid?.split("_")?.map { it.trim() }
+
+                    var otherIdHere: Int = 0
+
+                    if (userid?.toInt() == splitChannelID?.get(0)?.toInt()) {
+                        otherIdHere = splitChannelID?.get(1)?.toInt()!!
+                    } else {
+                        otherIdHere = splitChannelID?.get(0)?.toInt()!!
+                    }
+
+                    if (otherIdHere > 0) {
+                        startActivity(
+                            Intent(
+                                this,
+                                OtherProfileActivity::class.java
+                            ).apply {
+                                putExtra("otheruserid", otherIdHere)
+                            })
+                    }
+                }
 
                 val context = LocalContext.current
-
-                fun onHubPressed() {
-                    startActivity(
-                        Intent(
-                            this,
-                            ClanHubActivity::class.java
-                        ).apply {
-                            putExtra("clubName", clubName)
-                            putExtra("clubid", clubid)
-                            putExtra("channelid", channelid)
-                            putExtra("ongoingFrame", ongoingFrame)
-                            putExtra("startTime", startTime)
-                            putExtra("endTime", endTime)
-                            putExtra("userid", userid)
-                        })
-                }
 
                 val now: Instant = Clock.System.now()
                 val today: LocalDate = now.toLocalDateTime(TimeZone.currentSystemDefault()).date
@@ -137,25 +147,37 @@ class ClanFramesActivity : BaseActivity() {
                                         onBackPressed()
                                     },
                                     onActionIconPressed = {
-                                        context.startActivity(
-                                            Intent(
-                                                context,
-                                                ClanHubActivity::class.java
-                                            ).apply {
-                                                putExtra("clubName", clubName)
-                                                putExtra("clubid", clubid)
-                                                putExtra("channelid", channelid)
-                                                putExtra("ongoingFrame", ongoingFrame)
-                                                putExtra("startTime", startTime)
-                                                putExtra("endTime", endTime)
-                                            })
+                                        if (!directornot) {
+                                            context.startActivity(
+                                                Intent(
+                                                    context,
+                                                    ClanHubActivity::class.java
+                                                ).apply {
+                                                    putExtra("clubName", clubName)
+                                                    putExtra("clubid", clubid)
+                                                    putExtra("channelid", channelid)
+                                                    putExtra("ongoingFrame", ongoingFrame)
+                                                    putExtra("startTime", startTime)
+                                                    putExtra("endTime", endTime)
+                                                })
+                                        } else {
+                                            onDirectHubPressed()
+                                        }
                                     },
-                                    actionIcon = FeatherIcons.Users
+                                    actionIcon = if (!directornot) {
+                                        FeatherIcons.Users
+                                    } else {
+                                        FeatherIcons.User
+                                    }
                                 )
                             }
                         },
                     ) {
-                        Column( modifier = Modifier.background(AyeTheme.colors.uiBackground).fillMaxSize()) {
+                        Column(
+                            modifier = Modifier
+                                .background(AyeTheme.colors.uiBackground)
+                                .fillMaxSize()
+                        ) {
                             Spacer(modifier = Modifier.size(100.dp))
                             Spacer(modifier = Modifier.size(25.dp))
                             Row(

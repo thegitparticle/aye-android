@@ -38,6 +38,8 @@ import com.example.toastgoand.home.clantalk.components.NewPNMessage
 import com.example.toastgoand.home.clantalk.components.OldPNMessage
 import com.example.toastgoand.home.clantalk.components.StartClanFrame
 import com.example.toastgoand.home.clantalk.components.TextInputPart
+import com.example.toastgoand.home.directframes.DirectFramesActivity
+import com.example.toastgoand.home.directtalk.components.StartDirectFrame
 import com.example.toastgoand.network.defaultrecos.DefaultRecosDataClass
 import com.example.toastgoand.quick.QuickActivity
 import com.example.toastgoand.uibits.HeaderPlayScreens
@@ -101,6 +103,7 @@ class ClanTalkActivity : BaseActivity() {
                 var ongoingFrame = intent.getBooleanExtra("ongoingFrame", false)
                 val startTime = intent.getStringExtra("startTime")
                 val endTime = intent.getStringExtra("endTime")
+                val directornot = intent.getBooleanExtra("directornot", false)
 
                 val pnConfiguration = PNConfiguration().apply {
                     subscribeKey = "sub-c-d099e214-9bcf-11eb-9adf-f2e9c1644994"
@@ -171,10 +174,11 @@ class ClanTalkActivity : BaseActivity() {
                                         onBackPressed()
                                     },
                                     onActionIconPressed = {
+                                        if (!directornot) {
                                         context.startActivity(
                                             Intent(
                                                 context,
-                                                ClanFramesActivity::class.java
+                                                    ClanFramesActivity::class.java
                                             ).apply {
                                                 putExtra("clubName", clubName)
                                                 putExtra("clubid", clubid)
@@ -190,7 +194,29 @@ class ClanTalkActivity : BaseActivity() {
                                                     "userdp",
                                                     viewModel.deets.value?.image
                                                 )
+                                                putExtra("directornot", directornot)
                                             })
+                                        } else {
+                                            context.startActivity(
+                                                Intent(
+                                                    context, DirectFramesActivity::class.java
+                                                ).apply {
+                                                    putExtra("otherName", clubName)
+                                                    putExtra("directid", channelid)
+                                                    putExtra("ongoingFrame", ongoingFrame)
+                                                    putExtra("startTime", startTime)
+                                                    putExtra("endTime", endTime)
+                                                    putExtra(
+                                                        "userid",
+                                                        viewModel.deets.value?.user?.id.toString()
+                                                    )
+                                                    putExtra(
+                                                        "userdp",
+                                                        viewModel.deets.value?.image
+                                                    )
+                                                    putExtra("directornot", directornot)
+                                                })
+                                        }
                                     },
                                     actionIcon = FeatherIcons.Layers
                                 )
@@ -223,6 +249,7 @@ class ClanTalkActivity : BaseActivity() {
                                                                 "userid",
                                                                 viewModel.deets.value?.user?.id.toString()
                                                             )
+                                                            putExtra("directornot", directornot)
                                                         })
                                                 },
                                                 modifier = Modifier
@@ -283,7 +310,8 @@ class ClanTalkActivity : BaseActivity() {
                                                 userid = viewModel.deets.value?.user?.id.toString(),
                                                 channelid = channelid,
                                                 defaultRecos = defaultRecos,
-                                                clubName = clubName
+                                                clubName = clubName,
+                                                directornot = directornot
                                             )
                                         }
                                     }
@@ -291,14 +319,26 @@ class ClanTalkActivity : BaseActivity() {
                             } else {
                                 if (channelid != null) {
                                     if (clubName != null) {
-                                        StartClanFrame(
-                                            modifier = Modifier,
-                                            clubid = clubid,
-                                            channelid = channelid,
-                                            changeLiveStatus = ::changeFrameLiveStatus,
-                                            pubNub = pubNub,
-                                            clubName = clubName
-                                        )
+                                        if (!directornot) {
+                                            StartClanFrame(
+                                                modifier = Modifier,
+                                                clubid = clubid,
+                                                channelid = channelid,
+                                                changeLiveStatus = ::changeFrameLiveStatus,
+                                                pubNub = pubNub,
+                                                clubName = clubName
+                                            )
+                                        } else {
+                                            viewModel.deets.value?.user?.full_name?.let {
+                                                StartDirectFrame(
+                                                    modifier = Modifier,
+                                                    directid = channelid,
+                                                    changeLiveStatus = { ::changeFrameLiveStatus },
+                                                    pubNub = pubNub,
+                                                    myName = it
+                                                )
+                                            }
+                                        }
                                     }
                                 }
                             }

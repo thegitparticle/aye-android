@@ -51,6 +51,7 @@ fun LiveClanItem(myclan: MyClansDataClass, position: Int) {
                             putExtra("ongoingFrame", myclan.ongoing_frame)
                             putExtra("startTime", myclan.start_time)
                             putExtra("endTime", myclan.end_time)
+                            putExtra("directornot", false)
                         })
                     },
                 horizontalArrangement = Arrangement.Start

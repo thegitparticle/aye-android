@@ -61,7 +61,8 @@ fun TextInputPart(
     userid: String,
     channelid: String,
     defaultRecos: List<DefaultRecosDataClass>,
-    clubName: String
+    clubName: String,
+    directornot: Boolean
 ) {
     val typedText = remember { mutableStateOf(TextFieldValue()) }
 
