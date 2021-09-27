@@ -23,7 +23,7 @@ private val retrofit =
 interface StartClanApiInterface {
     @Headers("Content-Type: application/json")
     @POST("clubs/create_club/")
-    suspend fun startClan(@Body data: StartClanDataClass): StartClanDataClass
+    suspend fun startClan(@Body data: StartClanDataClass): StartClanResponseDataClass
 }
 
 object StartClanApi {

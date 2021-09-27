@@ -29,6 +29,12 @@
         android:windowSoftInputMode="stateHidden"
         tools:replace="android:appComponentFactory">
         <activity
+            android:name=".home.startclan.StartClanNameActivity"
+            android:exported="true" />
+        <activity
+            android:name=".home.startclan.StartClanInviteContactsActivity"
+            android:exported="true" />
+        <activity
             android:name=".home.startclan.SampleComposeActivity"
             android:exported="true"
             android:label="@string/title_activity_sample_compose"

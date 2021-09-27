@@ -1,20 +1,16 @@
 package com.example.toastgoand.home.startclan
 
 import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -24,29 +20,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.R
 import com.example.toastgoand.ToastgoApplication
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityStartClanBinding
-import com.example.toastgoand.home.clanhub.clanaddpeople.ClanAddPeopleActivity
-import com.example.toastgoand.home.clanhub.components.MyFriendItem
-import com.example.toastgoand.home.startclan.components.*
-import com.example.toastgoand.network.myfriends.MyFriendsDataClass
-import com.example.toastgoand.network.userdetails.User
-import com.example.toastgoand.network.userdetails.UserDetailsDataClass
 import com.example.toastgoand.uibits.HeaderOtherScreens
-import com.google.accompanist.insets.ProvideWindowInsets
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.ArrowRight
-import spencerstudios.com.bungeelib.Bungee
 
-class StartClanActivity : BaseActivity() {
+class StartClanInviteContactsActivity : BaseActivity() {
+
     private lateinit var binding: ActivityStartClanBinding
 
     private val viewModel: StartClanViewModel by viewModels {
@@ -56,49 +41,21 @@ class StartClanActivity : BaseActivity() {
         )
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = viewBinding as ActivityStartClanBinding
-
-        val addedFriends = mutableListOf<MyFriendsDataClass>()
-
-        fun addSelectedToList(item: MyFriendsDataClass) {
-            addedFriends.add(item)
-        }
-
-        fun removeSelectedToList(item: MyFriendsDataClass) {
-            addedFriends.remove(item)
-        }
 
         fun onBackPressedHere() {
             onBackPressed()
         }
 
         setContent {
-            AyeTheme {
+            AyeTheme() {
 
                 val context = LocalContext.current
 
-                val deetsHere: UserDetailsDataClass by viewModel.deets.observeAsState(
-                    UserDetailsDataClass(
-                        bio = "", image = "", user = User(
-                            phone = "",
-                            full_name = "",
-                            id = 0,
-                            clubs_joined_by_user = "",
-                            number_of_clubs_joined = 0,
-                            contact_list = "",
-                            total_frames_participation = 0,
-                            country_code_of_user = "",
-                            contact_list_sync_status = false,
-                            username = ""
-                        ), id = 0
-                    )
-                )
-
-                val myFriendsListHere: List<MyFriendsDataClass> by viewModel.friendsList.observeAsState(
-                    listOf<MyFriendsDataClass>()
-                )
+                val addedFriends = intent.getStringExtra("addedfriends")
 
                 val textState = remember { mutableStateOf(TextFieldValue()) }
 
@@ -116,7 +73,7 @@ class StartClanActivity : BaseActivity() {
                             onClick = {
                                 val intent = Intent(
                                     context,
-                                    StartClanInviteContactsActivity::class.java
+                                    StartClanNameActivity::class.java
                                 ).apply {
                                     putExtra( "addedfriends",  addedFriends.toString())
                                 }
@@ -149,11 +106,11 @@ class StartClanActivity : BaseActivity() {
                     ) {
                         TextField(
                             modifier = Modifier
-                                .background(AyeTheme.colors.uiSurface)
+                                .background(MaterialTheme.colors.surface)
                                 .clip(
-                                    RoundedCornerShape(corner = CornerSize(20.dp))
+                                    RoundedCornerShape(corner = CornerSize(10.dp))
                                 )
-                                .padding(vertical = 20.dp)
+                                .padding(vertical = 10.dp)
                                 .fillMaxWidth(0.9f),
                             value = textState.value,
                             onValueChange = { textState.value = it },
@@ -167,16 +124,38 @@ class StartClanActivity : BaseActivity() {
                             },
                         )
                         Text("The textfield has this text: " + textState.value.text)
-                        LazyColumn(modifier = Modifier.background(AyeTheme.colors.uiBackground).fillMaxWidth()) {
+                        LazyColumn(modifier = Modifier.background(MaterialTheme.colors.background)) {
+//                                val contactsParsed = Gson().fromJson<List<ContactItem>>(
+//                                    deetsHere.user.contact_list,
+//                                    ContactItem::class.java
+//                                )
 
-                            items(
-                                items = myFriendsListHere,
-                                itemContent = {
-                                    FriendsListItem(it, ::addSelectedToList, ::removeSelectedToList)
-                                })
+//                                val simpleContactsString =
+//                                    deetsHere.user.contact_list.drop(1).dropLast(1)
+
+//                        if (contactsString.length > 10) {
+//                            Log.i("invitepeople", contactsString?.slice(0..10))
+////                                    val parserHere = Json {
+////                                        isLenient = true; ignoreUnknownKeys = true; encodeDefaults =
+////                                        false;
+////                                    }
+////                                    val contactsListHere =
+////                                        parserHere.decodeFromString<ArrayList<ContactItem>>(
+////                                            contactsString
+////                                        )
+////                                    decodeFromString<ArrayList<ContactItem>>(deetsHere.user.contact_list)
+////                                    Log.i("invitepeople list", contactsListHere.toString())
+//                        }
+//
+//                        Log.i("invitepeople", contactsString)
+//
+////                                items(
+////                                    items = contactsListHere,
+////                                    itemContent = {
+////                                        ContactItemRender(Json.decodeFromString(it))
+////                                    })
                         }
                     }
-
                 }
             }
         }

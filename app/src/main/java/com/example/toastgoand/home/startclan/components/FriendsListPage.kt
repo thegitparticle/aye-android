@@ -26,12 +26,11 @@ import compose.icons.FeatherIcons
 import compose.icons.feathericons.ArrowRight
 
 @Composable
-fun FriendsListPage(friendsList: List<MyFriendsDataClass>, backHandle: Unit, navController: NavController) {
+fun FriendsListPage(friendsList: List<MyFriendsDataClass>, backHandle: Unit) {
     val textState = remember { mutableStateOf(TextFieldValue()) }
 
     AyeTheme() {
 
-        ProvideWindowInsets() {
             Scaffold(
                 topBar = {
                     HeaderOtherScreens(
@@ -43,7 +42,7 @@ fun FriendsListPage(friendsList: List<MyFriendsDataClass>, backHandle: Unit, nav
                 floatingActionButtonPosition = FabPosition.Center,
                 floatingActionButton = {
                     FloatingActionButton(
-                        onClick = { navController.navigate("contactslist") },
+                        onClick = {  },
                         modifier = Modifier
                             .padding(horizontal = 25.dp)
                             .size(60.dp),
@@ -94,7 +93,6 @@ fun FriendsListPage(friendsList: List<MyFriendsDataClass>, backHandle: Unit, nav
                             })
                     }
                 }
-            }
         }
     }
 }
