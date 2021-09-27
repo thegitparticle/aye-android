@@ -185,12 +185,12 @@ private fun TextBubble(text: String) {
     Box(
         modifier = Modifier
             .clip(ChatBubbleShape)
-            .background(MaterialTheme.colors.surface.copy(0.75f))
+            .background(AyeTheme.colors.uiSurface.copy(0.75f))
     ) {
         Text(
             text = text,
             style = MaterialTheme.typography.body2,
-            color = MaterialTheme.colors.onBackground
+            color = AyeTheme.colors.textSecondary
         )
     }
 }

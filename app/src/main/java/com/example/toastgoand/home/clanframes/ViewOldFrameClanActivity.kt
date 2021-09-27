@@ -3,10 +3,8 @@ package com.example.toastgoand.home.clanframes
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.getValue
@@ -101,7 +99,7 @@ class ViewOldFrameClanActivity : BaseActivity() {
                             contentPadding = PaddingValues(vertical = 8.dp),
                             reverseLayout = true,
                             modifier = Modifier
-                                .fillMaxWidth(),
+                                .fillMaxWidth().fillMaxHeight().background(AyeTheme.colors.uiBackground),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             item {
