@@ -4,13 +4,32 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.util.Log
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.Icon
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
+import com.example.toastgoand.auth.detailssignup.DetailsSignupActivity
 import com.example.toastgoand.auth.otplogin.OtpLoginActivity
+import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityEnterPhoneBinding
+import com.example.toastgoand.uibits.LoaderDialog
 import com.hbb20.CountryCodePicker.OnCountryChangeListener
+import compose.icons.FeatherIcons
+import compose.icons.feathericons.ArrowRight
 
 
 class EnterPhoneActivity : BaseActivity() {
@@ -37,18 +56,58 @@ class EnterPhoneActivity : BaseActivity() {
         viewModel = ViewModelProvider(this).get(EnterPhoneViewModel::class.java)
         binding.enterPhoneModel = viewModel
 
-        viewModel.phoneCheck.value?.let { it1 -> Log.i("EnterPhoneViewModelX", it1) }
-
         viewModel.phoneCheck.observe(this, Observer { response ->
             Log.i("EnterPhoneViewModelX", response)
+            if (response.isNotEmpty()) {
+                if (response == "True") {
+                    val intent =
+                        Intent(this, OtpLoginActivity::class.java).apply {
+                            putExtra(
+                                "phoneNumber",
+                                countryCode + phoneNumber.toString()
+                            )
+                        }
+                    startActivity(intent)
+                } else {
+                    val intent =
+                        Intent(this, DetailsSignupActivity::class.java).apply {
+                            putExtra(
+                                "phoneNumber",
+                                countryCode + phoneNumber.toString()
+                            )
+                        }
+                    startActivity(intent)
+                }
+            }
         })
 
-        binding.nextImageButton.setOnClickListener {
-//            viewModel.checkPhoneNumberHere(countryCode + phoneNumber.toString())
-            val intent = Intent(this, OtpLoginActivity::class.java).apply{
-                putExtra("phoneNumber", countryCode + phoneNumber.toString())
+        binding.composeView.setContent {
+            AyeTheme() {
+
+                val phoneCheckStatus: String by viewModel.phoneCheck.observeAsState("")
+                val context = LocalContext.current
+
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    val isDialogOpen = remember { mutableStateOf(false) }
+
+                    Icon(
+                        imageVector = FeatherIcons.ArrowRight,
+                        contentDescription = "next screen",
+                        modifier = Modifier
+                            .size(30.dp)
+                            .clickable {
+                                viewModel.checkPhoneNumberHere(countryCode + phoneNumber.toString())
+                                isDialogOpen.value = true
+                            }
+                            .background(color = AyeTheme.colors.textSecondary),
+                    )
+
+                    LoaderDialog(isDialogOpen)
+                }
             }
-            startActivity(intent)
         }
 
     }

@@ -9,10 +9,6 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,11 +35,17 @@ import android.widget.Toast
 import android.content.ClipboardManager
 import android.content.Context.CLIPBOARD_SERVICE
 import android.graphics.Color
+import android.view.ActionMode
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.View.inflate
 import androidx.compose.foundation.text.selection.SelectionContainer
+import androidx.compose.material.*
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.viewinterop.AndroidViewBinding
 import androidx.core.content.ContentProviderCompat.requireContext
@@ -55,7 +57,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
 
-@SuppressLint("ServiceCast")
+@SuppressLint("ServiceCast", "ClickableViewAccessibility")
 @Composable
 fun TextInputPart(
     userid: String,
@@ -150,7 +152,6 @@ fun TextInputPart(
 //        }
 //    })
 
-
     ProvideWindowInsets() {
         Column(
 //            modifier = Modifier.navigationBarsWithImePadding()
@@ -165,6 +166,14 @@ fun TextInputPart(
 //                SelectionContainer {
 //                    OutlinedTextField(
 //                        modifier = Modifier
+//                            .onFocusChanged { focusState ->
+//                                if (focusState.isFocused) {
+//                                    val text = typedText.value.text
+//                                    typedText.value = typedText.value.copy(
+//                                        selection = TextRange(0, text.length)
+//                                    )
+//                                }
+//                            }
 ////                    .focusRequester(
 ////                        focusTextInputRequester
 ////                    )
@@ -173,6 +182,7 @@ fun TextInputPart(
 //                        value = typedText.value,
 //                        onValueChange = { typedText.value = it },
 //                        placeholder = { Text(text = "type fun stuff...") },
+//                        textStyle = MaterialTheme.typography.body2,
 //                    )
 //                }
 
@@ -193,21 +203,60 @@ fun TextInputPart(
 
                 val selectedReco: String = ""
 
-//                Log.i("textinput", "text selected on long press")
+                class SelectedTextCallBack : ActionMode.Callback {
+                    override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+                        removeItemIfNeed(menu, android.R.id.copy)
+                        removeItemIfNeed(menu, android.R.id.cut)
+                        return true
+                    }
+
+                    private fun removeItemIfNeed(menu: Menu?, id: Int) {
+                        if (menu?.findItem(id) != null) {
+                            menu.removeItem(id)
+                        }
+                    }
+
+                    override fun onActionItemClicked(mode: ActionMode?, menu: MenuItem?) = false
+
+                    override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?) = false
+
+                    override fun onDestroyActionMode(mode: ActionMode?) = Unit
+                }
 
 
                 AndroidViewBinding(TalktypeBinding::inflate) {
                     textInputTextHere = textInputTalk
 
-                    textInputTextHere.setOnLongClickListener(
-                        object : View.OnLongClickListener {
-                            override fun onLongClick(v: View?): Boolean {
-                                Log.i("textinput", "text selected on long press")
-                                Toast.makeText(context, "selected", Toast.LENGTH_SHORT)
-                                return false
-                            }
-                        }
-                    )
+                    textInputTalkEdit.setTextIsSelectable(true)
+
+                    textInputTalkEdit.setOnTouchListener { view, motionEvent ->
+                        Log.i("textinput touch", textInputTalkEdit.selectionStart.toString())
+                        Log.i("textinput touch", textInputTalkEdit.selectionEnd.toString())
+                        Log.i(
+                            "textinput touch",
+                            textInputTalkEdit.text.toString().slice(
+                                textInputTalkEdit.selectionStart..
+                                        textInputTalkEdit.selectionEnd
+                            )
+                        )
+                        true
+                    }
+
+                    textInputTalkEdit.setOnClickListener {
+                        Log.i("textinput", textInputTalkEdit.selectionStart.toString())
+                        Log.i("textinput", textInputTalkEdit.selectionEnd.toString())
+                        Log.i(
+                            "textinput",
+                            textInputTalkEdit.text.toString().slice(
+                                textInputTalkEdit.selectionStart..
+                                textInputTalkEdit.selectionEnd
+                            )
+                        )
+                    }
+
+
+//                    customInsertionActionModeCallback = object : ActionMode.Callback {
+//                    }
 
 //                    textInputTalkHere.setOnLongClickListener(object : View.OnLongClickListener {
 //                        override fun onLongClick(v: View?): Boolean {

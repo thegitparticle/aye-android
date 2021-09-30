@@ -28,7 +28,6 @@ class EnterPhoneViewModel: ViewModel() {
         viewModelScope.launch {
             try {
                 val userResult = PhoneCheckApi.retrofitService.checkPhone(phone)
-//                Log.i("EnterPhoneViewModel", userResult.toString())
                 var x_here: PhoneCheckDataClass = userResult
                 _phoneCheck.value = x_here?.user_exists
                 Log.i("EnterPhoneViewModel", _phoneCheck.value!!)
