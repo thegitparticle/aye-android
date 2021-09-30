@@ -31,18 +31,16 @@ class LoginSetupActivity : BaseActivity() {
         intent.getStringExtra("phoneNumber")?.let { viewModel.getUserDetailsWhileLoginHere(it) }
 
         viewModel.userDetails.observe(this, Observer { userDetailsGo ->
-            binding.openHomeButton.visibility = View.VISIBLE
+            if (userDetailsGo.user.id > 0) {
+                prefHelper = PrefHelper(this)
+                prefHelper.put(Constant.PREF_IS_LOGIN, true)
+                val intent = Intent(this, LandingActivity::class.java).apply {
+                    putExtra("phoneNumber", intent.getStringExtra("phoneNumber"))
+                }
+                startActivity(intent)
+            }
             Log.i("observer", "obseving is happening")
         })
-
-        binding.openHomeButton.setOnClickListener {
-            prefHelper = PrefHelper(this)
-            prefHelper.put( Constant.PREF_IS_LOGIN, true)
-            val intent = Intent(this, LandingActivity::class.java).apply {
-                putExtra("phoneNumber", intent.getStringExtra("phoneNumber"))
-            }
-            startActivity(intent)
-        }
 
     }
 

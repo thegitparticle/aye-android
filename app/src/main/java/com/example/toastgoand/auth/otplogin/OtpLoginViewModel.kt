@@ -5,6 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.toastgoand.auth.otplogin.network.OTPLoginApi
+import com.example.toastgoand.auth.otplogin.network.OTPLoginDataClass
+import com.example.toastgoand.home.startclan.network.StartClanApi
 import com.example.toastgoand.network.phonecheck.PhoneCheckApi
 import com.example.toastgoand.network.phonecheck.PhoneCheckDataClass
 import kotlinx.coroutines.launch
@@ -19,6 +22,20 @@ class OtpLoginViewModel(): ViewModel() {
     override fun onCleared() {
         super.onCleared()
         Log.i("QuoteFragmentViewModel", "QuoteFragmentViewModel destroyed")
+    }
+
+    fun sendOtpPayload(payload: OTPLoginDataClass) {
+        viewModelScope.launch {
+            try {
+                val responseOTPHere = OTPLoginApi.retrofitService.otpLoginSend(payload)
+                _otpCheck.value = "worked"
+                Log.i("startclanlog", "otp worked")
+
+            } catch (e: Exception) {
+                _otpCheck.value = "failed"
+                Log.i("startclanlog", e.toString())
+            }
+        }
     }
 
     fun getUserDetailsHere(phone: String) {
