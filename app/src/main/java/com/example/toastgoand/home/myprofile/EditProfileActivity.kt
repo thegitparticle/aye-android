@@ -1,9 +1,14 @@
 package com.example.toastgoand.home.myprofile
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -13,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import androidx.viewbinding.ViewBinding
 import coil.compose.rememberImagePainter
 import com.example.toastgoand.BaseActivity
@@ -28,6 +34,9 @@ class EditProfileActivity : BaseActivity() {
 
     private lateinit var binding: ActivityEditProfileBinding
 
+    private val pickImage = 100
+    private var imageUri: Uri? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = viewBinding as ActivityEditProfileBinding
@@ -38,9 +47,7 @@ class EditProfileActivity : BaseActivity() {
 
         setContent {
 
-            val olddp = intent.getStringExtra("olddp")
-
-
+            imageUri = intent.getStringExtra("olddp")?.toUri()
 
             AyeTheme {
                 ProvideWindowInsets() {
@@ -56,7 +63,8 @@ class EditProfileActivity : BaseActivity() {
                         Column(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .background(MaterialTheme.colors.background),
+                                .fillMaxHeight()
+                                .background(AyeTheme.colors.uiBackground),
                             verticalArrangement = Arrangement.SpaceBetween,
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
@@ -70,17 +78,17 @@ class EditProfileActivity : BaseActivity() {
                             ) {
                                 SqaureRoundedIcon(
                                     FeatherIcons.Edit,
-                                    color = MaterialTheme.colors.secondary,
+                                    color = AyeTheme.colors.success,
                                     modifier = Modifier.padding(horizontal = 5.dp)
                                 )
                                 Text(
                                     text = "Edit Profile",
                                     style = MaterialTheme.typography.subtitle1,
-                                    color = MaterialTheme.colors.secondary,
+                                    color = AyeTheme.colors.success,
                                     modifier = Modifier.padding(horizontal = 20.dp)
                                 )
                             }
-                            val painter = rememberImagePainter(data = olddp)
+                            val painter = rememberImagePainter(data = imageUri)
                             Image(
                                 painter = painter,
                                 contentDescription = "Forest Image",
@@ -89,6 +97,10 @@ class EditProfileActivity : BaseActivity() {
                                     .padding(8.dp)
                                     .size(100.dp)
                                     .clip(RoundedCornerShape(corner = CornerSize(50.dp)))
+                                    .clickable {
+                                        val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+                                        startActivityForResult(gallery, pickImage)
+                                    }
 
                             )
                             Row(
@@ -104,7 +116,7 @@ class EditProfileActivity : BaseActivity() {
 //                                            ).apply { })
                                     },
                                     colors = ButtonDefaults.textButtonColors(
-                                        backgroundColor = MaterialTheme.colors.secondary,
+                                        backgroundColor = AyeTheme.colors.success,
                                     ),
                                     shape = RoundedCornerShape(30.dp),
                                     modifier = Modifier
@@ -115,7 +127,7 @@ class EditProfileActivity : BaseActivity() {
                                     Text(
                                         "save changes",
                                         style = MaterialTheme.typography.body1,
-                                        color = MaterialTheme.colors.onSecondary
+                                        color = AyeTheme.colors.uiBackground
                                     )
                                 }
                             }
@@ -125,6 +137,14 @@ class EditProfileActivity : BaseActivity() {
                     }
                 }
             }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK && requestCode == pickImage) {
+            imageUri = data?.data
+            Log.i("editprofilelogs", imageUri.toString())
         }
     }
 

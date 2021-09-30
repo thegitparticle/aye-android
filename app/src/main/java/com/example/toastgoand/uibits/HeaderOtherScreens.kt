@@ -51,7 +51,7 @@ fun HeaderOtherScreens (
                 }
             },
             backgroundColor = AyeTheme.colors.uiBackground.copy(alpha = 1f),
-//            elevation = 4.dp
+            elevation = 0.dp
         )
     }
 }

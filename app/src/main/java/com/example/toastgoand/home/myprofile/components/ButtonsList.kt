@@ -113,7 +113,6 @@ fun OneButtonHereWithInfo(
         shape = RoundedCornerShape(10.dp)
     ) {
         Row(
-            modifier = Modifier.padding(horizontal = 15.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
