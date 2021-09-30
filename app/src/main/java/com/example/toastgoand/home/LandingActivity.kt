@@ -87,19 +87,6 @@ class LandingActivity : BaseActivity() {
 
         binding = viewBinding as ActivityLandingBinding
 
-//        // start stream button login
-//        binding.floatingActionButton.setOnClickListener{
-//            Toast.makeText(this, "start stream", Toast.LENGTH_SHORT).show()
-//            showDefaultDialog()
-//            binding.navView.visibility = View.GONE
-//        }
-
-//        binding.logout.setOnClickListener {
-//            prefHelper = PrefHelper(this)
-//            prefHelper.put(Constant.PREF_IS_LOGIN, false)
-//            startActivity(Intent(this, LoginActivity::class.java))
-//        }
-
         binding.circleImage.setOnClickListener {
             val intent = Intent(this, MyProfileActivity::class.java).apply {}
             startActivity(intent)

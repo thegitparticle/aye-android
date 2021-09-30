@@ -67,7 +67,7 @@ class DirectsFragment : Fragment() {
                     Surface(modifier = Modifier.background(AyeTheme.colors.uiBackground)) {
                         SwipeRefresh(
                             state = rememberSwipeRefreshState(isRefreshing),
-                            onRefresh = {viewModel.refresh()}
+                            onRefresh = { viewModel.refresh() }
                         ) {
                             LazyColumn(
                                 modifier = Modifier.background(AyeTheme.colors.uiBackground)
@@ -90,7 +90,8 @@ class DirectsFragment : Fragment() {
                                 items(
                                     items = nudgeToHere,
                                     itemContent = {
-                                        viewModel.deets.value?.user?.id?.toString()?.let { it1 -> NudgeToItem(it, currentuserid = it1) }
+                                        viewModel.deets.value?.user?.id?.toString()
+                                            ?.let { it1 -> NudgeToItem(it, currentuserid = it1) }
                                     })
                                 item {
                                     Spacer(Modifier.height(200.dp))

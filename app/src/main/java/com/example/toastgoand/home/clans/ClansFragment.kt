@@ -102,14 +102,17 @@ class ClansFragment : Fragment() {
                     Surface(
                         modifier = Modifier
                             .background(AyeTheme.colors.uiBackground)
-                            .fillMaxSize()
+                            .fillMaxWidth()
+                            .fillMaxHeight()
                     ) {
                         SwipeRefresh(
                             state = rememberSwipeRefreshState(isRefreshing),
                             onRefresh = { viewModel.refresh() }
                         ) {
                             LazyColumn(
-                                modifier = Modifier.background(AyeTheme.colors.uiBackground)
+                                modifier = Modifier
+                                    .background(AyeTheme.colors.uiBackground)
+                                    .fillMaxHeight()
                             ) {
                                 items(
                                     items = liveClansHere,
@@ -131,7 +134,7 @@ class ClansFragment : Fragment() {
                                 item(
                                     key = "footer",
                                     content = {
-                                       StartClanButton()
+                                        StartClanButton()
                                     }
                                 )
                                 item {
