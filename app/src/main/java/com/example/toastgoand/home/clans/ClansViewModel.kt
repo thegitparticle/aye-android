@@ -66,7 +66,8 @@ class ClansViewModel(private val repo: MyClansRepo, private val repoDeets: UserD
                 val myClansResult = MyClansApi.retrofitService.getMyClans(userid.toString())
                 var x_here: List<MyClansDataClass> = myClansResult
                 insert(x_here)
-                Log.i("SettingUpViewModel", x_here.toString())
+                Log.i("speed clans api call", x_here.size.toString())
+                Log.i("speed clans api call", x_here.toString())
             } catch (e: Exception) {
                 Log.i("SettingUpViewModel", "API call for user details, Failed! ${e.message}")
             }

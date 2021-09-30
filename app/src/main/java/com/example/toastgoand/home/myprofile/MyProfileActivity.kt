@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
@@ -82,7 +83,8 @@ class MyProfileActivity : BaseActivity() {
                         Column(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .background(MaterialTheme.colors.background),
+                                .fillMaxHeight()
+                                .background(AyeTheme.colors.uiBackground),
                             verticalArrangement = Arrangement.SpaceBetween
                         ) {
                             Details(userDeets = deetsHere)

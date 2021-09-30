@@ -94,8 +94,12 @@ class ClansFragment : Fragment() {
                     val clansHere: List<MyClansDataClass> by
                     viewModel.myClans.observeAsState(listOf<MyClansDataClass>())
 
+                    Log.i("speed clans", clansHere.size.toString())
+
                     val liveClansHere: MutableList<MyClansDataClass> by
                     viewModel.liveClans.observeAsState(mutableListOf<MyClansDataClass>())
+
+                    Log.i("speed live clans", liveClansHere.size.toString())
 
                     val contextHere = LocalContext.current
 

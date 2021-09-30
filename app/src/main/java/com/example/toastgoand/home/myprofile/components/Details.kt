@@ -1,6 +1,7 @@
 package com.example.toastgoand.home.myprofile.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -21,7 +22,7 @@ import com.example.toastgoand.network.userdetails.UserDetailsDataClass
 fun Details(userDeets: UserDetailsDataClass) {
     AyeTheme() {
         Column(
-            modifier = Modifier.fillMaxHeight(0.5f).fillMaxWidth(),
+            modifier = Modifier.fillMaxHeight(0.5f).fillMaxWidth().background(color = AyeTheme.colors.uiBackground),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
