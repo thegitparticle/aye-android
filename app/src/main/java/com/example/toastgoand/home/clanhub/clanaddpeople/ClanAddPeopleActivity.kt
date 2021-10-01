@@ -1,28 +1,27 @@
 package com.example.toastgoand.home.clanhub.clanaddpeople
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.material.*
+import androidx.compose.material.R
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
@@ -32,11 +31,16 @@ import com.example.toastgoand.ToastgoApplication
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityClanAddPeopleBinding
 import com.example.toastgoand.home.clanhub.components.MyFriendItem
+import com.example.toastgoand.home.clanhub.network.AddFriendToClanApi
+import com.example.toastgoand.home.startclan.StartClanInviteContactsActivity
 import com.example.toastgoand.network.myfriends.MyFriendsDataClass
 import com.example.toastgoand.network.userdetails.User
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
 import com.example.toastgoand.uibits.HeaderOtherScreens
 import com.google.accompanist.insets.ProvideWindowInsets
+import compose.icons.FeatherIcons
+import compose.icons.feathericons.ArrowRight
+import kotlinx.coroutines.launch
 
 class ClanAddPeopleActivity : BaseActivity() {
 
@@ -58,6 +62,19 @@ class ClanAddPeopleActivity : BaseActivity() {
         fun onBackPressedHere() {
             onBackPressed()
         }
+
+        val addedFriends = mutableListOf<MyFriendsDataClass>()
+
+        fun addSelectedToList(item: MyFriendsDataClass) {
+            addedFriends.add(item)
+        }
+
+        fun removeSelectedToList(item: MyFriendsDataClass) {
+            addedFriends.remove(item)
+        }
+
+        val clubname = intent.getStringExtra("clubname")
+        val clubid = intent.getIntExtra("clubid", 0)
 
 
         setContent {
@@ -84,6 +101,7 @@ class ClanAddPeopleActivity : BaseActivity() {
                 )
 
                 val context = LocalContext.current
+                val composableScope = rememberCoroutineScope()
 
                 val textState = remember { mutableStateOf(TextFieldValue()) }
 
@@ -96,21 +114,53 @@ class ClanAddPeopleActivity : BaseActivity() {
                                 title = "",
                                 onBackIconPressed = { onBackPressedHere() }
                             )
+                        },
+                        floatingActionButtonPosition = FabPosition.Center,
+                        floatingActionButton = {
+                            FloatingActionButton(
+                                onClick = {
+                                    for (item in addedFriends) {
+                                        composableScope.launch {
+                                            try {
+                                                AddFriendToClanApi.retrofitService.addFriendToClan(
+                                                    adduserid = item.friend_user_id.toString(),
+                                                    clubid = clubid.toString()
+                                                )
+                                            } catch (e: Exception) {
+                                                Log.i("addpersontoclub", e.toString())
+                                            }
+                                        }
+                                    }
+                                    onBackPressedHere()
+                                },
+                                modifier = Modifier
+                                    .padding(horizontal = 25.dp)
+                                    .size(60.dp),
+                                backgroundColor = Color.Cyan,
+                            ) {
+                                Text(
+                                    text = "add them",
+                                    style = MaterialTheme.typography.body2,
+                                    color = AyeTheme.colors.uiBackground
+                                )
+                            }
                         }
                     ) { contentPadding ->
                         Column(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .background(MaterialTheme.colors.background),
-                            verticalArrangement = Arrangement.SpaceBetween, horizontalAlignment = Alignment.CenterHorizontally
+                                .background(AyeTheme.colors.uiBackground),
+                            verticalArrangement = Arrangement.SpaceBetween,
+                            horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             TextField(
                                 modifier = Modifier
-                                    .background(MaterialTheme.colors.surface)
+                                    .background(AyeTheme.colors.uiSurface)
                                     .clip(
                                         RoundedCornerShape(corner = CornerSize(10.dp))
                                     )
-                                    .padding(vertical = 10.dp).fillMaxWidth(0.9f),
+                                    .padding(vertical = 10.dp)
+                                    .fillMaxWidth(0.9f),
                                 value = textState.value,
                                 onValueChange = { textState.value = it },
                                 textStyle = MaterialTheme.typography.body2,
@@ -123,12 +173,16 @@ class ClanAddPeopleActivity : BaseActivity() {
                                 },
                             )
                             Text("The textfield has this text: " + textState.value.text)
-                            LazyColumn(modifier = Modifier.background(MaterialTheme.colors.background)) {
+                            LazyColumn(
+                                modifier = Modifier
+                                    .background(AyeTheme.colors.uiBackground)
+                                    .fillMaxWidth()
+                            ) {
 
                                 items(
                                     items = friendsListHere,
                                     itemContent = {
-                                        MyFriendItem(it)
+                                        MyFriendItem(it, ::addSelectedToList, ::removeSelectedToList)
                                     })
                             }
                         }

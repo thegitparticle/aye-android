@@ -151,6 +151,8 @@ class ClanHubActivity : BaseActivity() {
                                                 context,
                                                 ClanAddPeopleActivity::class.java
                                             ).apply {
+                                                putExtra("clubid", clubid)
+                                                putExtra ("clubname", clubName)
                                             }
                                             startActivity(intent)
                                             overridePendingTransition(

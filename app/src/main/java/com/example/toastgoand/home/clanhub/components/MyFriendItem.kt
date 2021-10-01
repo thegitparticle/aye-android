@@ -12,6 +12,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -21,27 +22,33 @@ import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.network.myfriends.MyFriendsDataClass
 
 @Composable
-fun MyFriendItem (friendItem: MyFriendsDataClass) {
+fun MyFriendItem(friendItem: MyFriendsDataClass,
+                 addFunction: (selectedItem: MyFriendsDataClass) -> Unit,
+                 removeFunction: (removedItem: MyFriendsDataClass) -> Unit
+                 ) {
     val selected = remember { mutableStateOf(false) }
 
     AyeTheme() {
-        Row (modifier = Modifier.padding(horizontal = 20.dp)) {
+        Row(
+            modifier = Modifier.padding(horizontal = 20.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             Checkbox(
                 checked = selected.value,
                 onCheckedChange = { selected.value = it }
             )
             UserDPHere(dp = friendItem.profile_pic)
-                Text(
-                    text = friendItem.name,
-                    style = MaterialTheme.typography.subtitle2,
-                    color = MaterialTheme.colors.onBackground
-                )
+            Text(
+                text = friendItem.name,
+                style = MaterialTheme.typography.subtitle2,
+                color = MaterialTheme.colors.onBackground
+            )
         }
     }
 }
 
 @Composable
-private fun UserDPHere (dp: String) {
+private fun UserDPHere(dp: String) {
     val painter = rememberImagePainter(data = dp)
     Image(
         painter = painter,
