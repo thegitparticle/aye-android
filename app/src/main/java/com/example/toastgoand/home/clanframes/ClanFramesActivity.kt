@@ -207,9 +207,11 @@ class ClanFramesActivity : BaseActivity() {
                                     "next month",
                                     tint = AyeTheme.colors.iconVector,
                                     modifier = Modifier.size(17.dp).clickable {
-                                        viewMonth += 1
-                                        monthText = getMonthName(viewMonth)
-                                        Log.i("viewmonth", viewMonth.toString())
+                                        if (!(viewMonth == currentMonth)) {
+                                            viewMonth += 1
+                                            monthText = getMonthName(viewMonth)
+                                            Log.i("viewmonth", viewMonth.toString())
+                                        }
                                     },
                                 )
                             }
