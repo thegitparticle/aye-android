@@ -67,7 +67,11 @@ fun DirectItem(directItem: MyDirectsDataClass) {
                         Icon(
                             Icons.Rounded.Layers,
                             "Back",
-                            tint = AyeTheme.colors.textSecondary.copy(0.25f),
+                            tint = if (directItem.ongoing_frame) {
+                                AyeTheme.colors.appLead
+                            } else {
+                                AyeTheme.colors.textSecondary.copy(0.25f)
+                            },
                             modifier = Modifier.size(11.dp)
                         )
                         Text(

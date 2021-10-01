@@ -15,6 +15,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -156,35 +157,39 @@ class DirectFramesActivity : BaseActivity() {
                         Column(
                             modifier = Modifier
                                 .background(AyeTheme.colors.uiBackground)
-                                .fillMaxSize()
+                                .fillMaxSize(),
+                            horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             Spacer(modifier = Modifier.size(100.dp))
                             Spacer(modifier = Modifier.size(25.dp))
                             Row(
                                 horizontalArrangement = Arrangement.SpaceBetween,
-                                modifier = Modifier.fillMaxWidth()
+                                modifier = Modifier.fillMaxWidth(0.9f)
                             ) {
                                 Icon(
-                                    imageVector = FeatherIcons.ChevronLeft,
-                                    contentDescription = "last month",
-                                    modifier = Modifier.clickable {
+                                    FeatherIcons.ChevronLeft,
+                                    "last month",
+                                    tint = AyeTheme.colors.iconVector,
+                                    modifier = Modifier.size(17.dp).clickable {
                                         viewMonth -= 1
                                         monthText = getMonthName(viewMonth)
                                         Log.i("viewmonth", viewMonth.toString())
-                                    }
+                                    },
                                 )
                                 Text(
                                     text = monthText,
-                                    style = MaterialTheme.typography.subtitle1
+                                    style = MaterialTheme.typography.subtitle1,
+                                    color = AyeTheme.colors.textSecondary
                                 )
                                 Icon(
-                                    imageVector = FeatherIcons.ChevronRight,
-                                    contentDescription = "next month",
-                                    modifier = Modifier.clickable {
+                                    FeatherIcons.ChevronRight,
+                                    "next month",
+                                    tint = AyeTheme.colors.iconVector,
+                                    modifier = Modifier.size(17.dp).clickable {
                                         viewMonth += 1
                                         monthText = getMonthName(viewMonth)
                                         Log.i("viewmonth", viewMonth.toString())
-                                    }
+                                    },
                                 )
                             }
                             Spacer(modifier = Modifier.size(25.dp))

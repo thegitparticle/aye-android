@@ -42,7 +42,7 @@ fun ADayDirect(
                 modifier = Modifier.padding(vertical = 20.dp),
                 text = date.toString(),
                 style = MaterialTheme.typography.subtitle1,
-                color = MaterialTheme.colors.background.copy(0.5f)
+                color = AyeTheme.colors.uiBackground.copy(0.5f)
             )
         }
     }

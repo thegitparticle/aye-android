@@ -27,7 +27,15 @@ fun AStripDirect(start: Int, end: Int, framesList: List<DirectFrameDataClass>,  
                     .width(
                         32.dp
                     )
-                    .background(Color.Blue.copy(0.5f))
+                    .background(
+                        if (start < 3) {
+                            AyeTheme.colors.brandVariant.copy(0.5f)
+                        } else if (start == 11) {
+                            AyeTheme.colors.appLeadVariant.copy(0.5f)
+                        } else {
+                            AyeTheme.colors.success.copy(0.5f)
+                        }
+                    )
                     .padding(horizontal = 50.dp)
                     .height(400.dp)
             )
