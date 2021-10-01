@@ -1,6 +1,8 @@
 package com.example.toastgoand.home.otherprofile.components
 
+import android.content.Intent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -12,10 +14,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.home.otherprofile.OtherProfileDataClass
+import com.example.toastgoand.uibits.ViewMediaActivity
 
 @Composable
 fun DetailsOtherProfile (userDeets: OtherProfileDataClass) {
@@ -45,13 +49,24 @@ fun DetailsOtherProfile (userDeets: OtherProfileDataClass) {
 @Composable
 private fun DPImage(deets: OtherProfileDataClass) {
     val painter = rememberImagePainter(data = deets.image)
+    val context = LocalContext.current
+
     Image(
         painter = painter,
         contentDescription = "Forest Image",
         contentScale = ContentScale.Crop,
         modifier = Modifier
             .padding(8.dp)
-            .size(55.dp)
-            .clip(RoundedCornerShape(corner = CornerSize(27.5.dp)))
+            .size(90.dp)
+            .clip(RoundedCornerShape(corner = CornerSize(45.dp)))
+            .clickable {
+                context.startActivity(
+                    Intent(
+                        context,
+                        ViewMediaActivity::class.java
+                    ).apply {
+                        putExtra("imagelink", deets.image)
+                    })
+            }
     )
 }
