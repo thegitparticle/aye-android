@@ -5,7 +5,9 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -13,22 +15,28 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toFile
 import androidx.core.net.toUri
 import androidx.viewbinding.ViewBinding
 import coil.compose.rememberImagePainter
 import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityEditProfileBinding
+import com.example.toastgoand.home.myprofile.network.EditProfileApi
+import com.example.toastgoand.home.myprofile.network.EditProfileDataClass
 import com.example.toastgoand.uibits.HeaderOtherScreens
 import com.example.toastgoand.uibits.SqaureRoundedIcon
 import com.google.accompanist.insets.ProvideWindowInsets
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.Edit
+import kotlinx.coroutines.launch
 
 class EditProfileActivity : BaseActivity() {
 
@@ -36,6 +44,7 @@ class EditProfileActivity : BaseActivity() {
 
     private val pickImage = 100
     private var imageUri: Uri? = null
+    private var profileupdateid: String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,92 +57,153 @@ class EditProfileActivity : BaseActivity() {
         setContent {
 
             imageUri = intent.getStringExtra("olddp")?.toUri()
+            profileupdateid = intent.getStringExtra("profileupdateid")
+
+            var showGallerySelect by remember { mutableStateOf(false) }
 
             AyeTheme {
-                ProvideWindowInsets() {
-                    Scaffold(
-                        topBar = {
-                            HeaderOtherScreens(
-                                modifier = Modifier.fillMaxWidth(),
-                                title = "",
-                                onBackIconPressed = { onBackPressedHere() }
-                            )
+                val context = LocalContext.current
+                val composableScope = rememberCoroutineScope()
+
+                @Composable
+                fun pickImageFromPhone() {
+                    val launcher = rememberLauncherForActivityResult(
+                        contract = ActivityResultContracts.GetContent(),
+                        onResult = { uri: Uri? ->
+                            imageUri = uri
+                            showGallerySelect = false
+
                         }
-                    ) { contentPadding ->
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .fillMaxHeight()
-                                .background(AyeTheme.colors.uiBackground),
-                            verticalArrangement = Arrangement.SpaceBetween,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth(0.9f)
-                                    .height(100.dp)
-                                    .padding(top = 10.dp, bottom = 30.dp),
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.Center
-                            ) {
-                                SqaureRoundedIcon(
-                                    FeatherIcons.Edit,
-                                    color = AyeTheme.colors.success,
-                                    modifier = Modifier.padding(horizontal = 5.dp)
-                                )
-                                Text(
-                                    text = "Edit Profile",
-                                    style = MaterialTheme.typography.subtitle1,
-                                    color = AyeTheme.colors.success,
-                                    modifier = Modifier.padding(horizontal = 20.dp)
+                    )
+
+                    @Composable
+                    fun LaunchGallery() {
+                        SideEffect {
+                            launcher.launch("image/*")
+                        }
+                    }
+                    LaunchGallery()
+                }
+
+                ProvideWindowInsets() {
+                    if (showGallerySelect) {
+                        pickImageFromPhone()
+                    } else {
+                        Scaffold(
+                            topBar = {
+                                HeaderOtherScreens(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    title = "",
+                                    onBackIconPressed = { onBackPressedHere() }
                                 )
                             }
-                            val painter = rememberImagePainter(data = imageUri)
-                            Image(
-                                painter = painter,
-                                contentDescription = "Forest Image",
-                                contentScale = ContentScale.Crop,
+                        ) { contentPadding ->
+                            Column(
                                 modifier = Modifier
-                                    .padding(8.dp)
-                                    .size(100.dp)
-                                    .clip(RoundedCornerShape(corner = CornerSize(50.dp)))
-                                    .clickable {
-                                        val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
-                                        startActivityForResult(gallery, pickImage)
-                                    }
-
-                            )
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.Center
+                                    .fillMaxWidth()
+                                    .fillMaxHeight()
+                                    .background(AyeTheme.colors.uiBackground),
+                                verticalArrangement = Arrangement.SpaceBetween,
+                                horizontalAlignment = Alignment.CenterHorizontally
                             ) {
-                                Button(
-                                    onClick = {
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth(0.9f)
+                                        .height(100.dp)
+                                        .padding(top = 10.dp, bottom = 30.dp),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.Center
+                                ) {
+                                    SqaureRoundedIcon(
+                                        FeatherIcons.Edit,
+                                        color = AyeTheme.colors.success,
+                                        modifier = Modifier.padding(horizontal = 5.dp)
+                                    )
+                                    Text(
+                                        text = "Edit Profile",
+                                        style = MaterialTheme.typography.subtitle1,
+                                        color = AyeTheme.colors.success,
+                                        modifier = Modifier.padding(horizontal = 20.dp)
+                                    )
+                                }
+                                val painter = rememberImagePainter(data = imageUri)
+                                Image(
+                                    painter = painter,
+                                    contentDescription = "Forest Image",
+                                    contentScale = ContentScale.Crop,
+                                    modifier = Modifier
+                                        .padding(8.dp)
+                                        .size(100.dp)
+                                        .clip(RoundedCornerShape(corner = CornerSize(50.dp)))
+                                        .clickable {
+                                            showGallerySelect = true
+                                        }
+
+                                )
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.Center
+                                ) {
+                                    Button(
+                                        onClick = {
+                                            composableScope.launch {
+                                                try {
+                                                    val bio_here = ""
+                                                    val image_here = "file:///$imageUri"
+                                                    val payload = image_here.toUri().toFile()?.let {
+                                                        EditProfileDataClass(
+                                                            bio = bio_here,
+                                                            image = it
+                                                        )
+                                                    }
+
+                                                    profileupdateid?.let {
+                                                        if (payload != null) {
+                                                            try {
+                                                                EditProfileApi.retrofitService.setNewProfile(
+                                                                    profileupdateid = it,
+                                                                    data = payload
+                                                                )
+                                                                Log.i(
+                                                                    "editprofilelogs",
+                                                                    "kinda worked"
+                                                                )
+                                                            } catch (ex: Exception) {
+                                                                Log.i("editprofilelogs", ex.toString())
+                                                            }
+                                                        }
+                                                    }
+                                                } catch (e: Exception) {
+                                                    Log.i("editprofilelogs", e.toString())
+                                                }
+                                            }
+
 //                                        context.startActivity(
 //                                            Intent(
 //                                                context,
 //                                                StartClanActivity::class.java
 //                                            ).apply { })
-                                    },
-                                    colors = ButtonDefaults.textButtonColors(
-                                        backgroundColor = AyeTheme.colors.success,
-                                    ),
-                                    shape = RoundedCornerShape(30.dp),
-                                    modifier = Modifier
-                                        .padding(vertical = 30.dp)
-                                        .height(60.dp)
-                                        .width(160.dp),
-                                ) {
-                                    Text(
-                                        "save changes",
-                                        style = MaterialTheme.typography.body1,
-                                        color = AyeTheme.colors.uiBackground
-                                    )
+                                        },
+                                        colors = ButtonDefaults.textButtonColors(
+                                            backgroundColor = AyeTheme.colors.success,
+                                        ),
+                                        shape = RoundedCornerShape(30.dp),
+                                        modifier = Modifier
+                                            .padding(vertical = 30.dp)
+                                            .height(60.dp)
+                                            .width(160.dp),
+                                    ) {
+                                        Text(
+                                            "save changes",
+                                            style = MaterialTheme.typography.body1,
+                                            color = AyeTheme.colors.uiBackground
+                                        )
+                                    }
                                 }
+
                             }
 
                         }
-
                     }
                 }
             }

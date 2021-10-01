@@ -109,6 +109,7 @@ class MyProfileActivity : BaseActivity() {
                                         ).apply {
                                             putExtra("olddp", deetsHere.image)
                                             putExtra("userid", deetsHere.user.id)
+                                            putExtra("profileupdateid", deetsHere.id.toString())
                                         })
 
                                 }
