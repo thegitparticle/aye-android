@@ -85,7 +85,7 @@ class LandingActivity : BaseActivity() {
 
     private val viewModel: LandingViewModel by viewModels {
         LandingViewModelFactory(
-            (this.getApplication() as ToastgoApplication).repository,
+            (this.application as ToastgoApplication).repository,
         )
     }
 
@@ -127,7 +127,8 @@ class LandingActivity : BaseActivity() {
                 val painterAye = rememberImagePainter(data = R.drawable.aye_logo)
                 val painterDp = rememberImagePainter(data = viewModel.deets.value?.image)
 
-                Log.i("landingactlogging", painterDp.toString())
+//                Log.i("landingactlogging", painterDp.toString())
+//                viewModel.deets.value?.image?.let { Log.i("landingactlogging", it) }
 
                 val context = LocalContext.current
 
@@ -176,7 +177,7 @@ class LandingActivity : BaseActivity() {
                                 val intent = Intent(context, MyProfileActivity::class.java).apply {}
                                 startActivity(intent)
                             }
-                            .background(MaterialTheme.colors.onSurface.copy(0.25f))
+                            .background(AyeTheme.colors.appLeadVariant.copy(0.1f))
                     )
                 }
             }
