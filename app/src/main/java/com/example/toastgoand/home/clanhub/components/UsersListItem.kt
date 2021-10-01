@@ -1,6 +1,7 @@
 package com.example.toastgoand.home.clanhub.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
@@ -28,7 +29,7 @@ fun UsersListItem(user: ClanMember, removeUser: () -> Unit = { }) {
         val openOptionsDialog = remember { mutableStateOf(false) }
 
         Row(
-            modifier = Modifier.clickable { openOptionsDialog.value = true }.fillMaxWidth(0.9f),
+            modifier = Modifier.clickable { openOptionsDialog.value = true }.fillMaxWidth(),
             horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -57,30 +58,33 @@ fun UsersListItem(user: ClanMember, removeUser: () -> Unit = { }) {
                     openOptionsDialog.value = false
                 },
                 title = {
-                    Text(text = "member options", style = MaterialTheme.typography.body2,
-                        color = MaterialTheme.colors.onBackground)
+                    Text(text = "", style = MaterialTheme.typography.body2,
+                        color = AyeTheme.colors.textPrimary)
                 },
                 buttons = {
                     Column(
                         modifier = Modifier
                             .fillMaxHeight(0.8f)
                             .fillMaxWidth(),
-                        horizontalAlignment = Alignment.CenterHorizontally
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
                     ) {
                         TextButton(
                             onClick = removeUser
                         ) {
                             Text(
-                                text = "remove",
+                                text = "remove from clan",
                                 style = MaterialTheme.typography.subtitle1,
-                                color = MaterialTheme.colors.error
+                                color = AyeTheme.colors.error
                             )
                         }
                     }
                 },
                 modifier = Modifier
                     .fillMaxWidth(0.9f)
-                    .fillMaxHeight(0.5f)
+                    .fillMaxHeight(0.3f)
+                    .background(color = AyeTheme.colors.uiBackground),
+                backgroundColor = AyeTheme.colors.uiBackground
             )
         }
     }

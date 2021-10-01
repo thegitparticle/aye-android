@@ -17,6 +17,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -104,127 +105,145 @@ class ClanHubActivity : BaseActivity() {
                             )
                         }
                     ) { contentPadding ->
-                        Column(
+                        LazyColumn(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .fillMaxSize()
-                                .background(AyeTheme.colors.uiBackground),
+                                .background(AyeTheme.colors.uiSurface),
                             verticalArrangement = Arrangement.Top,
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            Spacer(modifier = Modifier.size(30.dp))
-                            ClanMetrics(clanDeets)
-                            val members = clanDeets.users
-                            LazyColumn(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(vertical = 30.dp, horizontal = 20.dp),
-                                horizontalAlignment = Alignment.Start
-                            ) {
-                                items(
-                                    items = members,
-                                    itemContent = {
-                                        UsersListItem(user = it)
-                                    })
+                            item {
+                                Spacer(modifier = Modifier.size(30.dp))
                             }
-                            Row(
-                                modifier = Modifier.fillMaxWidth(0.9f),
-                                horizontalArrangement = Arrangement.SpaceEvenly
-                            ) {
-                                Button(
-                                    onClick = {
-                                        val intent = Intent(
-                                            context,
-                                            ClanAddPeopleActivity::class.java
-                                        ).apply {
-                                        }
-                                        startActivity(intent)
-                                        overridePendingTransition(
-                                            R.anim.slide_up_enter,
-                                            R.anim.slide_down_exit
-                                        )
-                                    },
-                                    colors = ButtonDefaults.textButtonColors(
-                                        backgroundColor = AyeTheme.colors.appLead,
-                                    ),
-                                    shape = RoundedCornerShape(25.dp),
+                            item {
+                                ClanMetrics(clanDeets)
+                            }
+                            item {
+                                Spacer(modifier = Modifier.size(30.dp))
+                            }
+                            val members = clanDeets.users
+                            item {
+                                Card(
                                     modifier = Modifier
-                                        .padding(vertical = 25.dp)
-                                        .height(50.dp)
-                                        .width(160.dp),
+                                        .fillMaxWidth(0.9f)
+                                        .clip(RoundedCornerShape(10.dp)),
+                                    backgroundColor = AyeTheme.colors.uiBackground,
+                                    elevation = 10.dp
                                 ) {
-                                    Text(
-                                        "add friends",
-                                        color = AyeTheme.colors.uiBackground,
-                                        style = MaterialTheme.typography.caption,
-                                    )
+                                    Column(
+                                        modifier = Modifier.padding(15.dp)
+                                    ) {
+                                        for (item in members) {
+                                            UsersListItem(user = item)
+                                        }
+                                    }
                                 }
+                            }
+                            item {
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(0.9f),
+                                    horizontalArrangement = Arrangement.SpaceEvenly
+                                ) {
+                                    Button(
+                                        onClick = {
+                                            val intent = Intent(
+                                                context,
+                                                ClanAddPeopleActivity::class.java
+                                            ).apply {
+                                            }
+                                            startActivity(intent)
+                                            overridePendingTransition(
+                                                R.anim.slide_up_enter,
+                                                R.anim.slide_down_exit
+                                            )
+                                        },
+                                        colors = ButtonDefaults.textButtonColors(
+                                            backgroundColor = AyeTheme.colors.appLead,
+                                        ),
+                                        shape = RoundedCornerShape(10.dp),
+                                        modifier = Modifier
+                                            .padding(vertical = 25.dp)
+                                            .height(40.dp)
+                                            .width(160.dp),
+                                    ) {
+                                        Text(
+                                            "add friends",
+                                            color = AyeTheme.colors.uiBackground,
+                                            style = MaterialTheme.typography.caption,
+                                        )
+                                    }
+                                    OutlinedButton(
+                                        onClick = {
+                                            val intent = Intent(
+                                                context,
+                                                InvitePeopleDirectlyActivity::class.java
+                                            ).apply {}
+                                            startActivity(intent)
+                                            overridePendingTransition(
+                                                R.anim.slide_up_enter,
+                                                R.anim.slide_down_exit
+                                            )
+                                        },
+                                        colors = ButtonDefaults.textButtonColors(
+                                        ),
+                                        shape = RoundedCornerShape(10.dp),
+                                        modifier = Modifier
+                                            .padding(vertical = 25.dp)
+                                            .height(40.dp)
+                                            .width(160.dp)
+                                            .border(
+                                                1.dp,
+                                                AyeTheme.colors.appLead,
+                                                shape = RoundedCornerShape(10.dp)
+                                            ),
+                                    ) {
+                                        Text(
+                                            "invite friends",
+                                            color = AyeTheme.colors.appLead,
+                                            style = MaterialTheme.typography.caption,
+                                        )
+                                    }
+                                }
+                            }
+                            item {
+                                Spacer(modifier = Modifier.size(30.dp))
+                            }
+                            item {
                                 OutlinedButton(
                                     onClick = {
-                                        val intent = Intent(
-                                            context,
-                                            InvitePeopleDirectlyActivity::class.java
-                                        ).apply {}
-                                        startActivity(intent)
-                                        overridePendingTransition(
-                                            R.anim.slide_up_enter,
-                                            R.anim.slide_down_exit
-                                        )
+                                        composableScope.launch {
+                                            try {
+                                                viewModel.deets.value?.id?.toString()?.let {
+                                                    QuitClanApi.retrofitService.quitClan(
+                                                        it,
+                                                        clubid.toString()
+                                                    )
+                                                }
+                                            } catch (e: Exception) {
+                                                Log.i("startdirect", e.toString())
+                                            }
+                                        }
                                     },
                                     colors = ButtonDefaults.textButtonColors(
                                     ),
-                                    shape = RoundedCornerShape(25.dp),
+                                    shape = RoundedCornerShape(10.dp),
                                     modifier = Modifier
                                         .padding(vertical = 25.dp)
-                                        .height(50.dp)
+                                        .height(40.dp)
                                         .width(160.dp)
                                         .border(
                                             1.dp,
-                                            AyeTheme.colors.appLead,
-                                            shape = RoundedCornerShape(25.dp)
+                                            AyeTheme.colors.error,
+                                            shape = RoundedCornerShape(10.dp)
                                         ),
                                 ) {
                                     Text(
-                                        "invite friends",
-                                        color = AyeTheme.colors.appLead,
+                                        "quit clan",
+                                        color = AyeTheme.colors.error,
                                         style = MaterialTheme.typography.caption,
                                     )
                                 }
-                            }
-                            Spacer(modifier = Modifier.size(30.dp))
-                            OutlinedButton(
-                                onClick = {
-                                    composableScope.launch {
-                                        try {
-                                            viewModel.deets.value?.id?.toString()?.let {
-                                                QuitClanApi.retrofitService.quitClan(
-                                                    it,
-                                                    clubid.toString()
-                                                )
-                                            }
-                                        } catch (e: Exception) {
-                                            Log.i("startdirect", e.toString())
-                                        }
-                                    }
-                                },
-                                colors = ButtonDefaults.textButtonColors(
-                                ),
-                                shape = RoundedCornerShape(25.dp),
-                                modifier = Modifier
-                                    .padding(vertical = 25.dp)
-                                    .height(50.dp)
-                                    .width(160.dp)
-                                    .border(
-                                        1.dp,
-                                        AyeTheme.colors.error,
-                                        shape = RoundedCornerShape(25.dp)
-                                    ),
-                            ) {
-                                Text(
-                                    "quit clan",
-                                    color = AyeTheme.colors.error,
-                                    style = MaterialTheme.typography.caption,
-                                )
                             }
                         }
                     }

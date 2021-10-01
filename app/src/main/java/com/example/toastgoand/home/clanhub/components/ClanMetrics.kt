@@ -14,23 +14,22 @@ import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.home.clanhub.ClanDetailsDataClass
 
 @Composable
-fun ClanMetrics (clanHub: ClanDetailsDataClass) {
+fun ClanMetrics(clanHub: ClanDetailsDataClass) {
     AyeTheme() {
 
         Box(
             modifier = Modifier
                 .wrapContentWidth()
                 .clip(RoundedCornerShape(15.dp))
-                .background(MaterialTheme.colors.primary.copy(.08f))
+                .background(AyeTheme.colors.brandVariant.copy(.08f))
                 .width(100.dp)
-                .height(50.dp)
-                ,
+                .height(50.dp),
             contentAlignment = Alignment.Center
         ) {
             Text(
                 text = "${clanHub.frames_total}",
                 style = MaterialTheme.typography.h5,
-                color = MaterialTheme.colors.primary
+                color = AyeTheme.colors.brandVariant
             )
         }
 
