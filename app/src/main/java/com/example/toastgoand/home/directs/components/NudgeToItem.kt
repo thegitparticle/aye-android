@@ -36,18 +36,16 @@ fun NudgeToItem(nudgeItem: NudgeToDataClass, currentuserid: String) {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Row() {
+            Row(verticalAlignment = Alignment.CenterVertically) {
                 NudgeToImage(nudgeItem = nudgeItem)
-                Column(
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp)
-                ) {
+
                     Text(
                         text = nudgeItem.name,
                         style = MaterialTheme.typography.subtitle1,
-                        color = AyeTheme.colors.textPrimary
+                        color = AyeTheme.colors.textPrimary,
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp),
                     )
-                }
             }
             StartButton(nudgeItem = nudgeItem, currentuserid = currentuserid)
         }
@@ -82,7 +80,7 @@ private fun StartButton(nudgeItem: NudgeToDataClass, currentuserid: String) {
     ) {
         Text(
             text = "start",
-            style = MaterialTheme.typography.caption,
+            style = MaterialTheme.typography.subtitle2,
             color = AyeTheme.colors.success
         )
     }
