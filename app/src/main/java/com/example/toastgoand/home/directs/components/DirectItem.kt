@@ -13,6 +13,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.DynamicFeed
+import androidx.compose.material.icons.outlined.Layers
+import androidx.compose.material.icons.rounded.Layers
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -63,7 +65,7 @@ fun DirectItem(directItem: MyDirectsDataClass) {
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
-                            Icons.Outlined.DynamicFeed,
+                            Icons.Rounded.Layers,
                             "Back",
                             tint = AyeTheme.colors.textSecondary.copy(0.25f),
                             modifier = Modifier.size(11.dp)

@@ -15,6 +15,8 @@ import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.DynamicFeed
+import androidx.compose.material.icons.outlined.Layers
+import androidx.compose.material.icons.rounded.Layers
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -71,7 +73,7 @@ fun DormantClan(myclan: MyClansDataClass) {
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
-                            Icons.Outlined.DynamicFeed,
+                            Icons.Rounded.Layers,
                             "Back",
                             tint = AyeTheme.colors.textSecondary.copy(0.25f),
                             modifier = Modifier.size(11.dp)
