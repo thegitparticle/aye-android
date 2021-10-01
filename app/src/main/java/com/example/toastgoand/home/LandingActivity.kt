@@ -14,13 +14,20 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.PersonAdd
+import androidx.compose.material.icons.rounded.PersonAddAlt1
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
@@ -131,7 +138,7 @@ class LandingActivity : BaseActivity() {
                     horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
                     CircleIcon(
-                        iconName = FeatherIcons.UserPlus,
+                        iconName =  Icons.Rounded.PersonAddAlt1,
                         modifier = Modifier
                             .padding(horizontal = 20.dp),
                         onIconPressed =
@@ -143,6 +150,7 @@ class LandingActivity : BaseActivity() {
                                 ).apply {}
                             startActivity(intent)
                         })
+
                     Image(
                         painter = painterAye,
                         contentDescription = "aye logo",

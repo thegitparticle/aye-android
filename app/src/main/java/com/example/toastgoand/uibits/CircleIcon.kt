@@ -7,6 +7,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.PersonAdd
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -43,8 +45,9 @@ fun CircleIcon (onIconPressed: () -> Unit = { }, iconName: ImageVector, modifier
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
-                    imageVector = iconName,
-                    contentDescription = "last month",
+                    iconName,
+                    "invite contacts to aye",
+                    tint = AyeTheme.colors.iconVector,
                     modifier = Modifier.size(17.dp),
                 )
             }
@@ -74,9 +77,10 @@ fun CircleIconSmall (onIconPressed: () -> Unit = { }, iconName: ImageVector, mod
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
-                    imageVector = iconName,
-                    contentDescription = "last month",
-                    modifier = Modifier.size(17.dp)
+                    iconName,
+                    "invite contacts to aye",
+                    tint = AyeTheme.colors.iconVector,
+                    modifier = Modifier.size(17.dp),
                 )
             }
         }
