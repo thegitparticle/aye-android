@@ -8,8 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Divider
@@ -74,6 +73,9 @@ class DirectsFragment : Fragment() {
                             LazyColumn(
                                 modifier = Modifier.background(AyeTheme.colors.uiBackground)
                             ) {
+                                item {
+                                    Spacer(Modifier.height(20.dp))
+                                }
                                 items(
                                     items = directsHere,
                                     itemContent = {
@@ -81,12 +83,20 @@ class DirectsFragment : Fragment() {
                                     })
                                 item {
                                     Spacer(Modifier.height(20.dp))
-                                    Divider(
-                                        color = AyeTheme.colors.textSecondary,
-                                        modifier = Modifier.alpha(
-                                            0.1F
-                                        ), thickness = 1.dp
-                                    )
+                                    Row(
+                                        horizontalArrangement = Arrangement.Center,
+                                        modifier = Modifier.fillMaxWidth()
+                                    ) {
+                                        Divider(
+                                            color = AyeTheme.colors.textSecondary,
+                                            modifier = Modifier
+                                                .alpha(
+                                                    0.1F
+                                                )
+                                                .fillMaxWidth(0.8f),
+                                            thickness = 1.dp,
+                                        )
+                                    }
                                     Spacer(Modifier.height(20.dp))
                                 }
                                 items(

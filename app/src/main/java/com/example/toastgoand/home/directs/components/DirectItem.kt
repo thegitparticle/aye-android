@@ -11,6 +11,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.DynamicFeed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,7 +36,6 @@ fun DirectItem(directItem: MyDirectsDataClass) {
         val context = LocalContext.current
 
         Row(modifier = Modifier
-            .padding(vertical = 7.5.dp)
             .clickable {
                 context.startActivity(Intent(context, ClanTalkActivity::class.java).apply {
                     putExtra("clubName", directItem.display_guys.full_name)
@@ -62,8 +63,9 @@ fun DirectItem(directItem: MyDirectsDataClass) {
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
-                            imageVector = FeatherIcons.Layers,
-                            contentDescription = "frames identifier icon",
+                            Icons.Outlined.DynamicFeed,
+                            "Back",
+                            tint = AyeTheme.colors.textSecondary.copy(0.25f),
                             modifier = Modifier.size(11.dp)
                         )
                         Text(
