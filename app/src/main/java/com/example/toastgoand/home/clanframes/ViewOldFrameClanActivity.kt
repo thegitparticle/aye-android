@@ -7,10 +7,13 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
@@ -97,7 +100,6 @@ class ViewOldFrameClanActivity : BaseActivity() {
                     ) { contentPadding ->
                         LazyColumn(
                             contentPadding = PaddingValues(vertical = 8.dp),
-                            reverseLayout = true,
                             modifier = Modifier
                                 .fillMaxWidth().fillMaxHeight().background(AyeTheme.colors.uiBackground),
                             horizontalAlignment = Alignment.CenterHorizontally
@@ -119,6 +121,24 @@ class ViewOldFrameClanActivity : BaseActivity() {
                                             }
                                         }
                                     })
+                            }
+                            item {
+                                Spacer(modifier = Modifier.size(30.dp))
+                            }
+                            item {
+                                Row (modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+                                    Text(
+                                        text = "end of frame",
+                                        style = MaterialTheme.typography.caption,
+                                        color = AyeTheme.colors.textSecondary,
+                                        modifier = Modifier
+                                            .alpha(
+                                                0.25F
+                                            )
+                                            .padding(horizontal = 4.dp)
+                                    )
+                                }
+
                             }
                             item {
                                 Spacer(modifier = Modifier.size(100.dp))

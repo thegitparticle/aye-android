@@ -45,7 +45,7 @@ fun HeaderOtherScreens (
                     Text(
                         text = title,
                         style = MaterialTheme.typography.subtitle1,
-                        color = MaterialTheme.colors.onBackground
+                        color = AyeTheme.colors.textSecondary
                     )
                     CircleIcon(iconName = FeatherIcons.X, onIconPressed = onBackIconPressed, modifier = Modifier)
                 }
