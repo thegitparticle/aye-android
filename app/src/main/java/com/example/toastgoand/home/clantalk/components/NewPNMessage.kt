@@ -27,7 +27,7 @@ import com.pubnub.api.models.consumer.pubsub.PNMessageResult
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class UserMetaData(val image_url: String, val user_dp: String, val type: String)
+data class UserMetaData(val type: String, val image_url: String, val user_dp: String)
 
 @Serializable
 data class CEntryDataNew(val message: String, val file: CEntryFileNew)
@@ -39,8 +39,8 @@ data class CEntryFileNew(val id: String, val name: String)
 fun NewPNMessage (message: PNMessageResult, userid: String, channelid: String) {
     AyeTheme() {
 
-        val metaData = Gson().fromJson<UserMetaData>(message.userMetadata, MessageMetaData::class.java)
-        Log.i("livemessage", "new message called")
+        val metaData = Gson().fromJson<UserMetaData>(message.userMetadata, UserMetaData::class.java)
+        Log.i("livemessage metadata gson", metaData.toString())
 
         if (metaData.type == "h") {
             HMessage(message = message)
@@ -55,7 +55,7 @@ fun NewPNMessage (message: PNMessageResult, userid: String, channelid: String) {
 private fun CMessage(message: PNMessageResult, userid: String, channelid: String) {
     AyeTheme() {
 
-        val metaData = Gson().fromJson<UserMetaData>(message.userMetadata, MessageMetaData::class.java)
+        val metaData = Gson().fromJson<UserMetaData>(message.userMetadata, UserMetaData::class.java)
         val entryData = Gson().fromJson<CEntryDataNew>(message.message, CEntryDataNew::class.java)
 
         val pnConfiguration = PNConfiguration().apply {
@@ -115,7 +115,7 @@ private fun CMessage(message: PNMessageResult, userid: String, channelid: String
 private fun HMessage(message: PNMessageResult) {
     AyeTheme() {
 
-        val metaData = Gson().fromJson<UserMetaData>(message.userMetadata, MessageMetaData::class.java)
+        val metaData = Gson().fromJson<UserMetaData>(message.userMetadata, UserMetaData::class.java)
 
         Box (modifier = Modifier
             .fillMaxWidth(0.95f)

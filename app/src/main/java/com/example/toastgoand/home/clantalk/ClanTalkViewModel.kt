@@ -61,8 +61,9 @@ class ClanTalkViewModel(repoDeets: UserDetailsRepo, private val repoRecos: Defau
 
                 override fun message(pubnub: PubNub, pnMessageResult: PNMessageResult) {
                     Log.i("livemessage", "Message payload: ${pnMessageResult}")
+                    _newMessages.postValue(listOf(pnMessageResult))
 //                    _newMessages.value?.add(pnMessageResult)
-                    _newMessages.postValue(_newMessages.value?.plus(listOf(pnMessageResult)))
+//                    _newMessages.postValue(_newMessages.value?.plus(listOf(pnMessageResult)))
 //                    GlobalScope.launch {
 //                        withContext(Dispatchers.Main) {_newMessages.value = _newMessages.value?.plus(pnMessageResult)}
 //                    }
