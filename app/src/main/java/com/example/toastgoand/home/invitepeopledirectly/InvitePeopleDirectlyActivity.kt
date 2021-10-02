@@ -7,16 +7,12 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.runtime.getValue
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -27,10 +23,16 @@ import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.ToastgoApplication
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityInvitePeopleDirectlyBinding
+import com.example.toastgoand.home.clanhub.network.AddFriendToClanApi
+import com.example.toastgoand.home.clanhub.network.InviteToClanSendApi
+import com.example.toastgoand.home.invitepeopledirectly.network.ContactsListItemDataClass
+import com.example.toastgoand.network.myclans.MyClansDataClass
+import com.example.toastgoand.network.myfriends.MyFriendsDataClass
 import com.example.toastgoand.network.userdetails.User
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
 import com.example.toastgoand.uibits.HeaderOtherScreens
 import com.google.accompanist.insets.ProvideWindowInsets
+import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 
 class InvitePeopleDirectlyActivity : BaseActivity() {
@@ -43,9 +45,6 @@ class InvitePeopleDirectlyActivity : BaseActivity() {
         )
     }
 
-    @Serializable
-    data class ContactItem(val name: String, val phone: String)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = viewBinding as ActivityInvitePeopleDirectlyBinding
@@ -53,6 +52,16 @@ class InvitePeopleDirectlyActivity : BaseActivity() {
 
         fun onBackPressedHere() {
             onBackPressed()
+        }
+
+        val addedContacts = mutableListOf<ContactsListItemDataClass>()
+
+        fun addSelectedToList(item: ContactsListItemDataClass) {
+            addedContacts.add(item)
+        }
+
+        fun removeSelectedToList(item: ContactsListItemDataClass) {
+            addedContacts.remove(item)
         }
 
         setContent {
@@ -74,7 +83,17 @@ class InvitePeopleDirectlyActivity : BaseActivity() {
                     )
                 )
 
+                val contactsListHere = viewModel.contactsList.observeAsState(
+                    listOf<ContactsListItemDataClass>()
+                )
+                val composableScope = rememberCoroutineScope()
+
                 val textState = remember { mutableStateOf(TextFieldValue()) }
+
+                val contactsFiltered = contactsListHere.value.filter { it ->
+                    val word_here = it.name.lowercase()
+                    word_here.contains(textState.value.text.lowercase(), false)
+                }
 
 
                 ProvideWindowInsets() {
@@ -85,21 +104,53 @@ class InvitePeopleDirectlyActivity : BaseActivity() {
                                 title = "",
                                 onBackIconPressed = { onBackPressedHere() }
                             )
+                        },
+                        floatingActionButtonPosition = FabPosition.Center,
+                        floatingActionButton = {
+                            FloatingActionButton(
+                                onClick = {
+                                    for (item in addedContacts) {
+                                        composableScope.launch {
+                                            try {
+                                                InviteToClanSendApi.retrofitService.inviteClanSendToClan(
+                                                    phonenumber = item.phone,
+                                                    userid = deetsHere.user.id.toString()
+                                                )
+                                            } catch (e: Exception) {
+                                                Log.i("invitepersonlogs", e.toString())
+                                            }
+                                        }
+                                    }
+                                    onBackPressedHere()
+                                },
+                                modifier = Modifier
+                                    .padding(horizontal = 25.dp),
+                                backgroundColor = AyeTheme.colors.appLeadVariant,
+                            ) {
+                                Text(
+                                    text = "invite them",
+                                    style = MaterialTheme.typography.subtitle2,
+                                    color = AyeTheme.colors.uiBackground,
+                                    modifier = Modifier.padding(horizontal = 20.dp)
+                                )
+                            }
                         }
                     ) { contentPadding ->
                         Column(
                             modifier = Modifier
-                                .fillMaxWidth().fillMaxHeight()
+                                .fillMaxWidth()
+                                .fillMaxHeight()
                                 .background(AyeTheme.colors.uiBackground),
-                            verticalArrangement = Arrangement.SpaceBetween, horizontalAlignment = Alignment.CenterHorizontally
+                            verticalArrangement = Arrangement.SpaceBetween,
+                            horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             TextField(
                                 modifier = Modifier
-                                    .background(AyeTheme.colors.uiBackground)
                                     .clip(
                                         RoundedCornerShape(corner = CornerSize(10.dp))
                                     )
-                                    .padding(vertical = 10.dp).fillMaxWidth(0.9f),
+                                    .padding(vertical = 10.dp)
+                                    .fillMaxWidth(0.9f),
                                 value = textState.value,
                                 onValueChange = { textState.value = it },
                                 textStyle = MaterialTheme.typography.body2,
@@ -110,40 +161,37 @@ class InvitePeopleDirectlyActivity : BaseActivity() {
                                         style = MaterialTheme.typography.body2
                                     )
                                 },
+                                colors = TextFieldDefaults.textFieldColors(
+                                    backgroundColor = AyeTheme.colors.uiSurface,
+                                    cursorColor = AyeTheme.colors.textPrimary.copy(0.5f),
+                                    textColor = AyeTheme.colors.textPrimary,
+                                    placeholderColor = AyeTheme.colors.textPrimary.copy(0.5f),
+                                    focusedLabelColor = AyeTheme.colors.uiSurface,
+                                    unfocusedLabelColor = AyeTheme.colors.uiSurface,
+                                    focusedIndicatorColor = AyeTheme.colors.uiSurface,
+                                    unfocusedIndicatorColor = AyeTheme.colors.uiSurface,
+                                )
                             )
-                            Text("The textfield has this text: " + textState.value.text)
+                            Spacer(modifier = Modifier.size(20.dp))
                             LazyColumn(modifier = Modifier.background(AyeTheme.colors.uiBackground)) {
-//                                val contactsParsed = Gson().fromJson<List<ContactItem>>(
-//                                    deetsHere.user.contact_list,
-//                                    ContactItem::class.java
-//                                )
-
-//                                val simpleContactsString =
-//                                    deetsHere.user.contact_list.drop(1).dropLast(1)
-
                                 val contactsString: String = deetsHere.user.contact_list
 
                                 if (contactsString.length > 10) {
                                     Log.i("invitepeople", contactsString?.slice(0..10))
-//                                    val parserHere = Json {
-//                                        isLenient = true; ignoreUnknownKeys = true; encodeDefaults =
-//                                        false;
-//                                    }
-//                                    val contactsListHere =
-//                                        parserHere.decodeFromString<ArrayList<ContactItem>>(
-//                                            contactsString
-//                                        )
-//                                    decodeFromString<ArrayList<ContactItem>>(deetsHere.user.contact_list)
-//                                    Log.i("invitepeople list", contactsListHere.toString())
                                 }
 
                                 Log.i("invitepeople", contactsString)
-
-//                                items(
-//                                    items = contactsListHere,
-//                                    itemContent = {
-//                                        ContactItemRender(Json.decodeFromString(it))
-//                                    })
+                                items(
+                                    items = contactsFiltered,
+                                    itemContent = {
+                                        ContactItemRender(
+                                            it, ::addSelectedToList,
+                                            ::removeSelectedToList
+                                        )
+                                    })
+                                item {
+                                    Spacer(modifier = Modifier.size(90.dp))
+                                }
                             }
                         }
                     }

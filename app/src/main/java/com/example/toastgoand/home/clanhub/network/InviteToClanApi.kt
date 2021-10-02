@@ -21,7 +21,7 @@ private val retrofit =
 
 interface InviteToClanSendApiInterface {
     @GET("users/send_invite/{phonenumber}/{userid}")
-    suspend fun addFriendToClan(@Path("phonenumber") phonenumber: String, @Path("userid") userid: String)
+    suspend fun inviteClanSendToClan(@Path("phonenumber") phonenumber: String, @Path("userid") userid: String)
 }
 
 object InviteToClanSendApi {
@@ -32,7 +32,7 @@ object InviteToClanSendApi {
 
 interface InviteToClanAddApiInterface {
     @GET("users/add_invited_user/{phonenumber}/{userid}/{clubid}")
-    suspend fun addFriendToClan(@Path("phonenumber") phonenumber: String, @Path("userid") userid: String, @Path("clubid") clubid: String)
+    suspend fun inviteClanAddToClan(@Path("phonenumber") phonenumber: String, @Path("userid") userid: String, @Path("clubid") clubid: String)
 }
 
 object InviteToClanAddApi {

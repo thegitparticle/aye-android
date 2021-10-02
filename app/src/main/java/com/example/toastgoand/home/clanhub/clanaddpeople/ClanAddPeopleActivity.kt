@@ -155,6 +155,7 @@ class ClanAddPeopleActivity : BaseActivity() {
                         Column(
                             modifier = Modifier
                                 .fillMaxWidth()
+                                .fillMaxHeight()
                                 .background(AyeTheme.colors.uiBackground),
                             verticalArrangement = Arrangement.SpaceBetween,
                             horizontalAlignment = Alignment.CenterHorizontally
