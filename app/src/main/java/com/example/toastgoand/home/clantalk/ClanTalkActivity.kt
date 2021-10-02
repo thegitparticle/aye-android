@@ -1,8 +1,10 @@
 package com.example.toastgoand.home.clantalk
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.inputmethod.InputMethodManager
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.animation.AnimatedVisibility
@@ -22,6 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
@@ -57,6 +60,7 @@ import compose.icons.FeatherIcons
 import compose.icons.feathericons.Camera
 import compose.icons.feathericons.Layers
 import compose.icons.feathericons.PlusSquare
+import kotlinx.android.synthetic.main.talktype.*
 import kotlinx.datetime.Clock
 
 class ClanTalkActivity : BaseActivity() {
@@ -114,6 +118,7 @@ class ClanTalkActivity : BaseActivity() {
                 }
 
                 val pubNub = PubNub(pnConfiguration)
+                val context = LocalContext.current
 
                 pubNub.subscribe(
                     channels = listOf(channelid) as List<String>
@@ -148,21 +153,24 @@ class ClanTalkActivity : BaseActivity() {
 
                 fun setUpTextInput() {
                     showTextInput = true
+                    val imm =
+                        getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
 //                    focusTextInputRequester.requestFocus()
                 }
 
                 fun reSetTextInput() {
                     showTextInput = false
+                    val inputMethodManager: InputMethodManager =
+                        context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
+                    inputMethodManager!!.hideSoftInputFromWindow(textInputTalk.windowToken, 0)
                 }
 
                 fun changeFrameLiveStatus() {
                     ongoingFrame = true
                     Log.i("startframeapicall", "backwaeds function call worked")
                 }
-
-                val context = LocalContext.current
-
-                Log.i("recos", defaultRecos.toString())
 
                 ProvideWindowInsets(windowInsetsAnimationsEnabled = true) {
                     Scaffold(
@@ -176,27 +184,27 @@ class ClanTalkActivity : BaseActivity() {
                                     },
                                     onActionIconPressed = {
                                         if (!directornot) {
-                                        context.startActivity(
-                                            Intent(
-                                                context,
+                                            context.startActivity(
+                                                Intent(
+                                                    context,
                                                     ClanFramesActivity::class.java
-                                            ).apply {
-                                                putExtra("clubName", clubName)
-                                                putExtra("clubid", clubid)
-                                                putExtra("channelid", channelid)
-                                                putExtra("ongoingFrame", ongoingFrame)
-                                                putExtra("startTime", startTime)
-                                                putExtra("endTime", endTime)
-                                                putExtra(
-                                                    "userid",
-                                                    viewModel.deets.value?.user?.id.toString()
-                                                )
-                                                putExtra(
-                                                    "userdp",
-                                                    viewModel.deets.value?.image
-                                                )
-                                                putExtra("directornot", directornot)
-                                            })
+                                                ).apply {
+                                                    putExtra("clubName", clubName)
+                                                    putExtra("clubid", clubid)
+                                                    putExtra("channelid", channelid)
+                                                    putExtra("ongoingFrame", ongoingFrame)
+                                                    putExtra("startTime", startTime)
+                                                    putExtra("endTime", endTime)
+                                                    putExtra(
+                                                        "userid",
+                                                        viewModel.deets.value?.user?.id.toString()
+                                                    )
+                                                    putExtra(
+                                                        "userdp",
+                                                        viewModel.deets.value?.image
+                                                    )
+                                                    putExtra("directornot", directornot)
+                                                })
                                         } else {
                                             context.startActivity(
                                                 Intent(
@@ -259,9 +267,10 @@ class ClanTalkActivity : BaseActivity() {
                                                 backgroundColor = AyeTheme.colors.textSecondary,
                                             ) {
                                                 Icon(
-                                                    imageVector = FeatherIcons.Camera,
-                                                    contentDescription = "last month",
-                                                    modifier = Modifier.size(20.dp)
+                                                    FeatherIcons.Camera,
+                                                    "invite contacts to aye",
+                                                    tint = AyeTheme.colors.uiBackground,
+                                                    modifier = Modifier.size(20.dp),
                                                 )
                                             }
                                             FloatingActionButton(
@@ -278,9 +287,10 @@ class ClanTalkActivity : BaseActivity() {
                                                 backgroundColor = AyeTheme.colors.success,
                                             ) {
                                                 Icon(
-                                                    imageVector = FeatherIcons.PlusSquare,
-                                                    contentDescription = "last month",
-                                                    modifier = Modifier.size(30.dp)
+                                                    FeatherIcons.PlusSquare,
+                                                    "invite contacts to aye",
+                                                    tint = AyeTheme.colors.uiBackground,
+                                                    modifier = Modifier.size(30.dp),
                                                 )
                                             }
                                             FloatingActionButton(
@@ -291,9 +301,10 @@ class ClanTalkActivity : BaseActivity() {
                                                 backgroundColor = AyeTheme.colors.appLead,
                                             ) {
                                                 Icon(
-                                                    imageVector = FeatherIcons.Layers,
-                                                    contentDescription = "last month",
-                                                    modifier = Modifier.size(20.dp)
+                                                    FeatherIcons.Layers,
+                                                    "invite contacts to aye",
+                                                    tint = AyeTheme.colors.uiBackground,
+                                                    modifier = Modifier.size(20.dp),
                                                 )
                                             }
                                         }
@@ -307,13 +318,25 @@ class ClanTalkActivity : BaseActivity() {
                                 AnimatedVisibility(visible = showTextInput) {
                                     if (channelid != null) {
                                         if (clubName != null) {
-                                            TextInputPart(
-                                                userid = viewModel.deets.value?.user?.id.toString(),
-                                                channelid = channelid,
-                                                defaultRecos = defaultRecos,
-                                                clubName = clubName,
-                                                directornot = directornot
-                                            )
+                                            Column(
+                                                modifier = Modifier
+                                                    .fillMaxHeight()
+//                                                    .background(AyeTheme.colors.appLead)
+//                                                    .alpha(0.1f)
+                                                ,
+                                                verticalArrangement = Arrangement.Center
+                                            ) {
+                                                viewModel.deets.value?.image?.let {
+                                                    TextInputPart(
+                                                        userid = viewModel.deets.value?.user?.id.toString(),
+                                                        channelid = channelid,
+                                                        defaultRecos = defaultRecos,
+                                                        clubName = clubName,
+                                                        directornot = directornot,
+                                                        userdp = it
+                                                    )
+                                                }
+                                            }
                                         }
                                     }
                                 }

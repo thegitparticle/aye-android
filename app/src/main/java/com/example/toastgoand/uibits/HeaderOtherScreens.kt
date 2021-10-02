@@ -2,6 +2,7 @@ package com.example.toastgoand.uibits
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -42,11 +43,14 @@ fun HeaderOtherScreens (
                         .padding(top = 40.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text(
-                        text = title,
-                        style = MaterialTheme.typography.subtitle1,
-                        color = AyeTheme.colors.textSecondary
-                    )
+                    SelectionContainer() {
+                        Text(
+                            text = title,
+                            style = MaterialTheme.typography.subtitle1,
+                            color = AyeTheme.colors.textSecondary
+                        )
+                    }
+
                     CircleIcon(iconName = FeatherIcons.X, onIconPressed = onBackIconPressed, modifier = Modifier)
                 }
             },

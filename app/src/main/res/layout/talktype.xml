@@ -2,24 +2,43 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
    >
-
-    <com.google.android.material.textfield.TextInputLayout
+    <EditText
         android:id="@+id/textInputTalk"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="232dp">
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/talktypebackground"
+        android:fontFamily="@font/gotham_rounded_book"
+        android:hint="type something fun ..."
+        android:imeOptions="actionDone"
+        android:importantForAutofill="no"
+        android:includeFontPadding="false"
+        android:inputType="textMultiLine"
+        android:textColor="@color/off_dark_splash"
+        android:textColorHint="@color/off_dark_splash"
+        android:textSize="16sp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+         />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/textInputTalkEdit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="type something fun ..."
-            android:textColor="@color/off_dark_splash"
-            android:textIsSelectable="true"
-            android:cursorVisible="true"
-            />
+<!--    <com.google.android.material.textfield.TextInputLayout-->
+<!--        android:id="@+id/textInputTalk"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        tools:layout_editor_absoluteX="1dp"-->
+<!--        android:hint="type something fun ..."-->
+<!--        android:background="@color/auth_off_light_splash"-->
+<!--        tools:layout_editor_absoluteY="232dp"-->
+<!--        >-->
 
-    </com.google.android.material.textfield.TextInputLayout>
+<!--        <com.google.android.material.textfield.TextInputEditText-->
+<!--            android:id="@+id/textInputTalkEdit"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textColor="@color/off_dark_splash"-->
+<!--            android:textIsSelectable="true"-->
+<!--            android:cursorVisible="true"-->
+<!--            />-->
+
+<!--    </com.google.android.material.textfield.TextInputLayout>-->
 
 </layout>
