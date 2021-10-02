@@ -31,6 +31,7 @@ import com.example.toastgoand.network.myfriends.MyFriendsDataClass
 import com.example.toastgoand.network.userdetails.User
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
 import com.example.toastgoand.uibits.HeaderOtherScreens
+import com.example.toastgoand.uibits.LoadingComposeBit
 import com.google.accompanist.insets.ProvideWindowInsets
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
@@ -63,6 +64,10 @@ class InvitePeopleDirectlyActivity : BaseActivity() {
         fun removeSelectedToList(item: ContactsListItemDataClass) {
             addedContacts.remove(item)
         }
+
+        val clubname = intent.getStringExtra("clubname")
+        val clubid = intent.getIntExtra("clubid", 0)
+        val fromclub = intent.getBooleanExtra("fromclub", false)
 
         setContent {
             AyeTheme {
@@ -173,25 +178,31 @@ class InvitePeopleDirectlyActivity : BaseActivity() {
                                 )
                             )
                             Spacer(modifier = Modifier.size(20.dp))
-                            LazyColumn(modifier = Modifier.background(AyeTheme.colors.uiBackground)) {
-                                val contactsString: String = deetsHere.user.contact_list
+                            if (contactsListHere.value.isNotEmpty()) {
+                                LazyColumn(modifier = Modifier.background(AyeTheme.colors.uiBackground)) {
+                                    val contactsString: String = deetsHere.user.contact_list
 
-                                if (contactsString.length > 10) {
-                                    Log.i("invitepeople", contactsString?.slice(0..10))
-                                }
+                                    if (contactsString.length > 10) {
+                                        Log.i("invitepeople", contactsString?.slice(0..10))
+                                    }
 
-                                Log.i("invitepeople", contactsString)
-                                items(
-                                    items = contactsFiltered,
-                                    itemContent = {
-                                        ContactItemRender(
-                                            it, ::addSelectedToList,
-                                            ::removeSelectedToList
-                                        )
-                                    })
-                                item {
-                                    Spacer(modifier = Modifier.size(90.dp))
+                                    Log.i("invitepeople", contactsString)
+                                    items(
+                                        items = contactsFiltered,
+                                        itemContent = {
+                                            ContactItemRender(
+                                                it, ::addSelectedToList,
+                                                ::removeSelectedToList
+                                            )
+                                        })
+                                    item {
+                                        Spacer(modifier = Modifier.size(90.dp))
+                                    }
                                 }
+                            } else {
+                                Spacer(modifier = Modifier.size(200.dp))
+                                LoadingComposeBit()
+                                Spacer(modifier = Modifier.size(400.dp))
                             }
                         }
                     }
