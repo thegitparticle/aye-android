@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.R
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -25,6 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import androidx.ui.text.toLowerCase
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.ToastgoApplication
@@ -105,6 +107,10 @@ class ClanAddPeopleActivity : BaseActivity() {
 
                 val textState = remember { mutableStateOf(TextFieldValue()) }
 
+                val friendsFiltered = friendsListHere.filter { it ->
+                    val word_here = it.name.lowercase()
+                    word_here.contains(textState.value.text.lowercase(), false)
+                }
 
                 ProvideWindowInsets() {
                     Scaffold(
@@ -134,14 +140,14 @@ class ClanAddPeopleActivity : BaseActivity() {
                                     onBackPressedHere()
                                 },
                                 modifier = Modifier
-                                    .padding(horizontal = 25.dp)
-                                    .size(60.dp),
-                                backgroundColor = Color.Cyan,
+                                    .padding(horizontal = 25.dp),
+                                backgroundColor = AyeTheme.colors.appLeadVariant,
                             ) {
                                 Text(
                                     text = "add them",
-                                    style = MaterialTheme.typography.body2,
-                                    color = AyeTheme.colors.uiBackground
+                                    style = MaterialTheme.typography.subtitle2,
+                                    color = AyeTheme.colors.uiBackground,
+                                    modifier = Modifier.padding(horizontal = 20.dp)
                                 )
                             }
                         }
@@ -155,7 +161,6 @@ class ClanAddPeopleActivity : BaseActivity() {
                         ) {
                             TextField(
                                 modifier = Modifier
-                                    .background(AyeTheme.colors.uiSurface)
                                     .clip(
                                         RoundedCornerShape(corner = CornerSize(10.dp))
                                     )
@@ -171,8 +176,18 @@ class ClanAddPeopleActivity : BaseActivity() {
                                         style = MaterialTheme.typography.body2
                                     )
                                 },
+                                colors = TextFieldDefaults.textFieldColors(
+                                    backgroundColor = AyeTheme.colors.uiSurface,
+                                    cursorColor = AyeTheme.colors.textPrimary.copy(0.5f),
+                                    textColor = AyeTheme.colors.textPrimary,
+                                    placeholderColor = AyeTheme.colors.textPrimary.copy(0.5f),
+                                    focusedLabelColor = AyeTheme.colors.uiSurface,
+                                    unfocusedLabelColor = AyeTheme.colors.uiSurface,
+                                    focusedIndicatorColor = AyeTheme.colors.uiSurface,
+                                    unfocusedIndicatorColor = AyeTheme.colors.uiSurface,
+                                )
                             )
-                            Text("The textfield has this text: " + textState.value.text)
+                            Spacer(modifier = Modifier.size(20.dp))
                             LazyColumn(
                                 modifier = Modifier
                                     .background(AyeTheme.colors.uiBackground)
@@ -180,10 +195,17 @@ class ClanAddPeopleActivity : BaseActivity() {
                             ) {
 
                                 items(
-                                    items = friendsListHere,
+                                    items = friendsFiltered,
                                     itemContent = {
-                                        MyFriendItem(it, ::addSelectedToList, ::removeSelectedToList)
+                                        MyFriendItem(
+                                            it,
+                                            ::addSelectedToList,
+                                            ::removeSelectedToList
+                                        )
                                     })
+                                item {
+                                    Spacer(modifier = Modifier.size(90.dp))
+                                }
                             }
                         }
                     }
