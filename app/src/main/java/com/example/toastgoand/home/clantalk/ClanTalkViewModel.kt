@@ -49,29 +49,11 @@ class ClanTalkViewModel(repoDeets: UserDetailsRepo, private val repoRecos: Defau
     fun watchLiveMessages(pubnub: PubNub, channelid: String, start: Long, end: Long) {
         viewModelScope.launch {
             pubnub.addListener(object : SubscribeCallback() {
-                override fun status(pubnub: PubNub, status: PNStatus) {
-                    Log.i("livemessage", "Status category: ${status.category}")
-                    // PNConnectedCategory, PNReconnectedCategory, PNDisconnectedCategory
-                    Log.i("livemessage", "Status operation: ${status.operation}")
-                    // PNSubscribeOperation, PNHeartbeatOperation
-
-                    Log.i("livemessage", "Status error: ${status.error}")
-                    // true or false
-                }
+                override fun status(pubnub: PubNub, status: PNStatus) {}
 
                 override fun message(pubnub: PubNub, pnMessageResult: PNMessageResult) {
                     Log.i("livemessage", "Message payload: ${pnMessageResult}")
                     _newMessages.postValue(listOf(pnMessageResult))
-//                    _newMessages.value?.add(pnMessageResult)
-//                    _newMessages.postValue(_newMessages.value?.plus(listOf(pnMessageResult)))
-//                    GlobalScope.launch {
-//                        withContext(Dispatchers.Main) {_newMessages.value = _newMessages.value?.plus(pnMessageResult)}
-//                    }
-//                    _newMessages.value?.get(0)
-//                        ?.let { Log.i("livemessage - inside message listener", it.toString()) }
-                    Log.i("livemessage", "Message channel: ${pnMessageResult.channel}")
-                    Log.i("livemessage","Message publisher: ${pnMessageResult.publisher}")
-                    Log.i("livemessage","Message timetoken: ${pnMessageResult.timetoken}")
                 }
             })
         }
