@@ -27,6 +27,7 @@ import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.ui.Scaffold
 import com.pubnub.api.PNConfiguration
 import com.pubnub.api.PubNub
+import com.pubnub.api.enums.PNReconnectionPolicy
 import com.pubnub.api.models.consumer.history.PNHistoryItemResult
 
 class ViewOldFrameClanActivity : BaseActivity() {
@@ -45,13 +46,16 @@ class ViewOldFrameClanActivity : BaseActivity() {
             onBackPressed()
         }
 
+        Log.i("cmessagedebugmainc", "on create")
+
         setContent {
-            AyeTheme() {
+            AyeTheme {
                 val oldMessagesHere: List<PNHistoryItemResult> by viewModel.oldMessages.observeAsState(
                     listOf<PNHistoryItemResult>()
                 )
 
-                Log.i("oldframeabab messages in activity", oldMessagesHere.toString())
+                Log.i("cmessagedebugmainc", oldMessagesHere.toString())
+                Log.i("cmessagedebugmainc", "on set content")
 
                 val clubName = intent.getStringExtra("clubName")
                 val channelid = intent.getStringExtra("channelid")
@@ -68,6 +72,7 @@ class ViewOldFrameClanActivity : BaseActivity() {
                     if (userid != null) {
                         uuid = userid
                     }
+                    reconnectionPolicy = PNReconnectionPolicy.LINEAR
                 }
 
                 val pubNub = PubNub(pnConfiguration)
@@ -76,6 +81,7 @@ class ViewOldFrameClanActivity : BaseActivity() {
                 if (channelid != null) {
                     if (startTime != null) {
                         if (endTime != null) {
+                            Log.i("cmessagedebugmain", "calling oldies")
                             viewModel.getOldMessages(
                                 pubNub = pubNub,
                                 channelid = channelid,
@@ -101,7 +107,9 @@ class ViewOldFrameClanActivity : BaseActivity() {
                         LazyColumn(
                             contentPadding = PaddingValues(vertical = 8.dp),
                             modifier = Modifier
-                                .fillMaxWidth().fillMaxHeight().background(AyeTheme.colors.uiBackground),
+                                .fillMaxWidth()
+                                .fillMaxHeight()
+                                .background(AyeTheme.colors.uiBackground),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             item {
@@ -113,6 +121,7 @@ class ViewOldFrameClanActivity : BaseActivity() {
                                     itemContent = {
                                         if (userid != null) {
                                             if (channelid != null) {
+                                                Log.i("cmessagedebugmain", "calling oldies comp")
                                                 OldPNMessage(
                                                     message = it,
                                                     userid = userid,
@@ -126,7 +135,10 @@ class ViewOldFrameClanActivity : BaseActivity() {
                                 Spacer(modifier = Modifier.size(30.dp))
                             }
                             item {
-                                Row (modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.Center
+                                ) {
                                     Text(
                                         text = "end of frame",
                                         style = MaterialTheme.typography.caption,

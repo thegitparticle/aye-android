@@ -130,6 +130,7 @@ class ClanTalkActivity : BaseActivity() {
                                 start = currentMoment * 10000000,
                                 end = startTime.toLong() * 10000000
                             )
+                            Log.i("cmessagedebugmain", "calling oldies")
                             viewModel.getOldMessages(
                                 pubNub = pubNub,
                                 channelid = channelid,
@@ -366,6 +367,7 @@ class ClanTalkActivity : BaseActivity() {
                                         items = oldMessagesHere,
                                         itemContent = {
                                             if (channelid != null) {
+                                                Log.i("cmessagedebugmain", "calling oldies comp")
                                                 OldPNMessage(
                                                     message = it,
                                                     userid = viewModel.deets.value?.user?.id.toString(),

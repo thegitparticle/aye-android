@@ -1,6 +1,7 @@
 package com.example.toastgoand.home.clantalk.components
 
 import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -17,6 +18,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import coil.compose.rememberImagePainter
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.uibits.ViewMediaActivity
@@ -45,8 +47,9 @@ fun OldPNMessage (message: PNHistoryItemResult, userid: String, channelid: Strin
 
         if (metaData.type == "h") {
             HMessage(message = message)
+            Log.i("cmessagedebugmain", "normal messages log")
         } else if (metaData.type == "c") {
-//            Log.i("oldpnmessage", message.entry.toString())
+            Log.i("cmessagedebugmain", "else if log before component invoke")
             CMessage(message = message, userid = userid, channelid = channelid)
         }
     }
@@ -56,6 +59,9 @@ fun OldPNMessage (message: PNHistoryItemResult, userid: String, channelid: Strin
 @Composable
 private fun CMessage(message: PNHistoryItemResult, userid: String, channelid: String) {
     AyeTheme() {
+
+        Log.i("cmessagedebug meta", message.meta.toString())
+        Log.i("cmessagedebug entry", message.entry.toString())
 
         val metaData = Gson().fromJson<MessageMetaData>(message.meta, MessageMetaData::class.java)
         val entryData = Gson().fromJson<CEntryData>(message.entry, CEntryData::class.java)
@@ -82,9 +88,10 @@ private fun CMessage(message: PNHistoryItemResult, userid: String, channelid: St
             fileId = entryData.file.id
         ).async { result, status ->
             if (status.error) {
-                Log.i("oldpnmessage", status.error.toString())
+                Log.i("cmessagedebug get url", status.error.toString())
             } else if (result != null) {
                 urlOfFileHere = result.url
+                Log.i("cmessagedebug get url", result.url)
                 imageLinkFound = true
             }
         }
@@ -97,7 +104,7 @@ private fun CMessage(message: PNHistoryItemResult, userid: String, channelid: St
                 .clip(RoundedCornerShape(corner = CornerSize(15.dp))),
                 contentAlignment = Alignment.Center
             ) {
-                ImageHere(imageLink = urlOfFileHere)
+                ImageHereForC(imageLink = urlOfFileHere)
                 DPBubble(dplink = metaData.user_dp, text = message.entry.toString())
             }
         } else {
@@ -140,7 +147,6 @@ private fun HMessage(message: PNHistoryItemResult) {
 private fun ImageHere(imageLink: String) {
     val painter = rememberImagePainter(data = imageLink)
     val context = LocalContext.current
-    Log.i("oldpnmessage", imageLink)
 
     Image(
         painter = painter,
@@ -162,6 +168,35 @@ private fun ImageHere(imageLink: String) {
             }
     )
 }
+
+@Composable
+private fun ImageHereForC(imageLink: String) {
+    val painter = rememberImagePainter(data = imageLink.toUri())
+    val context = LocalContext.current
+    Log.i("cmessagedebug inside painter", imageLink)
+    Log.i("cmessagedebug inside painter - paunter log", painter.toString())
+
+    Image(
+        painter = painter,
+        contentDescription = "message image link",
+        contentScale = ContentScale.Crop,
+        modifier = Modifier
+            .padding(8.dp)
+            .fillMaxWidth()
+            .height(250.dp)
+            .clip(RoundedCornerShape(corner = CornerSize(15.dp)))
+            .clickable {
+                context.startActivity(
+                    Intent(
+                        context,
+                        ViewMediaActivity::class.java
+                    ).apply {
+                        putExtra("imagelink", imageLink)
+                    })
+            }
+    )
+}
+
 
 @Composable
 private fun DPBubble(dplink: String, text: String) {
@@ -194,7 +229,9 @@ private fun TextBubble(text: String) {
         Text(
             text = text,
             style = MaterialTheme.typography.body2,
-            color = AyeTheme.colors.textSecondary
+            color = AyeTheme.colors.textSecondary,
+            modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp
+            )
         )
     }
 }
