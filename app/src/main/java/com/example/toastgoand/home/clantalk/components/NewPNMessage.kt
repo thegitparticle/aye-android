@@ -45,7 +45,7 @@ fun NewPNMessage (message: PNMessageResult, userid: String, channelid: String) {
         if (metaData.type == "h") {
             HMessage(message = message)
         } else if (metaData.type == "c") {
-//            Log.i("oldpnmessage", message.entry.toString())
+            Log.i("livemessage camera mess", message.toString())
             CMessage(message = message, userid = userid, channelid = channelid)
         }
     }

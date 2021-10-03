@@ -20,25 +20,51 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import coil.compose.rememberImagePainter
+import com.beust.klaxon.Parser
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.uibits.ViewMediaActivity
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.google.gson.Gson
 import com.pubnub.api.PNConfiguration
 import com.pubnub.api.PubNub
 import com.pubnub.api.models.consumer.history.PNHistoryItemResult
 import kotlinx.serialization.Serializable
+import com.google.gson.reflect.TypeToken
+import com.squareup.moshi.*
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.decodeFromJsonElement
+import org.json.JSONObject
+import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
+
 
 @Serializable
 data class MessageMetaData(val image_url: String, val user_dp: String, val type: String)
 
 @Serializable
+@JsonClass(generateAdapter = true)
 data class CEntryData(val message: String, val file: CEntryFile)
 
 @Serializable
+@JsonClass(generateAdapter = true)
 data class CEntryFile(val id: String, val name: String)
 
+class CEntryFileAdapter {
+    @ToJson
+    fun fileToJson(fileObj: CEntryFile) = fileObj.toString()
+
+    @FromJson
+    fun fileFromJson(json: String): CEntryFile? {
+        val moshiHereInside = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+
+        val adapter: JsonAdapter<CEntryFile> = moshiHereInside.adapter(CEntryFile::class.java)
+        val dataHere = adapter.fromJson(json)
+        return dataHere
+    }
+}
+
 @Composable
-fun OldPNMessage (message: PNHistoryItemResult, userid: String, channelid: String) {
+fun OldPNMessage(message: PNHistoryItemResult, userid: String, channelid: String) {
 
     AyeTheme() {
 
@@ -64,7 +90,26 @@ private fun CMessage(message: PNHistoryItemResult, userid: String, channelid: St
         Log.i("cmessagedebug entry", message.entry.toString())
 
         val metaData = Gson().fromJson<MessageMetaData>(message.meta, MessageMetaData::class.java)
-        val entryData = Gson().fromJson<CEntryData>(message.entry, CEntryData::class.java)
+
+        val json = JSONObject(message.entry.toString())
+        val message = json.getString("message")
+        val file = json.getJSONObject("file")
+
+        Log.i("cmessagedebug", file.toString())
+
+//        val entryData2 = Gson().fromJson(message.entry, CEntryData::class.java)
+
+//        val moshiHere = Moshi.Builder()
+//            .add(CEntryFileAdapter())
+//            .add(KotlinJsonAdapterFactory())
+//            .build()
+//
+//        val adapter: JsonAdapter<CEntryData> = moshiHere.adapter(CEntryData::class.java)
+//        val entryData = adapter.fromJson(message.entry.toString())
+
+//        val gson = Gson()
+//        val entryData: Map<String, CEntryFile> =
+//            gson.fromJson(message.entry, object : TypeToken<Map<String?, CEntryFile?>?>() {}.type)
 
         val pnConfiguration = PNConfiguration().apply {
             subscribeKey = "sub-c-d099e214-9bcf-11eb-9adf-f2e9c1644994"
@@ -77,45 +122,49 @@ private fun CMessage(message: PNHistoryItemResult, userid: String, channelid: St
 
 //        var name by remember { mutableStateOf("") }
 
-        var urlOfFileHere by remember { mutableStateOf("")}
+        var urlOfFileHere by remember { mutableStateOf("") }
         var imageLinkFound by remember {
             mutableStateOf(false)
         }
 
-        pubnub.getFileUrl(
-            channel = channelid,
-            fileName = entryData.file.name,
-            fileId = entryData.file.id
-        ).async { result, status ->
-            if (status.error) {
-                Log.i("cmessagedebug get url", status.error.toString())
-            } else if (result != null) {
-                urlOfFileHere = result.url
-                Log.i("cmessagedebug get url", result.url)
-                imageLinkFound = true
-            }
-        }
+//        if (entryData != null) {
+//            pubnub.getFileUrl(
+//                channel = channelid,
+//                fileName = entryData.file.name,
+//                fileId = entryData.file.id
+//            ).async { result, status ->
+//                if (status.error) {
+//                    Log.i("cmessagedebug get url", status.error.toString())
+//                } else if (result != null) {
+//                    urlOfFileHere = result.url
+//                    Log.i("cmessagedebug get url", result.url)
+//                    imageLinkFound = true
+//                }
+//            }
+//        }
 
         if (imageLinkFound) {
-            Box (modifier = Modifier
-                .fillMaxWidth(0.95f)
-                .height(250.dp)
-                .padding(vertical = 5.dp)
-                .clip(RoundedCornerShape(corner = CornerSize(15.dp))),
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth(0.95f)
+                    .height(250.dp)
+                    .padding(vertical = 5.dp)
+                    .clip(RoundedCornerShape(corner = CornerSize(15.dp))),
                 contentAlignment = Alignment.Center
             ) {
                 ImageHereForC(imageLink = urlOfFileHere)
-                DPBubble(dplink = metaData.user_dp, text = message.entry.toString())
+//                DPBubble(dplink = metaData.user_dp, text = message.entry.toString())
             }
         } else {
-            Box (modifier = Modifier
-                .fillMaxWidth(0.95f)
-                .height(250.dp)
-                .padding(vertical = 5.dp)
-                .clip(RoundedCornerShape(corner = CornerSize(15.dp))),
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth(0.95f)
+                    .height(250.dp)
+                    .padding(vertical = 5.dp)
+                    .clip(RoundedCornerShape(corner = CornerSize(15.dp))),
                 contentAlignment = Alignment.Center
             ) {
-                DPBubble(dplink = metaData.user_dp, text = message.entry.toString())
+//                DPBubble(dplink = metaData.user_dp, text = message.entry.toString())
             }
         }
 
@@ -130,11 +179,12 @@ private fun HMessage(message: PNHistoryItemResult) {
 
         Log.i("pubnub - only link", metaData.image_url)
 
-        Box (modifier = Modifier
-            .fillMaxWidth(0.95f)
-            .height(250.dp)
-            .padding(vertical = 5.dp)
-            .clip(RoundedCornerShape(corner = CornerSize(15.dp))),
+        Box(
+            modifier = Modifier
+                .fillMaxWidth(0.95f)
+                .height(250.dp)
+                .padding(vertical = 5.dp)
+                .clip(RoundedCornerShape(corner = CornerSize(15.dp))),
             contentAlignment = Alignment.Center
         ) {
             ImageHere(imageLink = metaData.image_url)
@@ -223,14 +273,17 @@ private val ChatBubbleShape = RoundedCornerShape(0.dp, 8.dp, 8.dp, 0.dp)
 
 @Composable
 private fun TextBubble(text: String) {
-    Box(modifier = Modifier
-        .clip(ChatBubbleShape)
-        .background(AyeTheme.colors.uiSurface.copy(0.75f))) {
+    Box(
+        modifier = Modifier
+            .clip(ChatBubbleShape)
+            .background(AyeTheme.colors.uiSurface.copy(0.75f))
+    ) {
         Text(
             text = text,
             style = MaterialTheme.typography.body2,
             color = AyeTheme.colors.textSecondary,
-            modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp
+            modifier = Modifier.padding(
+                horizontal = 20.dp, vertical = 10.dp
             )
         )
     }

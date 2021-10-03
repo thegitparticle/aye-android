@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.animation.AnimatedVisibility
@@ -17,11 +18,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.FabPosition
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -29,12 +27,14 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidViewBinding
 import androidx.core.view.WindowCompat
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.ToastgoApplication
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityClanTalkBinding
+import com.example.toastgoand.databinding.TalktypeBinding
 import com.example.toastgoand.home.clanframes.ClanFramesActivity
 import com.example.toastgoand.home.clantalk.camera.CameraActivity
 import com.example.toastgoand.home.clantalk.components.NewPNMessage
@@ -151,6 +151,19 @@ class ClanTalkActivity : BaseActivity() {
                 var showTextInput by remember { mutableStateOf(false) }
                 val focusTextInputRequester = remember { FocusRequester() }
 
+                var bindingOfTextEdit: EditText? = null
+
+                @Composable
+                fun AndroidViewBindingExample() {
+                    val context = LocalContext.current
+
+                    AndroidViewBinding(TalktypeBinding::inflate) {
+                        bindingOfTextEdit = textInputTalk
+                    }
+                }
+
+                AndroidViewBindingExample()
+
                 fun setUpTextInput() {
                     showTextInput = true
                     val imm =
@@ -161,6 +174,7 @@ class ClanTalkActivity : BaseActivity() {
 
                 fun reSetTextInput() {
                     showTextInput = false
+
                     val inputMethodManager: InputMethodManager =
                         context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
