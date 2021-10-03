@@ -32,6 +32,8 @@ import kotlinx.serialization.Serializable
 import com.google.gson.reflect.TypeToken
 import com.squareup.moshi.*
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.decodeFromJsonElement
 import org.json.JSONObject
@@ -72,8 +74,15 @@ fun OldPNMessage(message: PNHistoryItemResult, userid: String, channelid: String
 private fun CMessage(message: PNHistoryItemResult, userid: String, channelid: String) {
     AyeTheme() {
 
+        var urlOfFileHere by remember { mutableStateOf("") }
+        var imageLinkFound by remember {
+            mutableStateOf(false)
+        }
+
         Log.i("cmessagedebugmain meta", message.meta.toString())
         Log.i("cmessagedebugmain entry", message.entry.toString())
+
+        val composableScope = rememberCoroutineScope()
 
         val metaData = Gson().fromJson<MessageMetaData>(message.meta, MessageMetaData::class.java)
 
@@ -95,38 +104,38 @@ private fun CMessage(message: PNHistoryItemResult, userid: String, channelid: St
 
         val pubnub = PubNub(pnConfiguration)
 
-//        var name by remember { mutableStateOf("") }
+        urlOfFileHere = GetFileLinkFromPN(
+            userid = userid,
+            channelid = channelid,
+            filename = file_name,
+            fileid = file_id
+        )
 
-        var urlOfFileHere by remember { mutableStateOf("") }
-        var imageLinkFound by remember {
-            mutableStateOf(false)
-        }
 
-//        pubnub.getFileUrl(
-//            channel = channelid,
-//            fileName = file_name,
-//            fileId = file_id
-//        ).async { result, status ->
-//            if (status.error) {
-//                Log.i("cmessagedebug get url", status.error.toString())
-//            } else if (result != null) {
-//                urlOfFileHere = result.url
-//                Log.i("cmessagedebug get url", result.url)
-//                imageLinkFound = true
-//            }
-//        }
-
-        if (imageLinkFound) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth(0.95f)
-                    .height(250.dp)
-                    .padding(vertical = 5.dp)
-                    .clip(RoundedCornerShape(corner = CornerSize(15.dp))),
-                contentAlignment = Alignment.Center
-            ) {
-                ImageHereForC(imageLink = urlOfFileHere)
-                DPBubble(dplink = metaData.user_dp, text = message_text.toString())
+        if (urlOfFileHere.isNotEmpty()) {
+            if (urlOfFileHere == "error") {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(0.95f)
+                        .height(250.dp)
+                        .padding(vertical = 5.dp)
+                        .clip(RoundedCornerShape(corner = CornerSize(15.dp))),
+                    contentAlignment = Alignment.Center
+                ) {
+                    DPBubble(dplink = metaData.user_dp, text = message_text.toString())
+                }
+            } else {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(0.95f)
+                        .height(250.dp)
+                        .padding(vertical = 5.dp)
+                        .clip(RoundedCornerShape(corner = CornerSize(15.dp))),
+                    contentAlignment = Alignment.Center
+                ) {
+                    ImageHereForC(imageLink = urlOfFileHere)
+                    DPBubble(dplink = metaData.user_dp, text = message_text.toString())
+                }
             }
         } else {
             Box(
