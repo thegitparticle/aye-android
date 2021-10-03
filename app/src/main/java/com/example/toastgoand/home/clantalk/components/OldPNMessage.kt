@@ -49,20 +49,6 @@ data class CEntryData(val message: String, val file: CEntryFile)
 @JsonClass(generateAdapter = true)
 data class CEntryFile(val id: String, val name: String)
 
-class CEntryFileAdapter {
-    @ToJson
-    fun fileToJson(fileObj: CEntryFile) = fileObj.toString()
-
-    @FromJson
-    fun fileFromJson(json: String): CEntryFile? {
-        val moshiHereInside = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
-
-        val adapter: JsonAdapter<CEntryFile> = moshiHereInside.adapter(CEntryFile::class.java)
-        val dataHere = adapter.fromJson(json)
-        return dataHere
-    }
-}
-
 @Composable
 fun OldPNMessage(message: PNHistoryItemResult, userid: String, channelid: String) {
 
@@ -86,30 +72,19 @@ fun OldPNMessage(message: PNHistoryItemResult, userid: String, channelid: String
 private fun CMessage(message: PNHistoryItemResult, userid: String, channelid: String) {
     AyeTheme() {
 
-        Log.i("cmessagedebug meta", message.meta.toString())
-        Log.i("cmessagedebug entry", message.entry.toString())
+        Log.i("cmessagedebugmain meta", message.meta.toString())
+        Log.i("cmessagedebugmain entry", message.entry.toString())
 
         val metaData = Gson().fromJson<MessageMetaData>(message.meta, MessageMetaData::class.java)
 
         val json = JSONObject(message.entry.toString())
-        val message = json.getString("message")
+        val message_text = json.getString("message")
         val file = json.getJSONObject("file")
+        val json2 = JSONObject(file.toString())
+        val file_id = json2.getString("id")
+        val file_name = json2.getString("name")
 
-        Log.i("cmessagedebug", file.toString())
-
-//        val entryData2 = Gson().fromJson(message.entry, CEntryData::class.java)
-
-//        val moshiHere = Moshi.Builder()
-//            .add(CEntryFileAdapter())
-//            .add(KotlinJsonAdapterFactory())
-//            .build()
-//
-//        val adapter: JsonAdapter<CEntryData> = moshiHere.adapter(CEntryData::class.java)
-//        val entryData = adapter.fromJson(message.entry.toString())
-
-//        val gson = Gson()
-//        val entryData: Map<String, CEntryFile> =
-//            gson.fromJson(message.entry, object : TypeToken<Map<String?, CEntryFile?>?>() {}.type)
+        Log.i("cmessagedebugmain", file.toString())
 
         val pnConfiguration = PNConfiguration().apply {
             subscribeKey = "sub-c-d099e214-9bcf-11eb-9adf-f2e9c1644994"
@@ -127,19 +102,17 @@ private fun CMessage(message: PNHistoryItemResult, userid: String, channelid: St
             mutableStateOf(false)
         }
 
-//        if (entryData != null) {
-//            pubnub.getFileUrl(
-//                channel = channelid,
-//                fileName = entryData.file.name,
-//                fileId = entryData.file.id
-//            ).async { result, status ->
-//                if (status.error) {
-//                    Log.i("cmessagedebug get url", status.error.toString())
-//                } else if (result != null) {
-//                    urlOfFileHere = result.url
-//                    Log.i("cmessagedebug get url", result.url)
-//                    imageLinkFound = true
-//                }
+//        pubnub.getFileUrl(
+//            channel = channelid,
+//            fileName = file_name,
+//            fileId = file_id
+//        ).async { result, status ->
+//            if (status.error) {
+//                Log.i("cmessagedebug get url", status.error.toString())
+//            } else if (result != null) {
+//                urlOfFileHere = result.url
+//                Log.i("cmessagedebug get url", result.url)
+//                imageLinkFound = true
 //            }
 //        }
 
@@ -153,7 +126,7 @@ private fun CMessage(message: PNHistoryItemResult, userid: String, channelid: St
                 contentAlignment = Alignment.Center
             ) {
                 ImageHereForC(imageLink = urlOfFileHere)
-//                DPBubble(dplink = metaData.user_dp, text = message.entry.toString())
+                DPBubble(dplink = metaData.user_dp, text = message_text.toString())
             }
         } else {
             Box(
@@ -164,7 +137,7 @@ private fun CMessage(message: PNHistoryItemResult, userid: String, channelid: St
                     .clip(RoundedCornerShape(corner = CornerSize(15.dp))),
                 contentAlignment = Alignment.Center
             ) {
-//                DPBubble(dplink = metaData.user_dp, text = message.entry.toString())
+                DPBubble(dplink = metaData.user_dp, text = message_text.toString())
             }
         }
 
