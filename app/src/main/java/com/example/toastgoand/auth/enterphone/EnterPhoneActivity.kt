@@ -22,6 +22,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
+import com.example.toastgoand.R
 import com.example.toastgoand.auth.detailssignup.DetailsSignupActivity
 import com.example.toastgoand.auth.otplogin.OtpLoginActivity
 import com.example.toastgoand.composestyle.AyeTheme
@@ -44,6 +45,10 @@ class EnterPhoneActivity : BaseActivity() {
         binding = viewBinding as ActivityEnterPhoneBinding
 
         binding.editTextPhone.requestFocus()
+
+        binding.backIcon.setOnClickListener {
+            onBackPressed()
+        }
 
         val phoneNumber: Editable? = binding.editTextPhone.getText()
 
@@ -68,6 +73,10 @@ class EnterPhoneActivity : BaseActivity() {
                             )
                         }
                     startActivity(intent)
+                    overridePendingTransition(
+                        R.anim.slide_from_right ,
+                        R.anim.slide_out_left
+                    )
                 } else {
                     val intent =
                         Intent(this, DetailsSignupActivity::class.java).apply {
@@ -77,6 +86,10 @@ class EnterPhoneActivity : BaseActivity() {
                             )
                         }
                     startActivity(intent)
+                    overridePendingTransition(
+                        R.anim.slide_from_right ,
+                        R.anim.slide_out_left
+                    )
                 }
             }
         })

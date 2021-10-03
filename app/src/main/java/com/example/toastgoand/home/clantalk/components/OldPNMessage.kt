@@ -61,9 +61,9 @@ fun OldPNMessage(message: PNHistoryItemResult, userid: String, channelid: String
 
         if (metaData.type == "h") {
             HMessage(message = message)
-            Log.i("cmessagedebugmain", "normal messages log")
+//            Log.i("cmessagedebugmain", "normal messages log")
         } else if (metaData.type == "c") {
-            Log.i("cmessagedebugmain", "else if log before component invoke")
+//            Log.i("cmessagedebugmain", "else if log before component invoke")
             CMessage(message = message, userid = userid, channelid = channelid)
         }
     }
@@ -79,9 +79,6 @@ private fun CMessage(message: PNHistoryItemResult, userid: String, channelid: St
             mutableStateOf(false)
         }
 
-        Log.i("cmessagedebugmain meta", message.meta.toString())
-        Log.i("cmessagedebugmain entry", message.entry.toString())
-
         val composableScope = rememberCoroutineScope()
 
         val metaData = Gson().fromJson<MessageMetaData>(message.meta, MessageMetaData::class.java)
@@ -92,8 +89,6 @@ private fun CMessage(message: PNHistoryItemResult, userid: String, channelid: St
         val json2 = JSONObject(file.toString())
         val file_id = json2.getString("id")
         val file_name = json2.getString("name")
-
-        Log.i("cmessagedebugmain", file.toString())
 
         val pnConfiguration = PNConfiguration().apply {
             subscribeKey = "sub-c-d099e214-9bcf-11eb-9adf-f2e9c1644994"
@@ -114,6 +109,8 @@ private fun CMessage(message: PNHistoryItemResult, userid: String, channelid: St
 
         if (urlOfFileHere.isNotEmpty()) {
             if (urlOfFileHere == "error") {
+                Log.i("cmessagedebugmain", "file link is error")
+                Log.i("cmessagedebugmainurlerror", urlOfFileHere)
                 Box(
                     modifier = Modifier
                         .fillMaxWidth(0.95f)
@@ -125,6 +122,8 @@ private fun CMessage(message: PNHistoryItemResult, userid: String, channelid: St
                     DPBubble(dplink = metaData.user_dp, text = message_text.toString())
                 }
             } else {
+                Log.i("cmessagedebugmain", "file link is right url string")
+                Log.i("cmessagedebugmainurlright", urlOfFileHere)
                 Box(
                     modifier = Modifier
                         .fillMaxWidth(0.95f)
@@ -138,6 +137,8 @@ private fun CMessage(message: PNHistoryItemResult, userid: String, channelid: St
                 }
             }
         } else {
+            Log.i("cmessagedebugmain", "file link not avaialble yet")
+            Log.i("cmessagedebugmainurlnot", urlOfFileHere)
             Box(
                 modifier = Modifier
                     .fillMaxWidth(0.95f)

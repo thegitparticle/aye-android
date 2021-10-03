@@ -21,6 +21,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
+import com.example.toastgoand.R
 import com.example.toastgoand.auth.loginsetup.LoginSetupActivity
 import com.example.toastgoand.auth.otplogin.network.OTPLoginDataClass
 import com.example.toastgoand.auth.settingup.SettingUpActivity
@@ -42,6 +43,10 @@ class OtpLoginActivity : BaseActivity() {
 
         binding.firstPinView.requestFocus()
 
+        binding.backIcon.setOnClickListener {
+            onBackPressed()
+        }
+
         viewModel = ViewModelProvider(this).get(OtpLoginViewModel::class.java)
         binding.otpLoginModel = viewModel
 
@@ -59,6 +64,10 @@ class OtpLoginActivity : BaseActivity() {
                             )
                         }
                     startActivity(intent)
+                    overridePendingTransition(
+                        R.anim.slide_from_right ,
+                        R.anim.slide_out_left
+                    )
                 }
             }
         })

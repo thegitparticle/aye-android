@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
+import com.example.toastgoand.R
 import com.example.toastgoand.auth.enterphone.EnterPhoneActivity
 import com.example.toastgoand.databinding.ActivityWelcomeBinding
 
@@ -19,6 +20,10 @@ class WelcomeActivity : BaseActivity() {
         binding.diveInButton.setOnClickListener {
             val intent = Intent(this, EnterPhoneActivity::class.java).apply {}
             startActivity(intent)
+            overridePendingTransition(
+                R.anim.slide_from_right ,
+                R.anim.slide_out_left
+            )
         }
 
     }
