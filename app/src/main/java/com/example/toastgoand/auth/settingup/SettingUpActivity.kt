@@ -51,7 +51,8 @@ class SettingUpActivity : BaseActivity() {
                     intent.getStringExtra("countryIndicator")?.let {
                         viewModel.uploadUserContacts(
                             userid = intent.getStringExtra("userid")!!,
-                            countryIndicator = it
+                            countryIndicator = it,
+                            store = store
                         )
                     }
                     binding.changingText.text = "setting up your profile ..."

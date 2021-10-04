@@ -14,9 +14,9 @@ import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class SettingUpViewModel(application: ToastgoApplication): AndroidViewModel(application)  {
+class SettingUpViewModel: ViewModel()  {
 
-    private val context = getApplication<ToastgoApplication>().applicationContext
+//    private val context = getApplication<ToastgoApplication>().applicationContext
 
     private val _uploaded = MutableLiveData<Boolean>(false)
     val uploaded: LiveData<Boolean>
@@ -28,12 +28,11 @@ class SettingUpViewModel(application: ToastgoApplication): AndroidViewModel(appl
     }
 
     @InternalCoroutinesApi
-    fun uploadUserContacts(userid: String, countryIndicator: String) {
+    fun uploadUserContacts(userid: String, countryIndicator: String, store: ContactStore) {
         viewModelScope.launch {
             try {
                 var payload: UploadContactsDataClass = UploadContactsDataClass(contact_list = "")
                 var countryCode = CountryCodeDataClass(country_code = countryIndicator)
-                val store = ContactStore.newInstance(context)
 
                 store.fetchContacts().collect { contactsList ->
                     Log.i("contactswork", contactsList.toString())
