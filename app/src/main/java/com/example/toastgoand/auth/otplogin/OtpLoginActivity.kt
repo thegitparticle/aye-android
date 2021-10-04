@@ -51,8 +51,14 @@ class OtpLoginActivity : BaseActivity() {
         binding.otpLoginModel = viewModel
 
         val phoneNumberHere = intent.getStringExtra("phoneNumber")
+        if (phoneNumberHere != null) {
+            viewModel.getUserDetailsHere(phone = phoneNumberHere)
+        }
+        val deetsHere = viewModel.deets
 
-        viewModel.otpCheck.observe(this, {response ->
+        var countryIndicator = intent.getStringExtra("countryIndicator")
+
+        viewModel.otpCheck.observe(this, { response ->
             Log.i("OTPCheck", response)
             if (response.isNotEmpty()) {
                 if (response == "worked") {
@@ -62,10 +68,17 @@ class OtpLoginActivity : BaseActivity() {
                                 "phoneNumber",
                                 phoneNumberHere
                             )
+                            putExtra(
+                                "countryIndicator",
+                                countryIndicator
+                            )
+                            putExtra(
+                                "userid", viewModel.deets.value?.user?.id?.toString()
+                            )
                         }
                     startActivity(intent)
                     overridePendingTransition(
-                        R.anim.slide_from_right ,
+                        R.anim.slide_from_right,
                         R.anim.slide_out_left
                     )
                 }

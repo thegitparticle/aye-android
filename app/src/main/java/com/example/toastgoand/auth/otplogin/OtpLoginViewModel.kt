@@ -10,6 +10,8 @@ import com.example.toastgoand.auth.otplogin.network.OTPLoginDataClass
 import com.example.toastgoand.home.startclan.network.StartClanApi
 import com.example.toastgoand.network.phonecheck.PhoneCheckApi
 import com.example.toastgoand.network.phonecheck.PhoneCheckDataClass
+import com.example.toastgoand.network.userdetails.UserDetailsApi
+import com.example.toastgoand.network.userdetails.UserDetailsDataClass
 import kotlinx.coroutines.launch
 
 class OtpLoginViewModel(): ViewModel() {
@@ -18,6 +20,10 @@ class OtpLoginViewModel(): ViewModel() {
     private val _otpCheck = MutableLiveData<String>()
     val otpCheck: LiveData<String>
         get() = _otpCheck
+
+    private val _deets = MutableLiveData<UserDetailsDataClass>()
+    val deets: LiveData<UserDetailsDataClass>
+        get() = _deets
 
     override fun onCleared() {
         super.onCleared()
@@ -41,12 +47,11 @@ class OtpLoginViewModel(): ViewModel() {
     fun getUserDetailsHere(phone: String) {
         viewModelScope.launch {
             try {
-                val userResult = PhoneCheckApi.retrofitService.checkPhone(phone)
-                var x_here: PhoneCheckDataClass = userResult
-                _otpCheck.value = x_here?.user_exists
-                Log.i("EnterPhoneViewModel", _otpCheck.value!!)
+                val userResult = UserDetailsApi.retrofitService.getUserDetails(phone)
+                _deets.value = userResult
+                Log.i("OtpSignUpViewModel", _deets.value.toString())
             } catch (e: Exception) {
-                Log.i("EnterPhoneViewModel", "API call for user details, Failed! ${e.message}")
+                Log.i("OtpSignUpViewModel", "API call for user details, Failed! ${e.message}")
             }
         }
     }

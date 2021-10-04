@@ -46,7 +46,7 @@
         </LinearLayout>
 
         <mehdi.sakout.fancybuttons.FancyButton
-            android:id="@+id/openHomeButton"
+            android:id="@+id/allowContactsButton"
             android:layout_width="270dp"
             android:layout_height="60dp"
             android:layout_alignParentBottom="true"
@@ -59,12 +59,12 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="45dp"
             android:fontFamily="@font/lato"
-            android:visibility="invisible"
-            fancy:fb_defaultColor="@color/peach_splash"
+            fancy:fb_defaultColor="@color/auth_off_dark_splash"
             fancy:fb_iconPosition="left"
             fancy:fb_radius="30dp"
-            fancy:fb_text="dive into aye!"
-            fancy:fb_textColor="#FFFFFF" />
+            fancy:fb_text="@string/setting_up_contacts_button"
+            android:visibility="invisible"
+            fancy:fb_textColor="#FFFFFF"/>
 
     </RelativeLayout>
 </layout>
