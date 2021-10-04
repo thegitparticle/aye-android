@@ -21,8 +21,6 @@ private val retrofit =
         .build()
 
 interface UploadContactsApiInterface {
-    @Multipart
-    @Headers("Content-Type: application/json")
     @PUT("users/post_contacts_to_server/{userid}/")
     suspend fun uploadContacts(@Path("userid") userid: String, @Body data: UploadContactsDataClass)
 }
