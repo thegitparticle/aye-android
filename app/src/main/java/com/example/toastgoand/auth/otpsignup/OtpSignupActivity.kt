@@ -3,6 +3,7 @@ package com.example.toastgoand.auth.otpsignup
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -20,6 +21,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.R
+import com.example.toastgoand.ToastgoApplication
+import com.example.toastgoand.auth.loginsetup.LoginSetupViewModel
+import com.example.toastgoand.auth.loginsetup.LoginSetupViewModelFactory
 import com.example.toastgoand.auth.network.OtpSignUpApi
 import com.example.toastgoand.auth.network.dataclasses.OtpSignUpDataClass
 import com.example.toastgoand.auth.settingup.SettingUpActivity
@@ -33,7 +37,9 @@ import kotlinx.coroutines.launch
 class OtpSignupActivity : BaseActivity() {
     private lateinit var binding: ActivityOtpSignupBinding
 
-    private lateinit var viewModel: OtpSignupViewModel
+    private val viewModel: OtpSignupViewModel by viewModels {
+        OtpSignupViewModelFactory((application as ToastgoApplication).repository)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +52,6 @@ class OtpSignupActivity : BaseActivity() {
             onBackPressed()
         }
 
-        viewModel = ViewModelProvider(this).get(OtpSignupViewModel::class.java)
         binding.otpSignupModel = viewModel
 
         intent.getStringExtra("phoneNumber")?.let { viewModel.checkInvitedOrNot(it) }
@@ -59,7 +64,7 @@ class OtpSignupActivity : BaseActivity() {
             }
             startActivity(intent)
             overridePendingTransition(
-                R.anim.slide_from_right ,
+                R.anim.slide_from_right,
                 R.anim.slide_out_left
             )
         }
@@ -95,18 +100,28 @@ class OtpSignupActivity : BaseActivity() {
                                         OtpSignUpApi.retrofitService.newUserOtpCheck(
                                             data = payloadHere
                                         )
-                                        val intent = Intent(context, SettingUpActivity::class.java).apply {
-                                            putExtra("phoneNumber", intent.getStringExtra("phoneNumber"))
-                                            putExtra("invitedCheckData", viewModel.invitedData.toString())
-                                            putExtra("userid", viewModel.userDetails.value?.user?.id.toString())
-                                            putExtra(
-                                                "countryIndicator",
-                                                intent.getStringExtra("countryIndicator")
-                                            )
-                                        }
+                                        val intent =
+                                            Intent(context, SettingUpActivity::class.java).apply {
+                                                putExtra(
+                                                    "phoneNumber",
+                                                    intent.getStringExtra("phoneNumber")
+                                                )
+                                                putExtra(
+                                                    "invitedCheckData",
+                                                    viewModel.invitedData.toString()
+                                                )
+                                                putExtra(
+                                                    "userid",
+                                                    viewModel.userDetails.value?.user?.id.toString()
+                                                )
+                                                putExtra(
+                                                    "countryIndicator",
+                                                    intent.getStringExtra("countryIndicator")
+                                                )
+                                            }
                                         startActivity(intent)
                                         overridePendingTransition(
-                                            R.anim.slide_from_right ,
+                                            R.anim.slide_from_right,
                                             R.anim.slide_out_left
                                         )
                                     } catch (e: Exception) {

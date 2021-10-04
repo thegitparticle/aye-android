@@ -52,7 +52,7 @@ class DetailsSignupActivity : BaseActivity() {
         viewModel.detailsposted.observe(this, {response ->
             if (response) {
                 val intent =
-                    Intent(this, WelcomeActivity::class.java).apply {
+                    Intent(this, OtpSignupActivity::class.java).apply {
                         putExtra(
                             "phoneNumber",
                             intent.getStringExtra("phoneNumber")
