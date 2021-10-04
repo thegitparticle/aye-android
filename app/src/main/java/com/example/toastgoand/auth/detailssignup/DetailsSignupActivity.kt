@@ -23,11 +23,13 @@ import com.example.toastgoand.R
 import com.example.toastgoand.auth.network.DetailsSignUpApi
 import com.example.toastgoand.auth.network.dataclasses.DetailsSignUpDataClass
 import com.example.toastgoand.auth.otpsignup.OtpSignupActivity
+import com.example.toastgoand.auth.welcome.WelcomeActivity
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityDetailsSignupBinding
 import com.example.toastgoand.uibits.LoaderDialog
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.ArrowRight
+import kotlinx.android.synthetic.main.start_call_dialog.*
 import kotlinx.coroutines.launch
 
 class DetailsSignupActivity : BaseActivity() {
@@ -47,6 +49,27 @@ class DetailsSignupActivity : BaseActivity() {
         viewModel = ViewModelProvider(this).get(DetailsSignupViewModel::class.java)
         binding.detailsSignupModel = viewModel
 
+        viewModel.detailsposted.observe(this, {response ->
+            if (response) {
+                val intent =
+                    Intent(this, WelcomeActivity::class.java).apply {
+                        putExtra(
+                            "phoneNumber",
+                            intent.getStringExtra("phoneNumber")
+                        )
+                        putExtra(
+                            "countryIndicator",
+                            intent.getStringExtra("countryIndicator")
+                        )
+                    }
+                startActivity(intent)
+                overridePendingTransition(
+                    R.anim.slide_from_right,
+                    R.anim.slide_out_left
+                )
+            }
+        })
+
         binding.composeView.setContent {
             AyeTheme() {
 
@@ -58,6 +81,9 @@ class DetailsSignupActivity : BaseActivity() {
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     val isDialogOpen = remember { mutableStateOf(false) }
+                    val detailsposted = remember { mutableStateOf(false) }
+
+                    Log.i("signupdebug", "sign up de bug log working")
 
                     Icon(
                         imageVector = FeatherIcons.ArrowRight,
@@ -77,32 +103,7 @@ class DetailsSignupActivity : BaseActivity() {
                                     profile = empty_object
                                 )
 
-                                composableScope.launch {
-                                    try {
-                                        DetailsSignUpApi.retrofitService.newUserDetails(
-                                            data = payloadHere
-                                        )
-                                        val intent =
-                                            Intent(context, OtpSignupActivity::class.java).apply {
-                                                putExtra(
-                                                    "phoneNumber",
-                                                    intent.getStringExtra("phoneNumber")
-                                                )
-                                                putExtra(
-                                                    "countryIndicator",
-                                                    intent.getStringExtra("countryIndicator")
-                                                )
-                                            }
-                                        startActivity(intent)
-                                        overridePendingTransition(
-                                            R.anim.slide_from_right,
-                                            R.anim.slide_out_left
-                                        )
-                                    } catch (e: Exception) {
-                                        Log.i("detailssignup", e.toString())
-                                    }
-                                }
-
+                                viewModel.sendDetailsOfNewUser(payloadHere)
                                 isDialogOpen.value = true
                             }
                             .background(color = AyeTheme.colors.textSecondary),

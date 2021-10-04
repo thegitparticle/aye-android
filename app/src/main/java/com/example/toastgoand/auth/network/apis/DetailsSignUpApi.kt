@@ -25,7 +25,7 @@ private val retrofit =
 interface DetailsSignUpApiInterface {
     @Headers("Content-Type: application/json")
     @POST("users/register/")
-    suspend fun newUserDetails(@Body data: DetailsSignUpDataClass): DetailsSignUpDataClass
+    suspend fun newUserDetails(@Body data: DetailsSignUpDataClass)
 }
 
 object DetailsSignUpApi {
