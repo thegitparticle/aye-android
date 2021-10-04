@@ -42,12 +42,32 @@ class SettingUpActivity : BaseActivity() {
 
         val store = ContactStore.newInstance(application)
 
+        viewModel.uploaded.observe(this, {response ->
+            if (response == true) {
+                val intent = Intent(this, InvitedByActivity::class.java).apply {
+                    putExtra("phoneNumber", intent.getStringExtra("phoneNumber"))
+                    putExtra("invitedCheckData", intent.getStringExtra("invitedCheckData"))
+                }
+                startActivity(intent)
+                overridePendingTransition(
+                    R.anim.slide_from_right,
+                    R.anim.slide_out_left
+                )
+            } else {
+                var toast =
+                    Toast.makeText(this, "uploaded is not tru yet", Toast.LENGTH_LONG)
+                toast.show()
+            }
+        })
+
         val requestPermissionLauncher =
             registerForActivityResult(
                 ActivityResultContracts.RequestPermission()
             ) { isGranted: Boolean ->
                 if (isGranted) {
-                    Log.i("Permission: ", "Granted")
+                    Log.i("settingupdebug", "Granted")
+                    intent.getStringExtra("phoneNumber")?.let { Log.i("settingupdebug phone", it) }
+                    intent.getStringExtra("countryIndicator")?.let { Log.i("settingupdebug country code", it) }
                     intent.getStringExtra("countryIndicator")?.let {
                         viewModel.uploadUserContacts(
                             userid = intent.getStringExtra("userid")!!,
@@ -57,22 +77,8 @@ class SettingUpActivity : BaseActivity() {
                     }
                     binding.changingText.text = "setting up your profile ..."
                     binding.allowContactsButton.visibility = View.INVISIBLE
-                    if (viewModel.uploaded.value == true) {
-                        val intent = Intent(this, InvitedByActivity::class.java).apply {
-                            putExtra("phoneNumber", intent.getStringExtra("phoneNumber"))
-                            putExtra("invitedCheckData", intent.getStringExtra("invitedCheckData"))
-                        }
-                        startActivity(intent)
-                        overridePendingTransition(
-                            R.anim.slide_from_right,
-                            R.anim.slide_out_left
-                        )
-                    } else {
-                        var toast = Toast.makeText(this, "uploaded is not tru yet", Toast.LENGTH_LONG)
-                        toast.show()
-                    }
                 } else {
-                    Log.i("Permission: ", "Denied")
+                    Log.i("settingupdebug", "Denied")
                     binding.changingText.text = "Aye! needs contacts to work"
                     binding.allowContactsButton.visibility = View.VISIBLE
 
@@ -88,15 +94,6 @@ class SettingUpActivity : BaseActivity() {
             requestPermissionLauncher.launch(
                 Manifest.permission.READ_CONTACTS
             )
-
-//            val intent = Intent(this, InvitedByActivity::class.java).apply {
-//                putExtra("phoneNumber", intent.getStringExtra("phoneNumber"))
-//            }
-//            startActivity(intent)
-//            overridePendingTransition(
-//                R.anim.slide_from_right,
-//                R.anim.slide_out_left
-//            )
         }
 
     }

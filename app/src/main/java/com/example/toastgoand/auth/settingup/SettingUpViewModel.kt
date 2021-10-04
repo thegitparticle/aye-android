@@ -29,13 +29,14 @@ class SettingUpViewModel: ViewModel()  {
 
     @InternalCoroutinesApi
     fun uploadUserContacts(userid: String, countryIndicator: String, store: ContactStore) {
+        Log.i("settingupdebug", "upload contacts function in vm called")
         viewModelScope.launch {
             try {
                 var payload: UploadContactsDataClass = UploadContactsDataClass(contact_list = "")
                 var countryCode = CountryCodeDataClass(country_code = countryIndicator)
 
                 store.fetchContacts().collect { contactsList ->
-                    Log.i("contactswork", contactsList.toString())
+                    Log.i("settingupdebug", contactsList.toString())
                     var mutable_list: MutableList<Any> = contactsList.toMutableList()
                     mutable_list.add(0, countryCode)
                     payload.contact_list = mutable_list.toString()
@@ -50,7 +51,7 @@ class SettingUpViewModel: ViewModel()  {
 //                    }
             } catch (e: Exception) {
                 _uploaded.value = false
-                Log.i("SettingUpViewModel", "upload contacts PUT call for user details, Failed! ${e.message}")
+                Log.i("settingupdebug", "upload contacts PUT call for user details, Failed! ${e.message}")
             }
         }
     }

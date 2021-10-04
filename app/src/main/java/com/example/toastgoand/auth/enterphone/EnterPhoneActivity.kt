@@ -53,7 +53,9 @@ class EnterPhoneActivity : BaseActivity() {
         val phoneNumber: Editable? = binding.editTextPhone.getText()
 
         var countryCode: String = binding.ccp.selectedCountryCodeWithPlus
-        var countryIndicator: String = binding.ccp.selectedCountryName
+        var countryIndicator: String = binding.ccp.selectedCountryNameCode
+
+        Log.i("settingupdebug", countryIndicator)
 
         binding.ccp.setOnCountryChangeListener(OnCountryChangeListener {
             countryCode = binding.ccp.selectedCountryCodeWithPlus
@@ -72,10 +74,7 @@ class EnterPhoneActivity : BaseActivity() {
                                 "phoneNumber",
                                 countryCode + phoneNumber.toString()
                             )
-                            putExtra(
-                                "countryIndicator",
-                                countryIndicator
-                            )
+                            putExtra("countryIndicator", countryIndicator)
                         }
                     startActivity(intent)
                     overridePendingTransition(
@@ -89,6 +88,7 @@ class EnterPhoneActivity : BaseActivity() {
                                 "phoneNumber",
                                 countryCode + phoneNumber.toString()
                             )
+                            putExtra("countryIndicator", countryIndicator)
                         }
                     startActivity(intent)
                     overridePendingTransition(
@@ -135,3 +135,4 @@ class EnterPhoneActivity : BaseActivity() {
     }
 
 }
+

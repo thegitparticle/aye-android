@@ -49,6 +49,16 @@ class DetailsSignupActivity : BaseActivity() {
         viewModel = ViewModelProvider(this).get(DetailsSignupViewModel::class.java)
         binding.detailsSignupModel = viewModel
 
+        var phoneNumber = intent.getStringExtra("phoneNumber")
+        var countryIndicator = intent.getStringExtra("countryIndicator")
+
+        if (phoneNumber != null) {
+            Log.i("settingupdebug phone", phoneNumber)
+        }
+        if (countryIndicator != null) {
+            Log.i("settingupdebug country indicator", countryIndicator)
+        }
+
         viewModel.detailsposted.observe(this, {response ->
             if (response) {
                 val intent =

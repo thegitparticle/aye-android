@@ -24,17 +24,6 @@
             android:orientation="vertical">
 
         <TextView
-            android:id="@+id/username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/lato"
-            android:textColor="#FFFFFF"
-            android:textSize="22sp"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:text="gone" />
-
-        <TextView
             android:id="@+id/changingText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
