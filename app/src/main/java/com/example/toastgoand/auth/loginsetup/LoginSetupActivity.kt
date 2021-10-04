@@ -19,8 +19,12 @@ import com.example.toastgoand.databinding.ActivityLoginSetupBinding
 import com.example.toastgoand.home.LandingActivity
 import com.example.toastgoand.prefhelpers.Constant
 import com.example.toastgoand.prefhelpers.PrefHelper
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.coroutines.InternalCoroutinesApi
+import org.kpropmap.propMapOf
+import kotlin.reflect.full.memberProperties
 
 class LoginSetupActivity : BaseActivity() {
     private lateinit var binding: ActivityLoginSetupBinding
@@ -31,6 +35,11 @@ class LoginSetupActivity : BaseActivity() {
 
     lateinit var prefHelper: PrefHelper
 
+    inline fun <reified T : Any> T.asMap() : Map<String, Any?> {
+        val props = T::class.memberProperties.associateBy { it.name }
+        return props.keys.associateWith { props[it]?.get(this) }
+    }
+
     @InternalCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +48,12 @@ class LoginSetupActivity : BaseActivity() {
 
         binding = viewBinding as ActivityLoginSetupBinding
 
-        val store = ContactStore.newInstance(application)
+        val gson = Gson()
+
+//        //convert a data class to a map
+//        fun <T> T.serializeToMap(): Map<String, Any> {
+//            return convert()
+//        }
 
         val requestPermissionLauncher =
             registerForActivityResult(
@@ -50,15 +64,29 @@ class LoginSetupActivity : BaseActivity() {
                     intent.getStringExtra("phoneNumber")?.let { Log.i("settingupdebug phone", it) }
                     intent.getStringExtra("countryIndicator")?.let { Log.i("settingupdebug country code", it) }
 
-                    var listHere: MutableList<Any>
+                    var listHere: MutableList<MyContacts>
+
+                    Log.i("settingupdebug log in activity", "logging works")
 
                     KontactPicker.getAllKontacts(this) {contactList ->
                         listHere = contactList.toMutableList()
+
+                        val listHereMaps: MutableList<Map<String, String>> = mutableListOf()
+                        for (item in listHere) {
+                            mapOf("name" to item.contactName.toString(), "phone" to item.contactNumber.toString())?.let {
+                                listHereMaps.add(
+                                    it
+                                )
+                            }
+                        }
+
+                        Log.i("settingupdebug log in activity", listHereMaps.toString())
+
                         intent.getStringExtra("countryIndicator")?.let {
                             viewModel.uploadUserContacts(
                                 userid = intent.getStringExtra("userid")!!,
                                 countryIndicator = it,
-                                list = listHere
+                                list = listHereMaps
                             )
                         }
                     }

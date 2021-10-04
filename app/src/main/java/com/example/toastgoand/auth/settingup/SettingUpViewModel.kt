@@ -41,7 +41,7 @@ class SettingUpViewModel: ViewModel()  {
                     mutable_list.add(0, countryCode)
                     payload.contact_list = mutable_list.toString()
 //                    val contactsSuccess = UploadContactsApi.retrofitService.uploadContacts(userid = userid, data = payload)
-                    val contactsSuccess = UploadContactsApi.retrofitService.uploadContacts(data = payload)
+//                    val contactsSuccess = UploadContactsApi.retrofitService.uploadContacts(data = payload)
                     _uploaded.value = true
                 }
 //                    .collect { contacts ->

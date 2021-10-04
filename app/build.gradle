@@ -230,5 +230,6 @@ dependencies {
     // contacts fetching with coroutines library
     implementation 'com.alexstyl:contactstore:0.2.0'
     implementation 'com.github.deepakkumardk:KontactPicker:1.4.0'
+    implementation 'com.github.rocketraman:kpropmap:0.0.2'
 
 }

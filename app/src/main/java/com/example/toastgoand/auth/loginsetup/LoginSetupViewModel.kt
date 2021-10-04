@@ -16,6 +16,8 @@ import com.example.toastgoand.network.userdetails.UserDetailsRepo
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 class LoginSetupViewModel(private val repo: UserDetailsRepo): ViewModel() {
 
@@ -37,7 +39,7 @@ class LoginSetupViewModel(private val repo: UserDetailsRepo): ViewModel() {
     }
 
     @InternalCoroutinesApi
-    fun uploadUserContacts(userid: String, countryIndicator: String, list: MutableList<Any>) {
+    fun uploadUserContacts(userid: String, countryIndicator: String, list: MutableList<Map<String, String>>) {
         Log.i("settingupdebug", "upload contacts function in vm called")
         viewModelScope.launch {
             try {
@@ -45,25 +47,10 @@ class LoginSetupViewModel(private val repo: UserDetailsRepo): ViewModel() {
                 var countryCode = mapOf("country_code" to countryIndicator)
 
                 list.add(0, countryCode)
-                payload.contact_list = list.toString()
-                val contactsSuccess = UploadContactsApi.retrofitService.uploadContacts(data = payload)
+                payload.contact_list = Json.encodeToString(list)
+                val contactsSuccess = UploadContactsApi.retrofitService.uploadContacts(userid = userid, data = payload)
                 _uploaded.value = true
 
-//                store.fetchContacts().collect { contactsList ->
-//                    Log.i("settingupdebug", contactsList.toString())
-//                    var mutable_list: MutableList<Any> = contactsList.toMutableList()
-//                    mutable_list.add(0, countryCode)
-//                    payload.contact_list = mutable_list.toString()
-////                    val contactsSuccess = UploadContactsApi.retrofitService.uploadContacts(userid = userid, data = payload)
-//                    val contactsSuccess = UploadContactsApi.retrofitService.uploadContacts(data = payload)
-//                    _uploaded.value = true
-//                }
-//                    .collect { contacts ->
-////                        val contactString = contacts.joinToString(", ") {
-////                            "DisplayName = ${it.displayName}, isStarred = ${it.isStarred}, id = ${it.contactId}"
-////                        }
-////                        println("Contacts emitted: $contactString")
-//                    }
             } catch (e: Exception) {
                 _uploaded.value = false
                 Log.i("settingupdebug", "upload contacts PUT call for user details, Failed! ${e.message}")
