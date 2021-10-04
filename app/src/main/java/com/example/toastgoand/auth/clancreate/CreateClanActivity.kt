@@ -49,6 +49,10 @@ class CreateClanActivity : BaseActivity() {
             val intent = Intent(this, NameClanActivity::class.java).apply {
             }
             startActivity(intent)
+            overridePendingTransition(
+                R.anim.slide_from_right ,
+                R.anim.slide_out_left
+            )
         }
 
     }

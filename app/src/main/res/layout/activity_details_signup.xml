@@ -80,6 +80,13 @@
             android:textColorHint="@color/auth_mid_light_splash"
              />
 
+        <androidx.compose.ui.platform.ComposeView
+            android:id="@+id/compose_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            />
+
         <ImageButton
             android:id="@+id/nextImageButton"
             android:layout_width="wrap_content"
@@ -91,7 +98,8 @@
             android:contentDescription="TODO"
             android:minWidth="48dp"
             android:minHeight="48dp"
-            app:srcCompat="@drawable/ic_caretright" />
+            app:srcCompat="@drawable/ic_caretright"
+            android:visibility="gone"/>
 
     </LinearLayout>
 

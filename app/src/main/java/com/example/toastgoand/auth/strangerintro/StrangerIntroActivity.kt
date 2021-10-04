@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
+import com.example.toastgoand.R
 import com.example.toastgoand.auth.clancreate.CreateClanActivity
 import com.example.toastgoand.databinding.ActivityStrangerIntroBinding
 
@@ -25,6 +26,10 @@ class StrangerIntroActivity : BaseActivity() {
             val intent = Intent(this, CreateClanActivity::class.java).apply {
             }
             startActivity(intent)
+            overridePendingTransition(
+                R.anim.slide_from_right ,
+                R.anim.slide_out_left
+            )
         }
 
         binding.createClanButton.performClick()

@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
+import com.example.toastgoand.R
 import com.example.toastgoand.databinding.ActivityNameClanBinding
 
 class NameClanActivity : BaseActivity() {
@@ -24,6 +25,10 @@ class NameClanActivity : BaseActivity() {
             val intent = Intent(this, ClanCreatedActivity::class.java).apply{
             }
             startActivity(intent)
+            overridePendingTransition(
+                R.anim.slide_from_right ,
+                R.anim.slide_out_left
+            )
         }
 
     }

@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
+import com.example.toastgoand.R
 import com.example.toastgoand.databinding.ActivityClanCreatedBinding
 import com.example.toastgoand.home.LandingActivity
 import com.example.toastgoand.prefhelpers.Constant

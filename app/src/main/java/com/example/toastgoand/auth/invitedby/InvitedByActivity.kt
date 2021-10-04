@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
+import com.example.toastgoand.R
 import com.example.toastgoand.auth.strangerintro.StrangerIntroActivity
 import com.example.toastgoand.databinding.ActivityInvitedByBinding
 
@@ -25,6 +26,10 @@ class InvitedByActivity : BaseActivity() {
                 putExtra("phoneNumber", intent.getStringExtra("phoneNumber"))
             }
             startActivity(intent)
+            overridePendingTransition(
+                R.anim.slide_from_right ,
+                R.anim.slide_out_left
+            )
         }
     }
 

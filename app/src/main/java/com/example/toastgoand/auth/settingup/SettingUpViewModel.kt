@@ -2,45 +2,58 @@ package com.example.toastgoand.auth.settingup
 
 import android.util.Log
 import androidx.lifecycle.*
+import com.alexstyl.contactstore.ContactStore
+import com.example.toastgoand.ToastgoApplication
+import com.example.toastgoand.auth.network.apis.UploadContactsApi
+import com.example.toastgoand.auth.network.dataclasses.CountryCodeDataClass
+import com.example.toastgoand.auth.network.dataclasses.UploadContactsDataClass
 import com.example.toastgoand.network.userdetails.UserDetailsApi
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
 import com.example.toastgoand.network.userdetails.UserDetailsRepo
+import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class SettingUpViewModel(private val repo: UserDetailsRepo): ViewModel() {
+class SettingUpViewModel(application: ToastgoApplication): AndroidViewModel(application)  {
 
-    val userDetails: LiveData<UserDetailsDataClass> = repo.userDetails.asLiveData()
+    private val context = getApplication<ToastgoApplication>().applicationContext
+
+    private val _uploaded = MutableLiveData<Boolean>(false)
+    val uploaded: LiveData<Boolean>
+        get() = _uploaded
 
     override fun onCleared() {
         super.onCleared()
         Log.i("QuoteFragmentViewModel", "QuoteFragmentViewModel destroyed")
     }
 
-    fun insert(userDetails: UserDetailsDataClass) = viewModelScope.launch {
-        repo.insert(userDetails)
-    }
-
-    fun getUserDetailsHere(phone: String) {
+    @InternalCoroutinesApi
+    fun uploadUserContacts(userid: String, countryIndicator: String) {
         viewModelScope.launch {
             try {
-                val userResult = UserDetailsApi.retrofitService.getUserDetails(phone)
-                var x_here: UserDetailsDataClass = userResult
-                insert(x_here)
-                repo.insert(x_here)
+                var payload: UploadContactsDataClass = UploadContactsDataClass(contact_list = "")
+                var countryCode = CountryCodeDataClass(country_code = countryIndicator)
+                val store = ContactStore.newInstance(context)
+
+                store.fetchContacts().collect { contactsList ->
+                    Log.i("contactswork", contactsList.toString())
+                    var mutable_list: MutableList<Any> = contactsList.toMutableList()
+                    mutable_list.add(0, countryCode)
+                    payload.contact_list = mutable_list.toString()
+                    val contactsSuccess = UploadContactsApi.retrofitService.uploadContacts(userid = userid, data = payload)
+                    _uploaded.value = true
+                }
+//                    .collect { contacts ->
+////                        val contactString = contacts.joinToString(", ") {
+////                            "DisplayName = ${it.displayName}, isStarred = ${it.isStarred}, id = ${it.contactId}"
+////                        }
+////                        println("Contacts emitted: $contactString")
+//                    }
             } catch (e: Exception) {
-                Log.i("SettingUpViewModel", "API call for user details, Failed! ${e.message}")
+                _uploaded.value = false
+                Log.i("SettingUpViewModel", "upload contacts PUT call for user details, Failed! ${e.message}")
             }
         }
     }
-}
 
-
-class SettingUpViewModelFactory(private val repo: UserDetailsRepo) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(SettingUpViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return SettingUpViewModel(repo) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
 }
