@@ -43,6 +43,7 @@ import com.example.toastgoand.prefhelpers.PrefHelper
 import com.example.toastgoand.uibits.HeaderOtherScreens
 import com.example.toastgoand.uibits.LoadingComposeBit
 import com.google.accompanist.insets.ProvideWindowInsets
+import com.google.gson.Gson
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -65,14 +66,17 @@ class CreateClanActivity : BaseActivity() {
             onBackPressed()
         }
 
-        val addedContacts = mutableListOf<ContactsListItemDataClass>()
+        val addedContacts = arrayListOf<String>()
+        val addedContacts1 = mutableListOf<ContactsListItemDataClass>()
+
+        val gson = Gson()
 
         fun addSelectedToList(item: ContactsListItemDataClass) {
-            addedContacts.add(item)
+            addedContacts.add(item.phone)
         }
 
         fun removeSelectedToList(item: ContactsListItemDataClass) {
-            addedContacts.remove(item)
+            addedContacts.remove(item.phone)
         }
 
         setContent {
@@ -121,11 +125,11 @@ class CreateClanActivity : BaseActivity() {
                             FloatingActionButton(
                                 onClick = {
                                     for (item in addedContacts) {
-
+                                        var stringList = gson.toJson(addedContacts)
                                         val intent = Intent(this, NameClanActivity::class.java).apply {
                                             putExtra("userid", viewModel.deets.value?.user?.id.toString())
                                             putExtra("chosencontactssize", addedContacts.size.toString())
-                                            putExtra("chosencontacts", addedContacts.toString())
+                                            putExtra("chosencontacts", addedContacts)
                                         }
                                         startActivity(intent)
                                         overridePendingTransition(

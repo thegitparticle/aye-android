@@ -9,8 +9,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -20,17 +18,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
-import com.example.toastgoand.R
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityNameClanBinding
 import com.example.toastgoand.home.LandingActivity
 import com.example.toastgoand.home.startclan.network.StartClanApi
 import com.example.toastgoand.home.startclan.network.StartClanDataClass
-import com.example.toastgoand.network.userdetails.User
-import com.example.toastgoand.network.userdetails.UserDetailsDataClass
 import com.example.toastgoand.uibits.HeaderOtherScreens
 import kotlinx.coroutines.launch
 
@@ -55,7 +49,7 @@ class NameClanActivity : BaseActivity() {
                 val context = LocalContext.current
 
                 val chosencontactssize = intent.getStringExtra("chosencontactssize")
-                val chosencontacts = intent.getStringExtra("chosencontacts")
+                val chosencontacts = intent.getStringArrayExtra("chosencontacts")
                 val userid = intent.getStringExtra("userid")
 
                 val textState = remember { mutableStateOf(TextFieldValue()) }
@@ -65,6 +59,7 @@ class NameClanActivity : BaseActivity() {
                 var responseClanId = remember { mutableStateOf("") }
 
                 val composableScope = rememberCoroutineScope()
+
                 fun startClan() {
                     val name_here = textState.value.text
                     val admin_here = userid?.toInt()
@@ -79,6 +74,17 @@ class NameClanActivity : BaseActivity() {
                                 StartClanApi.retrofitService.startClan(payload_here)
 
                             responseClanId.value = responseStartClan.toString()
+
+                            if (chosencontacts != null) {
+                                for (item in chosencontacts) {
+                                    if (userid != null) {
+                                        viewModel.invitePeopleToClub(
+                                            phone = item, clubid = responseClanId.value,
+                                            hostuserid = userid
+                                        )
+                                    }
+                                }
+                            }
 
                             Log.i("startclanlog", responseClanId.value)
 
