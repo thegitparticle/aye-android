@@ -1,12 +1,15 @@
 package com.example.toastgoand.auth.loginsetup
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.core.net.toUri
 import androidx.lifecycle.Observer
 import androidx.viewbinding.ViewBinding
 import com.alexstyl.contactstore.ContactStore
@@ -21,8 +24,11 @@ import com.example.toastgoand.prefhelpers.Constant
 import com.example.toastgoand.prefhelpers.PrefHelper
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.android.synthetic.main.activity_create_clan.*
 import kotlinx.android.synthetic.main.fragment_main.*
-import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.*
+import org.jetbrains.anko.doAsyncResult
+import org.jetbrains.anko.onComplete
 import org.kpropmap.propMapOf
 import kotlin.reflect.full.memberProperties
 
@@ -35,25 +41,92 @@ class LoginSetupActivity : BaseActivity() {
 
     lateinit var prefHelper: PrefHelper
 
-    inline fun <reified T : Any> T.asMap() : Map<String, Any?> {
-        val props = T::class.memberProperties.associateBy { it.name }
-        return props.keys.associateWith { props[it]?.get(this) }
-    }
-
     @InternalCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        KontactPicker().startPickerForResult(this, KontactPickerItem(), 3000)
+        var listOfContactsDirect: MutableList<MyContacts>
+
+
+        fun filterContactsFromMap(contactMap: MutableMap<String, MyContacts>): MutableList<MyContacts> {
+            val myKontacts: MutableList<MyContacts> = arrayListOf()
+            val phoneList = arrayListOf<String>()
+            contactMap.entries.forEach {
+                val contact = it.value
+
+                contact.contactNumberList.forEach { number ->
+                    if (!phoneList.contains(number)) {
+                        val newContact = MyContacts(
+                            contact.contactId,
+                            contact.contactName,
+                            number, false, "".toUri(),
+                            contact.contactNumberList
+                        )
+                        myKontacts.add(newContact)
+                        phoneList.add(number)
+                    }
+                }
+            }
+            myKontacts.sortBy {
+                it.contactName
+            }
+            return myKontacts
+        }
+
+        fun getAllContacts(activity: Activity?, onCompleted: (MutableList<MyContacts>) -> Unit) {
+            val startTime = System.currentTimeMillis()
+            val projection = arrayOf(
+                ContactsContract.CommonDataKinds.Phone.CONTACT_ID,
+                ContactsContract.Contacts.DISPLAY_NAME,
+                ContactsContract.CommonDataKinds.Phone.NUMBER
+            )
+
+            val contactMap = mutableMapOf<String, MyContacts>()
+            val cr = activity?.contentResolver
+            doAsyncResult {
+                cr?.query(
+                    ContactsContract.CommonDataKinds.Phone.CONTENT_URI, projection,
+                    null, null, null
+                )?.use {
+                    val idIndex = it.getColumnIndex(ContactsContract.Data.CONTACT_ID)
+                    val nameIndex = it.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)
+                    val numberIndex = it.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
+
+                    var id: String
+                    var name: String
+                    var number: String
+                    while (it.moveToNext()) {
+                        val contacts = MyContacts()
+                        id = it.getLong(idIndex).toString()
+                        name = it.getString(nameIndex)
+                        number = it.getString(numberIndex).replace(" ", "")
+
+                        contacts.contactId = id
+                        contacts.contactName = name
+                        contacts.contactNumber = number
+                        contacts.contactNumberList = arrayListOf(number)
+
+                        if (contactMap[id] != null) {
+                            val list = contactMap[id]?.contactNumberList!!
+                            if (!list.contains(number))
+                                list.add(number)
+                            contacts.contactNumberList = list
+                        } else {
+                            contactMap[id] = contacts
+                        }
+                    }
+                    it.close()
+                }
+                onComplete {
+                    val fetchingTime = System.currentTimeMillis() - startTime
+                    Log.i("Fetching Completed", "in $fetchingTime ms")
+                    onCompleted.invoke(filterContactsFromMap(contactMap))
+                }
+                return@doAsyncResult
+            }
+        }
 
         binding = viewBinding as ActivityLoginSetupBinding
-
-        val gson = Gson()
-
-//        //convert a data class to a map
-//        fun <T> T.serializeToMap(): Map<String, Any> {
-//            return convert()
-//        }
 
         val requestPermissionLauncher =
             registerForActivityResult(
@@ -68,7 +141,7 @@ class LoginSetupActivity : BaseActivity() {
 
                     Log.i("settingupdebug log in activity", "logging works")
 
-                    KontactPicker.getAllKontacts(this) {contactList ->
+                    getAllContacts(this) {contactList ->
                         listHere = contactList.toMutableList()
 
                         val listHereMaps: MutableList<Map<String, String>> = mutableListOf()
@@ -90,6 +163,7 @@ class LoginSetupActivity : BaseActivity() {
                             )
                         }
                     }
+
                     binding.changingText.text = "setting up your profile ..."
                     binding.allowContactsButton.visibility = View.INVISIBLE
                 } else {
