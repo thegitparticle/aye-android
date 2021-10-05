@@ -293,7 +293,19 @@ class ClanTalkActivity : BaseActivity() {
                                                         Intent(
                                                             context,
                                                             QuickActivity::class.java
-                                                        ).apply { })
+                                                        ).apply {
+                                                            putExtra("clubName", clubName)
+                                                            putExtra("clubid", clubid)
+                                                            putExtra("channelid", channelid)
+                                                            putExtra("ongoingFrame", ongoingFrame)
+                                                            putExtra("startTime", startTime)
+                                                            putExtra("endTime", endTime)
+                                                            putExtra(
+                                                                "userid",
+                                                                viewModel.deets.value?.user?.id
+                                                            )
+                                                            putExtra("directornot", directornot)
+                                                        })
                                                 },
                                                 modifier = Modifier
                                                     .padding(horizontal = 25.dp)

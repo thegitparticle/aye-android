@@ -24,8 +24,10 @@ import com.example.toastgoand.databinding.ActivityQuickBinding
 import com.example.toastgoand.databinding.GroundFragmentBinding
 import com.example.toastgoand.quick.groundlayer.GroundFragmentDirections
 import com.example.toastgoand.quick.groundlayer.GroundViewModel
+import com.example.toastgoand.quick.network.apis.AgoraTokenApi
 import com.google.common.util.concurrent.ListenableFuture
 import kotlinx.android.synthetic.main.ground_fragment.*
+import kotlinx.android.synthetic.main.start_call_dialog.*
 
 class QuickActivity : BaseActivity() {
 
@@ -43,7 +45,17 @@ class QuickActivity : BaseActivity() {
 
         viewModel = ViewModelProvider(this).get(QuickViewModel::class.java)
         binding.quickViewModel = viewModel
-//        binding.lifecycleOwner = viewLifecycleOwner
+
+        val clubName = intent.getStringExtra("clubName").toString()
+        val clubid = intent.getIntExtra("clubid", 0)
+        val channelid = intent.getStringExtra("channelid").toString()
+        val ongoingFrame = intent.getBooleanExtra("ongoingFrame", false)
+        val startTime = intent.getStringExtra("startTime").toString()
+        val endTime = intent.getStringExtra("endTime").toString()
+        val userid = intent.getIntExtra("userid", 0)
+        val directornot = intent.getBooleanExtra("directornot", false)
+
+        viewModel.getTokenHere(userid = userid, channelid = channelid)
 
         cameraProviderFuture = ProcessCameraProvider.getInstance(this)
 
@@ -68,14 +80,30 @@ class QuickActivity : BaseActivity() {
 
         binding.cameraContainer.setOnClickListener {
             val intent = Intent(this, StreamCameraActivity::class.java).apply {
-//                putExtra("phoneNumber", intent.getStringExtra("phoneNumber"))
+                putExtra("clubName", clubName)
+                putExtra("clubid", clubid)
+                putExtra("channelid", channelid)
+                putExtra("ongoingFrame", ongoingFrame)
+                putExtra("startTime", startTime)
+                putExtra("endTime", endTime)
+                putExtra("userid", userid)
+                putExtra("directornot", directornot)
+                putExtra("token", viewModel.token.value)
             }
             startActivity(intent)
         }
 
         binding.appStreamContainer.setOnClickListener {
             val intent = Intent(this, StreamMultiActivity::class.java).apply {
-//                putExtra("phoneNumber", intent.getStringExtra("phoneNumber"))
+                putExtra("clubName", clubName)
+                putExtra("clubid", clubid)
+                putExtra("channelid", channelid)
+                putExtra("ongoingFrame", ongoingFrame)
+                putExtra("startTime", startTime)
+                putExtra("endTime", endTime)
+                putExtra("userid", userid)
+                putExtra("directornot", directornot)
+                putExtra("token", viewModel.token.value)
             }
             startActivity(intent)
         }
