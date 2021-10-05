@@ -8,6 +8,8 @@ import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.R
 import com.example.toastgoand.auth.clancreate.CreateClanActivity
 import com.example.toastgoand.databinding.ActivityStrangerIntroBinding
+import java.util.*
+import kotlin.concurrent.schedule
 
 
 class StrangerIntroActivity : BaseActivity() {
@@ -34,11 +36,11 @@ class StrangerIntroActivity : BaseActivity() {
 
         binding.createClanButton.performClick()
 
-//        runOnUiThread(
-//            Timer("strangerIntroDelay", false).schedule(10000) {
-//                binding.createClanButton.performClick()
-//            }
-//        )
+        runOnUiThread(
+            Timer("strangerIntroDelay", false).schedule(10000) {
+                binding.createClanButton.performClick()
+            }
+        )
 
     }
 

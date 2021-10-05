@@ -22,7 +22,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:paddingTop="8dp"
-                android:text="this is init sentence"
+                android:text="make a clan with your besties!"
                 android:textColor="@color/auth_light_splash"
                 android:textSize="20sp"/>
 
