@@ -45,6 +45,8 @@ class LoginSetupActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        intent.getStringExtra("phoneNumber")?.let { viewModel.getUserDetailsWhileLoginHere(it) }
+
         var listOfContactsDirect: MutableList<MyContacts>
 
 
@@ -177,8 +179,6 @@ class LoginSetupActivity : BaseActivity() {
         requestPermissionLauncher.launch(
             Manifest.permission.READ_CONTACTS
         )
-
-        intent.getStringExtra("phoneNumber")?.let { viewModel.getUserDetailsWhileLoginHere(it) }
 
         viewModel.uploaded.observe(this, Observer { response ->
             if (response) {

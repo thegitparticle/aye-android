@@ -107,8 +107,12 @@ class OtpSignupActivity : BaseActivity() {
                                                     intent.getStringExtra("phoneNumber")
                                                 )
                                                 putExtra(
-                                                    "invitedCheckData",
-                                                    viewModel.invitedData.toString()
+                                                    "invitedCheckDataClub",
+                                                    viewModel.invitedData.value?.invited_to_clubs_id.toString()
+                                                )
+                                                putExtra(
+                                                    "invitedCheckDataUser",
+                                                    viewModel.invitedData.value?.invited_by_user.toString()
                                                 )
                                                 putExtra(
                                                     "userid",

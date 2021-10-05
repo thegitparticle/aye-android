@@ -25,7 +25,7 @@
             android:textSize="22sp"
             android:layout_centerInParent="true"
             android:layout_gravity="center"
-            android:text="you have been invited by San" />
+            android:text="finding you friends ..." />
 
         <mehdi.sakout.fancybuttons.FancyButton
             android:id="@+id/diveInButton"
@@ -44,7 +44,8 @@
             fancy:fb_defaultColor="@color/auth_off_dark_splash"
             fancy:fb_iconPosition="left"
             fancy:fb_radius="30dp"
-            fancy:fb_text="@string/invited_by_go_button"
+            fancy:fb_text="dive into Aye!"
+            android:visibility="invisible"
             fancy:fb_textColor="#FFFFFF"/>
 
     </RelativeLayout>

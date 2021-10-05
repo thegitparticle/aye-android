@@ -65,9 +65,9 @@ class LoginSetupViewModel(private val repo: UserDetailsRepo): ViewModel() {
                 var x_here: UserDetailsDataClass = userResult
                 insert(x_here)
                 repo.insert(x_here)
-                Log.i("observer", x_here.toString())
+                Log.i("settingupdebuguserdeets", x_here.toString())
             } catch (e: Exception) {
-                Log.i("LoginSetupViewModel", "API call for user details, Failed! ${e.message}")
+                Log.i("settingupdebuguserdeets", "API call for user details, Failed! ${e.message}")
             }
         }
     }

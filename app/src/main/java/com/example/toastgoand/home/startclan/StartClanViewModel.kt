@@ -9,7 +9,10 @@ import com.example.toastgoand.network.userdetails.UserDetailsDataClass
 import com.example.toastgoand.network.userdetails.UserDetailsRepo
 import kotlinx.coroutines.launch
 
-class StartClanViewModel(private val repoFriends: MyFriendsRepo, private val repoDeets: UserDetailsRepo): ViewModel() {
+class StartClanViewModel(
+    private val repoFriends: MyFriendsRepo,
+    private val repoDeets: UserDetailsRepo
+) : ViewModel() {
 
     val deets: LiveData<UserDetailsDataClass> = repoDeets.userDetails.asLiveData()
 
@@ -25,7 +28,7 @@ class StartClanViewModel(private val repoFriends: MyFriendsRepo, private val rep
         }
     }
 
-        fun getMyFriendsHere(userid: Int) {
+    fun getMyFriendsHere(userid: Int) {
         viewModelScope.launch {
             try {
                 val myFriendsResult = MyFriendsApi.retrofitService.getMyFriends(userid.toString())
@@ -39,8 +42,11 @@ class StartClanViewModel(private val repoFriends: MyFriendsRepo, private val rep
     }
 }
 
-class StartClanViewModelFactory (private val repoFriends: MyFriendsRepo, private val repoDeets: UserDetailsRepo) : ViewModelProvider.Factory {
-    override fun <T: ViewModel> create(modelClass: Class<T>): T {
+class StartClanViewModelFactory(
+    private val repoFriends: MyFriendsRepo,
+    private val repoDeets: UserDetailsRepo
+) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(StartClanViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
             return StartClanViewModel(repoFriends, repoDeets) as T
