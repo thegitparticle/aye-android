@@ -42,6 +42,16 @@ class StreamCameraActivity : BaseActivity() {
     private lateinit var binding: ActivityStreamCameraBinding
     private lateinit var viewModel: StreamCameraViewModel
 
+    var clubName: String = ""
+    var clubid: Int = 0
+    var channelid : String = ""
+    var ongoingFrame : Boolean = false
+    var startTime : String = ""
+    var endTime : String = ""
+    var userid : Int = 0
+    var directornot : Boolean = false
+    var token: String = ""
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +59,16 @@ class StreamCameraActivity : BaseActivity() {
         binding = viewBinding as ActivityStreamCameraBinding
 
         viewModel = ViewModelProvider(this).get(StreamCameraViewModel::class.java)
+
+        clubName = intent.getStringExtra("clubName").toString()
+        clubid = intent.getIntExtra("clubid", 0)
+        channelid = intent.getStringExtra("channelid").toString()
+        ongoingFrame = intent.getBooleanExtra("ongoingFrame", false)
+        startTime = intent.getStringExtra("startTime").toString()
+        endTime = intent.getStringExtra("endTime").toString()
+        userid = intent.getIntExtra("userid", 0)
+        directornot = intent.getBooleanExtra("directornot", false)
+        token = intent.getStringExtra("token").toString()
 
         // If all the permissions are granted, initialize the RtcEngine object and join a channel.
         if (checkSelfPermission(
@@ -59,7 +79,7 @@ class StreamCameraActivity : BaseActivity() {
             initializeAndJoinChannel()
         }
 
-        Log.i("camerastream", "on create cam stream log")
+        Log.i("streamworking", channelid)
 
     }
 
@@ -78,17 +98,17 @@ class StreamCameraActivity : BaseActivity() {
             return false
         }
         return true
+
     }
 
     // Fill the App ID of your project generated on Agora Console.
-    private val APP_ID = "3203805757c54ff4a384e53869cc1888"
+    private val APP_ID = "851193d91b1945bda153a38f3584ead3"
 
     // Fill the channel name.
-    private val CHANNEL = "channel"
+//    private val CHANNEL = "90_c"
 
     // Fill the temp token generated on Agora Console.
-    private val TOKEN =
-        "0063203805757c54ff4a384e53869cc1888IACrVJ5afAo92kQBKhfHdf3bbnIO9wDQHBpynbmiHo7P50eO+aIAAAAAEAAWeksajB5OYQEAAQCMHk5h"
+//    private val TOKEN = "006851193d91b1945bda153a38f3584ead3IAC0sdltLv7UMVotFrpkgxQLknllea32mQpUuLOpCS2Eut78lGEAAAAAEADy5cWP7NZdYQEAAQDr1l1h"
 
     private var mRtcEngine: RtcEngine? = null
 
@@ -120,7 +140,7 @@ class StreamCameraActivity : BaseActivity() {
         mRtcEngine!!.setupLocalVideo(VideoCanvas(localFrame, VideoCanvas.RENDER_MODE_FIT, 0))
 
         // Join the channel with a token.
-        mRtcEngine!!.joinChannel(TOKEN, CHANNEL, "", 0)
+        mRtcEngine!!.joinChannel(token, channelid, "", userid)
 
         val composeView = binding.composeView
 
@@ -149,7 +169,7 @@ class StreamCameraActivity : BaseActivity() {
                             .size(40.dp)
                             .clickable {
                                 mRtcEngine?.switchCamera()
-                                Log.i("camerastream", "clicked on cam change")
+                                Log.i("streamworking", "clicked on cam change")
                             }
                     ) {
                         CircleIcon(iconName = FeatherIcons.Repeat, modifier = Modifier)
@@ -169,7 +189,7 @@ class StreamCameraActivity : BaseActivity() {
                         modifier = Modifier
                             .size(40.dp)
                             .clickable {
-                                Log.i("camerastream", "clicked on cam change")
+                                Log.i("streamworking", "clicked on cam change")
                                 mRtcEngine?.muteLocalAudioStream(!muted)
                                 muted = !muted
                             }
@@ -177,7 +197,7 @@ class StreamCameraActivity : BaseActivity() {
                         CircleIcon(
                             iconName = FeatherIcons.Mic,
                             modifier = Modifier.clickable {
-                                Log.i("camerastream", "clicked on cam change")
+                                Log.i("streamworking", "clicked on cam change")
                             })
                     }
                 }
