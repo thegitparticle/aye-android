@@ -128,50 +128,62 @@ class StartClanNameActivity : BaseActivity() {
                                 .fillMaxWidth()
                                 .fillMaxHeight()
                                 .background(AyeTheme.colors.uiBackground),
-                            verticalArrangement = Arrangement.SpaceBetween,
+                            verticalArrangement = Arrangement.Center,
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            TextField(
-                                modifier = Modifier
-                                    .background(MaterialTheme.colors.surface)
-                                    .clip(
-                                        RoundedCornerShape(corner = CornerSize(10.dp))
-                                    )
-                                    .padding(vertical = 10.dp)
-                                    .fillMaxWidth(0.9f),
-                                value = textState.value,
-                                onValueChange = { textState.value = it },
-                                textStyle = MaterialTheme.typography.body2,
-                                singleLine = true,
-                                placeholder = {
-                                    Text(
-                                        text = "",
-                                        style = MaterialTheme.typography.body2
-                                    )
-                                },
-                            )
-                            Text("The textfield has this text: " + textState.value.text)
-                            Button(
-                                onClick = {
-                                    startClan()
-                                    showNameSetUp.value = false
-                                },
-                                colors = ButtonDefaults.textButtonColors(
-                                    backgroundColor = AyeTheme.colors.textSecondary,
-                                ),
-                                shape = RoundedCornerShape(30.dp),
-                                modifier = Modifier
-                                    .padding(vertical = 30.dp)
-                                    .height(60.dp)
-                                    .width(160.dp),
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally
                             ) {
-                                Text(
-                                    "start clan",
-                                    style = MaterialTheme.typography.subtitle1,
-                                    color = AyeTheme.colors.uiBackground
+                                TextField(
+                                    modifier = Modifier
+                                        .clip(
+                                            RoundedCornerShape(corner = CornerSize(20.dp))
+                                        )
+                                        .padding(vertical = 10.dp)
+                                        .fillMaxWidth(0.9f),
+                                    value = textState.value,
+                                    onValueChange = { textState.value = it },
+                                    textStyle = MaterialTheme.typography.body2,
+                                    singleLine = true,
+                                    placeholder = {
+                                        Text(
+                                            text = "",
+                                            style = MaterialTheme.typography.body2
+                                        )
+                                    },
+                                    colors = TextFieldDefaults.textFieldColors(
+                                        backgroundColor = AyeTheme.colors.uiSurface,
+                                        cursorColor = AyeTheme.colors.textPrimary.copy(0.5f),
+                                        textColor = AyeTheme.colors.textPrimary,
+                                        placeholderColor = AyeTheme.colors.textPrimary.copy(0.5f),
+                                        focusedLabelColor = AyeTheme.colors.uiSurface,
+                                        unfocusedLabelColor = AyeTheme.colors.uiSurface,
+                                        focusedIndicatorColor = AyeTheme.colors.uiSurface,
+                                        unfocusedIndicatorColor = AyeTheme.colors.uiSurface,
+                                    )
                                 )
+                                Spacer(modifier = Modifier.size(20.dp))
+                                Button(
+                                    onClick = {
+                                        startClan()
+                                        showNameSetUp.value = false
+                                    },
+                                    colors = ButtonDefaults.textButtonColors(
+                                        backgroundColor = AyeTheme.colors.textSecondary,
+                                    ),
+                                    shape = RoundedCornerShape(30.dp),
+                                    modifier = Modifier
+                                        .padding(vertical = 30.dp)
+                                        .height(60.dp)
+                                        .width(160.dp),
+                                ) {
+                                    Text(
+                                        "start clan",
+                                        style = MaterialTheme.typography.subtitle1,
+                                        color = AyeTheme.colors.uiBackground
+                                    )
+                                }
                             }
-
                         }
                     } else {
                         Column(
