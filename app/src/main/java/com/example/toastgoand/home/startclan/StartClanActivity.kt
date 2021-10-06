@@ -42,6 +42,8 @@ import com.example.toastgoand.network.userdetails.User
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
 import com.example.toastgoand.uibits.HeaderOtherScreens
 import com.google.accompanist.insets.ProvideWindowInsets
+import com.google.accompanist.insets.navigationBarsWithImePadding
+import com.google.accompanist.insets.statusBarsPadding
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.ArrowRight
 import spencerstudios.com.bungeelib.Bungee
@@ -103,6 +105,9 @@ class StartClanActivity : BaseActivity() {
                 val textState = remember { mutableStateOf(TextFieldValue()) }
 
                 Scaffold(
+                    modifier = Modifier
+                        .navigationBarsWithImePadding()
+                        .statusBarsPadding(),
                     topBar = {
                         HeaderOtherScreens(
                             modifier = Modifier.fillMaxWidth(),
@@ -118,7 +123,7 @@ class StartClanActivity : BaseActivity() {
                                     context,
                                     StartClanInviteContactsActivity::class.java
                                 ).apply {
-                                    putExtra( "addedfriends",  addedFriends.toString())
+                                    putExtra("addedfriends", addedFriends.toString())
                                 }
                                 startActivity(intent)
                                 overridePendingTransition(
@@ -137,47 +142,56 @@ class StartClanActivity : BaseActivity() {
                                 modifier = Modifier.size(30.dp)
                             )
                         }
-                    }
-                ) { contentPadding ->
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .fillMaxHeight()
-                            .background(AyeTheme.colors.uiBackground),
-                        verticalArrangement = Arrangement.SpaceBetween,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        TextField(
+                    },
+                    content = { innerPadding ->
+                        Column(
                             modifier = Modifier
-                                .background(AyeTheme.colors.uiSurface)
-                                .clip(
-                                    RoundedCornerShape(corner = CornerSize(20.dp))
-                                )
-                                .padding(vertical = 20.dp)
-                                .fillMaxWidth(0.9f),
-                            value = textState.value,
-                            onValueChange = { textState.value = it },
-                            textStyle = MaterialTheme.typography.body2,
-                            singleLine = true,
-                            placeholder = {
-                                Text(
-                                    text = "",
-                                    style = MaterialTheme.typography.body2
-                                )
-                            },
-                        )
-                        Text("The textfield has this text: " + textState.value.text)
-                        LazyColumn(modifier = Modifier.background(AyeTheme.colors.uiBackground).fillMaxWidth()) {
+                                .fillMaxWidth()
+                                .fillMaxHeight()
+                                .background(AyeTheme.colors.uiBackground),
+                            verticalArrangement = Arrangement.SpaceBetween,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            TextField(
+                                modifier = Modifier
+                                    .background(AyeTheme.colors.uiSurface)
+                                    .clip(
+                                        RoundedCornerShape(corner = CornerSize(20.dp))
+                                    )
+                                    .padding(vertical = 20.dp)
+                                    .fillMaxWidth(0.9f),
+                                value = textState.value,
+                                onValueChange = { textState.value = it },
+                                textStyle = MaterialTheme.typography.body2,
+                                singleLine = true,
+                                placeholder = {
+                                    Text(
+                                        text = "",
+                                        style = MaterialTheme.typography.body2
+                                    )
+                                },
+                            )
+                            Text("The textfield has this text: " + textState.value.text)
+                            LazyColumn(
+                                modifier = Modifier
+                                    .background(AyeTheme.colors.uiBackground)
+                                    .fillMaxWidth()
+                            ) {
 
-                            items(
-                                items = myFriendsListHere,
-                                itemContent = {
-                                    FriendsListItem(it, ::addSelectedToList, ::removeSelectedToList)
-                                })
+                                items(
+                                    items = myFriendsListHere,
+                                    itemContent = {
+                                        FriendsListItem(
+                                            it,
+                                            ::addSelectedToList,
+                                            ::removeSelectedToList
+                                        )
+                                    })
+                            }
                         }
-                    }
 
-                }
+                    }
+                )
             }
         }
     }

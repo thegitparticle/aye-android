@@ -14,7 +14,7 @@
         android:background="@color/light_splash"
         android:paddingTop="0dp"
         android:shadowRadius="100"
-        android:translationZ="20dp"
+        android:translationZ="40dp"
         android:outlineAmbientShadowColor="@color/green_splash"
         app:layout_constraintTop_toTopOf="parent"
         >

@@ -27,7 +27,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ToastgoandN"
         android:windowSoftInputMode="stateHidden"
-        tools:replace="android:appComponentFactory">
+        tools:replace="android:appComponentFactory"
+        android:fitsSystemWindows="true"
+        >
         <activity
             android:name=".home.startclan.StartClanNameActivity"
             android:exported="true" />
