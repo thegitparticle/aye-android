@@ -45,12 +45,12 @@ class StreamCameraActivity : BaseActivity() {
 
     var clubName: String = ""
     var clubid: Int = 0
-    var channelid : String = ""
-    var ongoingFrame : Boolean = false
-    var startTime : String = ""
-    var endTime : String = ""
-    var userid : Int = 0
-    var directornot : Boolean = false
+    var channelid: String = ""
+    var ongoingFrame: Boolean = false
+    var startTime: String = ""
+    var endTime: String = ""
+    var userid: Int = 0
+    var directornot: Boolean = false
     var token: String = ""
 
 
@@ -119,13 +119,16 @@ class StreamCameraActivity : BaseActivity() {
 //            runOnUiThread {
             // Call setupRemoteVideo to set the remote video view after getting uid from the onUserJoined callback.
             setupRemoteVideo(uid)
-            Log.i("streamworking", "${uid} user joined")
+            Log.i("streamworking user joined", "${uid} user joined")
 //            }
         }
 
         override fun onLeaveChannel(stats: RtcStats) {
             super.onLeaveChannel(stats)
-            Log.i("streamworking iRtcEngineEventHandler onleave", String.format("local user %d leaveChannel!", userid))
+            Log.i(
+                "streamworking iRtcEngineEventHandler onleave",
+                String.format("local user %d leaveChannel!", userid)
+            )
         }
 
         override fun onJoinChannelSuccess(channel: String, userid: Int, elapsed: Int) {
@@ -134,6 +137,25 @@ class StreamCameraActivity : BaseActivity() {
                 String.format("onJoinChannelSuccess channel %s uid %d", channel, userid)
             )
         }
+
+        override fun onError(err: Int) {
+            Log.e(
+                "streamworking iRtcEngineEventHandler onError",
+                String.format("onError code %d message %s", err, RtcEngine.getErrorDescription(err))
+            )
+        }
+
+        override fun onWarning(warn: Int) {
+            Log.w(
+                "streamworking iRtcEngineEventHandler onWarning",
+                String.format(
+                    "onWarning code %d message %s",
+                    warn,
+                    RtcEngine.getErrorDescription(warn)
+                )
+            )
+        }
+
     }
 
     private fun initializeAndJoinChannel() {

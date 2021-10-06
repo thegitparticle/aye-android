@@ -184,8 +184,8 @@ class StreamMultiActivity : BaseActivity() {
                         modifier = Modifier
                             .size(60.dp)
                             .clickable {
-//                                engine?.leaveChannel()
-                                mSSClient!!.stop(context)
+                                engine?.leaveChannel()
+//                                mSSClient!!.stop(context)
                                 screenShare!!.text = resources.getString(R.string.screenshare)
                                 isSharing = false
                                 val intent = Intent(context, LandingActivity::class.java).apply {}
@@ -284,17 +284,17 @@ class StreamMultiActivity : BaseActivity() {
                 Log.i("streammultigoon if permission", "join channels called")
                 joinChannel(channelid)
                 if (!isSharing) {
-                    mSSClient!!.start(
-                        this, "851193d91b1945bda153a38f3584ead3", token,
-                        channelid, userid, VideoEncoderConfiguration(
-                            getScreenDimensions(),
-                            FRAME_RATE.FRAME_RATE_FPS_30,
-                            VideoEncoderConfiguration.STANDARD_BITRATE,
-                            ORIENTATION_MODE.ORIENTATION_MODE_ADAPTIVE
-                        )
-                    )
-                    screenShare!!.text = resources.getString(R.string.stop)
-                    isSharing = true
+//                    mSSClient!!.start(
+//                        this, "851193d91b1945bda153a38f3584ead3", token,
+//                        channelid, userid, VideoEncoderConfiguration(
+//                            getScreenDimensions(),
+//                            FRAME_RATE.FRAME_RATE_FPS_30,
+//                            VideoEncoderConfiguration.STANDARD_BITRATE,
+//                            ORIENTATION_MODE.ORIENTATION_MODE_ADAPTIVE
+//                        )
+//                    )
+//                    screenShare!!.text = resources.getString(R.string.stop)
+//                    isSharing = true
                 } else {
                     mSSClient!!.stop(this)
                     screenShare!!.text = resources.getString(R.string.screenshare)
