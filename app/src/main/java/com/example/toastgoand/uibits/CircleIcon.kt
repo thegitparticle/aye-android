@@ -46,7 +46,7 @@ fun CircleIcon (onIconPressed: () -> Unit = { }, iconName: ImageVector, modifier
             ) {
                 Icon(
                     iconName,
-                    "invite contacts to aye",
+                    "circle icon",
                     tint = AyeTheme.colors.iconVector,
                     modifier = Modifier.size(17.dp),
                 )
@@ -78,7 +78,7 @@ fun CircleIconSmall (onIconPressed: () -> Unit = { }, iconName: ImageVector, mod
             ) {
                 Icon(
                     iconName,
-                    "invite contacts to aye",
+                    "circle icon small",
                     tint = AyeTheme.colors.iconVector,
                     modifier = Modifier.size(17.dp),
                 )

@@ -97,14 +97,31 @@ class TheAyeActivity : BaseActivity() {
                                 Row(
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .padding(horizontal = 20.dp, vertical = 50.dp),
+                                        .padding(horizontal = 0.dp, vertical = 50.dp),
                                     horizontalArrangement = Arrangement.End
                                 ) {
-                                    CircleIconHere(
-                                        iconName = FeatherIcons.X,
-                                        onIconPressed = { onBackPressed() },
+                                    Box(
                                         modifier = Modifier
-                                    )
+                                            .width(70.dp)
+                                            .background(AyeTheme.colors.iconBackground.copy(0.0f))
+                                            .clickable(onClick = { onBackPressedHere() }),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Box(
+                                            modifier = Modifier
+                                                .size(35.dp)
+                                                .clip(CircleShape)
+                                                .background(AyeTheme.colors.iconBackground),
+                                            contentAlignment = Alignment.Center
+                                        ) {
+                                            Icon(
+                                                FeatherIcons.X,
+                                                "circle icon",
+                                                tint = AyeTheme.colors.iconVector,
+                                                modifier = Modifier.size(17.dp),
+                                            )
+                                        }
+                                    }
                                 }
                                 val painter = painterResource(id = R.drawable.aye_logo)
                                 Image(
