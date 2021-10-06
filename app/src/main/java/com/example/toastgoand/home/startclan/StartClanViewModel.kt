@@ -2,6 +2,8 @@ package com.example.toastgoand.home.startclan
 
 import android.util.Log
 import androidx.lifecycle.*
+import com.example.toastgoand.home.invitepeopledirectly.network.ContactsListItemDataClass
+import com.example.toastgoand.home.invitepeopledirectly.network.GetContactsListApi
 import com.example.toastgoand.network.myfriends.MyFriendsApi
 import com.example.toastgoand.network.myfriends.MyFriendsDataClass
 import com.example.toastgoand.network.myfriends.MyFriendsRepo
@@ -22,9 +24,14 @@ class StartClanViewModel(
         repoFriends.insert(myFriends = myFriends)
     }
 
+    private val _contactsList = MutableLiveData<List<ContactsListItemDataClass>>()
+    val contactsList: LiveData<List<ContactsListItemDataClass>>
+        get() = _contactsList
+
     init {
         deets.observeForever {
             deets.value?.user?.let { getMyFriendsHere(it.id) }
+            deets.value?.user?.let { getContactsListHere(it.id) }
         }
     }
 
@@ -37,6 +44,19 @@ class StartClanViewModel(
                 Log.i("StartClanViewModel", x_here.toString())
             } catch (e: Exception) {
                 Log.i("StartClanViewModel", "API call for user details, Failed! ${e.message}")
+            }
+        }
+    }
+
+    fun getContactsListHere(userid: Int) {
+        viewModelScope.launch {
+            try {
+                val listResult = GetContactsListApi.retrofitService.getMyFriends(userid = userid.toString())
+                var x_here: List<ContactsListItemDataClass> = listResult
+                _contactsList.value = x_here
+                Log.i("contactsViewModel", _contactsList.value!!.toString())
+            } catch (e: Exception) {
+                Log.i("contactsViewModel", "API call for user details, Failed! ${e.message}")
             }
         }
     }

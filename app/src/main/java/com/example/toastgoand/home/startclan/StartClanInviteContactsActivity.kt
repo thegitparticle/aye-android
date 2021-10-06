@@ -3,16 +3,21 @@ package com.example.toastgoand.home.startclan
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,6 +31,8 @@ import com.example.toastgoand.R
 import com.example.toastgoand.ToastgoApplication
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityStartClanBinding
+import com.example.toastgoand.home.invitepeopledirectly.ContactItemRender
+import com.example.toastgoand.home.invitepeopledirectly.network.ContactsListItemDataClass
 import com.example.toastgoand.uibits.HeaderOtherScreens
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.ArrowRight
@@ -46,6 +53,16 @@ class StartClanInviteContactsActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = viewBinding as ActivityStartClanBinding
 
+        val addedContactsHere = mutableListOf<ContactsListItemDataClass>()
+
+        fun addSelectedToListHere(item: ContactsListItemDataClass) {
+            addedContactsHere.add(item)
+        }
+
+        fun removeSelectedToListHere(item: ContactsListItemDataClass ) {
+            addedContactsHere.remove(item)
+        }
+
         fun onBackPressedHere() {
             onBackPressed()
         }
@@ -57,7 +74,18 @@ class StartClanInviteContactsActivity : BaseActivity() {
 
                 val addedFriends = intent.getStringExtra("addedfriends")
 
+                val contactsListHere: List<ContactsListItemDataClass> by viewModel.contactsList.observeAsState(
+                    listOf<ContactsListItemDataClass>()
+                )
+
+                val composableScope = rememberCoroutineScope()
+
                 val textState = remember { mutableStateOf(TextFieldValue()) }
+
+                val contactsFiltered = contactsListHere.filter { it ->
+                    val word_here = it.name.lowercase()
+                    word_here.contains(textState.value.text.lowercase(), false)
+                }
 
                 Scaffold(
                     topBar = {
@@ -75,7 +103,7 @@ class StartClanInviteContactsActivity : BaseActivity() {
                                     context,
                                     StartClanNameActivity::class.java
                                 ).apply {
-                                    putExtra( "addedfriends",  addedFriends.toString())
+                                    putExtra("addedfriends", addedFriends.toString())
                                 }
                                 startActivity(intent)
                                 overridePendingTransition(
@@ -84,14 +112,14 @@ class StartClanInviteContactsActivity : BaseActivity() {
                                 )
                             },
                             modifier = Modifier
-                                .padding(horizontal = 25.dp)
-                                .size(60.dp),
-                            backgroundColor = Color.Cyan,
+                                .padding(horizontal = 25.dp),
+                            backgroundColor = AyeTheme.colors.appLeadVariant,
                         ) {
-                            Icon(
-                                imageVector = FeatherIcons.ArrowRight,
-                                contentDescription = "last month",
-                                modifier = Modifier.size(30.dp)
+                            Text(
+                                text = "next",
+                                style = MaterialTheme.typography.subtitle2,
+                                color = AyeTheme.colors.uiBackground,
+                                modifier = Modifier.padding(horizontal = 20.dp)
                             )
                         }
                     }
@@ -106,9 +134,8 @@ class StartClanInviteContactsActivity : BaseActivity() {
                     ) {
                         TextField(
                             modifier = Modifier
-                                .background(MaterialTheme.colors.surface)
                                 .clip(
-                                    RoundedCornerShape(corner = CornerSize(10.dp))
+                                    RoundedCornerShape(corner = CornerSize(20.dp))
                                 )
                                 .padding(vertical = 10.dp)
                                 .fillMaxWidth(0.9f),
@@ -122,38 +149,36 @@ class StartClanInviteContactsActivity : BaseActivity() {
                                     style = MaterialTheme.typography.body2
                                 )
                             },
+                            colors = TextFieldDefaults.textFieldColors(
+                                backgroundColor = AyeTheme.colors.uiSurface,
+                                cursorColor = AyeTheme.colors.textPrimary.copy(0.5f),
+                                textColor = AyeTheme.colors.textPrimary,
+                                placeholderColor = AyeTheme.colors.textPrimary.copy(0.5f),
+                                focusedLabelColor = AyeTheme.colors.uiSurface,
+                                unfocusedLabelColor = AyeTheme.colors.uiSurface,
+                                focusedIndicatorColor = AyeTheme.colors.uiSurface,
+                                unfocusedIndicatorColor = AyeTheme.colors.uiSurface,
+                            )
                         )
-                        Text("The textfield has this text: " + textState.value.text)
-                        LazyColumn(modifier = Modifier.background(MaterialTheme.colors.background)) {
-//                                val contactsParsed = Gson().fromJson<List<ContactItem>>(
-//                                    deetsHere.user.contact_list,
-//                                    ContactItem::class.java
-//                                )
-
-//                                val simpleContactsString =
-//                                    deetsHere.user.contact_list.drop(1).dropLast(1)
-
-//                        if (contactsString.length > 10) {
-//                            Log.i("invitepeople", contactsString?.slice(0..10))
-////                                    val parserHere = Json {
-////                                        isLenient = true; ignoreUnknownKeys = true; encodeDefaults =
-////                                        false;
-////                                    }
-////                                    val contactsListHere =
-////                                        parserHere.decodeFromString<ArrayList<ContactItem>>(
-////                                            contactsString
-////                                        )
-////                                    decodeFromString<ArrayList<ContactItem>>(deetsHere.user.contact_list)
-////                                    Log.i("invitepeople list", contactsListHere.toString())
-//                        }
-//
-//                        Log.i("invitepeople", contactsString)
-//
-////                                items(
-////                                    items = contactsListHere,
-////                                    itemContent = {
-////                                        ContactItemRender(Json.decodeFromString(it))
-////                                    })
+                        Spacer(modifier = Modifier.size(20.dp))
+                        LazyColumn(
+                            modifier = Modifier
+                                .background(AyeTheme.colors.uiBackground)
+                                .fillMaxWidth()
+                        ) {
+                            items(
+                                items = contactsListHere,
+                                itemContent = {
+                                    ContactItemRender(
+                                        it,
+                                        ::addSelectedToListHere,
+                                        ::removeSelectedToListHere
+                                    )
+                                }
+                            )
+                            item {
+                                Spacer(modifier = Modifier.size(90.dp))
+                            }
                         }
                     }
                 }
