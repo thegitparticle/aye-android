@@ -20,7 +20,7 @@ import androidx.core.app.NotificationCompat;
 import com.example.toastgoand.R;
 import com.example.toastgoand.aidl.INotification;
 import com.example.toastgoand.aidl.IScreenSharing;
-import com.example.toastgoand.quick.callactivity.Constant;
+//import com.example.toastgoand.quick.callactivity.Constant;
 import com.example.toastgoand.quick.callactivity.gles.GLRender;
 import com.example.toastgoand.quick.callactivity.gles.ImgTexFrame;
 import com.example.toastgoand.quick.callactivity.gles.SinkConnector;
@@ -240,12 +240,12 @@ public class ScreenSharingService extends Service {
         ChannelMediaOptions option = new ChannelMediaOptions();
         option.autoSubscribeAudio = true;
         option.autoSubscribeVideo = true;
-        mRtcEngine.joinChannel(intent.getStringExtra(Constant.ACCESS_TOKEN), intent.getStringExtra(Constant.CHANNEL_NAME),
-                "ss_" + Process.myPid(), intent.getIntExtra(Constant.UID, 0), option);
+        mRtcEngine.joinChannel(intent.getStringExtra("ACCESS_TOKEN"), intent.getStringExtra("CHANNEL_NAME"),
+                "ss_" + Process.myPid(), intent.getIntExtra("UID", 0), option);
     }
 
     private void setUpEngine(Intent intent) {
-        String appId = intent.getStringExtra(Constant.APP_ID);
+        String appId = intent.getStringExtra("APP_ID");
         try {
             mRtcEngine = RtcEngine.create(getApplicationContext(), appId, new IRtcEngineEventHandler() {
                 @Override
@@ -336,11 +336,11 @@ public class ScreenSharingService extends Service {
     }
 
     private void setUpVideoConfig(Intent intent) {
-        int width = intent.getIntExtra(Constant.WIDTH, 0);
-        int height = intent.getIntExtra(Constant.HEIGHT, 0);
-        int frameRate = intent.getIntExtra(Constant.FRAME_RATE, 15);
-        int bitRate = intent.getIntExtra(Constant.BITRATE, 0);
-        int orientationMode = intent.getIntExtra(Constant.ORIENTATION_MODE, 0);
+        int width = intent.getIntExtra("WIDTH", 0);
+        int height = intent.getIntExtra("HEIGHT", 0);
+        int frameRate = intent.getIntExtra("FRAME_RATE", 15);
+        int bitRate = intent.getIntExtra("BITRATE", 0);
+        int orientationMode = intent.getIntExtra("ORIENTATION_MODE", 0);
         VideoEncoderConfiguration.FRAME_RATE fr;
         VideoEncoderConfiguration.ORIENTATION_MODE om;
 

@@ -75,15 +75,15 @@ public class ScreenSharingClient {
     public void start(Context context, String appId, String token, String channelName, int uid, VideoEncoderConfiguration vec) {
         if (mScreenShareSvc == null) {
             Intent intent = new Intent(context, ScreenSharingService.class);
-            intent.putExtra(Constant.APP_ID, appId);
-            intent.putExtra(Constant.ACCESS_TOKEN, token);
-            intent.putExtra(Constant.CHANNEL_NAME, channelName);
-            intent.putExtra(Constant.UID, uid);
-            intent.putExtra(Constant.WIDTH, vec.dimensions.width);
-            intent.putExtra(Constant.HEIGHT, vec.dimensions.height);
-            intent.putExtra(Constant.FRAME_RATE, vec.frameRate);
-            intent.putExtra(Constant.BITRATE, vec.bitrate);
-            intent.putExtra(Constant.ORIENTATION_MODE, vec.orientationMode.getValue());
+            intent.putExtra("APP_ID", appId);
+            intent.putExtra("ACCESS_TOKEN", token);
+            intent.putExtra("CHANNEL_NAME", channelName);
+            intent.putExtra("UID", uid);
+            intent.putExtra("WIDTH", vec.dimensions.width);
+            intent.putExtra("HEIGHT", vec.dimensions.height);
+            intent.putExtra("FRAME_RATE", vec.frameRate);
+            intent.putExtra("BITRATE", vec.bitrate);
+            intent.putExtra("ORIENTATION_MODE", vec.orientationMode.getValue());
             context.bindService(intent, mScreenShareConn, Context.BIND_AUTO_CREATE);
         } else {
             try {

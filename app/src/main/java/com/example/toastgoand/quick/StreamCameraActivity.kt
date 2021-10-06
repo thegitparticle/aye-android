@@ -25,6 +25,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
+import com.example.toastgoand.R
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityQuickBinding
 import com.example.toastgoand.databinding.ActivityStreamCameraBinding
@@ -118,7 +119,20 @@ class StreamCameraActivity : BaseActivity() {
 //            runOnUiThread {
             // Call setupRemoteVideo to set the remote video view after getting uid from the onUserJoined callback.
             setupRemoteVideo(uid)
+            Log.i("streamworking", "${uid} user joined")
 //            }
+        }
+
+        override fun onLeaveChannel(stats: RtcStats) {
+            super.onLeaveChannel(stats)
+            Log.i("streamworking iRtcEngineEventHandler onleave", String.format("local user %d leaveChannel!", userid))
+        }
+
+        override fun onJoinChannelSuccess(channel: String, userid: Int, elapsed: Int) {
+            Log.i(
+                "streamworking iRtcEngineEventHandler sucess",
+                String.format("onJoinChannelSuccess channel %s uid %d", channel, userid)
+            )
         }
     }
 

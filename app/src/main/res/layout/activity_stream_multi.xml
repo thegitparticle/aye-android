@@ -25,7 +25,8 @@
             android:id="@+id/fl_local"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:layout_above="@+id/ll_join" >
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true">
 
         </FrameLayout>
 
@@ -35,7 +36,7 @@
             android:layout_height="200dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:visibility="invisible"/>
+            android:visibility="gone"/>
 
         <LinearLayout
             android:id="@+id/ll_join"

@@ -38,7 +38,6 @@ import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityStreamCameraBinding
 import com.example.toastgoand.databinding.ActivityStreamMultiBinding
 import com.example.toastgoand.home.LandingActivity
-import com.example.toastgoand.quick.callactivity.MultiProcess
 import com.example.toastgoand.quick.callactivity.ScreenSharingClient
 import com.example.toastgoand.quick.callactivity.ScreenSharingClient.IStateListener
 import com.example.toastgoand.quick.callactivity.utils.CommonUtil
@@ -63,11 +62,20 @@ class StreamMultiActivity : BaseActivity() {
     private lateinit var binding: ActivityStreamMultiBinding
     private lateinit var viewModel: StreamMultiViewModel
 
-    private val TAG = MultiProcess::class.java.simpleName
+    var clubName: String = ""
+    var clubid: Int = 0
+    var channelid: String = ""
+    var ongoingFrame: Boolean = false
+    var startTime: String = ""
+    var endTime: String = ""
+    var userid: Int = 0
+    var directornot: Boolean = false
+    var token: String = ""
+    var token222: String = ""
+
+    //    private val TAG = MultiProcess::class.java.simpleName
     private val SCREEN_SHARE_UID = 10000
 // replace these where needed with binding layout values
-//    private val fl_local: FrameLayout? = null, private  var fl_remote:FrameLayout? = null
-//    private val join: Button? = null, private  var screenShare:android.widget.Button? = null
 
     private var fl_local: FrameLayout? = null
     private var fl_remote: FrameLayout? = null
@@ -75,7 +83,7 @@ class StreamMultiActivity : BaseActivity() {
     private var screenShare: Button? = null
     private var et_channel: EditText? = null
     private var engine: RtcEngine? = null
-    private var myUid = 0
+    private var myUid = userid
     private var joined = false
     private var isSharing = false
     private var mSSClient: ScreenSharingClient? = null
@@ -84,11 +92,11 @@ class StreamMultiActivity : BaseActivity() {
 
     private val mListener: IStateListener = object : IStateListener {
         override fun onError(error: Int) {
-            Log.i("streammulti", "Screen share service error happened: $error")
+            Log.i("streammultigoon", "Screen share service error happened: $error")
         }
 
         override fun onTokenWillExpire() {
-            Log.i("streammulti", "Screen share service token will expire")
+            Log.i("streammultigoon", "Screen share service token will expire")
             mSSClient!!.renewToken(null) // Replace the token with your valid token
         }
     }
@@ -99,6 +107,21 @@ class StreamMultiActivity : BaseActivity() {
         binding = viewBinding as ActivityStreamMultiBinding
 
         viewModel = ViewModelProvider(this).get(StreamMultiViewModel::class.java)
+
+
+        clubName = intent.getStringExtra("clubName").toString()
+        clubid = intent.getIntExtra("clubid", 0)
+        channelid = intent.getStringExtra("channelid").toString()
+        ongoingFrame = intent.getBooleanExtra("ongoingFrame", false)
+        startTime = intent.getStringExtra("startTime").toString()
+        endTime = intent.getStringExtra("endTime").toString()
+        userid = intent.getIntExtra("userid", 0)
+        directornot = intent.getBooleanExtra("directornot", false)
+        token222 = intent.getStringExtra("token").toString()
+        token = "006851193d91b1945bda153a38f3584ead3IACKJYOK3qEVqWrM8B8cbCFYFshFp1np5QrT0GWvMUjCeN78lGEAAAAAEADy5cWPzaFeYQEAAQDMoV5h"
+
+        Log.i("streammultigoon userid", userid.toString())
+        Log.i("streammultigoon token", token222)
 
         join = binding.btnJoin
         (join as AppCompatButton).setOnClickListener { this }
@@ -120,7 +143,7 @@ class StreamMultiActivity : BaseActivity() {
             AyeTheme() {
 
                 var muted by remember { mutableStateOf(false) }
-                var cameraOff by remember { mutableStateOf(false)}
+                var cameraOff by remember { mutableStateOf(false) }
                 var openDialog = remember { mutableStateOf(false) }
 
                 BackHandler(enabled = true, onBack = {
@@ -147,7 +170,11 @@ class StreamMultiActivity : BaseActivity() {
                             }
                     ) {
                         CircleIcon(
-                            iconName = if(cameraOff) {FeatherIcons.CameraOff} else {FeatherIcons.Camera},
+                            iconName = if (cameraOff) {
+                                FeatherIcons.CameraOff
+                            } else {
+                                FeatherIcons.Camera
+                            },
                             modifier = Modifier.clickable {
                                 Log.i("camerastream", "clicked on cam change")
                             })
@@ -157,7 +184,7 @@ class StreamMultiActivity : BaseActivity() {
                         modifier = Modifier
                             .size(60.dp)
                             .clickable {
-                                engine?.leaveChannel()
+//                                engine?.leaveChannel()
                                 mSSClient!!.stop(context)
                                 screenShare!!.text = resources.getString(R.string.screenshare)
                                 isSharing = false
@@ -239,7 +266,7 @@ class StreamMultiActivity : BaseActivity() {
              */
             engine = RtcEngine.create(
                 this,
-                getString(R.string.agora_app_id),
+                "851193d91b1945bda153a38f3584ead3",
                 iRtcEngineEventHandler
             )
 
@@ -254,11 +281,12 @@ class StreamMultiActivity : BaseActivity() {
                     Permission.Group.CAMERA
                 )
             ) {
-                joinChannel("channel")
+                Log.i("streammultigoon if permission", "join channels called")
+                joinChannel(channelid)
                 if (!isSharing) {
                     mSSClient!!.start(
-                        this, resources.getString(R.string.agora_app_id), null,
-                        "channel", this.SCREEN_SHARE_UID, VideoEncoderConfiguration(
+                        this, "851193d91b1945bda153a38f3584ead3", token,
+                        channelid, userid, VideoEncoderConfiguration(
                             getScreenDimensions(),
                             FRAME_RATE.FRAME_RATE_FPS_30,
                             VideoEncoderConfiguration.STANDARD_BITRATE,
@@ -281,11 +309,12 @@ class StreamMultiActivity : BaseActivity() {
                 Permission.Group.CAMERA
             ).onGranted { permissions: List<String?>? ->
                 // Permissions Granted
-                joinChannel("channel")
+                Log.i("streammultigoon asked for permission", "join channels called")
+                joinChannel(channelid)
                 if (!isSharing) {
                     mSSClient!!.start(
-                        this, resources.getString(R.string.agora_app_id), null,
-                        "channel", this.SCREEN_SHARE_UID, VideoEncoderConfiguration(
+                        this, "851193d91b1945bda153a38f3584ead3", token,
+                        channelid, userid, VideoEncoderConfiguration(
                             getScreenDimensions(),
                             FRAME_RATE.FRAME_RATE_FPS_30,
                             VideoEncoderConfiguration.STANDARD_BITRATE,
@@ -308,80 +337,80 @@ class StreamMultiActivity : BaseActivity() {
 
     }
 
-    fun onClick(v: View) {
-        if (v.id == R.id.btn_join) {
-            if (!joined) {
-                CommonUtil.hideInputBoard(this, et_channel)
-                // call when join button hit
-                val channelId = et_channel!!.text.toString()
-                // Check permission
-                if (AndPermission.hasPermissions(
-                        this,
-                        Permission.Group.STORAGE,
-                        Permission.Group.MICROPHONE,
-                        Permission.Group.CAMERA
-                    )
-                ) {
-                    joinChannel(channelId)
-                    return
-                }
-                // Request permission
-                AndPermission.with(this).runtime().permission(
-                    Permission.Group.STORAGE,
-                    Permission.Group.MICROPHONE,
-                    Permission.Group.CAMERA
-                ).onGranted { permissions: List<String?>? ->
-                    // Permissions Granted
-                    joinChannel(channelId)
-                }.start()
-            } else {
-                joined = false
-                /**After joining a channel, the user must call the leaveChannel method to end the
-                 * call before joining another channel. This method returns 0 if the user leaves the
-                 * channel and releases all resources related to the call. This method call is
-                 * asynchronous, and the user has not exited the channel when the method call returns.
-                 * Once the user leaves the channel, the SDK triggers the onLeaveChannel callback.
-                 * A successful leaveChannel method call triggers the following callbacks:
-                 * 1:The local client: onLeaveChannel.
-                 * 2:The remote client: onUserOffline, if the user leaving the channel is in the
-                 * Communication channel, or is a BROADCASTER in the Live Broadcast profile.
-                 * @returns 0: Success.
-                 * < 0: Failure.
-                 * PS:
-                 * 1:If you call the destroy method immediately after calling the leaveChannel
-                 * method, the leaveChannel process interrupts, and the SDK does not trigger
-                 * the onLeaveChannel callback.
-                 * 2:If you call the leaveChannel method during CDN live streaming, the SDK
-                 * triggers the removeInjectStreamUrl method.
-                 */
-                engine!!.leaveChannel()
-                join!!.text = getString(R.string.join)
-                mSSClient!!.stop(this)
-                screenShare!!.text = resources.getString(R.string.screenshare)
-                screenShare!!.isEnabled = false
-                isSharing = false
-            }
-        } else if (v.id == R.id.screenShare) {
-            val channelId = et_channel!!.text.toString()
-            if (!isSharing) {
-                mSSClient!!.start(
-                    this, resources.getString(R.string.agora_app_id), null,
-                    channelId, this.SCREEN_SHARE_UID, VideoEncoderConfiguration(
-                        getScreenDimensions(),
-                        FRAME_RATE.FRAME_RATE_FPS_30,
-                        VideoEncoderConfiguration.STANDARD_BITRATE,
-                        ORIENTATION_MODE.ORIENTATION_MODE_ADAPTIVE
-                    )
-                )
-                screenShare!!.text = resources.getString(R.string.stop)
-                isSharing = true
-            } else {
-                mSSClient!!.stop(this)
-                screenShare!!.text = resources.getString(R.string.screenshare)
-                isSharing = false
-            }
-        }
-    }
+//    fun onClick(v: View) {
+//        if (v.id == R.id.btn_join) {
+//            if (!joined) {
+//                CommonUtil.hideInputBoard(this, et_channel)
+//                // call when join button hit
+//                val channelId = et_channel!!.text.toString()
+//                // Check permission
+//                if (AndPermission.hasPermissions(
+//                        this,
+//                        Permission.Group.STORAGE,
+//                        Permission.Group.MICROPHONE,
+//                        Permission.Group.CAMERA
+//                    )
+//                ) {
+//                    joinChannel(channelId)
+//                    return
+//                }
+//                // Request permission
+//                AndPermission.with(this).runtime().permission(
+//                    Permission.Group.STORAGE,
+//                    Permission.Group.MICROPHONE,
+//                    Permission.Group.CAMERA
+//                ).onGranted { permissions: List<String?>? ->
+//                    // Permissions Granted
+//                    joinChannel(channelId)
+//                }.start()
+//            } else {
+//                joined = false
+//                /**After joining a channel, the user must call the leaveChannel method to end the
+//                 * call before joining another channel. This method returns 0 if the user leaves the
+//                 * channel and releases all resources related to the call. This method call is
+//                 * asynchronous, and the user has not exited the channel when the method call returns.
+//                 * Once the user leaves the channel, the SDK triggers the onLeaveChannel callback.
+//                 * A successful leaveChannel method call triggers the following callbacks:
+//                 * 1:The local client: onLeaveChannel.
+//                 * 2:The remote client: onUserOffline, if the user leaving the channel is in the
+//                 * Communication channel, or is a BROADCASTER in the Live Broadcast profile.
+//                 * @returns 0: Success.
+//                 * < 0: Failure.
+//                 * PS:
+//                 * 1:If you call the destroy method immediately after calling the leaveChannel
+//                 * method, the leaveChannel process interrupts, and the SDK does not trigger
+//                 * the onLeaveChannel callback.
+//                 * 2:If you call the leaveChannel method during CDN live streaming, the SDK
+//                 * triggers the removeInjectStreamUrl method.
+//                 */
+//                engine!!.leaveChannel()
+//                join!!.text = getString(R.string.join)
+//                mSSClient!!.stop(this)
+//                screenShare!!.text = resources.getString(R.string.screenshare)
+//                screenShare!!.isEnabled = false
+//                isSharing = false
+//            }
+//        } else if (v.id == R.id.screenShare) {
+//            val channelId = et_channel!!.text.toString()
+//            if (!isSharing) {
+//                mSSClient!!.start(
+//                    this, "851193d91b1945bda153a38f3584ead3", token,
+//                    channelid, userid, VideoEncoderConfiguration(
+//                        getScreenDimensions(),
+//                        FRAME_RATE.FRAME_RATE_FPS_30,
+//                        VideoEncoderConfiguration.STANDARD_BITRATE,
+//                        ORIENTATION_MODE.ORIENTATION_MODE_ADAPTIVE
+//                    )
+//                )
+//                screenShare!!.text = resources.getString(R.string.stop)
+//                isSharing = true
+//            } else {
+//                mSSClient!!.stop(this)
+//                screenShare!!.text = resources.getString(R.string.screenshare)
+//                isSharing = false
+//            }
+//        }
+//    }
 
     private fun getScreenDimensions(): VideoDimensions? {
         val manager = this.getSystemService(WINDOW_SERVICE) as WindowManager
@@ -447,7 +476,7 @@ class StreamMultiActivity : BaseActivity() {
          * https://docs.agora.io/en/Agora%20Platform/token?platform=All%20Platforms#get-a-temporary-token
          * A token generated at the server. This applies to scenarios with high-security requirements. For details, see
          * https://docs.agora.io/en/cloud-recording/token_server_java?platform=Java */
-        var accessToken: String? = getString(R.string.agora_access_token)
+        var accessToken: String? = token
         if (TextUtils.equals(accessToken, "") || TextUtils.equals(
                 accessToken,
                 "<#YOUR ACCESS TOKEN#>"
@@ -460,7 +489,7 @@ class StreamMultiActivity : BaseActivity() {
         val option = ChannelMediaOptions()
         option.autoSubscribeAudio = false
         option.autoSubscribeVideo = false
-        val res = engine!!.joinChannel(accessToken, channelId, "Extra Optional Data", 0, option)
+        val res = engine!!.joinChannel(accessToken, channelId, "Extra Optional Data", userid, option)
         if (res != 0) {
             // Usually happens with invalid parameters
             // Error code description can be found at:
@@ -478,7 +507,7 @@ class StreamMultiActivity : BaseActivity() {
          * Warning code: https://docs.agora.io/en/Voice/API%20Reference/java/classio_1_1agora_1_1rtc_1_1_i_rtc_engine_event_handler_1_1_warn_code.html */
         override fun onWarning(warn: Int) {
             Log.w(
-                "streammulti",
+                "streammultigoon iRtcEngineEventHandler onWarning",
                 String.format(
                     "onWarning code %d message %s",
                     warn,
@@ -491,7 +520,7 @@ class StreamMultiActivity : BaseActivity() {
          * Error code: https://docs.agora.io/en/Voice/API%20Reference/java/classio_1_1agora_1_1rtc_1_1_i_rtc_engine_event_handler_1_1_error_code.html */
         override fun onError(err: Int) {
             Log.e(
-                "streammulti",
+                "streammultigoon iRtcEngineEventHandler onError",
                 String.format("onError code %d message %s", err, RtcEngine.getErrorDescription(err))
             )
 //            showAlert(
@@ -509,7 +538,7 @@ class StreamMultiActivity : BaseActivity() {
          */
         override fun onLeaveChannel(stats: RtcStats) {
             super.onLeaveChannel(stats)
-            Log.i("streammulti", String.format("local user %d leaveChannel!", myUid))
+            Log.i("streammultigoon iRtcEngineEventHandler onleave", String.format("local user %d leaveChannel!", userid))
 //            showLongToast(String.format("local user %d leaveChannel!", myUid))
         }
 
@@ -520,13 +549,13 @@ class StreamMultiActivity : BaseActivity() {
          * @param uid User ID
          * @param elapsed Time elapsed (ms) from the user calling joinChannel until this callback is triggered
          */
-        override fun onJoinChannelSuccess(channel: String, uid: Int, elapsed: Int) {
+        override fun onJoinChannelSuccess(channel: String, userid: Int, elapsed: Int) {
             Log.i(
-                "streammulti",
-                String.format("onJoinChannelSuccess channel %s uid %d", channel, uid)
+                "streammultigoon iRtcEngineEventHandler sucess",
+                String.format("onJoinChannelSuccess channel %s uid %d", channel, userid)
             )
 //            showLongToast(String.format("onJoinChannelSuccess channel %s uid %d", channel, uid))
-            myUid = uid
+            myUid = userid
             joined = true
             handler?.post(Runnable {
                 join!!.isEnabled = true
@@ -568,11 +597,11 @@ class StreamMultiActivity : BaseActivity() {
          * @param elapsed Time elapsed (ms) from the local user calling the joinChannel method
          * until the SDK triggers this callback.
          */
-        override fun onRemoteAudioStateChanged(uid: Int, state: Int, reason: Int, elapsed: Int) {
-            super.onRemoteAudioStateChanged(uid, state, reason, elapsed)
+        override fun onRemoteAudioStateChanged(userid: Int, state: Int, reason: Int, elapsed: Int) {
+            super.onRemoteAudioStateChanged(userid, state, reason, elapsed)
             Log.i(
-                "streammulti",
-                "onRemoteAudioStateChanged->$uid, state->$state, reason->$reason"
+                "streammultigoon iRtcEngineEventHandler audio change",
+                "onRemoteAudioStateChanged->$userid, state->$state, reason->$reason"
             )
         }
 
@@ -614,11 +643,11 @@ class StreamMultiActivity : BaseActivity() {
          * @param elapsed Time elapsed (ms) from the local user calling the joinChannel method until
          * the SDK triggers this callback.
          */
-        override fun onRemoteVideoStateChanged(uid: Int, state: Int, reason: Int, elapsed: Int) {
-            super.onRemoteVideoStateChanged(uid, state, reason, elapsed)
+        override fun onRemoteVideoStateChanged(userid: Int, state: Int, reason: Int, elapsed: Int) {
+            super.onRemoteVideoStateChanged(userid, state, reason, elapsed)
             Log.i(
-                "streammulti",
-                "onRemoteVideoStateChanged->$uid, state->$state, reason->$reason"
+                "streammultigoon iRtcEngineEventHandler video change",
+                "onRemoteVideoStateChanged->$userid, state->$state, reason->$reason"
             )
         }
 
@@ -627,12 +656,12 @@ class StreamMultiActivity : BaseActivity() {
          * @param elapsed Time delay (ms) from the local user calling joinChannel/setClientRole
          * until this callback is triggered.
          */
-        override fun onUserJoined(uid: Int, elapsed: Int) {
-            super.onUserJoined(uid, elapsed)
-            Log.i("streammulti", "onUserJoined->$uid")
+        override fun onUserJoined(userid: Int, elapsed: Int) {
+            super.onUserJoined(userid, elapsed)
+            Log.i("streammultigoon iRtcEngineEventHandler userjoin", "onUserJoined->$userid")
 //            showLongToast(String.format("user %d joined!", uid))
             // don't render screen sharing view
-            if (SCREEN_SHARE_UID == uid) {
+            if (userid == userid) {
                 return
             }
             /**Check if the context is correct */
@@ -662,7 +691,7 @@ class StreamMultiActivity : BaseActivity() {
                     VideoCanvas(
                         surfaceView,
                         VideoCanvas.RENDER_MODE_HIDDEN,
-                        uid
+                        userid
                     )
                 )
             })
@@ -679,10 +708,10 @@ class StreamMultiActivity : BaseActivity() {
          * USER_OFFLINE_BECOME_AUDIENCE(2): (Live broadcast only.) The client role switched from
          * the host to the audience.
          */
-        override fun onUserOffline(uid: Int, reason: Int) {
-            Log.i("streammulti", String.format("user %d offline! reason:%d", uid, reason))
+        override fun onUserOffline(userid: Int, reason: Int) {
+            Log.i("streammultigoon iRtcEngineEventHandler", String.format("user %d offline! reason:%d", userid, reason))
 //            showLongToast(String.format("user %d offline! reason:%d", uid, reason))
-            if (SCREEN_SHARE_UID == uid) {
+            if (userid == userid) {
                 return
             }
             handler?.post(Runnable {
@@ -699,7 +728,7 @@ class StreamMultiActivity : BaseActivity() {
                 /**Clear render view
                  * Note: The video will stay at its last frame, to completely remove it you will need to
                  * remove the SurfaceView from its parent */
-                engine!!.setupRemoteVideo(VideoCanvas(null, VideoCanvas.RENDER_MODE_HIDDEN, uid))
+                engine!!.setupRemoteVideo(VideoCanvas(null, VideoCanvas.RENDER_MODE_HIDDEN, userid))
             })
         }
     }
