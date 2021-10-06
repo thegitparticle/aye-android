@@ -100,7 +100,6 @@ class InvitePeopleDirectlyActivity : BaseActivity() {
                     word_here.contains(textState.value.text.lowercase(), false)
                 }
 
-
                 ProvideWindowInsets() {
                     Scaffold(
                         topBar = {

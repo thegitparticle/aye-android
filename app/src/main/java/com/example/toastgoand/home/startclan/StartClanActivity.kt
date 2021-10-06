@@ -104,6 +104,11 @@ class StartClanActivity : BaseActivity() {
 
                 val textState = remember { mutableStateOf(TextFieldValue()) }
 
+                val friendsFiltered = myFriendsListHere.filter { it ->
+                    val word_here = it.name.lowercase()
+                    word_here.contains(textState.value.text.lowercase(), false)
+                }
+
                 Scaffold(
                     modifier = Modifier
                         .navigationBarsWithImePadding()
@@ -132,14 +137,14 @@ class StartClanActivity : BaseActivity() {
                                 )
                             },
                             modifier = Modifier
-                                .padding(horizontal = 25.dp)
-                                .size(60.dp),
-                            backgroundColor = Color.Cyan,
+                                .padding(horizontal = 25.dp),
+                            backgroundColor = AyeTheme.colors.appLeadVariant,
                         ) {
-                            Icon(
-                                imageVector = FeatherIcons.ArrowRight,
-                                contentDescription = "last month",
-                                modifier = Modifier.size(30.dp)
+                            Text(
+                                text = "next",
+                                style = MaterialTheme.typography.subtitle2,
+                                color = AyeTheme.colors.uiBackground,
+                                modifier = Modifier.padding(horizontal = 20.dp)
                             )
                         }
                     },
@@ -154,11 +159,10 @@ class StartClanActivity : BaseActivity() {
                         ) {
                             TextField(
                                 modifier = Modifier
-                                    .background(AyeTheme.colors.uiSurface)
                                     .clip(
                                         RoundedCornerShape(corner = CornerSize(20.dp))
                                     )
-                                    .padding(vertical = 20.dp)
+                                    .padding(vertical = 10.dp)
                                     .fillMaxWidth(0.9f),
                                 value = textState.value,
                                 onValueChange = { textState.value = it },
@@ -170,8 +174,18 @@ class StartClanActivity : BaseActivity() {
                                         style = MaterialTheme.typography.body2
                                     )
                                 },
+                                colors = TextFieldDefaults.textFieldColors(
+                                    backgroundColor = AyeTheme.colors.uiSurface,
+                                    cursorColor = AyeTheme.colors.textPrimary.copy(0.5f),
+                                    textColor = AyeTheme.colors.textPrimary,
+                                    placeholderColor = AyeTheme.colors.textPrimary.copy(0.5f),
+                                    focusedLabelColor = AyeTheme.colors.uiSurface,
+                                    unfocusedLabelColor = AyeTheme.colors.uiSurface,
+                                    focusedIndicatorColor = AyeTheme.colors.uiSurface,
+                                    unfocusedIndicatorColor = AyeTheme.colors.uiSurface,
+                                )
                             )
-                            Text("The textfield has this text: " + textState.value.text)
+                            Spacer(modifier = Modifier.size(20.dp))
                             LazyColumn(
                                 modifier = Modifier
                                     .background(AyeTheme.colors.uiBackground)
@@ -179,7 +193,7 @@ class StartClanActivity : BaseActivity() {
                             ) {
 
                                 items(
-                                    items = myFriendsListHere,
+                                    items = friendsFiltered,
                                     itemContent = {
                                         FriendsListItem(
                                             it,
@@ -187,6 +201,9 @@ class StartClanActivity : BaseActivity() {
                                             ::removeSelectedToList
                                         )
                                     })
+                                item {
+                                    Spacer(modifier = Modifier.size(90.dp))
+                                }
                             }
                         }
 

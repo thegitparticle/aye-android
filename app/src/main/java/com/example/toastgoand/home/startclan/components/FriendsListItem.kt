@@ -1,6 +1,7 @@
 package com.example.toastgoand.home.startclan.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -31,7 +32,15 @@ fun FriendsListItem(
     AyeTheme() {
         Row(modifier = Modifier
             .padding(horizontal = 20.dp, vertical = 10.dp)
-            .fillMaxWidth(0.9f),
+            .fillMaxWidth(0.9f)
+            .clickable {
+                selected.value = (!selected.value)
+                if (selected.value) {
+                    addFunction(friendItem)
+                } else {
+                    removeFunction(friendItem)
+                }
+            },
             verticalAlignment = Alignment.CenterVertically
         ) {
             Checkbox(
