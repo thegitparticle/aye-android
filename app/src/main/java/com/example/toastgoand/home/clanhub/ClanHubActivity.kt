@@ -111,7 +111,7 @@ class ClanHubActivity : BaseActivity() {
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .fillMaxSize()
-                                .background(AyeTheme.colors.uiSurface),
+                                .background(AyeTheme.colors.uiBackground),
                             verticalArrangement = Arrangement.Top,
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
@@ -130,7 +130,7 @@ class ClanHubActivity : BaseActivity() {
                                     modifier = Modifier
                                         .fillMaxWidth(0.9f)
                                         .clip(RoundedCornerShape(10.dp)),
-                                    backgroundColor = AyeTheme.colors.uiBackground,
+                                    backgroundColor = AyeTheme.colors.uiSurface,
                                     elevation = 10.dp
                                 ) {
                                     Column(
