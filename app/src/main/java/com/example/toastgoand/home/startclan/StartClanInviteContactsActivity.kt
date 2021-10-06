@@ -91,7 +91,7 @@ class StartClanInviteContactsActivity : BaseActivity() {
                     topBar = {
                         HeaderOtherScreens(
                             modifier = Modifier.fillMaxWidth(),
-                            title = "",
+                            title = "choose contacts",
                             onBackIconPressed = { onBackPressedHere() }
                         )
                     },

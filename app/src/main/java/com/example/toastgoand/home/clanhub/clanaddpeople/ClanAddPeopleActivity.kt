@@ -117,7 +117,7 @@ class ClanAddPeopleActivity : BaseActivity() {
                         topBar = {
                             HeaderOtherScreens(
                                 modifier = Modifier.fillMaxWidth(),
-                                title = "",
+                                title = "add friends to $clubname",
                                 onBackIconPressed = { onBackPressedHere() }
                             )
                         },

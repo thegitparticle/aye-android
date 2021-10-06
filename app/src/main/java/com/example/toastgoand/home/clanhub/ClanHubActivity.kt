@@ -98,11 +98,13 @@ class ClanHubActivity : BaseActivity() {
                 ProvideWindowInsets() {
                     Scaffold(
                         topBar = {
-                            HeaderOtherScreens(
-                                modifier = Modifier.fillMaxWidth(),
-                                title = "",
-                                onBackIconPressed = { onBackPressedHere() }
-                            )
+                            if (clubName != null) {
+                                HeaderOtherScreens(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    title = clubName,
+                                    onBackIconPressed = { onBackPressedHere() }
+                                )
+                            }
                         }
                     ) { contentPadding ->
                         LazyColumn(

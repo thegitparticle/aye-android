@@ -117,7 +117,7 @@ class StartClanNameActivity : BaseActivity() {
                     topBar = {
                         HeaderOtherScreens(
                             modifier = Modifier.fillMaxWidth(),
-                            title = "",
+                            title = "name of clan",
                             onBackIconPressed = { onBackPressedHere() }
                         )
                     },

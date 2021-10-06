@@ -116,7 +116,7 @@ class StartClanActivity : BaseActivity() {
                     topBar = {
                         HeaderOtherScreens(
                             modifier = Modifier.fillMaxWidth(),
-                            title = "",
+                            title = "choose friends",
                             onBackIconPressed = { onBackPressedHere() }
                         )
                     },

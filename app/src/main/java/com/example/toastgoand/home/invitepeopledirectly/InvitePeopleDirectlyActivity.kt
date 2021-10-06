@@ -105,7 +105,7 @@ class InvitePeopleDirectlyActivity : BaseActivity() {
                         topBar = {
                             HeaderOtherScreens(
                                 modifier = Modifier.fillMaxWidth(),
-                                title = "",
+                                title = "invite friends to Aye!",
                                 onBackIconPressed = { onBackPressedHere() }
                             )
                         },
