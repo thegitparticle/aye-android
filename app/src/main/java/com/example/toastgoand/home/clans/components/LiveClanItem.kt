@@ -192,7 +192,7 @@ fun TextPieces(myclan: MyClansDataClass) {
             )
             Row(modifier = Modifier.padding(vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
                 Icon(
-                    Icons.Rounded.Layers,
+                    FeatherIcons.Layers,
                     "Back",
                     tint = AyeTheme.colors.appLead,
                     modifier = Modifier.size(11.dp)

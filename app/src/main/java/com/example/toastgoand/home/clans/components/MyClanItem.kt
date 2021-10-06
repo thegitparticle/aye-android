@@ -73,7 +73,7 @@ fun DormantClan(myclan: MyClansDataClass) {
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
-                            Icons.Rounded.Layers,
+                            FeatherIcons.Layers,
                             "Back",
                             tint = AyeTheme.colors.textSecondary.copy(0.25f),
                             modifier = Modifier.size(11.dp)

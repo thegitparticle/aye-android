@@ -25,7 +25,6 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.home.clantalk.ClanTalkActivity
-import com.example.toastgoand.home.directtalk.DirectTalkActivity
 import com.example.toastgoand.network.directs.MyDirectsDataClass
 import com.example.toastgoand.utilities.drawColorShadow
 import compose.icons.FeatherIcons
@@ -65,7 +64,7 @@ fun DirectItem(directItem: MyDirectsDataClass) {
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
-                            Icons.Rounded.Layers,
+                            FeatherIcons.Layers,
                             "Back",
                             tint = if (directItem.ongoing_frame) {
                                 AyeTheme.colors.appLead
