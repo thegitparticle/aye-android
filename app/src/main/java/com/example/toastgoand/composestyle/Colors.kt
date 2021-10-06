@@ -7,26 +7,26 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 
 class TheAyeColors(
-    gradient1_1: List<Color>,
-    background: Color,
-    surface: Color,
-    onBackground: Color,
-    onSurface: Color,
     brand: Color,
     brandVariant: Color,
     appLead: Color,
     appLeadVariant: Color,
+    success: Color,
+    error: Color,
+    notification: Color,
     uiBackground: Color,
     uiSurface: Color,
     textPrimary: Color,
     textSecondary: Color,
-    textSpecial: Color,
     textLink: Color,
     iconBackground: Color,
     iconVector: Color,
-    error: Color,
-    success: Color,
-    notification: Color,
+    textSpecial: Color,
+    special1: Color,
+    special2: Color,
+    special3: Color,
+    special4: Color,
+    gradient1_1: List<Color>,
     isDark: Boolean,
 ) {
     var gradient1_1 by mutableStateOf(gradient1_1)
@@ -61,13 +61,13 @@ class TheAyeColors(
         private set
     var notification by mutableStateOf(notification)
         private set
-    var background by mutableStateOf(background)
+    var special1 by mutableStateOf(special1)
         private set
-    var surface by mutableStateOf(surface)
+    var special2 by mutableStateOf(special2)
         private set
-    var onSurface by mutableStateOf(onSurface)
+    var special3 by mutableStateOf(special3)
         private set
-    var onBackground by mutableStateOf(onBackground)
+    var special4 by mutableStateOf(special4)
         private set
     var isDark by mutableStateOf(isDark)
         private set
@@ -90,10 +90,10 @@ class TheAyeColors(
         error = other.error
         notification = other.notification
         isDark = other.isDark
-        onBackground = other.onBackground
-        onSurface = other.onSurface
-        surface = other.surface
-        background = other.background
+        special1 = other.special1
+        special2 = other.special2
+        special3 = other.special3
+        special4 = other.special4
     }
 
     fun copy(): TheAyeColors = TheAyeColors(
@@ -114,9 +114,9 @@ class TheAyeColors(
         error = error,
         notification = notification,
         isDark = isDark,
-        onBackground = onBackground,
-        onSurface = onSurface,
-        surface = surface,
-        background = background
+        special1 = special1,
+        special2 = special2,
+        special3 = special3,
+        special4 = special4,
     )
 }
