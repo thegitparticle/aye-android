@@ -197,8 +197,8 @@ class LandingActivity : BaseActivity() {
 
         tab.isInlineLabel = false
 
-        tab.getTabAt(0)?.setIcon(R.drawable.home_icon)
-        tab.getTabAt(1)?.setIcon(R.drawable.direct_icon_light)
+        tab.getTabAt(0)?.setIcon(R.drawable.home_icon)?.tabLabelVisibility = TabLayout.TAB_LABEL_VISIBILITY_UNLABELED
+        tab.getTabAt(1)?.setIcon(R.drawable.direct_icon_light)?.tabLabelVisibility = TabLayout.TAB_LABEL_VISIBILITY_UNLABELED
 
         tab.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener {
 
