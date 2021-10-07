@@ -250,29 +250,9 @@ class StreamCameraActivity : BaseActivity() {
                             color = Color.White, colorBg = Color.Black, size = 35.dp
                         )
                     }
-//                    Row(
-//                        modifier = Modifier
-//                            .size(40.dp)
-//                            .clickable {
-//                                Log.i("streamworking", "clicked on cam change")
-//                                mRtcEngine?.muteLocalAudioStream(!muted)
-//                                muted = !muted
-//                            }
-//                    ) {
-//                        CircleIcon(
-//                            iconName = FeatherIcons.Mic,
-//                            modifier = Modifier.clickable {
-//                                Log.i("streamworking", "clicked on cam change")
-//                            })
-//                    }
                 }
 
                 Column {
-//                    Button(onClick = {
-//                        openDialog.value = true
-//                    }) {
-//                        Text("Click me")
-//                    }
 
                     if (openDialog.value) {
 
