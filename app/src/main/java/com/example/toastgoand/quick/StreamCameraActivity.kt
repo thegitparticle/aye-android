@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.FrameLayout
 import androidx.activity.compose.BackHandler
 import androidx.camera.core.CameraSelector
@@ -18,6 +19,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
@@ -32,6 +34,7 @@ import com.example.toastgoand.databinding.ActivityStreamCameraBinding
 import com.example.toastgoand.home.LandingActivity
 import com.example.toastgoand.home.clantalk.ClanTalkActivity
 import com.example.toastgoand.uibits.CircleIcon
+import com.example.toastgoand.uibits.CircleIconCustomColorSize
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.*
 import io.agora.rtc.IRtcEngineEventHandler
@@ -196,22 +199,29 @@ class StreamCameraActivity : BaseActivity() {
                     modifier = Modifier
                         .fillMaxWidth(0.8f)
                         .height(100.dp)
-                        .background(MaterialTheme.colors.primary),
+                        .background(AyeTheme.colors.uiBackground.copy(0.0f)),
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Row(
                         modifier = Modifier
-                            .size(40.dp)
                             .clickable {
                                 mRtcEngine?.switchCamera()
                                 Log.i("streamworking", "clicked on cam change")
                             }
+                            .size(75.dp),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        CircleIcon(iconName = FeatherIcons.Repeat, modifier = Modifier)
+                        CircleIconCustomColorSize(
+                            iconName = FeatherIcons.Repeat, modifier = Modifier,
+                            color = Color.White, colorBg = Color.Black, size = 35.dp
+                        )
                     }
                     Icon(
-                        imageVector = FeatherIcons.XCircle,
+                        FeatherIcons.XCircle,
+                        "stop stream",
+                        tint = AyeTheme.colors.error,
                         modifier = Modifier
                             .size(60.dp)
                             .clickable {
@@ -219,23 +229,42 @@ class StreamCameraActivity : BaseActivity() {
                                 val intent = Intent(context, LandingActivity::class.java).apply {}
                                 startActivity(intent)
                             },
-                        contentDescription = "take pic icon"
                     )
                     Row(
                         modifier = Modifier
-                            .size(40.dp)
                             .clickable {
                                 Log.i("streamworking", "clicked on cam change")
                                 mRtcEngine?.muteLocalAudioStream(!muted)
                                 muted = !muted
                             }
+                            .size(75.dp),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        CircleIcon(
-                            iconName = FeatherIcons.Mic,
-                            modifier = Modifier.clickable {
-                                Log.i("streamworking", "clicked on cam change")
-                            })
+                        CircleIconCustomColorSize(
+                            iconName = if (muted) {
+                                FeatherIcons.MicOff
+                            } else {
+                                FeatherIcons.Mic
+                            }, modifier = Modifier,
+                            color = Color.White, colorBg = Color.Black, size = 35.dp
+                        )
                     }
+//                    Row(
+//                        modifier = Modifier
+//                            .size(40.dp)
+//                            .clickable {
+//                                Log.i("streamworking", "clicked on cam change")
+//                                mRtcEngine?.muteLocalAudioStream(!muted)
+//                                muted = !muted
+//                            }
+//                    ) {
+//                        CircleIcon(
+//                            iconName = FeatherIcons.Mic,
+//                            modifier = Modifier.clickable {
+//                                Log.i("streamworking", "clicked on cam change")
+//                            })
+//                    }
                 }
 
                 Column {

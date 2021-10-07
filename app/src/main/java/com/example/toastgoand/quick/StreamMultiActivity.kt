@@ -28,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
@@ -42,6 +43,7 @@ import com.example.toastgoand.quick.callactivity.ScreenSharingClient
 import com.example.toastgoand.quick.callactivity.ScreenSharingClient.IStateListener
 import com.example.toastgoand.quick.callactivity.utils.CommonUtil
 import com.example.toastgoand.uibits.CircleIcon
+import com.example.toastgoand.uibits.CircleIconCustomColorSize
 import com.yanzhenjie.permission.AndPermission
 import com.yanzhenjie.permission.runtime.Permission
 import compose.icons.FeatherIcons
@@ -118,7 +120,8 @@ class StreamMultiActivity : BaseActivity() {
         userid = intent.getIntExtra("userid", 0)
         directornot = intent.getBooleanExtra("directornot", false)
         token222 = intent.getStringExtra("token").toString()
-        token = "006851193d91b1945bda153a38f3584ead3IACKJYOK3qEVqWrM8B8cbCFYFshFp1np5QrT0GWvMUjCeN78lGEAAAAAEADy5cWPzaFeYQEAAQDMoV5h"
+        token =
+            "006851193d91b1945bda153a38f3584ead3IACKJYOK3qEVqWrM8B8cbCFYFshFp1np5QrT0GWvMUjCeN78lGEAAAAAEADy5cWPzaFeYQEAAQDMoV5h"
 
         Log.i("streammultigoon userid", userid.toString())
         Log.i("streammultigoon token", token222)
@@ -156,31 +159,35 @@ class StreamMultiActivity : BaseActivity() {
                     modifier = Modifier
                         .fillMaxWidth(0.8f)
                         .height(100.dp)
-                        .background(MaterialTheme.colors.primary),
+                        .background(AyeTheme.colors.uiBackground.copy(0.0f)),
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Row(
                         modifier = Modifier
-                            .size(40.dp)
+                            .size(75.dp)
                             .clickable {
                                 Log.i("camerastream", "clicked on cam change")
                                 engine?.muteLocalVideoStream(!cameraOff)
                                 cameraOff = !cameraOff
-                            }
+                            },
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        CircleIcon(
+                        CircleIconCustomColorSize(
                             iconName = if (cameraOff) {
                                 FeatherIcons.CameraOff
                             } else {
                                 FeatherIcons.Camera
                             },
-                            modifier = Modifier.clickable {
-                                Log.i("camerastream", "clicked on cam change")
-                            })
+                            modifier = Modifier,
+                            color = Color.White, colorBg = Color.Black, size = 35.dp
+                        )
                     }
                     Icon(
-                        imageVector = FeatherIcons.XCircle,
+                        FeatherIcons.XCircle,
+                        "stop stream",
+                        tint = AyeTheme.colors.error,
                         modifier = Modifier
                             .size(60.dp)
                             .clickable {
@@ -191,22 +198,27 @@ class StreamMultiActivity : BaseActivity() {
                                 val intent = Intent(context, LandingActivity::class.java).apply {}
                                 startActivity(intent)
                             },
-                        contentDescription = "take pic icon"
                     )
                     Row(
                         modifier = Modifier
-                            .size(40.dp)
+                            .size(75.dp)
                             .clickable {
                                 Log.i("camerastream", "clicked on cam change")
                                 engine?.muteLocalAudioStream(!muted)
                                 muted = !muted
-                            }
+                            },
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        CircleIcon(
-                            iconName = FeatherIcons.Mic,
-                            modifier = Modifier.clickable {
-                                Log.i("camerastream", "clicked on cam change")
-                            })
+                        CircleIconCustomColorSize(
+                            iconName = if (muted) {
+                                FeatherIcons.MicOff
+                            } else {
+                                FeatherIcons.Mic
+                            },
+                            modifier = Modifier,
+                            color = Color.White, colorBg = Color.Black, size = 35.dp
+                        )
                     }
                 }
 
@@ -489,7 +501,8 @@ class StreamMultiActivity : BaseActivity() {
         val option = ChannelMediaOptions()
         option.autoSubscribeAudio = false
         option.autoSubscribeVideo = false
-        val res = engine!!.joinChannel(accessToken, channelId, "Extra Optional Data", userid, option)
+        val res =
+            engine!!.joinChannel(accessToken, channelId, "Extra Optional Data", userid, option)
         if (res != 0) {
             // Usually happens with invalid parameters
             // Error code description can be found at:
@@ -538,7 +551,10 @@ class StreamMultiActivity : BaseActivity() {
          */
         override fun onLeaveChannel(stats: RtcStats) {
             super.onLeaveChannel(stats)
-            Log.i("streammultigoon iRtcEngineEventHandler onleave", String.format("local user %d leaveChannel!", userid))
+            Log.i(
+                "streammultigoon iRtcEngineEventHandler onleave",
+                String.format("local user %d leaveChannel!", userid)
+            )
 //            showLongToast(String.format("local user %d leaveChannel!", myUid))
         }
 
@@ -709,7 +725,10 @@ class StreamMultiActivity : BaseActivity() {
          * the host to the audience.
          */
         override fun onUserOffline(userid: Int, reason: Int) {
-            Log.i("streammultigoon iRtcEngineEventHandler", String.format("user %d offline! reason:%d", userid, reason))
+            Log.i(
+                "streammultigoon iRtcEngineEventHandler",
+                String.format("user %d offline! reason:%d", userid, reason)
+            )
 //            showLongToast(String.format("user %d offline! reason:%d", uid, reason))
             if (userid == userid) {
                 return
