@@ -27,13 +27,13 @@ fun SqaureRoundedIcon(iconName: ImageVector, color: Color, modifier: Modifier) {
             modifier = Modifier
                 .size(30.dp)
                 .clip(shape)
-                .background(color.copy(0.1f))
-                .alpha(0.1f),
+                .background(color.copy(0.1f)),
             contentAlignment = Alignment.Center
         ) {
             Icon(
-                imageVector = iconName,
-                contentDescription = "last month",
+                iconName,
+                "sqaure icon",
+                tint = color,
                 modifier = Modifier.size(17.dp)
             )
         }
