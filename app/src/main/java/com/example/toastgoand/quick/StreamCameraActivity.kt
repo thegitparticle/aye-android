@@ -268,11 +268,11 @@ class StreamCameraActivity : BaseActivity() {
                 }
 
                 Column {
-                    Button(onClick = {
-                        openDialog.value = true
-                    }) {
-                        Text("Click me")
-                    }
+//                    Button(onClick = {
+//                        openDialog.value = true
+//                    }) {
+//                        Text("Click me")
+//                    }
 
                     if (openDialog.value) {
 
@@ -284,29 +284,56 @@ class StreamCameraActivity : BaseActivity() {
                                 openDialog.value = false
                             },
                             title = {
-                                Text(text = "Dialog Title")
+                                Text(text = "stop stream?")
                             },
                             text = {
-                                Text("Here is a text ")
+                                Text("your friends get to view it in messages")
                             },
                             confirmButton = {
-                                Button(
-
-                                    onClick = {
-                                        openDialog.value = false
-                                    }) {
-                                    Text("This is the Confirm Button")
+                                Box(
+                                    modifier = Modifier
+                                        .wrapContentWidth()
+                                        .clip(RoundedCornerShape(20.dp))
+                                        .background(color = AyeTheme.colors.error)
+                                        .clickable {
+                                            openDialog.value = false
+                                            mRtcEngine?.leaveChannel()
+                                            val intent = Intent(context, LandingActivity::class.java).apply {}
+                                            startActivity(intent)
+                                        }
+                                        .width(100.dp)
+                                        .height(40.dp),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text(
+                                        text = "stop",
+                                        style = MaterialTheme.typography.subtitle2,
+                                        color = AyeTheme.colors.uiBackground
+                                    )
                                 }
                             },
                             dismissButton = {
-                                Button(
-
-                                    onClick = {
-                                        openDialog.value = false
-                                    }) {
-                                    Text("This is the dismiss Button")
+                                Box(
+                                    modifier = Modifier
+                                        .wrapContentWidth()
+                                        .clip(RoundedCornerShape(20.dp))
+                                        .background(AyeTheme.colors.uiSurface)
+                                        .clickable {
+                                            openDialog.value = false
+                                        }
+                                        .width(100.dp)
+                                        .height(40.dp),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text(
+                                        text = "no.. no..",
+                                        style = MaterialTheme.typography.subtitle2,
+                                        color = AyeTheme.colors.textSecondary
+                                    )
                                 }
-                            }
+                            },
+                            backgroundColor = AyeTheme.colors.uiBackground,
+                            contentColor = AyeTheme.colors.textSecondary
                         )
                     }
                 }

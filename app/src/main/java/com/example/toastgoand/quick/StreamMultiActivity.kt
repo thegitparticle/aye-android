@@ -21,6 +21,7 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -28,6 +29,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -223,11 +225,11 @@ class StreamMultiActivity : BaseActivity() {
                 }
 
                 Column {
-                    Button(onClick = {
-                        openDialog.value = true
-                    }) {
-                        Text("Click me")
-                    }
+//                    Button(onClick = {
+//                        openDialog.value = true
+//                    }) {
+//                        Text("Click me")
+//                    }
 
                     if (openDialog.value) {
 
@@ -239,29 +241,59 @@ class StreamMultiActivity : BaseActivity() {
                                 openDialog.value = false
                             },
                             title = {
-                                Text(text = "Dialog Title")
+                                Text(text = "stop stream?")
                             },
                             text = {
-                                Text("Here is a text ")
+                                Text("your friends get to view it in messages")
                             },
                             confirmButton = {
-                                Button(
-
-                                    onClick = {
-                                        openDialog.value = false
-                                    }) {
-                                    Text("This is the Confirm Button")
+                                Box(
+                                    modifier = Modifier
+                                        .wrapContentWidth()
+                                        .clip(RoundedCornerShape(20.dp))
+                                        .background(AyeTheme.colors.error)
+                                        .clickable {
+                                            openDialog.value = false
+                                            engine?.leaveChannel()
+//                                mSSClient!!.stop(context)
+                                            screenShare!!.text = resources.getString(R.string.screenshare)
+                                            isSharing = false
+                                            val intent = Intent(context, LandingActivity::class.java).apply {}
+                                            startActivity(intent)
+                                        }
+                                        .width(100.dp)
+                                        .height(40.dp),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text(
+                                        text = "stop",
+                                        style = MaterialTheme.typography.subtitle2,
+                                        color = AyeTheme.colors.uiBackground
+                                    )
                                 }
                             },
                             dismissButton = {
-                                Button(
-
-                                    onClick = {
-                                        openDialog.value = false
-                                    }) {
-                                    Text("This is the dismiss Button")
+                                Box(
+                                    modifier = Modifier
+                                        .wrapContentWidth()
+                                        .clip(RoundedCornerShape(20.dp))
+                                        .background(AyeTheme.colors.uiSurface)
+                                        .clickable {
+                                            openDialog.value = false
+                                        }
+                                        .width(100.dp)
+                                        .height(40.dp),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text(
+                                        text = "no.. no..",
+                                        style = MaterialTheme.typography.subtitle2,
+                                        color = AyeTheme.colors.textSecondary
+                                    )
                                 }
-                            }
+                            },
+                            backgroundColor = AyeTheme.colors.uiBackground,
+                            contentColor = AyeTheme.colors.textSecondary
                         )
                     }
                 }
