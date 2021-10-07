@@ -86,6 +86,7 @@
         <entry key="app/src/main/res/layout/talktype.xml" value="0.1" />
         <entry key="app/src/main/res/layout/welcome_fragment.xml" value="0.17648091433292515" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.25" />
+        <entry key="app/src/main/res/xml/bottom_nav_selector.xml" value="0.19293478260869565" />
       </map>
     </option>
   </component>

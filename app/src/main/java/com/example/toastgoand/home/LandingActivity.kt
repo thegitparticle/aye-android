@@ -188,12 +188,38 @@ class LandingActivity : BaseActivity() {
 
         val adapter = HomePagerAdapter(supportFragmentManager)
 
-        adapter.addFragment(ClansFragment(), "CLANS")
-        adapter.addFragment(DirectsFragment(), "DIRECTS")
+        adapter.addFragment(ClansFragment(), "clans")
+        adapter.addFragment(DirectsFragment(), "directs")
 
         pager.adapter = adapter
 
         tab.setupWithViewPager(pager)
+
+        tab.isInlineLabel = false
+
+        tab.getTabAt(0)?.setIcon(R.drawable.home_icon)
+        tab.getTabAt(1)?.setIcon(R.drawable.direct_icon_light)
+
+        tab.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener {
+
+            override fun onTabReselected(p0: TabLayout.Tab?) {
+            }
+
+            override fun onTabUnselected(p0: TabLayout.Tab?) {
+
+            }
+
+            override fun onTabSelected(xTab: TabLayout.Tab?) {
+                if (tab.selectedTabPosition == 0) {
+                    tab.getTabAt(0)?.setIcon(R.drawable.home_icon)
+                    tab.getTabAt(1)?.setIcon(R.drawable.direct_icon_light)
+                } else {
+                    tab.getTabAt(0)?.setIcon(R.drawable.home_icon_light)
+                    tab.getTabAt(1)?.setIcon(R.drawable.direct_icon)
+                }
+            }
+
+        })
 
         getSupportActionBar()?.hide()
 
