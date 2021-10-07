@@ -8,10 +8,9 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageCapture
-import androidx.camera.core.ImageCaptureException
-import androidx.camera.core.Preview
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -23,6 +22,7 @@ import androidx.compose.material.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -34,6 +34,7 @@ import com.example.toastgoand.R
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityCameraBinding
 import com.example.toastgoand.uibits.CircleIcon
+import com.example.toastgoand.uibits.CircleIconCustomColorSize
 import com.pubnub.api.PNConfiguration
 import com.pubnub.api.PubNub
 import compose.icons.FeatherIcons
@@ -46,6 +47,9 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ExecutorService
+import androidx.camera.core.CameraSelector
+import androidx.compose.runtime.*
+
 
 class CameraActivity : BaseActivity() {
     private var imageCapture: ImageCapture? = null
@@ -54,20 +58,22 @@ class CameraActivity : BaseActivity() {
 
     private lateinit var outputDirectory: File
     private lateinit var cameraExecutor: ExecutorService
+    private var cameraProvider: ProcessCameraProvider? = null
 
     // Select back camera as a default
     var cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+    private var lensFacing: Int = CameraSelector.LENS_FACING_BACK
 
     var savedUri: Uri = "".toUri()
 
     var clubName: String = ""
     var clubid: Int = 0
-    var channelid : String = ""
-    var ongoingFrame : Boolean = false
-    var startTime : String = ""
-    var endTime : String = ""
-    var userid : String = ""
-    var userdp : String = ""
+    var channelid: String = ""
+    var ongoingFrame: Boolean = false
+    var startTime: String = ""
+    var endTime: String = ""
+    var userid: String = ""
+    var userdp: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,41 +90,89 @@ class CameraActivity : BaseActivity() {
 
         outputDirectory = this.getOutputDirectory()
 
-        Log.i("CameraXBasic", "camera opened")
-
         val bottomButtons = binding.theBottomButtons
 
         bottomButtons.setContent {
+
+            var showGallerySelect by remember { mutableStateOf(false) }
+
+            @Composable
+            fun pickImageFromPhone() {
+                val launcher = rememberLauncherForActivityResult(
+                    contract = ActivityResultContracts.GetContent(),
+                    onResult = { uri: Uri? ->
+                        if (uri != null) {
+                            savedUri = uri
+                        }
+                        binding.imageTaken.setImageURI(Uri.parse(savedUri.toString()))
+                        binding.viewFinder.visibility = View.INVISIBLE
+                        binding.theBottomButtons.visibility = View.INVISIBLE
+                        binding.imageTaken.visibility = View.VISIBLE
+                        binding.theSendButtons.visibility = View.VISIBLE
+                        findViewById<ImageView>(R.id.imageTaken).setImageURI(savedUri)
+                        showGallerySelect = false
+                    }
+                )
+
+                @Composable
+                fun LaunchGallery() {
+                    SideEffect {
+                        launcher.launch("image/*")
+                    }
+                }
+                LaunchGallery()
+            }
+
             AyeTheme {
+                if (showGallerySelect) {
+                    pickImageFromPhone()
+                }
                 Row(
                     modifier = Modifier
-                        .fillMaxWidth(0.8f)
-                        .height(100.dp),
+                        .fillMaxWidth(1f)
+                        .height(100.dp)
+                    ,
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    CircleIcon(iconName = FeatherIcons.File, modifier = Modifier)
+                    Row(
+                        modifier = Modifier
+                            .clickable {
+                                binding.viewFinder.visibility = View.INVISIBLE
+                                binding.theBottomButtons.visibility = View.INVISIBLE
+                                showGallerySelect = true
+                            }
+                            .size(75.dp),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        CircleIconCustomColorSize(
+                            iconName = FeatherIcons.File, modifier = Modifier,
+                            color = Color.White, colorBg = Color.Black, size = 35.dp
+                        )
+                    }
                     Icon(
-                        imageVector = FeatherIcons.Circle,
+                        FeatherIcons.Circle,
+                        "take pic icon",
+                        tint = Color.White,
                         modifier = Modifier
                             .size(60.dp)
                             .clickable { takePhoto() },
-                        contentDescription = "take pic icon"
                     )
                     Row(
                         modifier = Modifier
-                            .size(40.dp)
                             .clickable {
-                                cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA
+                              flipCamera()
                                 Log.i("CameraXBasic", "clicked on cam change")
                             }
+                            .size(75.dp),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        CircleIcon(
-                            iconName = FeatherIcons.RefreshCcw,
-                            modifier = Modifier.clickable {
-                                cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA
-                                Log.i("CameraXBasic", "clicked on cam change")
-                            })
+                        CircleIconCustomColorSize(
+                            iconName = FeatherIcons.RefreshCcw, modifier = Modifier,
+                            color = Color.White, colorBg = Color.Black, size = 35.dp
+                        )
                     }
                 }
             }
@@ -135,12 +189,17 @@ class CameraActivity : BaseActivity() {
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    CircleIcon(iconName = FeatherIcons.X, modifier = Modifier.size(40.dp))
+                    CircleIcon(iconName = FeatherIcons.X, onIconPressed = {
+                        binding.imageTaken.visibility = View.INVISIBLE
+                        binding.theSendButtons.visibility = View.INVISIBLE
+                        binding.viewFinder.visibility = View.VISIBLE
+                        binding.theBottomButtons.visibility = View.VISIBLE
+                    } ,modifier = Modifier.size(40.dp))
                     Box(
                         modifier = Modifier
                             .wrapContentWidth()
                             .clip(RoundedCornerShape(20.dp))
-                            .background(MaterialTheme.colors.surface)
+                            .background(Color.White)
                             .clickable { sendCameraMessage() }
                             .width(75.dp)
                             .height(40.dp),
@@ -149,7 +208,7 @@ class CameraActivity : BaseActivity() {
                         Text(
                             text = "send",
                             style = MaterialTheme.typography.caption,
-                            color = MaterialTheme.colors.onSurface
+                            color = Color.Gray
                         )
                     }
                 }
@@ -178,20 +237,20 @@ class CameraActivity : BaseActivity() {
 
         val pubnub = PubNub(pnConfiguration)
 
-        data class metaHere (
+        data class metaHere(
             val type: String,
             val user_dp: String,
-                )
+        )
 
         if (channelid != null) {
             pubnub.sendFile(
                 channel = channelid,
                 fileName = "galgalgal",
-                inputStream =  savedUri.toFile().inputStream(),
+                inputStream = savedUri.toFile().inputStream(),
                 message = null,
                 meta = userdp?.let { metaHere(type = "c", user_dp = it) },
                 shouldStore = true
-                ).async { result, status ->
+            ).async { result, status ->
                 if (status.error) {
                     Log.i("CameraXBasic", status.error.toString())
                 } else {
@@ -246,12 +305,22 @@ class CameraActivity : BaseActivity() {
             })
     }
 
+    private fun flipCamera() {
+        if (cameraSelector === CameraSelector.DEFAULT_FRONT_CAMERA) cameraSelector =
+            CameraSelector.DEFAULT_BACK_CAMERA else if (cameraSelector === CameraSelector.DEFAULT_BACK_CAMERA) cameraSelector =
+            CameraSelector.DEFAULT_FRONT_CAMERA
+        startCamera()
+    }
+
     private fun startCamera() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
 
         cameraProviderFuture.addListener(Runnable {
             // Used to bind the lifecycle of cameras to the lifecycle owner
             val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
+
+            // Select lensFacing depending on the available cameras
+            lensFacing = CameraSelector.LENS_FACING_BACK
 
             // Preview
             val preview = Preview.Builder()
