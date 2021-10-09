@@ -78,7 +78,7 @@ fun OneButtonHere(title: String, icon: ImageVector, color: Color, onPressed: () 
             .padding(vertical = 5.dp)
             .clickable { onPressed() }
             .clip(RoundedCornerShape(10.dp)),
-        backgroundColor = AyeTheme.colors.textSpecial,
+        backgroundColor = AyeTheme.colors.uiSurface,
         shape = RoundedCornerShape(10.dp)
     ) {
         Row(
@@ -114,7 +114,7 @@ fun OneButtonHereWithInfo(
             .padding(vertical = 5.dp)
             .clickable { onPressed(); openDialog.value = true }
             .clip(RoundedCornerShape(10.dp)),
-        backgroundColor = AyeTheme.colors.textSpecial,
+        backgroundColor = AyeTheme.colors.uiSurface,
         shape = RoundedCornerShape(10.dp)
     ) {
         Column() {

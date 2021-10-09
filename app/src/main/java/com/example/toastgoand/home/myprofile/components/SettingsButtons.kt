@@ -59,7 +59,7 @@ fun ButtonRowHere(title: String, icon: ImageVector, color: Color, onPressed: () 
             .padding(vertical = 5.dp)
             .clickable { onPressed() }
             .clip(RoundedCornerShape(10.dp)),
-        backgroundColor = AyeTheme.colors.textSpecial,
+        backgroundColor = AyeTheme.colors.uiSurface,
         shape = RoundedCornerShape(10.dp)
     ) {
         Row(
