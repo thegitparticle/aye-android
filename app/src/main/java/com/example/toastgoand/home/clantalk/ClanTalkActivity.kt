@@ -45,6 +45,8 @@ import com.example.toastgoand.home.clantalk.components.TextInputPart
 import com.example.toastgoand.home.directframes.DirectFramesActivity
 import com.example.toastgoand.home.directtalk.components.StartDirectFrame
 import com.example.toastgoand.network.defaultrecos.DefaultRecosDataClass
+import com.example.toastgoand.network.userdetails.User
+import com.example.toastgoand.network.userdetails.UserDetailsDataClass
 import com.example.toastgoand.quick.QuickActivity
 import com.example.toastgoand.uibits.HeaderPlayScreens
 import com.google.accompanist.insets.ExperimentalAnimatedInsets
@@ -102,6 +104,23 @@ class ClanTalkActivity : BaseActivity() {
                     listOf<DefaultRecosDataClass>()
                 )
 
+                val deetsHere: UserDetailsDataClass by viewModel.deets.observeAsState(
+                    UserDetailsDataClass(
+                        bio = "", image = "", user = User(
+                            phone = "",
+                            full_name = "",
+                            id = 0,
+                            clubs_joined_by_user = "",
+                            number_of_clubs_joined = 0,
+                            contact_list = "",
+                            total_frames_participation = 0,
+                            country_code_of_user = "",
+                            contact_list_sync_status = false,
+                            username = ""
+                        ), id = 0
+                    )
+                )
+
                 val clubName = intent.getStringExtra("clubName")
                 val clubid = intent.getIntExtra("clubid", 0)
                 val channelid = intent.getStringExtra("channelid")
@@ -114,7 +133,7 @@ class ClanTalkActivity : BaseActivity() {
                     subscribeKey = "sub-c-d099e214-9bcf-11eb-9adf-f2e9c1644994"
                     publishKey = "pub-c-a65bb691-5b8a-4c4b-aef5-e2a26677122d"
                     secure = true
-                    uuid = viewModel.deets.value?.user?.id.toString()
+                    uuid = deetsHere.user?.id.toString()
                     reconnectionPolicy = PNReconnectionPolicy.LINEAR
                 }
 
@@ -250,7 +269,6 @@ class ClanTalkActivity : BaseActivity() {
                         },
                         floatingActionButton = {
                             AnimatedVisibility(visible = ongoingFrame) {
-//                                AnimatedVisibility(visible = !showTextInput) {
                                 AnimatedVisibility(visible = true) {
                                     AnimatedVisibility(visible = !showTextInput) {
                                         Row(
@@ -382,7 +400,7 @@ class ClanTalkActivity : BaseActivity() {
                                                 clubName = clubName
                                             )
                                         } else {
-                                            viewModel.deets.value?.user?.full_name?.let {
+                                            deetsHere.user?.full_name?.let {
                                                 StartDirectFrame(
                                                     modifier = Modifier,
                                                     directid = channelid,
