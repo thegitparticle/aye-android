@@ -38,7 +38,7 @@ import androidx.compose.ui.unit.dp
 import com.google.android.exoplayer2.MediaItem
 
 @Composable
-fun ComposeExoPlayer (videoLink: String, thumbNail: Uri) {
+fun ComposeExoPlayer (videoLink: String, thumbNail: Uri, isPlaying: Boolean) {
     val context = LocalContext.current
     val exoPlayer = remember(context) { SimpleExoPlayer.Builder(context).build() }
 
@@ -48,7 +48,7 @@ fun ComposeExoPlayer (videoLink: String, thumbNail: Uri) {
 
         VideoCard(
             thumbNail = thumbNail,
-            isPlaying = false,
+            isPlaying = isPlaying,
             exoPlayer = exoPlayer,
         )
     }

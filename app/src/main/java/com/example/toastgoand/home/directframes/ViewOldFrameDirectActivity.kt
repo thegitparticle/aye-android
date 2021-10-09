@@ -115,7 +115,9 @@ class ViewOldFrameDirectActivity: BaseActivity() {
                                                 OldPNMessage(
                                                     message = it,
                                                     userid = userid,
-                                                    channelid = directid
+                                                    channelid = directid,
+                                                    visibleItems = 1,
+                                                    thisItemIndex = 2
                                                 )
                                             }
                                         }

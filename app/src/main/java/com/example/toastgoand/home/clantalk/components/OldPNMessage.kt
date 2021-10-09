@@ -22,6 +22,7 @@ import androidx.core.net.toUri
 import coil.compose.rememberImagePainter
 import com.beust.klaxon.Parser
 import com.example.toastgoand.composestyle.AyeTheme
+import com.example.toastgoand.uibits.ComposeExoPlayer
 import com.example.toastgoand.uibits.ViewMediaActivity
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.google.gson.Gson
@@ -52,11 +53,21 @@ data class CEntryData(val message: String, val file: CEntryFile)
 data class CEntryFile(val id: String, val name: String)
 
 @Composable
-fun OldPNMessage(message: PNHistoryItemResult, userid: String, channelid: String) {
+fun OldPNMessage(
+    message: PNHistoryItemResult,
+    userid: String,
+    channelid: String,
+    visibleItems: Int,
+    thisItemIndex: Int
+) {
 
     AyeTheme() {
 
         val metaData = Gson().fromJson<MessageMetaData>(message.meta, MessageMetaData::class.java)
+
+        if (thisItemIndex === visibleItems) {
+            Log.i("scrollplaydebug", visibleItems.toString())
+        }
 
         if (metaData.type == "h") {
             HMessage(message = message)
@@ -64,16 +75,15 @@ fun OldPNMessage(message: PNHistoryItemResult, userid: String, channelid: String
         } else if (metaData.type == "c") {
 //            Log.i("cmessagedebugmain", "else if log before component invoke")
             CMessage(message = message, userid = userid, channelid = channelid)
-        }
-        else if (metaData.type == "s") {
-            SMessage(message = message)
+        } else if (metaData.type == "s") {
+            SMessage(message = message, thisItemIndex = thisItemIndex, visibleItems = visibleItems)
         }
     }
 
 }
 
 @Composable
-private fun SMessage(message: PNHistoryItemResult) {
+private fun SMessage(message: PNHistoryItemResult, thisItemIndex: Int, visibleItems: Int) {
     AyeTheme() {
 
         val metaData = Gson().fromJson<MessageMetaData>(message.meta, MessageMetaData::class.java)
@@ -88,7 +98,11 @@ private fun SMessage(message: PNHistoryItemResult) {
                 .clip(RoundedCornerShape(corner = CornerSize(15.dp))),
             contentAlignment = Alignment.Center
         ) {
-            ImageHere(imageLink = metaData.image_url)
+            ComposeExoPlayer(
+                videoLink = metaData.image_url,
+                thumbNail = "https://i.postimg.cc/y6mnnk9H/download-36.jpg".toUri(),
+                isPlaying = (thisItemIndex == visibleItems)
+            )
             DPBubble(dplink = metaData.user_dp, text = message.entry.toString())
         }
     }

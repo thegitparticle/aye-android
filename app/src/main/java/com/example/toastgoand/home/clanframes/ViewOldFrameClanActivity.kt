@@ -125,7 +125,9 @@ class ViewOldFrameClanActivity : BaseActivity() {
                                                 OldPNMessage(
                                                     message = it,
                                                     userid = userid,
-                                                    channelid = channelid
+                                                    channelid = channelid,
+                                                    visibleItems = 1,
+                                                    thisItemIndex = 2
                                                 )
                                             }
                                         }

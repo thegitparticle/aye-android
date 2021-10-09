@@ -322,7 +322,9 @@ class DirectTalkActivity : BaseActivity() {
                                                 OldPNMessage(
                                                     message = it,
                                                     userid = viewModel.deets.value?.user?.id.toString(),
-                                                    channelid = directid
+                                                    channelid = directid,
+                                                    visibleItems = 1,
+                                                    thisItemIndex = 2
                                                 )
                                             }
                                         })

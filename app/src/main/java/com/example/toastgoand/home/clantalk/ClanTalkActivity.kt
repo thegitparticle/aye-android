@@ -15,6 +15,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.FabPosition
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
@@ -185,6 +186,8 @@ class ClanTalkActivity : BaseActivity() {
                     ongoingFrame = true
                     Log.i("startframeapicall", "backwaeds function call worked")
                 }
+
+                val listState = rememberLazyListState()
 
                 ProvideWindowInsets(windowInsetsAnimationsEnabled = true) {
                     Scaffold(
@@ -406,7 +409,8 @@ class ClanTalkActivity : BaseActivity() {
                                     .clickable { reSetTextInput() }
                                     .fillMaxWidth()
                                     .background(AyeTheme.colors.uiBackground),
-                                horizontalAlignment = Alignment.CenterHorizontally
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                state = listState
                             ) {
                                 item {
                                     Spacer(modifier = Modifier.size(100.dp))
@@ -420,7 +424,9 @@ class ClanTalkActivity : BaseActivity() {
                                                 OldPNMessage(
                                                     message = it,
                                                     userid = viewModel.deets.value?.user?.id.toString(),
-                                                    channelid = channelid
+                                                    channelid = channelid,
+                                                    visibleItems = listState.firstVisibleItemIndex,
+                                                thisItemIndex = oldMessagesHere.indexOf(it)
                                                 )
                                             }
                                         })
