@@ -67,7 +67,7 @@ private fun OneButtonHereWithInfoHere(
             .clickable { onPressed() }
             .clip(RoundedCornerShape(10.dp))
             .clickable { onPressed },
-        backgroundColor = AyeTheme.colors.textSpecial,
+        backgroundColor = AyeTheme.colors.uiSurface,
         shape = RoundedCornerShape(10.dp)
     ) {
         Row( verticalAlignment = Alignment.CenterVertically,
