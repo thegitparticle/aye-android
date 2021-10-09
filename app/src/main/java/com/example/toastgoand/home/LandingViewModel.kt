@@ -17,8 +17,8 @@ class LandingViewModel(private val repoDeets: UserDetailsRepo): ViewModel() {
     val deets: LiveData<UserDetailsDataClass> = repoDeets.userDetails.asLiveData()
 
     init {
-        Log.i("landingactlogging vm1", deets.value.toString())
-        deets.value?.user?.phone?.let { getUserDetailsWhileLoginHere(phone = it) }
+            Log.i("dpdebughere vm", deets.value.toString())
+            deets.value?.user?.phone?.let { getUserDetailsWhileLoginHere(phone = it) }
     }
 
     fun insert(userDetails: UserDetailsDataClass) = viewModelScope.launch {

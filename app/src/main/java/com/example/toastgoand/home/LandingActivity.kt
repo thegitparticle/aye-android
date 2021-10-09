@@ -23,6 +23,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.PersonAdd
 import androidx.compose.material.icons.rounded.PersonAddAlt1
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -56,6 +58,8 @@ import com.example.toastgoand.home.myprofile.MyProfileActivity
 import com.example.toastgoand.home.startclan.StartClanActivity
 import com.example.toastgoand.navigator.Navigator
 import com.example.toastgoand.navigator.Screen
+import com.example.toastgoand.network.userdetails.User
+import com.example.toastgoand.network.userdetails.UserDetailsDataClass
 import com.example.toastgoand.prefhelpers.Constant
 import com.example.toastgoand.prefhelpers.PrefHelper
 import com.example.toastgoand.uibits.CircleIcon
@@ -121,14 +125,35 @@ class LandingActivity : BaseActivity() {
             )
         }
 
+        Log.i("dpdebughere normal", "normal logging works")
+
+        viewModel.deets.value?.image?.let { Log.i("dpdebughere", it) }
+
         val composePart = binding.headerButtons
         composePart.setContent {
             AyeTheme() {
-                val painterAye = rememberImagePainter(data = R.drawable.aye_logo)
-                val painterDp = rememberImagePainter(data = viewModel.deets.value?.image)
 
-//                Log.i("landingactlogging", painterDp.toString())
-//                viewModel.deets.value?.image?.let { Log.i("landingactlogging", it) }
+                val deetsHere: UserDetailsDataClass by viewModel.deets.observeAsState(
+                    UserDetailsDataClass(
+                        bio = "", image = "", user = User(
+                            phone = "",
+                            full_name = "",
+                            id = 0,
+                            clubs_joined_by_user = "",
+                            number_of_clubs_joined = 0,
+                            contact_list = "",
+                            total_frames_participation = 0,
+                            country_code_of_user = "",
+                            contact_list_sync_status = false,
+                            username = ""
+                        ), id = 0
+                    )
+                )
+
+                val painterAye = rememberImagePainter(data = R.drawable.aye_logo)
+                val painterDp = rememberImagePainter(data = deetsHere.image)
+
+                viewModel.deets.value?.image?.let { Log.i("dpdebughere compose", it) }
 
                 val context = LocalContext.current
 
