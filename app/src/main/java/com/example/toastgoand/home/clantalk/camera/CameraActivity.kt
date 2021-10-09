@@ -88,6 +88,10 @@ class CameraActivity : BaseActivity() {
             )
         }
 
+        fun onBackPressedHere() {
+            onBackPressed()
+        }
+
         outputDirectory = this.getOutputDirectory()
 
         val bottomButtons = binding.theBottomButtons
@@ -235,6 +239,8 @@ class CameraActivity : BaseActivity() {
             }
         }
 
+        Log.i("CameraXBasic", "send camera message clicked")
+
         val pubnub = PubNub(pnConfiguration)
 
         data class metaHere(
@@ -243,6 +249,7 @@ class CameraActivity : BaseActivity() {
         )
 
         if (channelid != null) {
+            Log.i("CameraXBasic", "send file channelid is passed")
             pubnub.sendFile(
                 channel = channelid,
                 fileName = "galgalgal",
@@ -257,6 +264,7 @@ class CameraActivity : BaseActivity() {
                     Log.i("CameraXBasic", "sending message worked")
                 }
             }
+            onBackPressed()
         }
 
     }

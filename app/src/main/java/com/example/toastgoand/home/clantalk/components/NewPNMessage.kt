@@ -40,7 +40,7 @@ fun NewPNMessage (message: PNMessageResult, userid: String, channelid: String) {
     AyeTheme() {
 
         val metaData = Gson().fromJson<UserMetaData>(message.userMetadata, UserMetaData::class.java)
-        Log.i("livemessage metadata gson", metaData.toString())
+        Log.i("CameraXBasic", message.toString())
 
         if (metaData.type == "h") {
             HMessage(message = message)
@@ -55,37 +55,38 @@ fun NewPNMessage (message: PNMessageResult, userid: String, channelid: String) {
 private fun CMessage(message: PNMessageResult, userid: String, channelid: String) {
     AyeTheme() {
 
+        Log.i("CameraXBasic", message.toString())
+
         val metaData = Gson().fromJson<UserMetaData>(message.userMetadata, UserMetaData::class.java)
         val entryData = Gson().fromJson<CEntryDataNew>(message.message, CEntryDataNew::class.java)
 
-        val pnConfiguration = PNConfiguration().apply {
-            subscribeKey = "sub-c-d099e214-9bcf-11eb-9adf-f2e9c1644994"
-            publishKey = "pub-c-a65bb691-5b8a-4c4b-aef5-e2a26677122d"
-            secure = true
-            uuid = userid
-        }
+//        val pnConfiguration = PNConfiguration().apply {
+//            subscribeKey = "sub-c-d099e214-9bcf-11eb-9adf-f2e9c1644994"
+//            publishKey = "pub-c-a65bb691-5b8a-4c4b-aef5-e2a26677122d"
+//            secure = true
+//            uuid = userid
+//        }
+//
+//        val pubnub = PubNub(pnConfiguration)
+//
+//        var urlOfFileHere by remember { mutableStateOf("") }
+//        var imageLinkFound by remember {
+//            mutableStateOf(false)
+//        }
+//
+//        pubnub.getFileUrl(
+//            channel = channelid,
+//            fileName = entryData.file.name,
+//            fileId = entryData.file.id
+//        ).async { result, status ->
+//            if (status.error) {
+//                Log.i("oldpnmessage", status.error.toString())
+//            } else if (result != null) {
+//                urlOfFileHere = result.url
+//                imageLinkFound = true
+//            }
+//        }
 
-        val pubnub = PubNub(pnConfiguration)
-
-        var urlOfFileHere by remember { mutableStateOf("") }
-        var imageLinkFound by remember {
-            mutableStateOf(false)
-        }
-
-        pubnub.getFileUrl(
-            channel = channelid,
-            fileName = entryData.file.name,
-            fileId = entryData.file.id
-        ).async { result, status ->
-            if (status.error) {
-                Log.i("oldpnmessage", status.error.toString())
-            } else if (result != null) {
-                urlOfFileHere = result.url
-                imageLinkFound = true
-            }
-        }
-
-        if (imageLinkFound) {
             Box (modifier = Modifier
                 .fillMaxWidth(0.95f)
                 .height(250.dp)
@@ -93,20 +94,20 @@ private fun CMessage(message: PNMessageResult, userid: String, channelid: String
                 .clip(RoundedCornerShape(corner = CornerSize(15.dp))),
                 contentAlignment = Alignment.Center
             ) {
-                ImageHere(imageLink = urlOfFileHere)
+                ImageHere(imageLink = "")
                 DPBubble(dplink = metaData.user_dp, text = message.message.toString())
             }
-        } else {
-            Box (modifier = Modifier
-                .fillMaxWidth(0.95f)
-                .height(250.dp)
-                .padding(vertical = 5.dp)
-                .clip(RoundedCornerShape(corner = CornerSize(15.dp))),
-                contentAlignment = Alignment.Center
-            ) {
-                DPBubble(dplink = metaData.user_dp, text = message.message.toString())
-            }
-        }
+
+//    else {
+//            Box (modifier = Modifier
+//                .fillMaxWidth(0.95f)
+//                .height(250.dp)
+//                .padding(vertical = 5.dp)
+//                .clip(RoundedCornerShape(corner = CornerSize(15.dp))),
+//                contentAlignment = Alignment.Center
+//            ) {
+//                DPBubble(dplink = metaData.user_dp, text = message.message.toString())
+//            }
 
     }
 }

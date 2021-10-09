@@ -435,7 +435,19 @@ class ClanTalkActivity : BaseActivity() {
                                 }
                                 if (oldMessagesHere.isNotEmpty()) {
                                     items(
-                                        items = oldMessagesHere,
+                                        items = newMessagesHere.reversed(),
+                                        itemContent = {
+                                            if (channelid != null) {
+                                                NewPNMessage(
+                                                    message = it,
+                                                    userid = viewModel.deets.value?.user?.id.toString(),
+                                                    channelid = channelid
+                                                )
+                                                Log.i("livemessage", "new pn message called")
+                                            }
+                                        })
+                                    items(
+                                        items = oldMessagesHere.reversed(),
                                         itemContent = {
                                             if (channelid != null) {
                                                 Log.i("cmessagedebugmain", "calling oldies comp")
@@ -446,18 +458,6 @@ class ClanTalkActivity : BaseActivity() {
                                                     visibleItems = listState.firstVisibleItemIndex,
                                                 thisItemIndex = oldMessagesHere.indexOf(it)
                                                 )
-                                            }
-                                        })
-                                    items(
-                                        items = newMessagesHere,
-                                        itemContent = {
-                                            if (channelid != null) {
-                                                NewPNMessage(
-                                                    message = it,
-                                                    userid = viewModel.deets.value?.user?.id.toString(),
-                                                    channelid = channelid
-                                                )
-                                                Log.i("livemessage", "new pn message called")
                                             }
                                         })
                                 }
