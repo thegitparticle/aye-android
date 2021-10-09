@@ -82,8 +82,9 @@ class OtpSignupActivity : BaseActivity() {
                     val isDialogOpen = remember { mutableStateOf(false) }
 
                     Icon(
-                        imageVector = FeatherIcons.ArrowRight,
-                        contentDescription = "next screen",
+                        FeatherIcons.ArrowRight,
+                        "next screen",
+                        tint = AyeTheme.colors.uiSurface,
                         modifier = Modifier
                             .size(30.dp)
                             .clickable {
