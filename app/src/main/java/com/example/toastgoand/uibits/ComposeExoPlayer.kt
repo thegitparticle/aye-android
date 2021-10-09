@@ -36,6 +36,10 @@ import compose.icons.FeatherIcons
 import compose.icons.feathericons.X
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import coil.decode.VideoFrameDecoder
+import coil.fetch.VideoFrameFileFetcher
+import coil.fetch.VideoFrameUriFetcher
+import coil.request.videoFrameMillis
 import com.google.android.exoplayer2.MediaItem
 
 @Composable
@@ -97,10 +101,13 @@ fun VideoCard(
 
 @Composable
 fun VideoThumbnail(url: Uri) {
+    val context = LocalContext.current
+
     Image(
         painter = rememberImagePainter(data = url, builder = {
-            crossfade(true)
-            size(512, 512)
+            VideoFrameDecoder(context)
+            fetcher(VideoFrameUriFetcher(context))
+            fetcher(VideoFrameFileFetcher(context))
         }),
         contentDescription = null,
         modifier = Modifier

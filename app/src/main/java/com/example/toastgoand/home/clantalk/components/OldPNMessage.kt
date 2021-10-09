@@ -19,7 +19,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
+import androidx.ui.res.imageResource
+import androidx.ui.res.loadImageResource
+import coil.ImageLoader
 import coil.compose.rememberImagePainter
+import coil.decode.VideoFrameDecoder
+import coil.fetch.VideoFrameFileFetcher
+import coil.fetch.VideoFrameUriFetcher
 import com.beust.klaxon.Parser
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.uibits.ComposeExoPlayer
@@ -38,6 +44,7 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.decodeFromJsonElement
 import org.json.JSONObject
+import java.io.File
 import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 
 
@@ -100,7 +107,8 @@ private fun SMessage(message: PNHistoryItemResult, thisItemIndex: Int, visibleIt
         ) {
             ComposeExoPlayer(
                 videoLink = metaData.image_url,
-                thumbNail = "https://i.postimg.cc/y6mnnk9H/download-36.jpg".toUri(),
+//                thumbNail = "https://i.postimg.cc/y6mnnk9H/download-36.jpg".toUri(),
+                thumbNail = metaData.image_url.toUri(),
                 isPlaying = (thisItemIndex == visibleItems)
             )
             DPBubble(dplink = metaData.user_dp, text = message.entry.toString())
