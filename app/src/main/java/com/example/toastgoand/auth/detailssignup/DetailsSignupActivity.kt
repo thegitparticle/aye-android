@@ -98,8 +98,9 @@ class DetailsSignupActivity : BaseActivity() {
                     Log.i("signupdebug", "sign up de bug log working")
 
                     Icon(
-                        imageVector = FeatherIcons.ArrowRight,
-                        contentDescription = "next screen",
+                        FeatherIcons.ArrowRight,
+                        "next screen",
+                        tint = AyeTheme.colors.uiSurface,
                         modifier = Modifier
                             .size(30.dp)
                             .clickable {
