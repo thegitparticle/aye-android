@@ -50,7 +50,7 @@
             android:layout_marginVertical="10dp"
             android:layout_marginHorizontal="20dp"
             android:text="@string/enter_phone_sub"
-            android:textColor="@color/auth_mid_light_splash"
+            android:textColor="@color/auth_off_light_splash"
             android:fontFamily="@font/gotham_rounded_light"
             android:textSize="15dp"/>
 

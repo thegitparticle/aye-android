@@ -49,6 +49,8 @@ class DetailsSignupActivity : BaseActivity() {
         viewModel = ViewModelProvider(this).get(DetailsSignupViewModel::class.java)
         binding.detailsSignupModel = viewModel
 
+        binding.editTextTextPersonName.requestFocus()
+
         var phoneNumber = intent.getStringExtra("phoneNumber")
         var countryIndicator = intent.getStringExtra("countryIndicator")
 
