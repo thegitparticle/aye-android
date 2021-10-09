@@ -39,23 +39,24 @@ import androidx.compose.ui.unit.dp
 import com.google.android.exoplayer2.MediaItem
 
 @Composable
-fun ComposeExoPlayer (videoLink: String, thumbNail: Uri, isPlaying: Boolean) {
+fun ComposeExoPlayer(videoLink: String, thumbNail: Uri, isPlaying: Boolean) {
     val context = LocalContext.current
     val exoPlayer = remember(context) { SimpleExoPlayer.Builder(context).build() }
 
-    exoPlayer.setMediaItem(MediaItem.fromUri(videoLink.toUri()))
-
-    Row(modifier = Modifier.fillMaxWidth().clickable {
-        context.startActivity(
-            Intent(
-                context,
-                ViewVideoActivity::class.java
-            ).apply {
-                putExtra("videolink", videoLink)
-            })
-    }) {
+    Row(modifier = Modifier
+        .fillMaxWidth()
+        .clickable {
+            context.startActivity(
+                Intent(
+                    context,
+                    ViewVideoActivity::class.java
+                ).apply {
+                    putExtra("videolink", videoLink)
+                })
+        }) {
 
         VideoCard(
+            videoLink = videoLink,
             thumbNail = thumbNail,
             isPlaying = isPlaying,
             exoPlayer = exoPlayer,
@@ -65,6 +66,7 @@ fun ComposeExoPlayer (videoLink: String, thumbNail: Uri, isPlaying: Boolean) {
 
 @Composable
 fun VideoCard(
+    videoLink: String,
     thumbNail: Uri,
     isPlaying: Boolean,
     exoPlayer: SimpleExoPlayer,
@@ -80,8 +82,14 @@ fun VideoCard(
         contentAlignment = Alignment.Center
     ) {
         if (isPlaying) {
-            VideoPlayerWithControls(exoPlayer)
+            exoPlayer.setMediaItem(MediaItem.fromUri(videoLink.toUri()))
+            exoPlayer.prepare()
+            exoPlayer.playWhenReady = true
+            exoPlayer.play()
+
+            VideoPlayerWithControls(exoPlayer, videoLink, isPlaying)
         } else {
+            exoPlayer.pause()
             VideoThumbnail(thumbNail)
         }
     }
@@ -103,18 +111,21 @@ fun VideoThumbnail(url: Uri) {
 }
 
 @Composable
-fun VideoPlayerWithControls(exoPlayer: SimpleExoPlayer) {
+fun VideoPlayerWithControls(exoPlayer: SimpleExoPlayer, videoLink: String, isPlaying: Boolean) {
     val context = LocalContext.current
     val playerView = remember {
         val layout = LayoutInflater.from(context).inflate(R.layout.video_player, null)
         val playerView = (layout.findViewById(R.id.playerView) as PlayerView).apply {
             player = exoPlayer
+
         }
-        layout.findViewById<ImageButton>(R.id.exo_pause).setOnClickListener { exoPlayer.pause() }
-        layout.findViewById<ImageButton>(R.id.exo_play).setOnClickListener { exoPlayer.play() }
         layout.id = View.generateViewId()
         playerView
     }
 
-    AndroidView({ playerView }, Modifier.height(256.dp).background(Color.Black))
+
+    AndroidView({ playerView },
+        Modifier
+            .height(256.dp)
+            .background(Color.Black))
 }

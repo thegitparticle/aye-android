@@ -8,4 +8,5 @@
     android:layout_gravity="center"
     android:keepScreenOn="true"
     app:show_timeout="1000"
+    app:auto_show="true"
     tools:background="@android:color/black" />
