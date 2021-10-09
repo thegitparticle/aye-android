@@ -20,8 +20,10 @@
         <Button
             android:id="@+id/diveInButton"
             android:text="@string/enter_app"
-            android:fontFamily="@font/lato"
-            android:background="@drawable/green_mid_button"
+            android:textAllCaps="false"
+            android:fontFamily="@font/gotham_rounded_bolditalic"
+            android:textColor="@color/off_light_splash"
+            android:background="@drawable/dark_mid_button"
             android:layout_width="196dp"
             android:layout_height="64dp"
             android:layout_alignParentBottom="true"
