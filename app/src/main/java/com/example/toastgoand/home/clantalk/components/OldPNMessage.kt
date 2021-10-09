@@ -250,7 +250,9 @@ private fun ImageHere(imageLink: String) {
 
 @Composable
 private fun ImageHereForC(imageLink: String) {
-    val painter = rememberImagePainter(data = imageLink.toUri())
+//    val painter = rememberImagePainter(data = imageLink.toUri())
+    val painter =
+        rememberImagePainter(data = "https://ps.pndsn.com/v1/files/sub-c-d099e214-9bcf-11eb-9adf-f2e9c1644994/channels/90_c/files/aae59914-7931-416a-9304-a41d0da8871b/galgalgal?pnsdk=PubNub-Kotlin%2F6.1.0&requestid=44d9c743-1c5d-482c-a832-e42cfcd5047c&uuid=82")
     val context = LocalContext.current
     Log.i("cmessagedebug inside painter", imageLink)
     Log.i("cmessagedebug inside painter - paunter log", painter.toString())
@@ -270,7 +272,7 @@ private fun ImageHereForC(imageLink: String) {
                         context,
                         ViewMediaActivity::class.java
                     ).apply {
-                        putExtra("imagelink", imageLink)
+                        putExtra("imagelink", "https://ps.pndsn.com/v1/files/sub-c-d099e214-9bcf-11eb-9adf-f2e9c1644994/channels/90_c/files/aae59914-7931-416a-9304-a41d0da8871b/galgalgal?pnsdk=PubNub-Kotlin%2F6.1.0&requestid=44d9c743-1c5d-482c-a832-e42cfcd5047c&uuid=82")
                     })
             }
     )
