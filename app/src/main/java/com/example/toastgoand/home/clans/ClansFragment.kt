@@ -27,6 +27,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.toastgoand.R
 import com.example.toastgoand.ToastgoApplication
+import com.example.toastgoand.TriggerVideoMessage
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.home.clans.components.LiveClanItem
 import com.example.toastgoand.home.clans.components.StartClanButton
@@ -139,6 +140,8 @@ class ClansFragment : Fragment() {
                                     key = "footer",
                                     content = {
                                         StartClanButton()
+                                        Spacer(Modifier.height(20.dp))
+                                        TriggerVideoMessage()
                                     }
                                 )
                                 item {

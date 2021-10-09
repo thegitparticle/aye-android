@@ -58,7 +58,6 @@ fun OldPNMessage(message: PNHistoryItemResult, userid: String, channelid: String
 
         val metaData = Gson().fromJson<MessageMetaData>(message.meta, MessageMetaData::class.java)
 
-
         if (metaData.type == "h") {
             HMessage(message = message)
 //            Log.i("cmessagedebugmain", "normal messages log")
@@ -66,8 +65,33 @@ fun OldPNMessage(message: PNHistoryItemResult, userid: String, channelid: String
 //            Log.i("cmessagedebugmain", "else if log before component invoke")
             CMessage(message = message, userid = userid, channelid = channelid)
         }
+        else if (metaData.type == "s") {
+            SMessage(message = message)
+        }
     }
 
+}
+
+@Composable
+private fun SMessage(message: PNHistoryItemResult) {
+    AyeTheme() {
+
+        val metaData = Gson().fromJson<MessageMetaData>(message.meta, MessageMetaData::class.java)
+
+        Log.i("pubnub - only link", metaData.image_url)
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth(0.95f)
+                .height(250.dp)
+                .padding(vertical = 5.dp)
+                .clip(RoundedCornerShape(corner = CornerSize(15.dp))),
+            contentAlignment = Alignment.Center
+        ) {
+            ImageHere(imageLink = metaData.image_url)
+            DPBubble(dplink = metaData.user_dp, text = message.entry.toString())
+        }
+    }
 }
 
 @Composable

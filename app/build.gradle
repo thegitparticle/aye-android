@@ -7,6 +7,7 @@ plugins {
     id 'org.jetbrains.kotlin.plugin.serialization' version '1.5.30'
     id 'kotlin-android-extensions'
     id 'com.google.gms.google-services'
+    id "de.jjohannes.missing-metadata-guava" version "0.1"
 }
 
 
@@ -21,7 +22,7 @@ android {
 
     defaultConfig {
         applicationId "com.toastgoand"
-        minSdk 26
+        minSdk 24
         targetSdk 31
         versionCode 7
         versionName "1.0"
@@ -235,5 +236,10 @@ dependencies {
     implementation 'com.github.deepakkumardk:KontactPicker:1.4.0'
     implementation 'org.jetbrains.anko:anko-commons:0.10.8'
     implementation 'com.github.rocketraman:kpropmap:0.0.2'
+
+    // video player exoplayer
+    implementation 'com.google.android.exoplayer:exoplayer-core:2.12.0'
+    implementation 'com.google.android.exoplayer:exoplayer-dash:2.12.0'
+    implementation 'com.google.android.exoplayer:exoplayer-ui:2.12.0'
 
 }
