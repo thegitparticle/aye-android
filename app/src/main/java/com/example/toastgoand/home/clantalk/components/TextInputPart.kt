@@ -61,6 +61,12 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.databinding.BindingAdapter
+import android.R
+import androidx.compose.runtime.snapshots.SnapshotStateList
+import com.example.toastgoand.home.clantalk.network.GetSelectedRecos
+import com.example.toastgoand.home.clantalk.network.GetSelectedRecosDataClass
+import com.example.toastgoand.home.clantalk.network.NewClanFrameApi
+import kotlinx.coroutines.launch
 
 
 @SuppressLint("ServiceCast", "ClickableViewAccessibility")
@@ -75,14 +81,16 @@ fun TextInputPart(
 ) {
     val typedText = remember { mutableStateOf(TextFieldValue()) }
 
+    var selectedText = remember { mutableStateOf("") }
+    var selectedTextRecos =
+        remember { mutableListOf(GetSelectedRecosDataClass(id = 0, links = listOf("", "", "", "", "", "", ""))) }
+
     val pnConfiguration = PNConfiguration().apply {
         subscribeKey = "sub-c-d099e214-9bcf-11eb-9adf-f2e9c1644994"
         publishKey = "pub-c-a65bb691-5b8a-4c4b-aef5-e2a26677122d"
         secure = true
         uuid = userid
     }
-
-    Log.i("recos", defaultRecos.toString())
 
     val pubnub = PubNub(pnConfiguration)
 
@@ -132,13 +140,10 @@ fun TextInputPart(
     @Composable
     fun RecoOverlay(defaultRecos: List<DefaultRecosDataClass>) {
 
-        Log.i("defaultrecos", defaultRecos.toString())
 
         Row(
             modifier = Modifier
-                .background(AyeTheme.colors.uiBackground)
-//                .horizontalScroll(enabled = true, state = rememberScrollState())
-            ,
+                .background(AyeTheme.colors.uiBackground),
             verticalAlignment = Alignment.CenterVertically
         ) {
             if (defaultRecos.isNotEmpty()) {
@@ -154,13 +159,23 @@ fun TextInputPart(
                             .fillMaxWidth()
                             .horizontalScroll(enabled = true, state = rememberScrollState())
                     ) {
-                        RecoImage(defaultRecos[0].links[0])
-                        RecoImage(defaultRecos[0].links[1])
-                        RecoImage(defaultRecos[0].links[2])
-                        RecoImage(defaultRecos[0].links[3])
-                        RecoImage(defaultRecos[0].links[4])
-                        RecoImage(defaultRecos[0].links[5])
-                        RecoImage(defaultRecos[0].links[6])
+                        if (selectedText.value.length > 1) {
+                            RecoImage(selectedTextRecos[0].links[0])
+                            RecoImage(selectedTextRecos[0].links[1])
+                            RecoImage(selectedTextRecos[0].links[2])
+                            RecoImage(selectedTextRecos[0].links[3])
+                            RecoImage(selectedTextRecos[0].links[4])
+                            RecoImage(selectedTextRecos[0].links[5])
+                            RecoImage(selectedTextRecos[0].links[6])
+                        } else {
+                            RecoImage(defaultRecos[0].links[0])
+                            RecoImage(defaultRecos[0].links[1])
+                            RecoImage(defaultRecos[0].links[2])
+                            RecoImage(defaultRecos[0].links[3])
+                            RecoImage(defaultRecos[0].links[4])
+                            RecoImage(defaultRecos[0].links[5])
+                            RecoImage(defaultRecos[0].links[6])
+                        }
                     }
                 }
             }
@@ -182,19 +197,61 @@ fun TextInputPart(
 
     val context = LocalContext.current
 
-    var clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-
-    Log.i("textinput", clipboard.getText().toString())
-
     var bindingOfTextEdit: EditText? = null
 
     @Composable
     fun AndroidViewBindingExample() {
         val context = LocalContext.current
+        val composableScope = rememberCoroutineScope()
 
         AndroidViewBinding(TalktypeBinding::inflate) {
             bindingOfTextEdit = textInputTalk
             textInputTalk.requestFocus()
+
+            fun callForNewRecos() {
+                composableScope.launch {
+                    try {
+                        selectedTextRecos =
+                            GetSelectedRecos.retrofitService.getSelectedWordRecos(
+                                userid = userid,
+                                word = selectedText.value
+                            )
+//                        Log.i("textrecosdebug worked api", selectedTextRecos.toString())
+                    } catch (e: Exception) {
+                        Log.i("textrecosdebug fail api", e.toString())
+                    }
+
+                }
+            }
+
+            textInputTalk.setCustomSelectionActionModeCallback(object : ActionMode.Callback {
+                override fun onPrepareActionMode(mode: ActionMode?, menu: Menu): Boolean {
+
+                    selectedText.value =
+                        textInputTalk.text.slice(textInputTalk.selectionStart..(textInputTalk.selectionEnd - 1))
+                            .toString()
+
+                    callForNewRecos()
+
+                    // Remove the "select all" option
+                    menu.removeItem(R.id.selectAll)
+                    // Remove the "cut" option
+                    menu.removeItem(R.id.cut)
+                    // Remove the "copy all" option
+                    menu.removeItem(R.id.copy)
+                    return true
+                }
+
+                override fun onCreateActionMode(mode: ActionMode?, menu: Menu): Boolean {
+                    return true
+                }
+
+                override fun onDestroyActionMode(mode: ActionMode?) {}
+
+                override fun onActionItemClicked(mode: ActionMode?, p1: MenuItem?): Boolean {
+                    return false
+                }
+            })
         }
     }
 
@@ -266,7 +323,6 @@ fun TextInputPart(
             }
         }
     }
-
 }
 
 
