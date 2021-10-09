@@ -63,6 +63,9 @@
             android:name=".uibits.ViewMediaActivity"
             android:exported="true" />
         <activity
+            android:name=".uibits.ViewVideoActivity"
+            android:exported="true" />
+        <activity
             android:name=".home.myprofile.SettingsActivity"
             android:exported="true" />
         <activity

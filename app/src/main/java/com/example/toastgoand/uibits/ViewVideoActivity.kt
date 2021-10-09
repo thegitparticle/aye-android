@@ -31,7 +31,7 @@ class ViewVideoActivity: BaseActivity() {
 
         videoLink = intent.getStringExtra("videolink")?.toUri()!!
 
-        haulerView.setOnDragDismissedListener {
+        binding.haulerViewVideoView.setOnDragDismissedListener {
             finish() // finish activity when dismissed
         }
     }

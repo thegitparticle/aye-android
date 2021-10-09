@@ -1,5 +1,6 @@
 package com.example.toastgoand.uibits
 
+import android.content.Intent
 import android.net.Uri
 import android.service.autofill.OnClickAction
 import android.util.Log
@@ -44,7 +45,15 @@ fun ComposeExoPlayer (videoLink: String, thumbNail: Uri, isPlaying: Boolean) {
 
     exoPlayer.setMediaItem(MediaItem.fromUri(videoLink.toUri()))
 
-    Row(modifier = Modifier.fillMaxWidth()) {
+    Row(modifier = Modifier.fillMaxWidth().clickable {
+        context.startActivity(
+            Intent(
+                context,
+                ViewVideoActivity::class.java
+            ).apply {
+                putExtra("videolink", videoLink)
+            })
+    }) {
 
         VideoCard(
             thumbNail = thumbNail,
