@@ -349,6 +349,23 @@ class StreamBottomSheetFragment : SuperBottomSheetFragment() {
             findViewById<ComposeView>(R.id.composeInSheet).setContent {
                 AyeTheme() {
 
+                    val deetsHere: UserDetailsDataClass by viewModel.deets.observeAsState(
+                        UserDetailsDataClass(
+                            bio = "", image = "", user = User(
+                                phone = "",
+                                full_name = "",
+                                id = 0,
+                                clubs_joined_by_user = "",
+                                number_of_clubs_joined = 0,
+                                contact_list = "",
+                                total_frames_participation = 0,
+                                country_code_of_user = "",
+                                contact_list_sync_status = false,
+                                username = ""
+                            ), id = 0
+                        )
+                    )
+
                     val clansHere: List<MyClansDataClass> by
                     viewModel.myClans.observeAsState(listOf<MyClansDataClass>())
 
@@ -392,7 +409,7 @@ class StreamBottomSheetFragment : SuperBottomSheetFragment() {
                         items(
                             items = clansHere,
                             itemContent = {
-                                TextRowButtonClan(clan = it)
+                                TextRowButtonClan(clan = it, userid = deetsHere.user.id)
                             })
                         item {
                             Spacer(Modifier.height(10.dp))
@@ -444,7 +461,7 @@ class StreamBottomSheetFragment : SuperBottomSheetFragment() {
                         items(
                             items = directsHere,
                             itemContent = {
-                                TextRowButtonDirect(direct = it)
+                                TextRowButtonDirect(direct = it, userid = deetsHere.user.id)
                             })
                         item {
                             Spacer(Modifier.height(20.dp))

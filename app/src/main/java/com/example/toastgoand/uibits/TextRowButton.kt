@@ -1,5 +1,6 @@
 package com.example.toastgoand.uibits
 
+import android.content.Intent
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -10,10 +11,12 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.network.directs.MyDirectsDataClass
 import com.example.toastgoand.network.myclans.MyClansDataClass
+import com.example.toastgoand.quick.QuickActivity
 
 @Composable
 fun TextRowButton(
@@ -64,7 +67,10 @@ fun TextRowButton(
 }
 
 @Composable
-fun TextRowButtonClan(clan: MyClansDataClass) {
+fun TextRowButtonClan(clan: MyClansDataClass, userid: Int) {
+
+    val context = LocalContext.current
+
     if (clan.on_going_stream_status) {
         TextRowButton(
             mainText = clan.club_name,
@@ -78,34 +84,99 @@ fun TextRowButtonClan(clan: MyClansDataClass) {
                 mainText = clan.club_name,
                 infoText = "frame ongoing",
                 enabled = true,
-                infoColor = AyeTheme.colors.appLead
+                infoColor = AyeTheme.colors.appLead,
+                onPressed = {
+                    context.startActivity(
+                        Intent(
+                            context,
+                            QuickActivity::class.java
+                        ).apply {
+                            putExtra("clubName", clan.club_name)
+                            putExtra("clubid", clan.club_id)
+                            putExtra("channelid", clan.pn_channel_id)
+                            putExtra("ongoingFrame", clan.ongoing_frame)
+                            putExtra("startTime", clan.start_time)
+                            putExtra("endTime", clan.end_time)
+                            putExtra("userid", userid)
+                            putExtra("directornot", false)
+                        })
+                }
             )
         } else {
             TextRowButton(
                 mainText = clan.club_name,
                 infoText = "",
                 enabled = true,
-                infoColor = AyeTheme.colors.appLead
+                infoColor = AyeTheme.colors.appLead,
+                onPressed = {
+                    context.startActivity(
+                        Intent(
+                            context,
+                            QuickActivity::class.java
+                        ).apply {
+                            putExtra("clubName", clan.club_name)
+                            putExtra("clubid", clan.club_id)
+                            putExtra("channelid", clan.pn_channel_id)
+                            putExtra("ongoingFrame", clan.ongoing_frame)
+                            putExtra("startTime", clan.start_time)
+                            putExtra("endTime", clan.end_time)
+                            putExtra("userid", userid)
+                            putExtra("directornot", false)
+                        })
+                }
             )
         }
     }
 }
 
 @Composable
-fun TextRowButtonDirect(direct: MyDirectsDataClass) {
+fun TextRowButtonDirect(direct: MyDirectsDataClass, userid: Int) {
+
+    val context = LocalContext.current
+
     if (direct.ongoing_frame) {
         TextRowButton(
             mainText = direct.display_guys.full_name,
             infoText = "frame ongoing",
-            enabled = false,
-            infoColor = AyeTheme.colors.appLead
+            enabled = true,
+            infoColor = AyeTheme.colors.appLead,
+            onPressed = {
+                context.startActivity(
+                    Intent(
+                        context,
+                        QuickActivity::class.java
+                    ).apply {
+                        putExtra("clubName", direct.display_guys.full_name)
+                        putExtra("channelid", direct.direct_channel_id)
+                        putExtra("ongoingFrame", direct.ongoing_frame)
+                        putExtra("startTime", direct.start_time)
+                        putExtra("endTime", direct.end_time)
+                        putExtra("directornot", true)
+                        putExtra("userid", userid)
+                    })
+            }
         )
     } else {
         TextRowButton(
             mainText = direct.display_guys.full_name,
             infoText = "",
             enabled = true,
-            infoColor = AyeTheme.colors.appLead
+            infoColor = AyeTheme.colors.appLead,
+            onPressed = {
+                context.startActivity(
+                    Intent(
+                        context,
+                        QuickActivity::class.java
+                    ).apply {
+                        putExtra("clubName", direct.display_guys.full_name)
+                        putExtra("channelid", direct.direct_channel_id)
+                        putExtra("ongoingFrame", direct.ongoing_frame)
+                        putExtra("startTime", direct.start_time)
+                        putExtra("endTime", direct.end_time)
+                        putExtra("directornot", true)
+                        putExtra("userid", userid)
+                    })
+            }
         )
     }
 }
