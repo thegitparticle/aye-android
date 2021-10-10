@@ -22,7 +22,7 @@ import kotlinx.coroutines.CoroutineScope
 
 @Database(
     entities = [UserDetailsDataClass::class, MyClansDataClass::class, MyDirectsDataClass::class, NudgeToDataClass::class, MyFriendsDataClass::class, DefaultRecosDataClass::class],
-    version = 4
+    version = 5
 )
 
 @TypeConverters(ConverterGo::class)

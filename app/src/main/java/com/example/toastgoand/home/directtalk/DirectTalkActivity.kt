@@ -33,7 +33,6 @@ import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.ToastgoApplication
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityDirectTalkBinding
-import com.example.toastgoand.dummy.DummyClanHub
 import com.example.toastgoand.home.clantalk.components.NewPNMessage
 import com.example.toastgoand.home.clantalk.components.OldPNMessage
 import com.example.toastgoand.home.directframes.DirectFramesActivity
@@ -137,7 +136,6 @@ class DirectTalkActivity : BaseActivity() {
                     }
                 }
 
-                val members = DummyClanHub.clanHub.users
                 val context = LocalContext.current
 
                 var showStartClanOverlayDirect by remember { mutableStateOf(true) }

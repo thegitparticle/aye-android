@@ -18,6 +18,8 @@ data class MyClansDataClass(
     val ongoing_frame: Boolean,
     val start_time: String,
     val end_time: String,
+    val on_going_stream_status: Boolean,
+    val stream_started_by: String,
     val display_photos: MutableList<DisplayPhotos>?
 )
 
