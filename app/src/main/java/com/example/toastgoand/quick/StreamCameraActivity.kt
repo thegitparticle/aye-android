@@ -108,22 +108,14 @@ class StreamCameraActivity : BaseActivity() {
     // Fill the App ID of your project generated on Agora Console.
     private val APP_ID = "851193d91b1945bda153a38f3584ead3"
 
-    // Fill the channel name.
-//    private val CHANNEL = "90_c"
-
-    // Fill the temp token generated on Agora Console.
-//    private val TOKEN = "006851193d91b1945bda153a38f3584ead3IAC0sdltLv7UMVotFrpkgxQLknllea32mQpUuLOpCS2Eut78lGEAAAAAEADy5cWP7NZdYQEAAQDr1l1h"
-
     private var mRtcEngine: RtcEngine? = null
 
     private val mRtcEventHandler = object : IRtcEngineEventHandler() {
         // Listen for the remote user joining the channel to get the uid of the user.
         override fun onUserJoined(uid: Int, elapsed: Int) {
-//            runOnUiThread {
             // Call setupRemoteVideo to set the remote video view after getting uid from the onUserJoined callback.
             setupRemoteVideo(uid)
             Log.i("streamworking user joined", "${uid} user joined")
-//            }
         }
 
         override fun onLeaveChannel(stats: RtcStats) {
@@ -139,6 +131,8 @@ class StreamCameraActivity : BaseActivity() {
                 "streamworking iRtcEngineEventHandler sucess",
                 String.format("onJoinChannelSuccess channel %s uid %d", channel, userid)
             )
+            viewModel.startStreamClubServerCalls(userid = userid, channelid = channelid, clubid = clubid)
+
         }
 
         override fun onError(err: Int) {
