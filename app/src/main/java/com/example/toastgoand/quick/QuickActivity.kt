@@ -1,6 +1,8 @@
 package com.example.toastgoand.quick
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +11,7 @@ import android.view.ViewGroup
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -26,6 +29,7 @@ import com.example.toastgoand.quick.groundlayer.GroundFragmentDirections
 import com.example.toastgoand.quick.groundlayer.GroundViewModel
 import com.example.toastgoand.quick.network.apis.AgoraTokenApi
 import com.google.common.util.concurrent.ListenableFuture
+import com.yanzhenjie.permission.runtime.Permission.Group.STORAGE
 import kotlinx.android.synthetic.main.ground_fragment.*
 import kotlinx.android.synthetic.main.start_call_dialog.*
 
@@ -54,6 +58,10 @@ class QuickActivity : BaseActivity() {
         val endTime = intent.getStringExtra("endTime").toString()
         val userid = intent.getIntExtra("userid", 0)
         val directornot = intent.getBooleanExtra("directornot", false)
+
+        checkSelfPermission(Manifest.permission.RECORD_AUDIO, PERMISSION_REQ_ID_RECORD_AUDIO)
+        checkSelfPermission(Manifest.permission.CAMERA, PERMISSION_REQ_ID_CAMERA)
+        checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, PERMISSION_REQ_ID_STORAGE)
 
         viewModel.getTokenHere(userid = userid, channelid = channelid)
 
@@ -107,6 +115,25 @@ class QuickActivity : BaseActivity() {
             }
             startActivity(intent)
         }
+
+    }
+
+    private val PERMISSION_REQ_ID_RECORD_AUDIO = 22
+    private val PERMISSION_REQ_ID_CAMERA = PERMISSION_REQ_ID_RECORD_AUDIO + 1
+    private val PERMISSION_REQ_ID_STORAGE = PERMISSION_REQ_ID_CAMERA + 1
+
+    private fun checkSelfPermission(permission: String, requestCode: Int): Boolean {
+        if (ContextCompat.checkSelfPermission(this, permission) !=
+            PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(permission),
+                requestCode
+            )
+            return false
+        }
+        return true
 
     }
 
