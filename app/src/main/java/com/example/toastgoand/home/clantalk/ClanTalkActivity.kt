@@ -10,27 +10,32 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.FabPosition
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Icon
+import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidViewBinding
 import androidx.core.view.WindowCompat
 import androidx.viewbinding.ViewBinding
+import coil.compose.rememberImagePainter
 import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.ToastgoApplication
 import com.example.toastgoand.composestyle.AyeTheme
@@ -44,6 +49,9 @@ import com.example.toastgoand.home.clantalk.components.StartClanFrame
 import com.example.toastgoand.home.clantalk.components.TextInputPart
 import com.example.toastgoand.home.directframes.DirectFramesActivity
 import com.example.toastgoand.home.directtalk.components.StartDirectFrame
+import com.example.toastgoand.home.otherprofile.DepthDetails
+import com.example.toastgoand.home.otherprofile.OtherProfileDataClass
+import com.example.toastgoand.home.otherprofile.network.OtherProfileApi
 import com.example.toastgoand.network.defaultrecos.DefaultRecosDataClass
 import com.example.toastgoand.network.userdetails.User
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
@@ -64,7 +72,9 @@ import compose.icons.feathericons.Camera
 import compose.icons.feathericons.Layers
 import compose.icons.feathericons.PlusSquare
 import kotlinx.android.synthetic.main.talktype.*
+import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
+import java.lang.Exception
 
 class ClanTalkActivity : BaseActivity() {
 
@@ -127,6 +137,8 @@ class ClanTalkActivity : BaseActivity() {
                 var ongoingFrame = intent.getBooleanExtra("ongoingFrame", false)
                 val startTime = intent.getStringExtra("startTime")
                 val endTime = intent.getStringExtra("endTime")
+                val ongoingStream = intent.getStringExtra("ongoingStream")
+                val ongoingStreamUser = intent.getStringExtra("ongoingStreamUser")
                 val directornot = intent.getBooleanExtra("directornot", false)
 
                 val pnConfiguration = PNConfiguration().apply {
@@ -265,6 +277,88 @@ class ClanTalkActivity : BaseActivity() {
                                     },
                                     actionIcon = FeatherIcons.Layers
                                 )
+
+                                var streamerDetails: OtherProfileDataClass = OtherProfileDataClass(
+                                    user = DepthDetails(
+                                        username = "",
+                                        phone = "",
+                                        full_name = "",
+                                        id = 0,
+                                        clubs_joined_by_user = "",
+                                        number_of_clubs_joined = 0,
+                                        contact_list = "",
+                                        total_frames_participation = 0,
+                                        country_code_of_user = "",
+                                        contact_list_sync_status = false
+                                    ),
+                                    bio = "",
+                                    image = "",
+                                    id = 0
+                                )
+
+                                fun fetchOtherUserDetails(streamRunnerId: String) {
+                                    val composableScope = rememberCoroutineScope()
+                                    composableScope.launch {
+                                        try {
+                                            streamerDetails =
+                                                OtherProfileApi.retrofitService.getOtherProfile(
+                                                    "",
+                                                    streamRunnerId
+                                                )[0]
+                                        } catch (e: Exception) {
+                                            Log.i("clanstalk other user deets", e.toString())
+                                        }
+                                    }
+                                }
+
+                                AyeTheme() {
+                                    androidx.compose.foundation.layout.Row(
+                                        modifier = Modifier
+                                            .fillMaxWidth(0.9f)
+                                            .padding(vertical = 10.dp)
+                                            .background(color = AyeTheme.colors.brandVariant),
+                                        horizontalArrangement = Arrangement.SpaceBetween,
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+                                        Row(verticalAlignment = Alignment.CenterVertically) {
+                                            val painter =
+                                                rememberImagePainter(data = streamerDetails.image)
+                                            Image(
+                                                painter = painter,
+                                                contentDescription = "stream dp in clantalk",
+                                                contentScale = ContentScale.Crop,
+                                                modifier = Modifier
+                                                    .padding(horizontal = 20.dp)
+                                                    .size(40.dp)
+                                                    .clip(RoundedCornerShape(corner = CornerSize(20.dp)))
+                                            )
+                                            Text(
+                                                text = "${streamerDetails.user.full_name} is streaming now",
+                                                style = MaterialTheme.typography.subtitle2,
+                                                color = AyeTheme.colors.textPrimary,
+                                                modifier = Modifier.padding(horizontal = 20.dp)
+                                            )
+                                        }
+                                        Row(verticalAlignment = Alignment.CenterVertically) {
+                                            Box(
+                                                modifier = Modifier
+                                                    .wrapContentWidth()
+                                                    .clip(RoundedCornerShape(20.dp))
+                                                    .background(Color.White)
+                                                    .clickable { }
+                                                    .width(75.dp)
+                                                    .height(40.dp),
+                                                contentAlignment = Alignment.Center
+                                            ) {
+                                                Text(
+                                                    text = "join",
+                                                    style = MaterialTheme.typography.caption,
+                                                    color = Color.Gray
+                                                )
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         },
                         floatingActionButton = {
@@ -456,7 +550,7 @@ class ClanTalkActivity : BaseActivity() {
                                                     userid = viewModel.deets.value?.user?.id.toString(),
                                                     channelid = channelid,
                                                     visibleItems = listState.firstVisibleItemIndex,
-                                                thisItemIndex = oldMessagesHere.indexOf(it)
+                                                    thisItemIndex = oldMessagesHere.indexOf(it)
                                                 )
                                             }
                                         })

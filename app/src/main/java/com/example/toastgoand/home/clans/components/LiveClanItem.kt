@@ -55,6 +55,8 @@ fun LiveClanItem(myclan: MyClansDataClass, position: Int) {
                             putExtra("ongoingFrame", myclan.ongoing_frame)
                             putExtra("startTime", myclan.start_time)
                             putExtra("endTime", myclan.end_time)
+                            putExtra("ongoingStream", myclan.on_going_stream_status)
+                            putExtra("ongoingStreamUser", myclan.stream_started_by)
                             putExtra("directornot", false)
                         })
                     },
