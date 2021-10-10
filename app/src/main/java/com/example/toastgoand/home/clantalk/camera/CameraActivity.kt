@@ -49,6 +49,8 @@ import java.util.*
 import java.util.concurrent.ExecutorService
 import androidx.camera.core.CameraSelector
 import androidx.compose.runtime.*
+import java.io.FileInputStream
+import java.io.InputStream
 
 
 class CameraActivity : BaseActivity() {
@@ -65,6 +67,7 @@ class CameraActivity : BaseActivity() {
     private var lensFacing: Int = CameraSelector.LENS_FACING_BACK
 
     var savedUri: Uri = "".toUri()
+    var savedUriGallery = "".toUri()
 
     var clubName: String = ""
     var clubid: Int = 0
@@ -107,6 +110,7 @@ class CameraActivity : BaseActivity() {
                     onResult = { uri: Uri? ->
                         if (uri != null) {
                             savedUri = uri
+                            savedUriGallery = Uri.parse(savedUri.toString())
                         }
                         binding.imageTaken.setImageURI(Uri.parse(savedUri.toString()))
                         binding.viewFinder.visibility = View.INVISIBLE
@@ -166,7 +170,7 @@ class CameraActivity : BaseActivity() {
                     Row(
                         modifier = Modifier
                             .clickable {
-                              flipCamera()
+                                flipCamera()
                                 Log.i("CameraXBasic", "clicked on cam change")
                             }
                             .size(75.dp),
@@ -250,18 +254,28 @@ class CameraActivity : BaseActivity() {
 
         if (channelid != null) {
             Log.i("CameraXBasic", "send file channelid is passed")
+
+            var convertedStream = if (savedUriGallery.toString().length > 2) {
+                Log.i("CameraXBasic", savedUriGallery.toString())
+//                val fileHere: File = File(savedUri.getPath())
+                FileInputStream(File(savedUri.path))
+            } else {
+                Log.i("CameraXBasic", "savedUri camera")
+                FileInputStream(File(savedUri.path))
+            }
+
             pubnub.sendFile(
                 channel = channelid,
                 fileName = "galgalgal",
-                inputStream = savedUri.toFile().inputStream(),
+                inputStream = convertedStream,
                 message = null,
                 meta = userdp?.let { metaHere(type = "c", user_dp = it) },
                 shouldStore = true
             ).async { result, status ->
                 if (status.error) {
-                    Log.i("CameraXBasic", status.error.toString())
+                    Log.i("CameraXBasic send error", status.error.toString())
                 } else {
-                    Log.i("CameraXBasic", "sending message worked")
+                    Log.i("CameraXBasic send sucess", "sending message worked")
                 }
             }
             onBackPressed()
