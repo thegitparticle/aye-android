@@ -47,9 +47,6 @@
             android:name=".quick.StreamMultiActivity"
             android:exported="true" />
         <activity
-            android:name=".quick.StreamScreenActivity"
-            android:exported="true" />
-        <activity
             android:name=".quick.StreamCameraActivity"
             android:exported="true" />
         <activity

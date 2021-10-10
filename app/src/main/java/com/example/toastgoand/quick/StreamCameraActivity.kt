@@ -124,6 +124,9 @@ class StreamCameraActivity : BaseActivity() {
                 "streamworking iRtcEngineEventHandler onleave",
                 String.format("local user %d leaveChannel!", userid)
             )
+            if (directornot) {
+                viewModel.stopStreamClubServerCalls(userid = userid, clubid = clubid, channelid = channelid)
+            }
         }
 
         override fun onJoinChannelSuccess(channel: String, userid: Int, elapsed: Int) {
@@ -131,8 +134,13 @@ class StreamCameraActivity : BaseActivity() {
                 "streamworking iRtcEngineEventHandler sucess",
                 String.format("onJoinChannelSuccess channel %s uid %d", channel, userid)
             )
-            viewModel.startStreamClubServerCalls(userid = userid, channelid = channelid, clubid = clubid)
-
+            if (directornot) {
+                viewModel.startStreamClubServerCalls(
+                    userid = userid,
+                    channelid = channelid,
+                    clubid = clubid
+                )
+            }
         }
 
         override fun onError(err: Int) {
