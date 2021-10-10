@@ -20,6 +20,7 @@
         android:name=".ToastgoApplication"
         android:allowBackup="true"
         android:appComponentFactory="androidx"
+        android:fitsSystemWindows="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:process=":screensharingsvc"
@@ -27,9 +28,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ToastgoandN"
         android:windowSoftInputMode="stateHidden"
-        tools:replace="android:appComponentFactory"
-        android:fitsSystemWindows="true"
-        >
+        tools:replace="android:appComponentFactory">
+        <activity
+            android:name=".quick.WatchStreamActivity"
+            android:exported="true" />
         <activity
             android:name=".home.startclan.StartClanNameActivity"
             android:exported="true" />
