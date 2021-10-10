@@ -37,7 +37,6 @@ import compose.icons.FeatherIcons
 import compose.icons.feathericons.Layers
 
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun DormantClan(myclan: MyClansDataClass) {
     val context = LocalContext.current
@@ -98,18 +97,31 @@ fun DormantClan(myclan: MyClansDataClass) {
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 private fun ClanImage(myclan: MyClansDataClass) {
     val painter = rememberImagePainter(data = myclan.club_profile_pic)
-    Image(
-        painter = painter,
-        contentDescription = "Forest Image",
-        contentScale = ContentScale.Crop,
-        modifier = Modifier
-            .padding(8.dp)
-            .size(55.dp)
-            .clip(RoundedCornerShape(corner = CornerSize(27.5.dp)))
-            .drawColorShadow(MaterialTheme.colors.onBackground, offsetY = 4.dp, alpha = 0.5f)
-    )
+    val versionAPI = Build.VERSION.SDK_INT
+
+    if (versionAPI >= 27) {
+        Image(
+            painter = painter,
+            contentDescription = "Forest Image",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .padding(8.dp)
+                .size(55.dp)
+                .clip(RoundedCornerShape(corner = CornerSize(27.5.dp)))
+                .drawColorShadow(MaterialTheme.colors.onBackground, offsetY = 4.dp, alpha = 0.5f)
+        )
+    } else {
+        Image(
+            painter = painter,
+            contentDescription = "Forest Image",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .padding(8.dp)
+                .size(55.dp)
+                .clip(RoundedCornerShape(corner = CornerSize(27.5.dp)))
+        )
+    }
 }

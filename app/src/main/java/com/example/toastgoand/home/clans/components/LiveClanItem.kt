@@ -105,7 +105,7 @@ fun LiveClanItem(myclan: MyClansDataClass, position: Int) {
                     verticalArrangement = Arrangement.Center,
                     modifier = Modifier
                         .fillMaxWidth(fraction = 0.4f)
-                        .padding(vertical = 5.dp) ,
+                        .padding(vertical = 5.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     if (totalMember == 2) {
@@ -192,7 +192,10 @@ fun TextPieces(myclan: MyClansDataClass) {
                 style = MaterialTheme.typography.subtitle1,
                 color = AyeTheme.colors.textPrimary
             )
-            Row(modifier = Modifier.padding(vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+            Row(
+                modifier = Modifier.padding(vertical = 4.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Icon(
                     FeatherIcons.Layers,
                     "Back",
@@ -214,6 +217,7 @@ fun TextPieces(myclan: MyClansDataClass) {
 @Composable
 private fun PersonImage(imageLink: String) {
     val painter = rememberImagePainter(data = imageLink)
+    val versionAPI = Build.VERSION.SDK_INT
 
     val infiniteTransition = rememberInfiniteTransition()
 
@@ -226,7 +230,6 @@ private fun PersonImage(imageLink: String) {
         )
     )
 
-    @RequiresApi(Build.VERSION_CODES.O)
     @Composable
     fun PersonDpBox(shape: Shape) {
         Column(
@@ -240,13 +243,28 @@ private fun PersonImage(imageLink: String) {
                     .background(MaterialTheme.colors.onSurface),
                 contentAlignment = Alignment.Center
             ) {
-                Image(
-                    painter = painter,
-                    contentDescription = "clan member dp",
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .size(70.dp).drawColorShadow(AyeTheme.colors.textSecondary, offsetY = 4.dp, alpha = 0.5f)
-                )
+                if (versionAPI >= 27) {
+                    Image(
+                        painter = painter,
+                        contentDescription = "clan member dp",
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .size(70.dp)
+                            .drawColorShadow(
+                                AyeTheme.colors.textSecondary,
+                                offsetY = 4.dp,
+                                alpha = 0.5f
+                            )
+                    )
+                } else {
+                    Image(
+                        painter = painter,
+                        contentDescription = "clan member dp",
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .size(70.dp)
+                    )
+                }
             }
         }
     }

@@ -30,7 +30,6 @@ import com.example.toastgoand.utilities.drawColorShadow
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.Layers
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun DirectItem(directItem: MyDirectsDataClass) {
     AyeTheme() {
@@ -95,18 +94,31 @@ fun DirectItem(directItem: MyDirectsDataClass) {
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun DirectImage(directItem: MyDirectsDataClass) {
     val painter = rememberImagePainter(data = directItem.display_guys.profile_picture)
-    Image(
-        painter = painter,
-        contentDescription = "Forest Image",
-        contentScale = ContentScale.Crop,
-        modifier = Modifier
-            .padding(8.dp)
-            .size(55.dp)
-            .clip(RoundedCornerShape(corner = CornerSize(27.5.dp)))
-            .drawColorShadow(MaterialTheme.colors.onBackground, offsetY = 4.dp, alpha = 0.5f)
-    )
+    val versionAPI = Build.VERSION.SDK_INT
+
+    if (versionAPI >= 27) {
+        Image(
+            painter = painter,
+            contentDescription = "Forest Image",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .padding(8.dp)
+                .size(55.dp)
+                .clip(RoundedCornerShape(corner = CornerSize(27.5.dp)))
+                .drawColorShadow(MaterialTheme.colors.onBackground, offsetY = 4.dp, alpha = 0.5f)
+        )
+    } else {
+        Image(
+            painter = painter,
+            contentDescription = "Forest Image",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .padding(8.dp)
+                .size(55.dp)
+                .clip(RoundedCornerShape(corner = CornerSize(27.5.dp)))
+        )
+    }
 }

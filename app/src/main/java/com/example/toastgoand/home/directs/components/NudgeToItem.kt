@@ -25,7 +25,6 @@ import com.example.toastgoand.network.nudgelist.NudgeToDataClass
 import com.example.toastgoand.utilities.drawColorShadow
 import kotlinx.coroutines.launch
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NudgeToItem(nudgeItem: NudgeToDataClass, currentuserid: String) {
     AyeTheme() {
@@ -86,18 +85,31 @@ private fun StartButton(nudgeItem: NudgeToDataClass, currentuserid: String) {
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 private fun NudgeToImage(nudgeItem: NudgeToDataClass) {
     val painter = rememberImagePainter(data = nudgeItem.profile_pic)
-    Image(
-        painter = painter,
-        contentDescription = "Forest Image",
-        contentScale = ContentScale.Crop,
-        modifier = Modifier
-            .padding(8.dp)
-            .size(55.dp)
-            .clip(RoundedCornerShape(corner = CornerSize(27.5.dp)))
-            .drawColorShadow(MaterialTheme.colors.onBackground, offsetY = 4.dp, alpha = 0.5f)
-    )
+    val versionAPI = Build.VERSION.SDK_INT
+
+    if (versionAPI >= 27) {
+        Image(
+            painter = painter,
+            contentDescription = "Forest Image",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .padding(8.dp)
+                .size(55.dp)
+                .clip(RoundedCornerShape(corner = CornerSize(27.5.dp)))
+                .drawColorShadow(MaterialTheme.colors.onBackground, offsetY = 4.dp, alpha = 0.5f)
+        )
+    } else {
+        Image(
+            painter = painter,
+            contentDescription = "Forest Image",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .padding(8.dp)
+                .size(55.dp)
+                .clip(RoundedCornerShape(corner = CornerSize(27.5.dp)))
+        )
+    }
 }
