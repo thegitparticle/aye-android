@@ -281,9 +281,9 @@ class ClanTalkActivity : BaseActivity() {
                                         actionIcon = FeatherIcons.Layers
                                     )
 
-                                    if (!ongoingStream) {
+                                    if (ongoingStream) {
                                         if (ongoingStreamUser != null) {
-                                            viewModel.getStreamerDetails("83")
+                                            viewModel.getStreamerDetails(ongoingStreamUser)
                                         }
 
                                         val streamerDetails: OtherProfileDataClass by viewModel.streamDeets.observeAsState(
