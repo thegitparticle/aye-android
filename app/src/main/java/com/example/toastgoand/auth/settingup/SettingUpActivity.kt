@@ -181,10 +181,12 @@ class SettingUpActivity : BaseActivity() {
                     }
 
                     binding.changingText.text = "setting up your profile ..."
+                    binding.animationView.setAnimation(R.raw.loading_ping_pong_cup)
                     binding.allowContactsButton.visibility = View.INVISIBLE
                 } else {
                     Log.i("settingupdebug", "Denied")
                     binding.changingText.text = "Aye! needs contacts to work"
+                    binding.animationView.setAnimation(R.raw.contacts_lottie)
                     binding.allowContactsButton.visibility = View.VISIBLE
 
                 }

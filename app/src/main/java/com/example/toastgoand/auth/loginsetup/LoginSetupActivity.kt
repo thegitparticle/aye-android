@@ -17,6 +17,7 @@ import com.deepakkumardk.kontactpickerlib.KontactPicker
 import com.deepakkumardk.kontactpickerlib.model.KontactPickerItem
 import com.deepakkumardk.kontactpickerlib.model.MyContacts
 import com.example.toastgoand.BaseActivity
+import com.example.toastgoand.R
 import com.example.toastgoand.ToastgoApplication
 import com.example.toastgoand.databinding.ActivityLoginSetupBinding
 import com.example.toastgoand.home.LandingActivity
@@ -167,10 +168,12 @@ class LoginSetupActivity : BaseActivity() {
                     }
 
                     binding.changingText.text = "setting up your profile ..."
+                    binding.animationView.setAnimation(R.raw.loading_ping_pong_cup)
                     binding.allowContactsButton.visibility = View.INVISIBLE
                 } else {
                     Log.i("settingupdebug", "Denied")
                     binding.changingText.text = "Aye! needs contacts to work"
+                    binding.animationView.setAnimation(R.raw.contacts_lottie)
                     binding.allowContactsButton.visibility = View.VISIBLE
 
                 }

@@ -243,4 +243,8 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer-dash:2.12.0'
     implementation 'com.google.android.exoplayer:exoplayer-ui:2.12.0'
 
+    // lottie for android
+    def lottieVersion = "3.4.0"
+    implementation "com.airbnb.android:lottie:$lottieVersion"
+
 }

@@ -2,7 +2,8 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".auth.settingup.SettingUpActivity"
-    xmlns:fancy="http://schemas.android.com/apk/res-auto">
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
@@ -14,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/blue_splash">
+        android:background="@color/off_dark_splash">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -23,11 +24,21 @@
             android:layout_gravity="center"
             android:orientation="vertical">
 
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/animationView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                app:lottie_rawRes="@raw/loading_ping_pong_cup"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"/>
+
         <TextView
             android:id="@+id/changingText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/lato"
+            android:fontFamily="@font/gotham_rounded_medium"
             android:textColor="#FFFFFF"
             android:textSize="22sp"
             android:layout_centerInParent="true"
@@ -49,7 +60,7 @@
             android:paddingTop="10dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="45dp"
-            android:fontFamily="@font/lato"
+            android:fontFamily="@font/gotham_rounded_medium"
             fancy:fb_defaultColor="@color/auth_off_dark_splash"
             fancy:fb_iconPosition="left"
             fancy:fb_radius="30dp"
