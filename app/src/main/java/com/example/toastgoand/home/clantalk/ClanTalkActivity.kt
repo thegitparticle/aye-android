@@ -77,6 +77,11 @@ import kotlinx.android.synthetic.main.talktype.*
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import java.lang.Exception
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener
+
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent.setEventListener
+
 
 class ClanTalkActivity : BaseActivity() {
 
@@ -214,6 +219,16 @@ class ClanTalkActivity : BaseActivity() {
 
                     inputMethodManager!!.hideSoftInputFromWindow(textInputTalk.windowToken, 0)
                 }
+
+                setEventListener(
+                    this,
+                    KeyboardVisibilityEventListener {
+                        // some code depending on keyboard visiblity status
+                        if (!KeyboardVisibilityEvent.isKeyboardVisible(this)) {
+                            reSetTextInput()
+                        }
+
+                    })
 
                 fun changeFrameLiveStatus() {
                     ongoingFrame = true
@@ -358,15 +373,24 @@ class ClanTalkActivity : BaseActivity() {
                                                                             "Pope and Test"
                                                                         )
                                                                         putExtra("clubid", 90)
-                                                                        putExtra("channelid", "90_c")
-                                                                        putExtra("ongoingFrame", true)
+                                                                        putExtra(
+                                                                            "channelid",
+                                                                            "90_c"
+                                                                        )
+                                                                        putExtra(
+                                                                            "ongoingFrame",
+                                                                            true
+                                                                        )
                                                                         putExtra("startTime", "")
                                                                         putExtra("endTime", "")
                                                                         putExtra(
                                                                             "userid",
                                                                             viewModel.deets.value?.user?.id.toString()
                                                                         )
-                                                                        putExtra("directornot", false)
+                                                                        putExtra(
+                                                                            "directornot",
+                                                                            false
+                                                                        )
                                                                     })
                                                             }
                                                             .width(90.dp)
@@ -558,11 +582,13 @@ class ClanTalkActivity : BaseActivity() {
                                         items = newMessagesHere.reversed(),
                                         itemContent = {
                                             if (channelid != null) {
-                                                NewPNMessage(
-                                                    message = it,
-                                                    userid = viewModel.deets.value?.user?.id.toString(),
-                                                    channelid = channelid
-                                                )
+                                                Row (modifier = Modifier.clickable {reSetTextInput()}) {
+                                                    NewPNMessage(
+                                                        message = it,
+                                                        userid = viewModel.deets.value?.user?.id.toString(),
+                                                        channelid = channelid
+                                                    )
+                                                }
                                                 Log.i("livemessage", "new pn message called")
                                             }
                                         })
@@ -571,13 +597,15 @@ class ClanTalkActivity : BaseActivity() {
                                         itemContent = {
                                             if (channelid != null) {
                                                 Log.i("cmessagedebugmain", "calling oldies comp")
-                                                OldPNMessage(
-                                                    message = it,
-                                                    userid = viewModel.deets.value?.user?.id.toString(),
-                                                    channelid = channelid,
-                                                    visibleItems = listState.firstVisibleItemIndex,
-                                                    thisItemIndex = oldMessagesHere.indexOf(it)
-                                                )
+                                                Row (modifier = Modifier.clickable {reSetTextInput()}) {
+                                                    OldPNMessage(
+                                                        message = it,
+                                                        userid = viewModel.deets.value?.user?.id.toString(),
+                                                        channelid = channelid,
+                                                        visibleItems = listState.firstVisibleItemIndex,
+                                                        thisItemIndex = oldMessagesHere.indexOf(it)
+                                                    )
+                                                }
                                             }
                                         })
                                 }

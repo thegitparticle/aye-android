@@ -249,4 +249,7 @@ dependencies {
 
     //bottom sheet
     implementation 'com.github.andrefrsousa:SuperBottomSheet:2.0.0'
+
+    //keyboard event listener
+    implementation "net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:3.0.0-RC3"
 }

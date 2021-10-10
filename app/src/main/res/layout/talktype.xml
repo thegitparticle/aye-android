@@ -14,31 +14,11 @@
         android:includeFontPadding="false"
         android:inputType="textMultiLine"
         android:textColor="@color/off_dark_splash"
-        android:textColorHint="@color/off_dark_splash"
-        android:textSize="16sp"
+        android:textColorHint="@color/auth_mid_dark_splash"
+        android:textSize="15sp"
         android:focusable="true"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
         android:focusableInTouchMode="true"
-         />
-
-<!--    <com.google.android.material.textfield.TextInputLayout-->
-<!--        android:id="@+id/textInputTalk"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        tools:layout_editor_absoluteX="1dp"-->
-<!--        android:hint="type something fun ..."-->
-<!--        android:background="@color/auth_off_light_splash"-->
-<!--        tools:layout_editor_absoluteY="232dp"-->
-<!--        >-->
-
-<!--        <com.google.android.material.textfield.TextInputEditText-->
-<!--            android:id="@+id/textInputTalkEdit"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:textColor="@color/off_dark_splash"-->
-<!--            android:textIsSelectable="true"-->
-<!--            android:cursorVisible="true"-->
-<!--            />-->
-
-<!--    </com.google.android.material.textfield.TextInputLayout>-->
-
+        />
 </layout>

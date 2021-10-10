@@ -139,8 +139,6 @@ fun TextInputPart(
 
     @Composable
     fun RecoOverlay(defaultRecos: List<DefaultRecosDataClass>) {
-
-
         Row(
             modifier = Modifier
                 .background(AyeTheme.colors.uiBackground),
@@ -216,7 +214,6 @@ fun TextInputPart(
                                 userid = userid,
                                 word = selectedText.value
                             )
-//                        Log.i("textrecosdebug worked api", selectedTextRecos.toString())
                     } catch (e: Exception) {
                         Log.i("textrecosdebug fail api", e.toString())
                     }
@@ -263,7 +260,8 @@ fun TextInputPart(
                 modifier = Modifier
                     .background(AyeTheme.colors.uiBackground)
                     .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 Row(
                     modifier = Modifier
@@ -277,46 +275,48 @@ fun TextInputPart(
                 Icon(
                     FeatherIcons.Send,
                     "invite contacts to aye",
-                    tint = AyeTheme.colors.iconVector,
+                    tint = AyeTheme.colors.textSecondary,
                     modifier = Modifier
-                        .size(40.dp)
+                        .size(30.dp)
                         .clickable {
                             var messageFinal: String = bindingOfTextEdit?.text.toString()
-                            pubnub
-                                .publish(
-                                    message = messageFinal,
-                                    channel = channelid,
-                                    meta = HMessageMetaDataClass(
-                                        type = "h",
-                                        image_url = selectedReco,
-                                        user_dp = userdp
+                            if (messageFinal.isNotEmpty()) {
+                                pubnub
+                                    .publish(
+                                        message = messageFinal,
+                                        channel = channelid,
+                                        meta = HMessageMetaDataClass(
+                                            type = "h",
+                                            image_url = selectedReco,
+                                            user_dp = userdp
+                                        )
                                     )
-                                )
-                                .async { result, status ->
-                                    if (status.error) {
-                                        Log.i("messagesendingfail", status.toString())
-                                    } else {
-                                        pubnub
-                                            .publish(
-                                                message = payloadHere,
-                                                channel = channelid + "_push"
-                                            )
-                                            .async { result, status ->
-                                                if (!status.error) {
-                                                    Log.i(
-                                                        "messagesendingapicall notif",
-                                                        "notif it worked"
-                                                    )
-                                                } else {
-                                                    Log.i(
-                                                        "messagesendingapicall notif",
-                                                        status.toString()
-                                                    )
+                                    .async { result, status ->
+                                        if (status.error) {
+                                            Log.i("messagesendingfail", status.toString())
+                                        } else {
+                                            pubnub
+                                                .publish(
+                                                    message = payloadHere,
+                                                    channel = channelid + "_push"
+                                                )
+                                                .async { result, status ->
+                                                    if (!status.error) {
+                                                        Log.i(
+                                                            "messagesendingapicall notif",
+                                                            "notif it worked"
+                                                        )
+                                                    } else {
+                                                        Log.i(
+                                                            "messagesendingapicall notif",
+                                                            status.toString()
+                                                        )
+                                                    }
                                                 }
-                                            }
-                                        Log.i("messagesendingsuccess", result.toString())
+                                            Log.i("messagesendingsuccess", result.toString())
+                                        }
                                     }
-                                }
+                            }
 
                         }
                 )
