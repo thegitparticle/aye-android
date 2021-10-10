@@ -22,6 +22,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:paddingTop="8dp"
+                android:fontFamily="@font/gotham_rounded_book"
                 android:text="make a clan with your besties!"
                 android:textColor="@color/auth_light_splash"
                 android:textSize="20sp"/>
