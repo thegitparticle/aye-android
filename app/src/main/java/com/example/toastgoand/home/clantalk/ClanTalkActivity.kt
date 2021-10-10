@@ -34,6 +34,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidViewBinding
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.viewbinding.ViewBinding
 import coil.compose.rememberImagePainter
 import com.example.toastgoand.BaseActivity
@@ -56,6 +57,7 @@ import com.example.toastgoand.network.defaultrecos.DefaultRecosDataClass
 import com.example.toastgoand.network.userdetails.User
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
 import com.example.toastgoand.quick.QuickActivity
+import com.example.toastgoand.quick.WatchStreamActivity
 import com.example.toastgoand.uibits.HeaderPlayScreens
 import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.google.accompanist.insets.ProvideWindowInsets
@@ -137,7 +139,7 @@ class ClanTalkActivity : BaseActivity() {
                 var ongoingFrame = intent.getBooleanExtra("ongoingFrame", false)
                 val startTime = intent.getStringExtra("startTime")
                 val endTime = intent.getStringExtra("endTime")
-                val ongoingStream = intent.getStringExtra("ongoingStream")
+                val ongoingStream = intent.getBooleanExtra("ongoingStream", false)
                 val ongoingStreamUser = intent.getStringExtra("ongoingStreamUser")
                 val directornot = intent.getBooleanExtra("directornot", false)
 
@@ -224,137 +226,161 @@ class ClanTalkActivity : BaseActivity() {
                     Scaffold(
                         topBar = {
                             if (clubName != null) {
-                                HeaderPlayScreens(
-                                    modifier = Modifier.statusBarsPadding(),
-                                    title = clubName,
-                                    onBackIconPressed = {
-                                        onBackPressed()
-                                    },
-                                    onActionIconPressed = {
-                                        if (!directornot) {
-                                            context.startActivity(
-                                                Intent(
-                                                    context,
-                                                    ClanFramesActivity::class.java
-                                                ).apply {
-                                                    putExtra("clubName", clubName)
-                                                    putExtra("clubid", clubid)
-                                                    putExtra("channelid", channelid)
-                                                    putExtra("ongoingFrame", ongoingFrame)
-                                                    putExtra("startTime", startTime)
-                                                    putExtra("endTime", endTime)
-                                                    putExtra(
-                                                        "userid",
-                                                        viewModel.deets.value?.user?.id.toString()
-                                                    )
-                                                    putExtra(
-                                                        "userdp",
-                                                        viewModel.deets.value?.image
-                                                    )
-                                                    putExtra("directornot", directornot)
-                                                })
-                                        } else {
-                                            context.startActivity(
-                                                Intent(
-                                                    context, DirectFramesActivity::class.java
-                                                ).apply {
-                                                    putExtra("otherName", clubName)
-                                                    putExtra("directid", channelid)
-                                                    putExtra("ongoingFrame", ongoingFrame)
-                                                    putExtra("startTime", startTime)
-                                                    putExtra("endTime", endTime)
-                                                    putExtra(
-                                                        "userid",
-                                                        viewModel.deets.value?.user?.id.toString()
-                                                    )
-                                                    putExtra(
-                                                        "userdp",
-                                                        viewModel.deets.value?.image
-                                                    )
-                                                    putExtra("directornot", directornot)
-                                                })
+                                Column() {
+                                    HeaderPlayScreens(
+                                        modifier = Modifier.statusBarsPadding(),
+                                        title = clubName,
+                                        onBackIconPressed = {
+                                            onBackPressed()
+                                        },
+                                        onActionIconPressed = {
+                                            if (!directornot) {
+                                                context.startActivity(
+                                                    Intent(
+                                                        context,
+                                                        ClanFramesActivity::class.java
+                                                    ).apply {
+                                                        putExtra("clubName", clubName)
+                                                        putExtra("clubid", clubid)
+                                                        putExtra("channelid", channelid)
+                                                        putExtra("ongoingFrame", ongoingFrame)
+                                                        putExtra("startTime", startTime)
+                                                        putExtra("endTime", endTime)
+                                                        putExtra(
+                                                            "userid",
+                                                            viewModel.deets.value?.user?.id.toString()
+                                                        )
+                                                        putExtra(
+                                                            "userdp",
+                                                            viewModel.deets.value?.image
+                                                        )
+                                                        putExtra("directornot", directornot)
+                                                    })
+                                            } else {
+                                                context.startActivity(
+                                                    Intent(
+                                                        context, DirectFramesActivity::class.java
+                                                    ).apply {
+                                                        putExtra("otherName", clubName)
+                                                        putExtra("directid", channelid)
+                                                        putExtra("ongoingFrame", ongoingFrame)
+                                                        putExtra("startTime", startTime)
+                                                        putExtra("endTime", endTime)
+                                                        putExtra(
+                                                            "userid",
+                                                            viewModel.deets.value?.user?.id.toString()
+                                                        )
+                                                        putExtra(
+                                                            "userdp",
+                                                            viewModel.deets.value?.image
+                                                        )
+                                                        putExtra("directornot", directornot)
+                                                    })
+                                            }
+                                        },
+                                        actionIcon = FeatherIcons.Layers
+                                    )
+
+                                    if (!ongoingStream) {
+                                        if (ongoingStreamUser != null) {
+                                            viewModel.getStreamerDetails("83")
                                         }
-                                    },
-                                    actionIcon = FeatherIcons.Layers
-                                )
 
-                                var streamerDetails: OtherProfileDataClass = OtherProfileDataClass(
-                                    user = DepthDetails(
-                                        username = "",
-                                        phone = "",
-                                        full_name = "",
-                                        id = 0,
-                                        clubs_joined_by_user = "",
-                                        number_of_clubs_joined = 0,
-                                        contact_list = "",
-                                        total_frames_participation = 0,
-                                        country_code_of_user = "",
-                                        contact_list_sync_status = false
-                                    ),
-                                    bio = "",
-                                    image = "",
-                                    id = 0
-                                )
-
-                                fun fetchOtherUserDetails(streamRunnerId: String) {
-                                    val composableScope = rememberCoroutineScope()
-                                    composableScope.launch {
-                                        try {
-                                            streamerDetails =
-                                                OtherProfileApi.retrofitService.getOtherProfile(
-                                                    "",
-                                                    streamRunnerId
-                                                )[0]
-                                        } catch (e: Exception) {
-                                            Log.i("clanstalk other user deets", e.toString())
-                                        }
-                                    }
-                                }
-
-                                AyeTheme() {
-                                    androidx.compose.foundation.layout.Row(
-                                        modifier = Modifier
-                                            .fillMaxWidth(0.9f)
-                                            .padding(vertical = 10.dp)
-                                            .background(color = AyeTheme.colors.brandVariant),
-                                        horizontalArrangement = Arrangement.SpaceBetween,
-                                        verticalAlignment = Alignment.CenterVertically
-                                    ) {
-                                        Row(verticalAlignment = Alignment.CenterVertically) {
-                                            val painter =
-                                                rememberImagePainter(data = streamerDetails.image)
-                                            Image(
-                                                painter = painter,
-                                                contentDescription = "stream dp in clantalk",
-                                                contentScale = ContentScale.Crop,
-                                                modifier = Modifier
-                                                    .padding(horizontal = 20.dp)
-                                                    .size(40.dp)
-                                                    .clip(RoundedCornerShape(corner = CornerSize(20.dp)))
+                                        val streamerDetails: OtherProfileDataClass by viewModel.streamDeets.observeAsState(
+                                            OtherProfileDataClass(
+                                                user = DepthDetails(
+                                                    username = "",
+                                                    phone = "",
+                                                    full_name = "",
+                                                    id = 0,
+                                                    clubs_joined_by_user = "",
+                                                    number_of_clubs_joined = 0,
+                                                    contact_list = "",
+                                                    total_frames_participation = 0,
+                                                    country_code_of_user = "",
+                                                    contact_list_sync_status = false
+                                                ),
+                                                bio = "",
+                                                image = "",
+                                                id = 0
                                             )
-                                            Text(
-                                                text = "${streamerDetails.user.full_name} is streaming now",
-                                                style = MaterialTheme.typography.subtitle2,
-                                                color = AyeTheme.colors.textPrimary,
-                                                modifier = Modifier.padding(horizontal = 20.dp)
-                                            )
-                                        }
-                                        Row(verticalAlignment = Alignment.CenterVertically) {
-                                            Box(
+                                        )
+
+                                        AyeTheme() {
+                                            androidx.compose.foundation.layout.Row(
                                                 modifier = Modifier
-                                                    .wrapContentWidth()
-                                                    .clip(RoundedCornerShape(20.dp))
-                                                    .background(Color.White)
-                                                    .clickable { }
-                                                    .width(75.dp)
-                                                    .height(40.dp),
-                                                contentAlignment = Alignment.Center
+                                                    .fillMaxWidth()
+                                                    .padding(vertical = 0.dp)
+                                                    .background(color = AyeTheme.colors.brandVariant),
+                                                horizontalArrangement = Arrangement.SpaceBetween,
+                                                verticalAlignment = Alignment.CenterVertically
                                             ) {
-                                                Text(
-                                                    text = "join",
-                                                    style = MaterialTheme.typography.caption,
-                                                    color = Color.Gray
-                                                )
+                                                Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(vertical = 10.dp)) {
+                                                    val painter =
+                                                        rememberImagePainter(data = streamerDetails.image)
+                                                    Image(
+                                                        painter = painter,
+                                                        contentDescription = "stream dp in clantalk",
+                                                        contentScale = ContentScale.Crop,
+                                                        modifier = Modifier
+                                                            .padding(horizontal = 20.dp)
+                                                            .size(40.dp)
+                                                            .clip(
+                                                                RoundedCornerShape(
+                                                                    corner = CornerSize(
+                                                                        20.dp
+                                                                    )
+                                                                )
+                                                            )
+                                                    )
+                                                    Text(
+                                                        text = "${streamerDetails.user.full_name} is streaming now",
+                                                        style = MaterialTheme.typography.subtitle2,
+                                                        color = AyeTheme.colors.uiBackground,
+                                                        modifier = Modifier.padding(horizontal = 0.dp)
+                                                    )
+                                                }
+                                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                                    Box(
+                                                        modifier = Modifier
+                                                            .wrapContentWidth()
+                                                            .clip(RoundedCornerShape(15.dp))
+                                                            .background(Color.White)
+                                                            .padding(horizontal = 5.dp)
+                                                            .clickable {
+                                                                context.startActivity(
+                                                                    Intent(
+                                                                        context,
+                                                                        WatchStreamActivity::class.java
+                                                                    ).apply {
+                                                                        putExtra(
+                                                                            "clubName",
+                                                                            "Pope and Test"
+                                                                        )
+                                                                        putExtra("clubid", 90)
+                                                                        putExtra("channelid", "90_c")
+                                                                        putExtra("ongoingFrame", true)
+                                                                        putExtra("startTime", "")
+                                                                        putExtra("endTime", "")
+                                                                        putExtra(
+                                                                            "userid",
+                                                                            viewModel.deets.value?.user?.id.toString()
+                                                                        )
+                                                                        putExtra("directornot", false)
+                                                                    })
+                                                            }
+                                                            .width(90.dp)
+                                                            .height(30.dp),
+                                                        contentAlignment = Alignment.Center
+                                                    ) {
+                                                        Text(
+                                                            text = "join",
+                                                            style = MaterialTheme.typography.caption,
+                                                            color = AyeTheme.colors.textSecondary,
+                                                            modifier = Modifier
+                                                        )
+                                                    }
+                                                }
                                             }
                                         }
                                     }

@@ -39,7 +39,7 @@ fun HeaderPlayScreens(
                 .height(100.dp),
             contentPadding = rememberInsetsPaddingValues(
                 LocalWindowInsets.current.statusBars,
-                applyBottom = false,
+                applyBottom = true,
             ),
             title = {
                 Row(

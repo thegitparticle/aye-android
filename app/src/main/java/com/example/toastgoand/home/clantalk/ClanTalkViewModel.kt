@@ -2,6 +2,8 @@ package com.example.toastgoand.home.clantalk
 
 import android.util.Log
 import androidx.lifecycle.*
+import com.example.toastgoand.home.otherprofile.OtherProfileDataClass
+import com.example.toastgoand.home.otherprofile.network.OtherProfileApi
 import com.example.toastgoand.network.defaultrecos.DefaultRecosApi
 import com.example.toastgoand.network.defaultrecos.DefaultRecosDataClass
 import com.example.toastgoand.network.defaultrecos.DefaultRecosRepo
@@ -30,6 +32,10 @@ class ClanTalkViewModel(repoDeets: UserDetailsRepo, private val repoRecos: Defau
     private var _newMessages = MutableLiveData<List<PNMessageResult>>()
     val newMessages: LiveData<List<PNMessageResult>>
         get() = _newMessages
+
+    private var _streamerDeets = MutableLiveData<OtherProfileDataClass>()
+    val streamDeets: LiveData<OtherProfileDataClass>
+        get() = _streamerDeets
 
     private fun insertDefaultRecos(recos: List<DefaultRecosDataClass>) = viewModelScope.launch {
         repoRecos.insert(recos)
@@ -90,6 +96,20 @@ class ClanTalkViewModel(repoDeets: UserDetailsRepo, private val repoRecos: Defau
                     _oldMessages.value = result?.messages
                     Log.i("pubnub members", _oldMessages.toString())
                 }
+            }
+        }
+    }
+
+    fun getStreamerDetails(streamRunnerId: String) {
+        viewModelScope.launch {
+            try {
+                _streamerDeets.value =
+                    OtherProfileApi.retrofitService.getOtherProfile(
+                        "",
+                        streamRunnerId
+                    )[0]
+            } catch (e: java.lang.Exception) {
+                Log.i("clanstalk other user deets", e.toString())
             }
         }
     }
