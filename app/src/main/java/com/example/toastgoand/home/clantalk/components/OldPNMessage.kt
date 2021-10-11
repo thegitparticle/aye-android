@@ -37,6 +37,7 @@ import com.pubnub.api.PubNub
 import com.pubnub.api.models.consumer.history.PNHistoryItemResult
 import kotlinx.serialization.Serializable
 import com.google.gson.reflect.TypeToken
+import com.pubnub.api.models.consumer.files.PNFileUrlResult
 import com.squareup.moshi.*
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.Dispatchers
@@ -145,14 +146,6 @@ private fun CMessage(message: PNHistoryItemResult, userid: String, channelid: St
 
         val pubnub = PubNub(pnConfiguration)
 
-        urlOfFileHere = GetFileLinkFromPN(
-            userid = userid,
-            channelid = channelid,
-            filename = file_name,
-            fileid = file_id
-        )
-
-
         if (urlOfFileHere.isNotEmpty()) {
             if (urlOfFileHere == "error") {
                 Log.i("cmessagedebugmain", "file link is error")
@@ -165,6 +158,11 @@ private fun CMessage(message: PNHistoryItemResult, userid: String, channelid: St
                         .clip(RoundedCornerShape(corner = CornerSize(15.dp))),
                     contentAlignment = Alignment.Center
                 ) {
+                    pubnub.getFileUrl(
+                        channel = channelid,
+                        fileName = file_name,
+                        fileId = file_id
+                    ).sync()?.let { ImageHereForC(imageLink = it) }
                     DPBubble(dplink = metaData.user_dp, text = message_text.toString())
                 }
             } else {
@@ -178,7 +176,11 @@ private fun CMessage(message: PNHistoryItemResult, userid: String, channelid: St
                         .clip(RoundedCornerShape(corner = CornerSize(15.dp))),
                     contentAlignment = Alignment.Center
                 ) {
-                    ImageHereForC(imageLink = urlOfFileHere)
+                    pubnub.getFileUrl(
+                        channel = channelid,
+                        fileName = file_name,
+                        fileId = file_id
+                    ).sync()?.let { ImageHereForC(imageLink = it) }
                     DPBubble(dplink = metaData.user_dp, text = message_text.toString())
                 }
             }
@@ -193,6 +195,11 @@ private fun CMessage(message: PNHistoryItemResult, userid: String, channelid: St
                     .clip(RoundedCornerShape(corner = CornerSize(15.dp))),
                 contentAlignment = Alignment.Center
             ) {
+                pubnub.getFileUrl(
+                    channel = channelid,
+                    fileName = file_name,
+                    fileId = file_id
+                ).sync()?.let { ImageHereForC(imageLink = it) }
                 DPBubble(dplink = metaData.user_dp, text = message_text.toString())
             }
         }
@@ -249,12 +256,10 @@ private fun ImageHere(imageLink: String) {
 }
 
 @Composable
-private fun ImageHereForC(imageLink: String) {
-//    val painter = rememberImagePainter(data = imageLink.toUri())
-    val painter =
-        rememberImagePainter(data = "https://ps.pndsn.com/v1/files/sub-c-d099e214-9bcf-11eb-9adf-f2e9c1644994/channels/90_c/files/aae59914-7931-416a-9304-a41d0da8871b/galgalgal?pnsdk=PubNub-Kotlin%2F6.1.0&requestid=44d9c743-1c5d-482c-a832-e42cfcd5047c&uuid=82")
+private fun ImageHereForC(imageLink: PNFileUrlResult) {
+    val painter = rememberImagePainter(data = imageLink.url.toUri())
     val context = LocalContext.current
-    Log.i("cmessagedebug inside painter", imageLink)
+    Log.i("cmessagedebug inside painter", imageLink.url.toString())
     Log.i("cmessagedebug inside painter - paunter log", painter.toString())
 
     Image(
@@ -272,7 +277,7 @@ private fun ImageHereForC(imageLink: String) {
                         context,
                         ViewMediaActivity::class.java
                     ).apply {
-                        putExtra("imagelink", "https://ps.pndsn.com/v1/files/sub-c-d099e214-9bcf-11eb-9adf-f2e9c1644994/channels/90_c/files/aae59914-7931-416a-9304-a41d0da8871b/galgalgal?pnsdk=PubNub-Kotlin%2F6.1.0&requestid=44d9c743-1c5d-482c-a832-e42cfcd5047c&uuid=82")
+                        putExtra("imagelink", imageLink.url)
                     })
             }
     )
