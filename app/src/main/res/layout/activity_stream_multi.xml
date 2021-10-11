@@ -36,7 +36,16 @@
             android:layout_height="200dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
-            android:visibility="visible"/>
+            android:visibility="invisible"/>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="open your fav app and capture a moment!"
+            android:textColor="@color/auth_off_light_splash"
+            android:fontFamily="@font/gotham_rounded_medium"/>
 
         <LinearLayout
             android:id="@+id/ll_join"
@@ -54,6 +63,7 @@
                 android:layout_height="0dp"
                 android:hint="@string/channel_id"
                 android:digits="@string/chanel_support_char"/>
+
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_join"
@@ -81,6 +91,8 @@
             android:layout_marginBottom="24dp"
             android:enabled="false"
             android:text="@string/screenshare" />
+
+
 
     </RelativeLayout>
 
