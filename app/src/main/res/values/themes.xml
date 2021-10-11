@@ -77,6 +77,11 @@
         <item name="android:textSize">12sp</item>
     </style>
 
+    <style name="TextAppearance.Nothing" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:fontFamily">@font/gotham_rounded_book</item>
+        <item name="android:textSize">1sp</item>
+    </style>
+
     <style name="Theme.ToastgoandN.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
