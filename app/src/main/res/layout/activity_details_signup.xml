@@ -61,7 +61,7 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:textColor="@color/auth_off_light_splash"
-            android:fontFamily="@font/lato"
+            android:fontFamily="@font/gotham_rounded_book"
             android:hint="full name"
             android:focusable="true"
             android:focusableInTouchMode="true"
@@ -77,7 +77,7 @@
             android:ems="10"
             android:inputType="textVisiblePassword"
             android:textColor="@color/auth_off_light_splash"
-            android:fontFamily="@font/lato"
+            android:fontFamily="@font/gotham_rounded_book"
             android:hint="username"
             android:textColorHint="@color/auth_mid_light_splash"
              />
