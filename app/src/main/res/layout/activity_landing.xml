@@ -28,7 +28,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="80dp"
             android:layout_weight="1"
             android:orientation="horizontal"
             android:layout_gravity="center_vertical"
@@ -38,43 +38,6 @@
                 android:id="@+id/headerButtons"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
-
-            <ImageView
-                android:id="@+id/invitePeopleLogo"
-                android:visibility="gone"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_gravity="start"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_weight="0.1"
-                app:srcCompat="@drawable/ic_invitepeople" />
-
-            <ImageView
-                android:id="@+id/ayeLogo"
-                android:visibility="gone"
-                android:layout_width="45dp"
-                android:layout_height="25dp"
-                android:layout_gravity="center"
-                android:layout_weight="0.5"
-                app:srcCompat="@drawable/aye_pink_gradient" />
-
-
-            <com.jackandphantom.circularimageview.CircleImage
-                android:id="@+id/circleImage"
-                android:visibility="gone"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="start"
-                android:layout_marginRight="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_weight="0.1"
-                android:src="@drawable/sample_dp"
-                app:add_shadow="true"
-                app:border_color="#ed2e2e"
-                app:border_width="3dp"
-                app:shadow_color="#a10909"
-                app:shadow_radius="20" />
 
         </LinearLayout>
 

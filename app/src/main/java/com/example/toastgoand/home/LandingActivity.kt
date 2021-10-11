@@ -111,33 +111,6 @@ class LandingActivity : BaseActivity() {
 
         binding = viewBinding as ActivityLandingBinding
 
-        binding.circleImage.setOnClickListener {
-            val intent = Intent(this, MyProfileActivity::class.java).apply {}
-            startActivity(intent)
-            overridePendingTransition(
-                R.anim.slide_up_enter,
-                R.anim.slide_down_exit
-            )
-        }
-
-        binding.ayeLogo.setOnClickListener {
-            val intent = Intent(this, StartClanActivity::class.java).apply {}
-            startActivity(intent)
-            overridePendingTransition(
-                R.anim.slide_up_enter,
-                R.anim.slide_down_exit
-            )
-        }
-
-        binding.invitePeopleLogo.setOnClickListener {
-            val intent = Intent(this, InvitePeopleDirectlyActivity::class.java).apply {}
-            startActivity(intent)
-            overridePendingTransition(
-                R.anim.slide_up_enter,
-                R.anim.slide_down_exit
-            )
-        }
-
         binding.floatingActionButton.setOnClickListener {
             val sheet = StreamBottomSheetFragment()
             sheet.show(supportFragmentManager, "StreamBottomSheetFragment")
@@ -180,6 +153,7 @@ class LandingActivity : BaseActivity() {
                         .fillMaxWidth()
                         .background(color = AyeTheme.colors.uiBackground),
                     horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.Bottom
                 ) {
                     CircleIcon(
                         iconName = Icons.Rounded.PersonAddAlt1,

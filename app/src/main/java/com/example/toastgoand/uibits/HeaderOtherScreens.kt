@@ -32,15 +32,14 @@ fun HeaderOtherScreens (
                 .height(100.dp)
             ,
             contentPadding = rememberInsetsPaddingValues(
-                LocalWindowInsets.current.statusBars,
-                applyBottom = false,
+                LocalWindowInsets.current.systemBars,
             ),
             title = {
                 Row(
                     verticalAlignment = Alignment.Bottom,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 40.dp),
+                        .padding(top = 20.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     SelectionContainer() {

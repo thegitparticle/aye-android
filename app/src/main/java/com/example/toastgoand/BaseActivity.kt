@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
@@ -19,15 +20,13 @@ abstract class BaseActivity: AppCompatActivity() {
     open lateinit var viewBinding: ViewBinding
     abstract fun binding(): ViewBinding
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         viewBinding = binding()
         setContentView(viewBinding.root)
 
-        getSupportActionBar()?.hide()
-
+        supportActionBar?.hide()
 
     }
 

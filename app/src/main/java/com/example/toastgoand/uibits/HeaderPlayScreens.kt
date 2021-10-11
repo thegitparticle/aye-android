@@ -15,6 +15,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.ui.graphics.Color
 import com.example.toastgoand.composestyle.AyeTheme
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.ProvideWindowInsets
@@ -36,17 +37,16 @@ fun HeaderPlayScreens(
         TopAppBar(
             modifier = modifier
                 .fillMaxWidth()
-                .height(100.dp),
+                .height(80.dp),
             contentPadding = rememberInsetsPaddingValues(
-                LocalWindowInsets.current.statusBars,
-                applyBottom = true,
+                LocalWindowInsets.current.systemBars,
             ),
             title = {
                 Row(
-                    verticalAlignment = Alignment.Bottom,
+                    verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 40.dp),
+                        .padding(top = 20.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     CircleIconSmall(
