@@ -124,8 +124,10 @@ class StreamCameraActivity : BaseActivity() {
                 "streamworking iRtcEngineEventHandler onleave",
                 String.format("local user %d leaveChannel!", userid)
             )
-            if (directornot) {
+            if (!directornot) {
                 viewModel.stopStreamClubServerCalls(userid = userid, clubid = clubid, channelid = channelid)
+            } else {
+                viewModel.stopStreamDirectServerCalls(userid = userid, channelid = channelid)
             }
         }
 
@@ -134,12 +136,14 @@ class StreamCameraActivity : BaseActivity() {
                 "streamworking iRtcEngineEventHandler sucess",
                 String.format("onJoinChannelSuccess channel %s uid %d", channel, userid)
             )
-            if (directornot) {
+            if (!directornot) {
                 viewModel.startStreamClubServerCalls(
                     userid = userid,
                     channelid = channelid,
                     clubid = clubid
                 )
+            } else {
+                viewModel.startStreamDirectServerCalls(userid = userid, channelid = channelid)
             }
         }
 

@@ -546,13 +546,6 @@ class StreamMultiActivity : BaseActivity() {
         // Prevent repeated entry
         join!!.isEnabled = false
 
-        if (directornot) {
-            viewModel.startStreamClubServerCalls(
-                userid = userid,
-                channelid = channelid,
-                clubid = clubid
-            )
-        }
     }
 
     private val iRtcEngineEventHandler: IRtcEngineEventHandler = object : IRtcEngineEventHandler() {
@@ -595,8 +588,10 @@ class StreamMultiActivity : BaseActivity() {
                 "streammultigoon iRtcEngineEventHandler onleave",
                 String.format("local user %d leaveChannel!", userid)
             )
-            if (directornot) {
+            if (!directornot) {
                 viewModel.stopStreamClubServerCalls(userid = userid, clubid = clubid, channelid = channelid)
+            } else {
+                viewModel.stopStreamDirectServerCalls(userid = userid, channelid = channelid)
             }
 //            showLongToast(String.format("local user %d leaveChannel!", myUid))
         }
@@ -621,6 +616,16 @@ class StreamMultiActivity : BaseActivity() {
                 join!!.text = getString(R.string.leave)
                 screenShare!!.isEnabled = true
             })
+
+            if (!directornot) {
+                viewModel.startStreamClubServerCalls(
+                    userid = userid,
+                    channelid = channelid,
+                    clubid = clubid
+                )
+            } else {
+                viewModel.startStreamDirectServerCalls(userid = userid, channelid = channelid)
+            }
         }
 
         /**Since v2.9.0.
