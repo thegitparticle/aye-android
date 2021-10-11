@@ -38,8 +38,6 @@ import androidx.viewbinding.ViewBinding
 import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.R
 import com.example.toastgoand.composestyle.AyeTheme
-import com.example.toastgoand.databinding.ActivityStreamCameraBinding
-import com.example.toastgoand.databinding.ActivityStreamMultiBinding
 import com.example.toastgoand.home.LandingActivity
 import com.example.toastgoand.quick.callactivity.ScreenSharingClient
 import com.example.toastgoand.quick.callactivity.ScreenSharingClient.IStateListener
@@ -63,7 +61,7 @@ import java.lang.Exception
 
 class StreamMultiActivity : BaseActivity() {
 
-    private lateinit var binding: ActivityStreamMultiBinding
+    private lateinit var binding: com.example.toastgoand.databinding.ActivityStreamMultiBinding
     private lateinit var viewModel: StreamMultiViewModel
 
     var clubName: String = ""
@@ -108,7 +106,7 @@ class StreamMultiActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = viewBinding as ActivityStreamMultiBinding
+        binding = viewBinding as com.example.toastgoand.databinding.ActivityStreamMultiBinding
 
         viewModel = ViewModelProvider(this).get(StreamMultiViewModel::class.java)
 
@@ -381,80 +379,6 @@ class StreamMultiActivity : BaseActivity() {
 
     }
 
-//    fun onClick(v: View) {
-//        if (v.id == R.id.btn_join) {
-//            if (!joined) {
-//                CommonUtil.hideInputBoard(this, et_channel)
-//                // call when join button hit
-//                val channelId = et_channel!!.text.toString()
-//                // Check permission
-//                if (AndPermission.hasPermissions(
-//                        this,
-//                        Permission.Group.STORAGE,
-//                        Permission.Group.MICROPHONE,
-//                        Permission.Group.CAMERA
-//                    )
-//                ) {
-//                    joinChannel(channelId)
-//                    return
-//                }
-//                // Request permission
-//                AndPermission.with(this).runtime().permission(
-//                    Permission.Group.STORAGE,
-//                    Permission.Group.MICROPHONE,
-//                    Permission.Group.CAMERA
-//                ).onGranted { permissions: List<String?>? ->
-//                    // Permissions Granted
-//                    joinChannel(channelId)
-//                }.start()
-//            } else {
-//                joined = false
-//                /**After joining a channel, the user must call the leaveChannel method to end the
-//                 * call before joining another channel. This method returns 0 if the user leaves the
-//                 * channel and releases all resources related to the call. This method call is
-//                 * asynchronous, and the user has not exited the channel when the method call returns.
-//                 * Once the user leaves the channel, the SDK triggers the onLeaveChannel callback.
-//                 * A successful leaveChannel method call triggers the following callbacks:
-//                 * 1:The local client: onLeaveChannel.
-//                 * 2:The remote client: onUserOffline, if the user leaving the channel is in the
-//                 * Communication channel, or is a BROADCASTER in the Live Broadcast profile.
-//                 * @returns 0: Success.
-//                 * < 0: Failure.
-//                 * PS:
-//                 * 1:If you call the destroy method immediately after calling the leaveChannel
-//                 * method, the leaveChannel process interrupts, and the SDK does not trigger
-//                 * the onLeaveChannel callback.
-//                 * 2:If you call the leaveChannel method during CDN live streaming, the SDK
-//                 * triggers the removeInjectStreamUrl method.
-//                 */
-//                engine!!.leaveChannel()
-//                join!!.text = getString(R.string.join)
-//                mSSClient!!.stop(this)
-//                screenShare!!.text = resources.getString(R.string.screenshare)
-//                screenShare!!.isEnabled = false
-//                isSharing = false
-//            }
-//        } else if (v.id == R.id.screenShare) {
-//            val channelId = et_channel!!.text.toString()
-//            if (!isSharing) {
-//                mSSClient!!.start(
-//                    this, "851193d91b1945bda153a38f3584ead3", token,
-//                    channelid, userid, VideoEncoderConfiguration(
-//                        getScreenDimensions(),
-//                        FRAME_RATE.FRAME_RATE_FPS_30,
-//                        VideoEncoderConfiguration.STANDARD_BITRATE,
-//                        ORIENTATION_MODE.ORIENTATION_MODE_ADAPTIVE
-//                    )
-//                )
-//                screenShare!!.text = resources.getString(R.string.stop)
-//                isSharing = true
-//            } else {
-//                mSSClient!!.stop(this)
-//                screenShare!!.text = resources.getString(R.string.screenshare)
-//                isSharing = false
-//            }
-//        }
-//    }
 
     private fun getScreenDimensions(): VideoDimensions? {
         val manager = this.getSystemService(WINDOW_SERVICE) as WindowManager
@@ -549,8 +473,6 @@ class StreamMultiActivity : BaseActivity() {
     }
 
     private val iRtcEngineEventHandler: IRtcEngineEventHandler = object : IRtcEngineEventHandler() {
-        /**Reports a warning during SDK runtime.
-         * Warning code: https://docs.agora.io/en/Voice/API%20Reference/java/classio_1_1agora_1_1rtc_1_1_i_rtc_engine_event_handler_1_1_warn_code.html */
         override fun onWarning(warn: Int) {
             Log.w(
                 "streammultigoon iRtcEngineEventHandler onWarning",
@@ -562,26 +484,13 @@ class StreamMultiActivity : BaseActivity() {
             )
         }
 
-        /**Reports an error during SDK runtime.
-         * Error code: https://docs.agora.io/en/Voice/API%20Reference/java/classio_1_1agora_1_1rtc_1_1_i_rtc_engine_event_handler_1_1_error_code.html */
         override fun onError(err: Int) {
             Log.e(
                 "streammultigoon iRtcEngineEventHandler onError",
                 String.format("onError code %d message %s", err, RtcEngine.getErrorDescription(err))
             )
-//            showAlert(
-//                String.format(
-//                    "onError code %d message %s",
-//                    err,
-//                    RtcEngine.getErrorDescription(err)
-//                )
-//            )
         }
 
-        /**Occurs when a user leaves the channel.
-         * @param stats With this callback, the application retrieves the channel information,
-         * such as the call duration and statistics.
-         */
         override fun onLeaveChannel(stats: RtcStats) {
             super.onLeaveChannel(stats)
             Log.i(
@@ -593,22 +502,13 @@ class StreamMultiActivity : BaseActivity() {
             } else {
                 viewModel.stopStreamDirectServerCalls(userid = userid, channelid = channelid)
             }
-//            showLongToast(String.format("local user %d leaveChannel!", myUid))
         }
 
-        /**Occurs when the local user joins a specified channel.
-         * The channel name assignment is based on channelName specified in the joinChannel method.
-         * If the uid is not specified when joinChannel is called, the server automatically assigns a uid.
-         * @param channel Channel name
-         * @param uid User ID
-         * @param elapsed Time elapsed (ms) from the user calling joinChannel until this callback is triggered
-         */
         override fun onJoinChannelSuccess(channel: String, userid: Int, elapsed: Int) {
             Log.i(
                 "streammultigoon iRtcEngineEventHandler sucess",
                 String.format("onJoinChannelSuccess channel %s uid %d", channel, userid)
             )
-//            showLongToast(String.format("onJoinChannelSuccess channel %s uid %d", channel, uid))
             myUid = userid
             joined = true
             handler?.post(Runnable {
@@ -723,8 +623,6 @@ class StreamMultiActivity : BaseActivity() {
         override fun onUserJoined(userid: Int, elapsed: Int) {
             super.onUserJoined(userid, elapsed)
             Log.i("streammultigoon iRtcEngineEventHandler userjoin", "onUserJoined->$userid")
-//            showLongToast(String.format("user %d joined!", uid))
-            // don't render screen sharing view
             if (userid == userid) {
                 return
             }
@@ -814,6 +712,6 @@ class StreamMultiActivity : BaseActivity() {
     }
 
     override fun binding(): ViewBinding {
-        return ActivityStreamMultiBinding.inflate(layoutInflater)
+        return com.example.toastgoand.databinding.ActivityStreamMultiBinding.inflate(layoutInflater)
     }
 }

@@ -48,6 +48,7 @@ class StreamCameraViewModel : ViewModel() {
     }
 
     fun stopStreamClubServerCalls(userid: Int, channelid: String, clubid: Int) {
+        Log.i("streamworking", "stop stream api ncall function triggered for clubs")
         viewModelScope.launch {
             try {
                 StopClanInfoToServerApi.retrofitService.stopClanStream(

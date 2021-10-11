@@ -20,7 +20,7 @@ private val retrofit =
         .build()
 
 interface StopClanInfoToServerApiInterface {
-    @GET("users/start_club_stream/{userid}/{clubid}")
+    @GET("users/stop_club_stream/{userid}/{clubid}")
     suspend fun stopClanStream(
         @Path("userid") userid: String,
         @Path("clubid") clubid: String
