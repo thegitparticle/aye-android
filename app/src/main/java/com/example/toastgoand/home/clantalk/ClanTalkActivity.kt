@@ -515,7 +515,7 @@ class ClanTalkActivity : BaseActivity() {
 //                                                    .background(AyeTheme.colors.appLead)
 //                                                    .alpha(0.1f)
                                                 ,
-                                                verticalArrangement = Arrangement.Center
+                                                verticalArrangement = Arrangement.Bottom
                                             ) {
                                                 viewModel.deets.value?.image?.let {
                                                     TextInputPart(
