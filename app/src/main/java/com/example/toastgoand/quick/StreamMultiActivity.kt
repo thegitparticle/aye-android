@@ -119,9 +119,9 @@ class StreamMultiActivity : BaseActivity() {
         endTime = intent.getStringExtra("endTime").toString()
         userid = intent.getIntExtra("userid", 0)
         directornot = intent.getBooleanExtra("directornot", false)
-        token222 = intent.getStringExtra("token").toString()
-        token =
-            "006851193d91b1945bda153a38f3584ead3IACKJYOK3qEVqWrM8B8cbCFYFshFp1np5QrT0GWvMUjCeN78lGEAAAAAEADy5cWPzaFeYQEAAQDMoV5h"
+        token = intent.getStringExtra("token").toString()
+//        token =
+//            "006851193d91b1945bda153a38f3584ead3IACKJYOK3qEVqWrM8B8cbCFYFshFp1np5QrT0GWvMUjCeN78lGEAAAAAEADy5cWPzaFeYQEAAQDMoV5h"
 
         Log.i("streammultigoon userid", userid.toString())
         Log.i("streammultigoon token", token222)
@@ -427,18 +427,7 @@ class StreamMultiActivity : BaseActivity() {
             ORIENTATION_MODE.ORIENTATION_MODE_FIXED_PORTRAIT
         )
         engine!!.setVideoEncoderConfiguration(configuration)
-        //        engine.setVideoEncoderConfiguration(new VideoEncoderConfiguration( VideoEncoderConfiguration.FRAME_RATE.valueOf(VD_640x360),
-//                FRAME_RATE_FPS_15,
-//                STANDARD_BITRATE,
-//                ORIENTATION_MODE_ADAPTIVE
-//        ));
 
-//        engine.setVideoEncoderConfiguration(new VideoEncoderConfiguration(
-//                ((TheApplication)getActivity().getApplication()).getGlobalSettings().getVideoEncodingDimensionObject(),
-//                VideoEncoderConfiguration.FRAME_RATE.valueOf(((TheApplication)getActivity().getApplication()).getGlobalSettings().getVideoEncodingFrameRate()),
-//                STANDARD_BITRATE,
-//                VideoEncoderConfiguration.ORIENTATION_MODE.valueOf(((TheApplication)getActivity().getApplication()).getGlobalSettings().getVideoEncodingOrientation())
-//        ));
         /**Please configure accessToken in the string_config file.
          * A temporary token generated in Console. A temporary token is valid for 24 hours. For details, see
          * https://docs.agora.io/en/Agora%20Platform/token?platform=All%20Platforms#get-a-temporary-token
@@ -460,14 +449,8 @@ class StreamMultiActivity : BaseActivity() {
         val res =
             engine!!.joinChannel(accessToken, channelId, "Extra Optional Data", userid, option)
         if (res != 0) {
-            // Usually happens with invalid parameters
-            // Error code description can be found at:
-            // en: https://docs.agora.io/en/Voice/API%20Reference/java/classio_1_1agora_1_1rtc_1_1_i_rtc_engine_event_handler_1_1_error_code.html
-            // cn: https://docs.agora.io/cn/Voice/API%20Reference/java/classio_1_1agora_1_1rtc_1_1_i_rtc_engine_event_handler_1_1_error_code.html
-//            showAlert(RtcEngine.getErrorDescription(Math.abs(res)))
             return
         }
-        // Prevent repeated entry
         join!!.isEnabled = false
 
     }
