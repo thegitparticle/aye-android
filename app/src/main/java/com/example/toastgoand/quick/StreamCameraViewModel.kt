@@ -5,10 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.toastgoand.quick.network.apis.AgoraTokenApi
-import com.example.toastgoand.quick.network.apis.StartClanInfoToServerApi
-import com.example.toastgoand.quick.network.apis.StartRecordingApi
-import com.example.toastgoand.quick.network.apis.StopClanInfoToServerApi
+import com.example.toastgoand.quick.network.apis.*
 import kotlinx.coroutines.launch
 
 class StreamCameraViewModel : ViewModel() {
@@ -56,6 +53,36 @@ class StreamCameraViewModel : ViewModel() {
                 StopClanInfoToServerApi.retrofitService.stopClanStream(
                     userid = userid.toString(),
                     clubid = clubid.toString()
+                )
+            } catch (e: Exception) {
+                Log.i("streamworking", "API call for stop stream, Failed! ${e.message}")
+            }
+        }
+    }
+
+    fun startStreamDirectServerCalls(userid: Int, channelid: String) {
+        viewModelScope.launch {
+            try {
+                val grabedResources = StartRecordingApi.retrofitService.getTheToken(
+                    userid = userid.toString(),
+                    channelid = channelid
+                )
+                StartDirectInfoToServerApi.retrofitService.startDirectStream(
+                    userid = userid.toString(),
+                    channelid = channelid
+                )
+            } catch (e: Exception) {
+                Log.i("streamworking", "API call for server call setup, Failed! ${e.message}")
+            }
+        }
+    }
+
+    fun stopStreamDirectServerCalls(userid: Int, channelid: String) {
+        viewModelScope.launch {
+            try {
+                StopDirectInfoToServerApi.retrofitService.stopDirectStream(
+                    userid = userid.toString(),
+                    channelid = channelid
                 )
             } catch (e: Exception) {
                 Log.i("streamworking", "API call for stop stream, Failed! ${e.message}")
