@@ -5,9 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,6 +20,7 @@ import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.R
 import com.example.toastgoand.auth.network.DetailsSignUpApi
 import com.example.toastgoand.auth.network.dataclasses.DetailsSignUpDataClass
+import com.example.toastgoand.auth.otplogin.network.OTPLoginDataClass
 import com.example.toastgoand.auth.otpsignup.OtpSignupActivity
 import com.example.toastgoand.auth.welcome.WelcomeActivity
 import com.example.toastgoand.composestyle.AyeTheme
@@ -97,13 +96,11 @@ class DetailsSignupActivity : BaseActivity() {
 
                     Log.i("signupdebug", "sign up de bug log working")
 
-                    Icon(
-                        FeatherIcons.ArrowRight,
-                        "next screen",
-                        tint = AyeTheme.colors.uiSurface,
+                    Box(
                         modifier = Modifier
-                            .size(30.dp)
-                            .clickable {
+                            .width(70.dp)
+                            .background(AyeTheme.colors.iconBackground.copy(0.0f))
+                            .clickable{
 
                                 var full_name = binding.editTextTextPersonName.text
                                 var user_name = binding.editTextTextPersonName2.text
@@ -118,35 +115,22 @@ class DetailsSignupActivity : BaseActivity() {
 
                                 viewModel.sendDetailsOfNewUser(payloadHere)
                                 isDialogOpen.value = true
-                            }
-                            .background(color = AyeTheme.colors.textSecondary),
-                    )
+                            },
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            FeatherIcons.ArrowRight,
+                            "next screen",
+                            tint = AyeTheme.colors.uiSurface,
+                            modifier = Modifier.size(35.dp),
+                        )
+                    }
 
                     LoaderDialog(isDialogOpen)
                 }
             }
         }
 
-//        binding.nextImageButton.setOnClickListener {
-//            val intent = Intent(this, OtpSignupActivity::class.java).apply {
-//                putExtra("phoneNumber", intent.getStringExtra("phoneNumber"))
-//            }
-//            startActivity(intent)
-//            overridePendingTransition(
-//                R.anim.slide_from_right ,
-//                R.anim.slide_out_left
-//            )
-//        }
-
-//        viewModel.phoneCheck.value?.let { it1 -> Log.i("EnterPhoneViewModelX", it1) }
-//
-//        viewModel.phoneCheck.observe(this, Observer { response ->
-//            Log.i("EnterPhoneViewModelX", response)
-//        })
-//
-//        binding.nextImageButton.setOnClickListener {
-//            viewModel.getUserDetailsHere(countryCode + phoneNumber.toString())
-//        }
 
     }
 

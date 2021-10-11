@@ -6,9 +6,8 @@ import android.text.Editable
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -16,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Observer
@@ -110,20 +110,23 @@ class EnterPhoneActivity : BaseActivity() {
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     val isDialogOpen = remember { mutableStateOf(false) }
-
-                    Icon(
-                        FeatherIcons.ArrowRight,
-                        "next screen",
-                        tint = AyeTheme.colors.uiSurface,
+                    Box(
                         modifier = Modifier
-                            .size(30.dp)
-                            .clickable {
+                            .width(70.dp)
+                            .background(AyeTheme.colors.iconBackground.copy(0.0f))
+                            .clickable{
                                 viewModel.checkPhoneNumberHere(countryCode + phoneNumber.toString())
                                 isDialogOpen.value = true
-                            }
-                            .background(color = AyeTheme.colors.textSecondary),
-                    )
-
+                            },
+                        contentAlignment = Alignment.Center
+                    ) {
+                            Icon(
+                                FeatherIcons.ArrowRight,
+                                "next screen",
+                                tint = AyeTheme.colors.uiSurface,
+                                modifier = Modifier.size(35.dp),
+                            )
+                    }
                     LoaderDialog(isDialogOpen)
                 }
             }

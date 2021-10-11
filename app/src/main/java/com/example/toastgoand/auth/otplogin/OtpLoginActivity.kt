@@ -5,9 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -97,13 +95,11 @@ class OtpLoginActivity : BaseActivity() {
                 ) {
                     val isDialogOpen = remember { mutableStateOf(false) }
 
-                    Icon(
-                        FeatherIcons.ArrowRight,
-                        "next screen",
-                        tint = AyeTheme.colors.uiSurface,
+                    Box(
                         modifier = Modifier
-                            .size(30.dp)
-                            .clickable {
+                            .width(70.dp)
+                            .background(AyeTheme.colors.iconBackground.copy(0.0f))
+                            .clickable{
 
                                 val phone = phoneNumberHere
                                 val password = binding.firstPinView.text.toString()
@@ -115,29 +111,21 @@ class OtpLoginActivity : BaseActivity() {
                                     )
                                 )
                                 isDialogOpen.value = true
-                            }
-                            .background(color = AyeTheme.colors.textSecondary),
-                    )
+                            },
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            FeatherIcons.ArrowRight,
+                            "next screen",
+                            tint = AyeTheme.colors.uiSurface,
+                            modifier = Modifier.size(35.dp),
+                        )
+                    }
 
                     LoaderDialog(isDialogOpen)
                 }
             }
         }
-
-//        viewModel.phoneCheck.value?.let { it1 -> Log.i("EnterPhoneViewModelX", it1) }
-//
-//        viewModel.phoneCheck.observe(this, Observer { response ->
-//            Log.i("EnterPhoneViewModelX", response)
-//        })
-//
-//        binding.nextImageButton.setOnClickListener {
-//            intent.getStringExtra("phoneNumber")?.let { it1 -> viewModel.getUserDetailsHere(it1) }
-
-//            val intent = Intent(this, LoginSetupActivity::class.java).apply {
-//                putExtra("phoneNumber", intent.getStringExtra("phoneNumber"))
-//            }
-//            startActivity(intent)
-//        }
 
     }
 

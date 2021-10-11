@@ -6,9 +6,7 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -81,14 +79,11 @@ class OtpSignupActivity : BaseActivity() {
                 ) {
                     val isDialogOpen = remember { mutableStateOf(false) }
 
-                    Icon(
-                        FeatherIcons.ArrowRight,
-                        "next screen",
-                        tint = AyeTheme.colors.uiSurface,
+                    Box(
                         modifier = Modifier
-                            .size(30.dp)
-                            .clickable {
-
+                            .width(70.dp)
+                            .background(AyeTheme.colors.iconBackground.copy(0.0f))
+                            .clickable{
                                 var otp = binding.firstPinView.text
 
                                 var payloadHere = OtpSignUpDataClass(
@@ -133,11 +128,17 @@ class OtpSignupActivity : BaseActivity() {
                                         Log.i("detailssignup", e.toString())
                                     }
                                 }
-
                                 isDialogOpen.value = true
-                            }
-                            .background(color = AyeTheme.colors.textSecondary),
-                    )
+                            },
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            FeatherIcons.ArrowRight,
+                            "next screen",
+                            tint = AyeTheme.colors.uiSurface,
+                            modifier = Modifier.size(35.dp),
+                        )
+                    }
 
                     LoaderDialog(isDialogOpen)
                 }
