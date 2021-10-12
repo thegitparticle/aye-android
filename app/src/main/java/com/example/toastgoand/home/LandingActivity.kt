@@ -123,8 +123,7 @@ class LandingActivity : BaseActivity() {
             repository,
             repositoryMyClans,
             repositoryMyDirects,
-
-            )
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -336,7 +335,7 @@ class StreamBottomSheetFragment : SuperBottomSheetFragment() {
         LandingViewModelFactory(
             UserDetailsRepo(database.userDetailsDao()),
             MyClansRepo(database.myClansDao()),
-            MyDirectsRepo (database.myDirectsDao()),
+            MyDirectsRepo(database.myDirectsDao()),
         )
     }
 
