@@ -34,12 +34,14 @@ import com.example.toastgoand.R
 import com.example.toastgoand.ToastgoApplication
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityStartClanBinding
+import com.example.toastgoand.home.LandingActivity
 import com.example.toastgoand.home.clanhub.clanaddpeople.ClanAddPeopleActivity
 import com.example.toastgoand.home.clanhub.components.MyFriendItem
 import com.example.toastgoand.home.startclan.components.*
 import com.example.toastgoand.network.myfriends.MyFriendsDataClass
 import com.example.toastgoand.network.userdetails.User
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
+import com.example.toastgoand.splash.SplashActivity
 import com.example.toastgoand.uibits.HeaderOtherScreens
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.navigationBarsWithImePadding
@@ -53,8 +55,8 @@ class StartClanActivity : BaseActivity() {
 
     private val viewModel: StartClanViewModel by viewModels {
         StartClanViewModelFactory(
-            (this.application as ToastgoApplication).repositoryMyFriends,
-            (this.application as ToastgoApplication).repository
+            LandingActivity().repositoryMyFriends,
+            LandingActivity().repository
         )
     }
 

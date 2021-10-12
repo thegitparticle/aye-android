@@ -23,6 +23,7 @@ import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.ToastgoApplication
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityInvitePeopleDirectlyBinding
+import com.example.toastgoand.home.LandingActivity
 import com.example.toastgoand.home.clanhub.network.AddFriendToClanApi
 import com.example.toastgoand.home.clanhub.network.InviteToClanSendApi
 import com.example.toastgoand.home.invitepeopledirectly.network.ContactsListItemDataClass
@@ -30,6 +31,7 @@ import com.example.toastgoand.network.myclans.MyClansDataClass
 import com.example.toastgoand.network.myfriends.MyFriendsDataClass
 import com.example.toastgoand.network.userdetails.User
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
+import com.example.toastgoand.splash.SplashActivity
 import com.example.toastgoand.uibits.HeaderOtherScreens
 import com.example.toastgoand.uibits.LoadingComposeBit
 import com.google.accompanist.insets.ProvideWindowInsets
@@ -41,8 +43,8 @@ class InvitePeopleDirectlyActivity : BaseActivity() {
 
     private val viewModel: InvitePeopleDirectlyViewModel by viewModels {
         InvitePeopleDirectlyViewModelFactory(
-            (this.application as ToastgoApplication).repository,
-            (this.application as ToastgoApplication).repositoryMyFriends
+            LandingActivity().repository,
+            LandingActivity().repositoryMyFriends
         )
     }
 

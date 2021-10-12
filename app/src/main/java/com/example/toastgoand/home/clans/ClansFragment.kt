@@ -32,19 +32,27 @@ import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.home.clans.components.LiveClanItem
 import com.example.toastgoand.home.clans.components.StartClanButton
 import com.example.toastgoand.home.startclan.StartClanActivity
+import com.example.toastgoand.network.AppRoomDB
 import com.example.toastgoand.network.myclans.MyClansDataClass
+import com.example.toastgoand.network.myclans.MyClansRepo
 import com.example.toastgoand.network.pnstuff.pushSetupClans
+import com.example.toastgoand.network.userdetails.UserDetailsRepo
 import com.example.toastgoand.prefhelpers.Constant
 import com.example.toastgoand.prefhelpers.PrefHelper
+import com.example.toastgoand.splash.SplashActivity
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
 
 class ClansFragment : Fragment() {
+    val applicationScope = CoroutineScope(SupervisorJob())
+    val database by lazy { AppRoomDB.getDatabase(activity?.getApplication() as ToastgoApplication, applicationScope) }
 
     private val viewModel: ClansViewModel by viewModels {
         ClansViewModelFactory(
-            (getActivity()?.getApplication() as ToastgoApplication).repositoryMyClans,
-            (getActivity()?.getApplication() as ToastgoApplication).repository
+            MyClansRepo(database.myClansDao()),
+            UserDetailsRepo(database.userDetailsDao())
         )
     }
 

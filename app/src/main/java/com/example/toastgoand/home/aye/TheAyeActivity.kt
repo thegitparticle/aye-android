@@ -29,9 +29,11 @@ import com.example.toastgoand.R
 import com.example.toastgoand.ToastgoApplication
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityTheAyeBinding
+import com.example.toastgoand.home.LandingActivity
 import com.example.toastgoand.home.directs.network.NudgeToStartDirectApi
 import com.example.toastgoand.network.userdetails.User
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
+import com.example.toastgoand.splash.SplashActivity
 import com.google.accompanist.insets.ProvideWindowInsets
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.X
@@ -43,7 +45,7 @@ class TheAyeActivity : BaseActivity() {
 
     private val viewModel: TheAyeViewModel by viewModels {
         TheAyeViewModelFactory(
-            (this.application as ToastgoApplication).repository
+            LandingActivity().repository
         )
     }
 

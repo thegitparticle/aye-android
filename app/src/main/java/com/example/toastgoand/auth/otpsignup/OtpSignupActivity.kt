@@ -27,6 +27,8 @@ import com.example.toastgoand.auth.network.dataclasses.OtpSignUpDataClass
 import com.example.toastgoand.auth.settingup.SettingUpActivity
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityOtpSignupBinding
+import com.example.toastgoand.home.LandingActivity
+import com.example.toastgoand.splash.SplashActivity
 import com.example.toastgoand.uibits.LoaderDialog
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.ArrowRight
@@ -36,7 +38,7 @@ class OtpSignupActivity : BaseActivity() {
     private lateinit var binding: ActivityOtpSignupBinding
 
     private val viewModel: OtpSignupViewModel by viewModels {
-        OtpSignupViewModelFactory((application as ToastgoApplication).repository)
+        OtpSignupViewModelFactory(LandingActivity().repository)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

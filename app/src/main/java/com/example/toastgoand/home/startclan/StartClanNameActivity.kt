@@ -33,6 +33,7 @@ import com.example.toastgoand.home.startclan.network.StartClanApi
 import com.example.toastgoand.home.startclan.network.StartClanDataClass
 import com.example.toastgoand.network.userdetails.User
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
+import com.example.toastgoand.splash.SplashActivity
 import com.example.toastgoand.uibits.HeaderOtherScreens
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.ArrowRight
@@ -45,8 +46,8 @@ class StartClanNameActivity : BaseActivity() {
 
     private val viewModel: StartClanViewModel by viewModels {
         StartClanViewModelFactory(
-            (this.application as ToastgoApplication).repositoryMyFriends,
-            (this.application as ToastgoApplication).repository
+            LandingActivity().repositoryMyFriends,
+            LandingActivity().repository
         )
     }
 

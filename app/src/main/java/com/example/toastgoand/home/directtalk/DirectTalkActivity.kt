@@ -33,6 +33,7 @@ import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.ToastgoApplication
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityDirectTalkBinding
+import com.example.toastgoand.home.LandingActivity
 import com.example.toastgoand.home.clantalk.components.NewPNMessage
 import com.example.toastgoand.home.clantalk.components.OldPNMessage
 import com.example.toastgoand.home.directframes.DirectFramesActivity
@@ -40,6 +41,7 @@ import com.example.toastgoand.home.directtalk.camera.CameraDirectActivity
 import com.example.toastgoand.home.directtalk.components.StartDirectFrame
 import com.example.toastgoand.home.directtalk.components.TextInputDirect
 import com.example.toastgoand.network.defaultrecos.DefaultRecosDataClass
+import com.example.toastgoand.splash.SplashActivity
 import com.example.toastgoand.uibits.HeaderPlayScreens
 import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.google.accompanist.insets.ProvideWindowInsets
@@ -61,8 +63,8 @@ class DirectTalkActivity : BaseActivity() {
 
     private val viewModel: DirectTalkViewModel by viewModels {
         DirectTalkViewModelFactory(
-            (this.application as ToastgoApplication).repository,
-            (this.application as ToastgoApplication).repositoryDefaultRecos
+            LandingActivity().repository,
+            LandingActivity().repositoryDefaultRecos
         )
     }
 

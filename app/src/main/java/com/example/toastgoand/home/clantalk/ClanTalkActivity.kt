@@ -42,6 +42,7 @@ import com.example.toastgoand.ToastgoApplication
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityClanTalkBinding
 import com.example.toastgoand.databinding.TalktypeBinding
+import com.example.toastgoand.home.LandingActivity
 import com.example.toastgoand.home.clanframes.ClanFramesActivity
 import com.example.toastgoand.home.clantalk.camera.CameraActivity
 import com.example.toastgoand.home.clantalk.components.NewPNMessage
@@ -58,6 +59,7 @@ import com.example.toastgoand.network.userdetails.User
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
 import com.example.toastgoand.quick.QuickActivity
 import com.example.toastgoand.quick.WatchStreamActivity
+import com.example.toastgoand.splash.SplashActivity
 import com.example.toastgoand.uibits.HeaderPlayScreens
 import com.google.accompanist.insets.ExperimentalAnimatedInsets
 import com.google.accompanist.insets.ProvideWindowInsets
@@ -89,8 +91,8 @@ class ClanTalkActivity : BaseActivity() {
 
     private val viewModel: ClanTalkViewModel by viewModels {
         ClanTalkViewModelFactory(
-            (this.application as ToastgoApplication).repository,
-            (this.application as ToastgoApplication).repositoryDefaultRecos
+            LandingActivity().repository,
+            LandingActivity().repositoryDefaultRecos
         )
     }
 

@@ -133,10 +133,6 @@
             android:exported="true"
             android:launchMode = "singleInstance"/>
         <activity
-            android:name=".home.directhub.DirectHubActivity"
-            android:exported="true"
-            android:launchMode = "singleInstance"/>
-        <activity
             android:name=".home.clanhub.ClanHubActivity"
             android:exported="true"
             android:launchMode = "singleInstance"/>

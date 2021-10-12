@@ -42,6 +42,7 @@ import com.example.toastgoand.home.invitepeopledirectly.InvitePeopleDirectlyView
 import com.example.toastgoand.home.invitepeopledirectly.InvitePeopleDirectlyViewModelFactory
 import com.example.toastgoand.prefhelpers.Constant
 import com.example.toastgoand.prefhelpers.PrefHelper
+import com.example.toastgoand.splash.SplashActivity
 import com.example.toastgoand.uibits.HeaderOtherScreens
 import com.google.accompanist.insets.ProvideWindowInsets
 import kotlinx.coroutines.launch
@@ -51,8 +52,8 @@ class ClanCreatedActivity : BaseActivity() {
 
     private val viewModel: ClanCreatedViewModel by viewModels {
         InvitePeopleDirectlyViewModelFactory(
-            (this.application as ToastgoApplication).repository,
-            (this.application as ToastgoApplication).repositoryMyFriends
+            LandingActivity().repository,
+            LandingActivity().repositoryMyFriends
         )
     }
 

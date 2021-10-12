@@ -27,18 +27,27 @@ import com.example.toastgoand.ToastgoApplication
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.home.directs.components.DirectItem
 import com.example.toastgoand.home.directs.components.NudgeToItem
+import com.example.toastgoand.network.AppRoomDB
 import com.example.toastgoand.network.directs.MyDirectsDataClass
+import com.example.toastgoand.network.directs.MyDirectsRepo
 import com.example.toastgoand.network.nudgelist.NudgeToDataClass
+import com.example.toastgoand.network.nudgelist.NudgeToRepo
+import com.example.toastgoand.network.userdetails.UserDetailsRepo
+import com.example.toastgoand.splash.SplashActivity
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
 
 class DirectsFragment : Fragment() {
+    val applicationScope = CoroutineScope(SupervisorJob())
+    val database by lazy { AppRoomDB.getDatabase(activity?.getApplication() as ToastgoApplication, applicationScope) }
 
     private val viewModel: DirectsViewModel by viewModels {
         DirectsViewModelFactory(
-            (getActivity()?.getApplication() as ToastgoApplication).repositoryMyDirects,
-            (getActivity()?.getApplication() as ToastgoApplication).repository,
-            (getActivity()?.getApplication() as ToastgoApplication).repositoryNudgeTo
+            MyDirectsRepo(database.myDirectsDao()),
+            UserDetailsRepo(database.userDetailsDao()),
+            NudgeToRepo(database.nudgeToDao())
         )
     }
 
