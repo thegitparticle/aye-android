@@ -26,8 +26,6 @@ class WelcomeActivity : BaseActivity() {
             )
         }
 
-        binding.animationView.setAnimation(R.raw.loading_ping_pong_cup)
-
     }
 
     override fun binding(): ViewBinding {
