@@ -76,7 +76,6 @@ class ClansFragment : Fragment() {
             }
         }
 
-
         return inflater.inflate(R.layout.clans_fragment, container, false).apply {
             findViewById<ComposeView>(R.id.composeView).setContent {
 

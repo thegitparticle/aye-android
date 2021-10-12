@@ -71,6 +71,9 @@ class SettingUpActivity : BaseActivity() {
             return myKontacts
         }
 
+        binding.changingText.text = "setting up your profile ..."
+        binding.animationView.setAnimation(R.raw.loading_ping_pong_cup)
+
         fun getAllContacts(activity: Activity?, onCompleted: (MutableList<MyContacts>) -> Unit) {
             val startTime = System.currentTimeMillis()
             val projection = arrayOf(

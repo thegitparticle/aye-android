@@ -30,144 +30,185 @@
         tools:replace="android:appComponentFactory">
         <activity
             android:name=".quick.WatchStreamActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode = "singleInstance"/>
         <activity
             android:name=".home.startclan.StartClanNameActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode = "singleInstance"/>
         <activity
             android:name=".home.startclan.StartClanInviteContactsActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode = "singleInstance"/>
         <activity
             android:name=".home.startclan.SampleComposeActivity"
             android:exported="true"
             android:label="@string/title_activity_sample_compose"
-            android:theme="@style/Theme.ToastgoandN.NoActionBar" />
+            android:theme="@style/Theme.ToastgoandN.NoActionBar"
+            android:launchMode = "singleInstance"/>
         <activity
             android:name=".quick.StreamMultiActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode = "singleInstance"/>
         <activity
             android:name=".quick.StreamCameraActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode = "singleInstance"/>
         <activity
             android:name=".home.clanhub.clanaddpeople.ClanAddPeopleActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode = "singleInstance"/>
         <activity
             android:name=".home.clanframes.ViewOldFrameClanActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode = "singleInstance"/>
         <activity
             android:name=".home.directframes.ViewOldFrameDirectActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode = "singleInstance"/>
         <activity
             android:name=".uibits.ViewMediaActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode = "singleInstance"/>
         <activity
             android:name=".uibits.ViewVideoActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode = "singleInstance"/>
         <activity
             android:name=".home.myprofile.SettingsActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode = "singleInstance"/>
         <activity
             android:name=".home.myprofile.EditProfileActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode = "singleInstance"/>
         <activity
             android:name=".auth.loginsetup.LoginSetupActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode = "singleInstance"/>
         <activity
             android:name=".home.directtalk.camera.CameraDirectActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode = "singleInstance"/>
         <activity
             android:name=".home.clantalk.camera.CameraActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode = "singleInstance"/>
         <activity
             android:name=".home.otherprofile.OtherProfileActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode = "singleInstance"/>
         <activity
             android:name=".home.invitepeopledirectly.InvitePeopleDirectlyActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode = "singleInstance"/>
         <activity
             android:name=".home.startclan.StartClanActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode = "singleInstance"/>
         <activity
             android:name=".home.myprofile.MyProfileActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode = "singleInstance"/>
         <activity
             android:name=".home.aye.TheAyeActivity"
             android:fitsSystemWindows="true"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode = "singleInstance" />
         <activity
             android:name=".home.directtalk.DirectTalkActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode = "singleInstance"/>
         <activity
             android:name=".home.directframes.DirectFramesActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode = "singleInstance"/>
         <activity
             android:name=".home.clantalk.ClanTalkActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"
+            android:launchMode = "singleInstance"/>
         <activity
             android:name=".home.clanframes.ClanFramesActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode = "singleInstance"/>
         <activity
             android:name=".home.directhub.DirectHubActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode = "singleInstance"/>
         <activity
             android:name=".home.clanhub.ClanHubActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode = "singleInstance"/>
         <activity
             android:name=".auth.clancreate.ClanCreatedActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode = "singleInstance"/>
         <activity
             android:name=".auth.clancreate.NameClanActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode = "singleInstance"/>
         <activity
             android:name=".auth.clancreate.CreateClanActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode = "singleInstance"/>
         <activity
             android:name=".auth.strangerintro.StrangerIntroActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode = "singleInstance"/>
         <activity
             android:name=".auth.invitedby.InvitedByActivity"
             android:exported="true" />
         <activity
             android:name=".auth.settingup.SettingUpActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode = "singleInstance"/>
         <activity
             android:name=".auth.otpsignup.OtpSignupActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode = "singleInstance"/>
         <activity
             android:name=".auth.detailssignup.DetailsSignupActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode = "singleInstance"/>
         <activity
             android:name=".auth.otplogin.OtpLoginActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode = "singleInstance"/>
         <activity
             android:name=".auth.enterphone.EnterPhoneActivity"
             android:exported="true"
-            android:windowSoftInputMode="stateAlwaysVisible" />
+            android:windowSoftInputMode="stateAlwaysVisible"
+            android:launchMode = "singleInstance"/>
         <activity
             android:name=".auth.welcome.WelcomeActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode = "singleInstance"/>
         <activity
             android:name=".quick.QuickActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode = "singleInstance"/>
         <activity
             android:name=".home.LandingActivity"
-            android:exported="true" />
+            android:exported="true"
+            />
         <activity
             android:name=".splash.SplashActivity"
-            android:exported="true">
+            android:exported="true"
+            android:launchMode = "singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".auth.LoginActivity" />
+        <activity android:name=".auth.LoginActivity" android:launchMode = "singleInstance" />
         <activity
             android:name=".quick.callactivity.impl.ScreenCapture$ScreenCaptureAssistantActivity"
             android:process=":screensharingsvc"
             android:screenOrientation="fullUser"
-            android:theme="@android:style/Theme.Translucent" />
+            android:theme="@android:style/Theme.Translucent"
+            android:launchMode = "singleInstance"/>
 
         <service
             android:name=".quick.callactivity.impl.ScreenSharingService"

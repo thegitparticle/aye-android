@@ -131,6 +131,9 @@ class LoginSetupActivity : BaseActivity() {
 
         binding = viewBinding as ActivityLoginSetupBinding
 
+        binding.changingText.text = "setting up your profile ..."
+        binding.animationView.setAnimation(R.raw.loading_ping_pong_cup)
+
         val requestPermissionLauncher =
             registerForActivityResult(
                 ActivityResultContracts.RequestPermission()
@@ -187,12 +190,14 @@ class LoginSetupActivity : BaseActivity() {
             if (response) {
                 prefHelper = PrefHelper(this)
                 prefHelper.put(Constant.PREF_IS_LOGIN, true)
+                Log.i("settingupdebug", "uploaded boolean value is observed to be changed")
                 val intent = Intent(this, LandingActivity::class.java).apply {
                     putExtra("phoneNumber", intent.getStringExtra("phoneNumber"))
                 }
                 startActivity(intent)
+                Log.i("settingupdebug", "uploaded boolean value is observed to be changed after stareting activity")
             }
-            Log.i("observer", "obseving is happening")
+            Log.i("settingupdebug", "obseving is happening")
         })
 
     }

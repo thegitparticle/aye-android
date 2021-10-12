@@ -116,6 +116,7 @@ class LandingActivity : BaseActivity() {
             sheet.show(supportFragmentManager, "StreamBottomSheetFragment")
         }
 
+
         Log.i("dpdebughere normal", "normal logging works")
 
         viewModel.deets.value?.image?.let { Log.i("dpdebughere", it) }
