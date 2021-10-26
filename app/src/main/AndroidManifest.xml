@@ -29,8 +29,12 @@
         android:windowSoftInputMode="stateHidden"
         tools:replace="android:appComponentFactory">
         <activity
-            android:name=".home.sample.DummyXActivity"
+            android:name=".home.sample.DummyYActivity"
             android:exported="false" />
+        <activity
+            android:name=".home.sample.DummyXActivity"
+            android:exported="true"
+            android:launchMode="singleInstance" />
         <activity
             android:name=".quick.WatchStreamActivity"
             android:exported="true"
