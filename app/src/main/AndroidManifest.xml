@@ -44,12 +44,6 @@
             android:exported="true"
             android:launchMode="singleInstance" />
         <activity
-            android:name=".home.startclan.SampleComposeActivity"
-            android:exported="true"
-            android:label="@string/title_activity_sample_compose"
-            android:launchMode="singleInstance"
-            android:theme="@style/Theme.ToastgoandN.NoActionBar" />
-        <activity
             android:name=".quick.StreamMultiActivity"
             android:exported="true"
             android:launchMode="singleInstance" />
