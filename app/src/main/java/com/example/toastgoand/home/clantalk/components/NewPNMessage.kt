@@ -38,20 +38,15 @@ data class CEntryFileNew(val id: String, val name: String)
 
 @Composable
 fun NewPNMessage (message: Any, userid: String, channelid: String) {
+
     AyeTheme() {
 
         if (message is PNMessageResult) {
 
             val metaData =
                 Gson().fromJson<UserMetaData>(message.userMetadata, UserMetaData::class.java)
-            Log.i("CameraXBasic", message.toString())
 
-//            if (metaData.type == "h") {
-                HMessage(message = message)
-//            } else if (metaData.type == "c") {
-//                Log.i("livemessage camera mess", message.toString())
-//                CMessage(message = message, userid = userid, channelid = channelid)
-//            }
+            HMessage(message = message)
 
         } else if (message is PNFileEventResult) {
 
