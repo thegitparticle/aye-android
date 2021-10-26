@@ -111,8 +111,8 @@ class ClanTalkActivity : BaseActivity() {
                     listOf<PNHistoryItemResult>()
                 )
 
-                val newMessagesHere: List<PNMessageResult> by viewModel.newMessages.observeAsState(
-                    listOf<PNMessageResult>()
+                val newMessagesHere: List<Any> by viewModel.newMessages.observeAsState(
+                    listOf<Any>()
                 )
 
                 Log.i("livemessage in activity", newMessagesHere.toString())

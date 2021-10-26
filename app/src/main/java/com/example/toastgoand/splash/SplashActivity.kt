@@ -1,6 +1,7 @@
 package com.example.toastgoand.splash
 
 import android.os.Bundle
+import android.util.Log
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import androidx.viewbinding.ViewBinding
@@ -30,6 +31,8 @@ class SplashActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         bindViews()
         prefHelper = PrefHelper(this)
+
+        Log.i("launchtimedebug", "splash activity on create called")
     }
 
     private fun bindViews() {
@@ -45,9 +48,13 @@ class SplashActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
 
+        Log.i("launchtimedebug", "splash activity on resume called")
+
         if (prefHelper.getBoolean( Constant.PREF_IS_LOGIN )) {
+            Log.i("launchtimedebug", "splash activity on resume got pref value")
             navigator.navigateTo(Screen.LANDING)
         } else {
+            Log.i("launchtimedebug", "splash activity on resume got pref value")
             navigator.navigateTo(Screen.LOGIN)
         }
 
