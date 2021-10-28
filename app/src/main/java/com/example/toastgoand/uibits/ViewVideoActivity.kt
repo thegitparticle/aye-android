@@ -11,6 +11,7 @@ import com.example.toastgoand.databinding.ActivityViewVideoBinding
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.util.Util
+import app.futured.hauler.setOnDragDismissedListener
 
 class ViewVideoActivity: BaseActivity() {
     private lateinit var binding: ActivityViewVideoBinding
@@ -29,9 +30,9 @@ class ViewVideoActivity: BaseActivity() {
 
         videoLink = intent.getStringExtra("videolink")?.toUri()!!
 
-//        binding.haulerViewVideoView.setOnDragDismissedListener {
-//            finish() // finish activity when dismissed
-//        }
+        binding.haulerViewVideoView.setOnDragDismissedListener {
+            finish() // finish activity when dismissed
+        }
     }
 
     public override fun onStart() {

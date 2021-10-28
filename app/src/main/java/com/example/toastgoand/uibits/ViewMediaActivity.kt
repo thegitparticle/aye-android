@@ -12,6 +12,8 @@ import coil.compose.rememberImagePainter
 import com.example.toastgoand.BaseActivity
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityViewMediaBinding
+import app.futured.hauler.setOnDragDismissedListener
+import kotlinx.android.synthetic.main.activity_view_media.*
 
 class ViewMediaActivity : BaseActivity() {
     private lateinit var binding: ActivityViewMediaBinding
@@ -38,9 +40,9 @@ class ViewMediaActivity : BaseActivity() {
                 }
         }
 
-//        haulerView.setOnDragDismissedListener {
-//            finish() // finish activity when dismissed
-//        }
+        haulerView.setOnDragDismissedListener {
+            finish() // finish activity when dismissed
+        }
     }
 
     override fun binding(): ViewBinding {
