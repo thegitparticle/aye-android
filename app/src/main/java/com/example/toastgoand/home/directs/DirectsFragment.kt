@@ -29,6 +29,7 @@ import com.example.toastgoand.home.directs.components.DirectItem
 import com.example.toastgoand.home.directs.components.NudgeToItem
 import com.example.toastgoand.network.directs.MyDirectsDataClass
 import com.example.toastgoand.network.nudgelist.NudgeToDataClass
+import com.example.toastgoand.uibits.GlowIndicator
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
@@ -68,6 +69,12 @@ class DirectsFragment : Fragment() {
                     Surface(modifier = Modifier.background(AyeTheme.colors.uiBackground)) {
                         SwipeRefresh(
                             state = rememberSwipeRefreshState(isRefreshing),
+                            indicator = { state, trigger ->
+                                GlowIndicator(
+                                    swipeRefreshState = state,
+                                    refreshTriggerDistance = trigger
+                                )
+                            },
                             onRefresh = { viewModel.refresh() }
                         ) {
                             LazyColumn(

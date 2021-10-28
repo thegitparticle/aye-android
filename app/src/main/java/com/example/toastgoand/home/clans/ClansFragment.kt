@@ -36,6 +36,7 @@ import com.example.toastgoand.network.myclans.MyClansDataClass
 import com.example.toastgoand.network.pnstuff.pushSetupClans
 import com.example.toastgoand.prefhelpers.Constant
 import com.example.toastgoand.prefhelpers.PrefHelper
+import com.example.toastgoand.uibits.GlowIndicator
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
@@ -111,6 +112,12 @@ class ClansFragment : Fragment() {
                     ) {
                         SwipeRefresh(
                             state = rememberSwipeRefreshState(isRefreshing),
+                            indicator = { state, trigger ->
+                                GlowIndicator(
+                                    swipeRefreshState = state,
+                                    refreshTriggerDistance = trigger
+                                )
+                            },
                             onRefresh = { viewModel.refresh() }
                         ) {
                             LazyColumn(

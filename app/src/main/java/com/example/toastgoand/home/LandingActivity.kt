@@ -116,9 +116,6 @@ class LandingActivity : BaseActivity() {
             sheet.show(supportFragmentManager, "StreamBottomSheetFragment")
         }
 
-
-        Log.i("dpdebughere normal", "normal logging works")
-
         viewModel.deets.value?.image?.let { Log.i("dpdebughere", it) }
 
         val composePart = binding.headerButtons
@@ -142,7 +139,7 @@ class LandingActivity : BaseActivity() {
                     )
                 )
 
-                val painterAye = rememberImagePainter(data = R.drawable.aye_logo)
+                val painterAye = rememberImagePainter(data = R.drawable.sup_on_red)
                 val painterDp = rememberImagePainter(data = deetsHere.image)
 
                 viewModel.deets.value?.image?.let { Log.i("dpdebughere compose", it) }
@@ -176,8 +173,8 @@ class LandingActivity : BaseActivity() {
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
                             .padding(horizontal = 20.dp)
-                            .width(55.dp)
-                            .height(35.dp)
+                            .width(51.dp)
+                            .height(45.dp)
                             .clickable {
                                 val intent = Intent(context, TheAyeActivity::class.java).apply {}
                                 startActivity(intent)
