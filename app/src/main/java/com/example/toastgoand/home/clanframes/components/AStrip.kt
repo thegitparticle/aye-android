@@ -11,16 +11,18 @@ import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.home.clanframes.ClanFrameDataClass
 
 @Composable
-fun AStrip (start: Int, end: Int, framesList: List<ClanFrameDataClass>,  clubName: String,
-            userid: String, channelid: String) {
+fun AStrip(
+    start: Int, end: Int, framesList: List<ClanFrameDataClass>, clubName: String,
+    userid: String, channelid: String
+) {
 
     val datesArray = mutableListOf<Int>()
 
-    for (i in start .. end) {
+    for (i in start..end) {
         datesArray.add(i)
     }
 
-    AyeTheme () {
+    AyeTheme() {
         Box(Modifier.width(100.dp), contentAlignment = Alignment.TopCenter) {
             Box(
                 Modifier
@@ -36,12 +38,18 @@ fun AStrip (start: Int, end: Int, framesList: List<ClanFrameDataClass>,  clubNam
                             AyeTheme.colors.success.copy(0.5f)
                         }
                     )
-                    .padding(50.dp)
+                    .padding(horizontal = 50.dp)
                     .height(400.dp)
             )
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 for (date in datesArray) {
-                    ADay(date, framesList, clubName = clubName, userid = userid, channelid = channelid)
+                    ADay(
+                        date,
+                        framesList,
+                        clubName = clubName,
+                        userid = userid,
+                        channelid = channelid
+                    )
                 }
             }
         }

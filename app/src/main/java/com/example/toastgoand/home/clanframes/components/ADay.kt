@@ -21,8 +21,10 @@ import com.example.toastgoand.home.clanframes.ClanFrameDataClass
 import com.example.toastgoand.home.clanframes.ViewOldFrameClanActivity
 
 @Composable
-fun ADay(date: Int, framesList: List<ClanFrameDataClass>,  clubName: String,
-         userid: String, channelid: String) {
+fun ADay(
+    date: Int, framesList: List<ClanFrameDataClass>, clubName: String,
+    userid: String, channelid: String
+) {
     AyeTheme() {
         val checkResult = checkForFrames(date, framesList)
 
@@ -60,8 +62,10 @@ private fun checkForFrames(
 }
 
 @Composable
-private fun FrameImage(item: ClanFrameDataClass,  clubName: String,
-                       userid: String, channelid: String) {
+private fun FrameImage(
+    item: ClanFrameDataClass, clubName: String,
+    userid: String, channelid: String
+) {
     val painter = rememberImagePainter(data = item.frame_picture_link)
     val context = LocalContext.current
 
@@ -70,7 +74,7 @@ private fun FrameImage(item: ClanFrameDataClass,  clubName: String,
         contentDescription = "clan frame thumbnail",
         contentScale = ContentScale.Crop,
         modifier = Modifier
-            .padding(vertical = 20.dp )
+            .padding(vertical = 20.dp)
             .size(60.dp)
             .clip(RoundedCornerShape(corner = CornerSize(12.dp)))
             .clickable {
