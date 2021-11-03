@@ -578,20 +578,20 @@ class ClanTalkActivity : BaseActivity() {
                                     Spacer(modifier = Modifier.size(100.dp))
                                 }
                                 if (oldMessagesHere.isNotEmpty()) {
-                                    items(
-                                        items = newMessagesHere.reversed(),
-                                        itemContent = {
-                                            if (channelid != null) {
-                                                Row (modifier = Modifier.clickable {reSetTextInput()}) {
-                                                    NewPNMessage(
-                                                        message = it,
-                                                        userid = viewModel.deets.value?.user?.id.toString(),
-                                                        channelid = channelid
-                                                    )
-                                                }
-                                                Log.i("livemessage", "new pn message called")
-                                            }
-                                        })
+//                                    items(
+//                                        items = newMessagesHere.reversed(),
+//                                        itemContent = {
+//                                            if (channelid != null) {
+//                                                Row (modifier = Modifier.clickable {reSetTextInput()}) {
+//                                                    NewPNMessage(
+//                                                        message = it,
+//                                                        userid = viewModel.deets.value?.user?.id.toString(),
+//                                                        channelid = channelid
+//                                                    )
+//                                                }
+//                                                Log.i("livemessage", "new pn message called")
+//                                            }
+//                                        })
                                     items(
                                         items = oldMessagesHere.reversed(),
                                         itemContent = {
