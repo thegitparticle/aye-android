@@ -182,18 +182,33 @@ fun TextInputPart(
                             .horizontalScroll(enabled = true, state = rememberScrollState())
                     ) {
                         if (selectedText.value.length > 1) {
-                            RecoImage(selectedTextRecos[0].links[0])
-                            RecoImage(selectedTextRecos[0].links[1])
-                            RecoImage(selectedTextRecos[0].links[2])
-                            RecoImage(selectedTextRecos[0].links[3])
-                            RecoImage(selectedTextRecos[0].links[4])
-                            RecoImage(selectedTextRecos[0].links[5])
-                            RecoImage(selectedTextRecos[0].links[6])
-                            RecoImage(selectedTextRecos[1].links[0])
-                            RecoImage(selectedTextRecos[1].links[1])
-                            RecoImage(selectedTextRecos[1].links[2])
-                            RecoImage(selectedTextRecos[1].links[3])
-                            RecoImage(selectedTextRecos[1].links[4])
+
+                            if (selectedTextRecos.size == 2) {
+
+                                RecoImage(selectedTextRecos[0].links[0])
+                                RecoImage(selectedTextRecos[0].links[1])
+                                RecoImage(selectedTextRecos[0].links[2])
+                                RecoImage(selectedTextRecos[0].links[3])
+                                RecoImage(selectedTextRecos[0].links[4])
+                                RecoImage(selectedTextRecos[0].links[5])
+                                RecoImage(selectedTextRecos[0].links[6])
+                                RecoImage(selectedTextRecos[1].links[0])
+                                RecoImage(selectedTextRecos[1].links[1])
+                                RecoImage(selectedTextRecos[1].links[2])
+                                RecoImage(selectedTextRecos[1].links[3])
+                                RecoImage(selectedTextRecos[1].links[4])
+                            } else {
+
+                                RecoImage(selectedTextRecos[0].links[0])
+                                RecoImage(selectedTextRecos[0].links[1])
+                                RecoImage(selectedTextRecos[0].links[2])
+                                RecoImage(selectedTextRecos[0].links[3])
+                                RecoImage(selectedTextRecos[0].links[4])
+                                RecoImage(selectedTextRecos[0].links[5])
+                                RecoImage(selectedTextRecos[0].links[6])
+                            }
+
+
                         } else {
                             RecoImage(defaultRecos[0].links[0])
                             RecoImage(defaultRecos[0].links[1])
