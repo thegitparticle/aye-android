@@ -70,9 +70,11 @@ import com.pubnub.api.enums.PNReconnectionPolicy
 import com.pubnub.api.models.consumer.history.PNHistoryItemResult
 import com.pubnub.api.models.consumer.pubsub.PNMessageResult
 import compose.icons.FeatherIcons
+import compose.icons.TablerIcons
 import compose.icons.feathericons.Camera
 import compose.icons.feathericons.Layers
 import compose.icons.feathericons.PlusSquare
+import compose.icons.tablericons.Keyboard
 import kotlinx.android.synthetic.main.talktype.*
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
@@ -492,7 +494,7 @@ class ClanTalkActivity : BaseActivity() {
                                                 backgroundColor = AyeTheme.colors.appLead,
                                             ) {
                                                 Icon(
-                                                    FeatherIcons.Layers,
+                                                    TablerIcons.Keyboard,
                                                     "invite contacts to aye",
                                                     tint = AyeTheme.colors.uiBackground,
                                                     modifier = Modifier.size(20.dp),
