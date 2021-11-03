@@ -108,7 +108,7 @@ fun DirectImage(directItem: MyDirectsDataClass) {
                 .padding(8.dp)
                 .size(55.dp)
                 .clip(RoundedCornerShape(corner = CornerSize(27.5.dp)))
-                .drawColorShadow(MaterialTheme.colors.onBackground, offsetY = 4.dp, alpha = 0.5f)
+                .drawColorShadow(AyeTheme.colors.textSecondary, offsetY = 4.dp, alpha = 0.5f)
         )
     } else {
         Image(
