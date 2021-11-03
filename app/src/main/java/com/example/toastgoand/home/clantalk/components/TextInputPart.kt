@@ -62,11 +62,19 @@ import com.google.android.material.textfield.TextInputLayout
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.databinding.BindingAdapter
 import android.R
+import android.os.Build.VERSION.SDK_INT
 import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.ui.layout.ConstraintLayout
+import androidx.ui.layout.fillMaxSize
+import coil.ImageLoader
+import coil.decode.GifDecoder
+import coil.decode.ImageDecoderDecoder
 import com.example.toastgoand.home.clantalk.network.GetSelectedRecos
 import com.example.toastgoand.home.clantalk.network.GetSelectedRecosDataClass
 import com.example.toastgoand.home.clantalk.network.NewClanFrameApi
+import com.skydoves.landscapist.ShimmerParams
 import kotlinx.coroutines.launch
+import com.skydoves.landscapist.coil.CoilImage
 
 
 @SuppressLint("ServiceCast", "ClickableViewAccessibility")
@@ -100,18 +108,34 @@ fun TextInputPart(
     fun RecoImage(imageLink: String) {
         val painter = rememberImagePainter(data = imageLink)
 
-        Image(
-            painter = painter,
-            contentDescription = "Forest Image",
-            contentScale = ContentScale.Crop,
+        val context = LocalContext.current
+        val imageLoader = ImageLoader.Builder(context)
+            .componentRegistry {
+                if (SDK_INT >= 28) {
+                    add(ImageDecoderDecoder(context))
+                } else {
+                    add(GifDecoder())
+                }
+            }
+            .build()
+
+        CoilImage(
+            imageModel = imageLink, // URL of the animated images.
+            imageLoader = imageLoader,
+            shimmerParams = ShimmerParams(
+                baseColor = AyeTheme.colors.uiSurface,
+                highlightColor = AyeTheme.colors.uiBackground
+            ),
             modifier = Modifier
+                .fillMaxWidth()
                 .padding(8.dp)
-                .size(width = 100.dp, height = 50.dp)
-                .clip(RoundedCornerShape(corner = CornerSize(10.dp)))
+                .size(width = 120.dp, height = 60.dp)
+                .clip(RoundedCornerShape(10.dp))
                 .clickable {
                     selectedReco = imageLink
-                }
+                },
         )
+
     }
 
     @Composable
@@ -165,6 +189,11 @@ fun TextInputPart(
                             RecoImage(selectedTextRecos[0].links[4])
                             RecoImage(selectedTextRecos[0].links[5])
                             RecoImage(selectedTextRecos[0].links[6])
+                            RecoImage(selectedTextRecos[1].links[0])
+                            RecoImage(selectedTextRecos[1].links[1])
+                            RecoImage(selectedTextRecos[1].links[2])
+                            RecoImage(selectedTextRecos[1].links[3])
+                            RecoImage(selectedTextRecos[1].links[4])
                         } else {
                             RecoImage(defaultRecos[0].links[0])
                             RecoImage(defaultRecos[0].links[1])
@@ -173,6 +202,11 @@ fun TextInputPart(
                             RecoImage(defaultRecos[0].links[4])
                             RecoImage(defaultRecos[0].links[5])
                             RecoImage(defaultRecos[0].links[6])
+                            RecoImage(defaultRecos[1].links[0])
+                            RecoImage(defaultRecos[1].links[1])
+                            RecoImage(defaultRecos[1].links[2])
+                            RecoImage(defaultRecos[1].links[3])
+                            RecoImage(defaultRecos[1].links[4])
                         }
                     }
                 }
