@@ -48,7 +48,7 @@ class ClanHubActivity : BaseActivity() {
 
     private val viewModel: ClanHubViewModel by viewModels {
         ClanHubViewModelFactory(
-            LandingActivity().repository
+            (this.application as ToastgoApplication).repository
         )
     }
 

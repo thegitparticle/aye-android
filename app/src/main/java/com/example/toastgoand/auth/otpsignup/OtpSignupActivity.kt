@@ -38,7 +38,7 @@ class OtpSignupActivity : BaseActivity() {
     private lateinit var binding: ActivityOtpSignupBinding
 
     private val viewModel: OtpSignupViewModel by viewModels {
-        OtpSignupViewModelFactory(LandingActivity().repository)
+        OtpSignupViewModelFactory((this.application as ToastgoApplication).repository)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

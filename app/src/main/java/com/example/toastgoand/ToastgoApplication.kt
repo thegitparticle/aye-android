@@ -15,7 +15,7 @@ import kotlinx.coroutines.SupervisorJob
 
 @HiltAndroidApp
 class ToastgoApplication: Application() {
-//    val applicationScope = CoroutineScope(SupervisorJob())
+    val applicationScope = CoroutineScope(SupervisorJob())
 //
 //    fun logHere () {
 //        Log.i("slowstartupdebug", "before database initlaiza in app class")
@@ -25,11 +25,11 @@ class ToastgoApplication: Application() {
 //    }
 //    // Using by lazy so the database and the repository are only created when they're needed
 //    // rather than when the application starts
-//    val database by lazy { AppRoomDB.getDatabase(this, applicationScope) }
-//    val repository by lazy { UserDetailsRepo(database.userDetailsDao()) }
-//    val repositoryMyClans by lazy { MyClansRepo(database.myClansDao()) }
-//    val repositoryMyDirects by lazy {MyDirectsRepo(database.myDirectsDao())}
-//    val repositoryNudgeTo by lazy {NudgeToRepo(database.nudgeToDao())}
-//    val repositoryMyFriends by lazy {MyFriendsRepo(database.myFriendsDao())}
-//    val repositoryDefaultRecos by lazy {DefaultRecosRepo(database.defaultRecosDao())}
+    val database by lazy { AppRoomDB.getDatabase(this, applicationScope) }
+    val repository by lazy { UserDetailsRepo(database.userDetailsDao()) }
+    val repositoryMyClans by lazy { MyClansRepo(database.myClansDao()) }
+    val repositoryMyDirects by lazy {MyDirectsRepo(database.myDirectsDao())}
+    val repositoryNudgeTo by lazy {NudgeToRepo(database.nudgeToDao())}
+    val repositoryMyFriends by lazy {MyFriendsRepo(database.myFriendsDao())}
+    val repositoryDefaultRecos by lazy {DefaultRecosRepo(database.defaultRecosDao())}
 }

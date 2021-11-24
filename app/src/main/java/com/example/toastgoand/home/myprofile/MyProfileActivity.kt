@@ -36,7 +36,7 @@ class MyProfileActivity : BaseActivity() {
     private val viewModel: MyProfileViewModel by viewModels {
         MyProfileViewModelFactory(
 //            (this.application as ToastgoApplication).repository
-                (LandingActivity().repository)
+                ((this.application as ToastgoApplication).repository)
         )
     }
 

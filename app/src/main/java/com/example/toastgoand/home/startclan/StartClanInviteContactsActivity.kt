@@ -45,8 +45,8 @@ class StartClanInviteContactsActivity : BaseActivity() {
 
     private val viewModel: StartClanViewModel by viewModels {
         StartClanViewModelFactory(
-            LandingActivity().repositoryMyFriends,
-            LandingActivity().repository
+            (this.application as ToastgoApplication).repositoryMyFriends,
+            (this.application as ToastgoApplication).repository
         )
     }
 

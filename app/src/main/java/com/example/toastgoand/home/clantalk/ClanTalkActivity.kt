@@ -93,8 +93,8 @@ class ClanTalkActivity : BaseActivity() {
 
     private val viewModel: ClanTalkViewModel by viewModels {
         ClanTalkViewModelFactory(
-            LandingActivity().repository,
-            LandingActivity().repositoryDefaultRecos
+            (this.application as ToastgoApplication).repository,
+            (this.application as ToastgoApplication).repositoryDefaultRecos
         )
     }
 

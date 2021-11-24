@@ -38,7 +38,7 @@ class LoginSetupActivity : BaseActivity() {
     private lateinit var binding: ActivityLoginSetupBinding
 
     private val viewModel: LoginSetupViewModel by viewModels {
-        LoginSetupViewModelFactory(LandingActivity().repository)
+        LoginSetupViewModelFactory((this.application as ToastgoApplication).repository)
     }
 
     lateinit var prefHelper: PrefHelper

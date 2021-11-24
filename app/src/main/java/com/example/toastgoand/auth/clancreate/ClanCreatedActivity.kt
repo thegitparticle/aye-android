@@ -52,8 +52,8 @@ class ClanCreatedActivity : BaseActivity() {
 
     private val viewModel: ClanCreatedViewModel by viewModels {
         InvitePeopleDirectlyViewModelFactory(
-            LandingActivity().repository,
-            LandingActivity().repositoryMyFriends
+            (this.application as ToastgoApplication).repository,
+            (this.application as ToastgoApplication).repositoryMyFriends
         )
     }
 

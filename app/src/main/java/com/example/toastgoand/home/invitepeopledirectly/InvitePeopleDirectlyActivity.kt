@@ -43,8 +43,8 @@ class InvitePeopleDirectlyActivity : BaseActivity() {
 
     private val viewModel: InvitePeopleDirectlyViewModel by viewModels {
         InvitePeopleDirectlyViewModelFactory(
-            LandingActivity().repository,
-            LandingActivity().repositoryMyFriends
+            (this.application as ToastgoApplication).repository,
+            (this.application as ToastgoApplication).repositoryMyFriends
         )
     }
 

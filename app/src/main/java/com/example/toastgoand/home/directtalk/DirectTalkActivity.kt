@@ -63,8 +63,8 @@ class DirectTalkActivity : BaseActivity() {
 
     private val viewModel: DirectTalkViewModel by viewModels {
         DirectTalkViewModelFactory(
-            LandingActivity().repository,
-            LandingActivity().repositoryDefaultRecos
+            (this.application as ToastgoApplication).repository,
+            (this.application as ToastgoApplication).repositoryDefaultRecos
         )
     }
 

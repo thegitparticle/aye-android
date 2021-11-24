@@ -54,8 +54,8 @@ class CreateClanActivity : BaseActivity() {
 
     private val viewModel: CreateClanViewModel by viewModels {
         CreateClanViewModelFactory(
-            LandingActivity().repository,
-            LandingActivity().repositoryMyFriends
+            (this.application as ToastgoApplication).repository,
+            (this.application as ToastgoApplication).repositoryMyFriends
         )
     }
 

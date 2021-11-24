@@ -46,7 +46,7 @@ class TheAyeActivity : BaseActivity() {
 
     private val viewModel: TheAyeViewModel by viewModels {
         TheAyeViewModelFactory(
-            LandingActivity().repository
+            (this.application as ToastgoApplication).repository
         )
     }
 
