@@ -37,13 +37,12 @@ import com.google.accompanist.insets.ProvideWindowInsets
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.Edit
 import kotlinx.coroutines.launch
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
 import retrofit2.http.Part
 import android.os.FileUtils
-import okhttp3.RequestBody
+import okhttp3.*
 import okhttp3.RequestBody.Companion.asRequestBody
+import okio.IOException
 import java.io.File
 
 
@@ -55,6 +54,8 @@ class EditProfileActivity : BaseActivity() {
     private var imageUri: Uri? = null
     private var imagePath: String? = ""
     private var profileupdateid: String? = ""
+    private var imageData = "".toUri()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,6 +83,7 @@ class EditProfileActivity : BaseActivity() {
                         onResult = { uri: Uri? ->
                             imageUri = uri
                             imagePath = uri?.encodedPath
+                            imageData = Uri.parse(imageUri.toString())
                             showGallerySelect = false
 
                         }
@@ -147,7 +149,7 @@ class EditProfileActivity : BaseActivity() {
                                         .size(100.dp)
                                         .clip(RoundedCornerShape(corner = CornerSize(50.dp)))
                                         .clickable {
-                                        showGallerySelect = true
+                                            showGallerySelect = true
                                         }
 
                                 )
@@ -161,6 +163,7 @@ class EditProfileActivity : BaseActivity() {
                                                 "editprofilelogs",
                                                 "clicked on button"
                                             )
+
                                             composableScope.launch {
                                                 try {
 
@@ -228,6 +231,10 @@ class EditProfileActivity : BaseActivity() {
                                                             it
                                                         )
                                                     }
+
+                                                    Log.i(
+                                                        "editprofilelogsdatapath", imageData.toString()
+                                                    )
 
                                                     val image: MultipartBody.Part? =
                                                         prepareFilePart("image", "file://$imageUri".toUri())
