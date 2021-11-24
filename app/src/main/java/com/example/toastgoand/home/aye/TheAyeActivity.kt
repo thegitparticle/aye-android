@@ -18,6 +18,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
@@ -90,7 +91,7 @@ class TheAyeActivity : BaseActivity() {
                             Column(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .fillMaxHeight(),
+                                    .fillMaxHeight().background(Color.Black),
                                 verticalArrangement = Arrangement.SpaceBetween,
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
@@ -123,14 +124,13 @@ class TheAyeActivity : BaseActivity() {
                                         }
                                     }
                                 }
-                                val painter = painterResource(id = R.drawable.aye_logo)
+                                val painter = painterResource(id = R.drawable.sup_transparent)
                                 Image(
                                     painter = painter,
                                     contentDescription = "aye logo",
                                     contentScale = ContentScale.Crop,
                                     modifier = Modifier
-                                        .padding(8.dp)
-                                        .size(200.dp)
+                                        .padding(8.dp).width(200.dp).height(83.dp)
                                 )
                                 Button(
                                     onClick = {
@@ -156,7 +156,7 @@ class TheAyeActivity : BaseActivity() {
                                     shape = RoundedCornerShape(30.dp),
                                     modifier = Modifier
                                         .padding(vertical = 25.dp)
-                                        .height(50.dp)
+                                        .height(60.dp)
                                         .width(200.dp),
                                 ) {
                                     Text(
