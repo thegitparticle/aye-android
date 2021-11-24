@@ -240,7 +240,7 @@ private fun PersonImage(imageLink: String) {
                 modifier = Modifier
                     .size((100 * sizeofImage).dp)
                     .clip(shape)
-                    .background(MaterialTheme.colors.onSurface),
+                    .background(AyeTheme.colors.textSecondary),
                 contentAlignment = Alignment.Center
             ) {
                 if (versionAPI >= 27) {
@@ -287,7 +287,7 @@ private fun PlusPeople(displayItems: List<DisplayPhotos>) {
                 modifier = Modifier
                     .size(50.dp)
                     .clip(shape)
-                    .background(MaterialTheme.colors.onSurface),
+                    .background(AyeTheme.colors.textSecondary),
                 contentAlignment = Alignment.Center
             ) {
                 Text(

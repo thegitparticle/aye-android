@@ -72,9 +72,11 @@ import com.pubnub.api.enums.PNReconnectionPolicy
 import com.pubnub.api.models.consumer.history.PNHistoryItemResult
 import com.pubnub.api.models.consumer.pubsub.PNMessageResult
 import compose.icons.FeatherIcons
+import compose.icons.TablerIcons
 import compose.icons.feathericons.Camera
 import compose.icons.feathericons.Layers
 import compose.icons.feathericons.PlusSquare
+import compose.icons.tablericons.Keyboard
 import kotlinx.android.synthetic.main.talktype.*
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
@@ -113,8 +115,8 @@ class ClanTalkActivity : BaseActivity() {
                     listOf<PNHistoryItemResult>()
                 )
 
-                val newMessagesHere: List<PNMessageResult> by viewModel.newMessages.observeAsState(
-                    listOf<PNMessageResult>()
+                val newMessagesHere: List<Any> by viewModel.newMessages.observeAsState(
+                    listOf<Any>()
                 )
 
                 Log.i("livemessage in activity", newMessagesHere.toString())
@@ -494,7 +496,7 @@ class ClanTalkActivity : BaseActivity() {
                                                 backgroundColor = AyeTheme.colors.appLead,
                                             ) {
                                                 Icon(
-                                                    FeatherIcons.Layers,
+                                                    TablerIcons.Keyboard,
                                                     "invite contacts to aye",
                                                     tint = AyeTheme.colors.uiBackground,
                                                     modifier = Modifier.size(20.dp),
@@ -580,20 +582,20 @@ class ClanTalkActivity : BaseActivity() {
                                     Spacer(modifier = Modifier.size(100.dp))
                                 }
                                 if (oldMessagesHere.isNotEmpty()) {
-                                    items(
-                                        items = newMessagesHere.reversed(),
-                                        itemContent = {
-                                            if (channelid != null) {
-                                                Row (modifier = Modifier.clickable {reSetTextInput()}) {
-                                                    NewPNMessage(
-                                                        message = it,
-                                                        userid = viewModel.deets.value?.user?.id.toString(),
-                                                        channelid = channelid
-                                                    )
-                                                }
-                                                Log.i("livemessage", "new pn message called")
-                                            }
-                                        })
+//                                    items(
+//                                        items = newMessagesHere.reversed(),
+//                                        itemContent = {
+//                                            if (channelid != null) {
+//                                                Row (modifier = Modifier.clickable {reSetTextInput()}) {
+//                                                    NewPNMessage(
+//                                                        message = it,
+//                                                        userid = viewModel.deets.value?.user?.id.toString(),
+//                                                        channelid = channelid
+//                                                    )
+//                                                }
+//                                                Log.i("livemessage", "new pn message called")
+//                                            }
+//                                        })
                                     items(
                                         items = oldMessagesHere.reversed(),
                                         itemContent = {

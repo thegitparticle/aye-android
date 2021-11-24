@@ -60,6 +60,25 @@ class ClansViewModel(private val repo: MyClansRepo, private val repoDeets: UserD
         }
     }
 
+    fun callingInitHere () {
+
+        deets.observeForever {
+            deets.value?.user?.let { getMyClansHere(it.id) }
+        }
+        myClans.observeForever {
+            val dummyHere = mutableListOf<MyClansDataClass>()
+            for (item in myClans.value!!) {
+                if (item.ongoing_frame) {
+                    dummyHere.add(item)
+                }
+            }
+            _liveClans.value = dummyHere
+        }
+        _liveClans.observeForever {
+            Log.i("liveclansif", _liveClans.toString())
+        }
+    }
+
     fun getMyClansHere(userid: Int) {
         viewModelScope.launch {
             try {

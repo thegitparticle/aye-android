@@ -32,27 +32,20 @@ import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.home.clans.components.LiveClanItem
 import com.example.toastgoand.home.clans.components.StartClanButton
 import com.example.toastgoand.home.startclan.StartClanActivity
-import com.example.toastgoand.network.AppRoomDB
 import com.example.toastgoand.network.myclans.MyClansDataClass
-import com.example.toastgoand.network.myclans.MyClansRepo
 import com.example.toastgoand.network.pnstuff.pushSetupClans
-import com.example.toastgoand.network.userdetails.UserDetailsRepo
 import com.example.toastgoand.prefhelpers.Constant
 import com.example.toastgoand.prefhelpers.PrefHelper
-import com.example.toastgoand.splash.SplashActivity
+import com.example.toastgoand.uibits.GlowIndicator
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.SupervisorJob
 
 class ClansFragment : Fragment() {
-    val applicationScope = CoroutineScope(SupervisorJob())
-    val database by lazy { AppRoomDB.getDatabase(activity?.getApplication() as ToastgoApplication, applicationScope) }
 
     private val viewModel: ClansViewModel by viewModels {
         ClansViewModelFactory(
-            MyClansRepo(database.myClansDao()),
-            UserDetailsRepo(database.userDetailsDao())
+            (getActivity()?.getApplication() as ToastgoApplication).repositoryMyClans,
+            (getActivity()?.getApplication() as ToastgoApplication).repository
         )
     }
 
@@ -119,6 +112,12 @@ class ClansFragment : Fragment() {
                     ) {
                         SwipeRefresh(
                             state = rememberSwipeRefreshState(isRefreshing),
+                            indicator = { state, trigger ->
+                                GlowIndicator(
+                                    swipeRefreshState = state,
+                                    refreshTriggerDistance = trigger
+                                )
+                            },
                             onRefresh = { viewModel.refresh() }
                         ) {
                             LazyColumn(
@@ -163,6 +162,11 @@ class ClansFragment : Fragment() {
             }
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.callingInitHere()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

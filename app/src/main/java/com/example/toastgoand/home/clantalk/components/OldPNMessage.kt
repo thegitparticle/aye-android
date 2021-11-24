@@ -2,6 +2,7 @@ package com.example.toastgoand.home.clantalk.components
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -23,6 +24,8 @@ import androidx.ui.res.imageResource
 import androidx.ui.res.loadImageResource
 import coil.ImageLoader
 import coil.compose.rememberImagePainter
+import coil.decode.GifDecoder
+import coil.decode.ImageDecoderDecoder
 import coil.decode.VideoFrameDecoder
 import coil.fetch.VideoFrameFileFetcher
 import coil.fetch.VideoFrameUriFetcher
@@ -38,6 +41,8 @@ import com.pubnub.api.models.consumer.history.PNHistoryItemResult
 import kotlinx.serialization.Serializable
 import com.google.gson.reflect.TypeToken
 import com.pubnub.api.models.consumer.files.PNFileUrlResult
+import com.skydoves.landscapist.ShimmerParams
+import com.skydoves.landscapist.coil.CoilImage
 import com.squareup.moshi.*
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.Dispatchers
@@ -234,12 +239,24 @@ private fun ImageHere(imageLink: String) {
     val painter = rememberImagePainter(data = imageLink)
     val context = LocalContext.current
 
-    Image(
-        painter = painter,
-        contentDescription = "message image link",
-        contentScale = ContentScale.Crop,
+    val imageLoader = ImageLoader.Builder(context)
+        .componentRegistry {
+            if (Build.VERSION.SDK_INT >= 28) {
+                add(ImageDecoderDecoder(context))
+            } else {
+                add(GifDecoder())
+            }
+        }
+        .build()
+
+    CoilImage(
+        imageModel = imageLink, // URL of the animated images.
+        imageLoader = imageLoader,
+        shimmerParams = ShimmerParams(
+            baseColor = AyeTheme.colors.uiSurface,
+            highlightColor = AyeTheme.colors.uiBackground
+        ),
         modifier = Modifier
-            .padding(8.dp)
             .fillMaxWidth()
             .height(250.dp)
             .clip(RoundedCornerShape(corner = CornerSize(15.dp)))
@@ -253,6 +270,7 @@ private fun ImageHere(imageLink: String) {
                     })
             }
     )
+
 }
 
 @Composable

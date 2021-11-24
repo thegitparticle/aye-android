@@ -24,6 +24,7 @@ import com.google.gson.Gson
 import com.pubnub.api.PNConfiguration
 import com.pubnub.api.PubNub
 import com.pubnub.api.models.consumer.pubsub.PNMessageResult
+import com.pubnub.api.models.consumer.pubsub.files.PNFileEventResult
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -36,29 +37,43 @@ data class CEntryDataNew(val message: String, val file: CEntryFileNew)
 data class CEntryFileNew(val id: String, val name: String)
 
 @Composable
-fun NewPNMessage (message: PNMessageResult, userid: String, channelid: String) {
+fun NewPNMessage (message: Any, userid: String, channelid: String) {
+
     AyeTheme() {
 
-        val metaData = Gson().fromJson<UserMetaData>(message.userMetadata, UserMetaData::class.java)
-        Log.i("CameraXBasic", message.toString())
+        if (message is PNMessageResult) {
 
-        if (metaData.type == "h") {
+            val metaData =
+                Gson().fromJson<UserMetaData>(message.userMetadata, UserMetaData::class.java)
+
             HMessage(message = message)
-        } else if (metaData.type == "c") {
-            Log.i("livemessage camera mess", message.toString())
+
+        } else if (message is PNFileEventResult) {
+
             CMessage(message = message, userid = userid, channelid = channelid)
         }
     }
 }
 
 @Composable
-private fun CMessage(message: PNMessageResult, userid: String, channelid: String) {
+private fun CMessage(message: PNFileEventResult, userid: String, channelid: String) {
     AyeTheme() {
 
-        Log.i("CameraXBasic", message.toString())
+        Box (modifier = Modifier
+            .fillMaxWidth(0.95f)
+            .height(250.dp)
+            .padding(vertical = 5.dp)
+            .clip(RoundedCornerShape(corner = CornerSize(15.dp))),
+            contentAlignment = Alignment.Center
+        ) {
+            ImageHere(imageLink = message.file.url)
+            DPBubbleWithoutImage(text = message.message.toString())
+        }
 
-        val metaData = Gson().fromJson<UserMetaData>(message.userMetadata, UserMetaData::class.java)
-        val entryData = Gson().fromJson<CEntryDataNew>(message.message, CEntryDataNew::class.java)
+//        Log.i("CameraXBasic", message.toString())
+
+//        val metaData = Gson().fromJson<UserMetaData>(message.userMetadata, UserMetaData::class.java)
+//        val entryData = Gson().fromJson<CEntryDataNew>(message.message, CEntryDataNew::class.java)
 
 //        val pnConfiguration = PNConfiguration().apply {
 //            subscribeKey = "sub-c-d099e214-9bcf-11eb-9adf-f2e9c1644994"
@@ -87,16 +102,7 @@ private fun CMessage(message: PNMessageResult, userid: String, channelid: String
 //            }
 //        }
 
-            Box (modifier = Modifier
-                .fillMaxWidth(0.95f)
-                .height(250.dp)
-                .padding(vertical = 5.dp)
-                .clip(RoundedCornerShape(corner = CornerSize(15.dp))),
-                contentAlignment = Alignment.Center
-            ) {
-                ImageHere(imageLink = "")
-                DPBubble(dplink = metaData.user_dp, text = message.message.toString())
-            }
+
 
 //    else {
 //            Box (modifier = Modifier
@@ -163,6 +169,13 @@ private fun DPBubble(dplink: String, text: String) {
     Column() {
         TextBubble(text = text)
         DPHere(dplink = dplink)
+    }
+}
+
+@Composable
+private fun DPBubbleWithoutImage(text: String) {
+    Column() {
+        TextBubble(text = text)
     }
 }
 

@@ -1,6 +1,7 @@
 package com.example.toastgoand.home.clanframes.components
 
 import android.util.Log
+import android.widget.ScrollView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -95,29 +96,77 @@ fun AMonthX(
             if (currentDate <= 10) {
                 Row(
                     horizontalArrangement = Arrangement.SpaceEvenly,
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth().background(AyeTheme.colors.uiBackground)
+                    verticalAlignment = Alignment.Top,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(AyeTheme.colors.uiBackground)
                 ) {
-                    AStrip(start = 1, end = currentDate, framesList = framesList, clubName = clubName, userid = userid, channelid = channelid)
+                    AStrip(
+                        start = 1,
+                        end = currentDate,
+                        framesList = framesList,
+                        clubName = clubName,
+                        userid = userid,
+                        channelid = channelid
+                    )
                 }
             } else if (currentDate in 11..20) {
                 Row(
                     horizontalArrangement = Arrangement.SpaceEvenly,
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth().background(AyeTheme.colors.uiBackground)
+                    verticalAlignment = Alignment.Top,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(AyeTheme.colors.uiBackground)
                 ) {
-                    AStrip(start = 1, end = 10, framesList = framesList, clubName, userid, channelid = channelid)
-                    AStrip(start = 11, end = currentDate, framesList = framesList, clubName = clubName, userid = userid, channelid = channelid)
+                    AStrip(
+                        start = 1,
+                        end = 10,
+                        framesList = framesList,
+                        clubName,
+                        userid,
+                        channelid = channelid
+                    )
+                    AStrip(
+                        start = 11,
+                        end = currentDate,
+                        framesList = framesList,
+                        clubName = clubName,
+                        userid = userid,
+                        channelid = channelid
+                    )
                 }
             } else {
                 Row(
                     horizontalArrangement = Arrangement.SpaceEvenly,
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth().background(AyeTheme.colors.uiBackground)
+                    verticalAlignment = Alignment.Top,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(AyeTheme.colors.uiBackground)
                 ) {
-                    AStrip(start = 1, end = 10, framesList = framesList, clubName = clubName, userid = userid, channelid = channelid)
-                    AStrip(start = 11, end = 20, framesList = framesList, clubName = clubName, userid = userid, channelid = channelid)
-                    AStrip(start = 21, end = currentDate, framesList = framesList, clubName = clubName, userid = userid, channelid = channelid)
+                    AStrip(
+                        start = 1,
+                        end = 10,
+                        framesList = framesList,
+                        clubName = clubName,
+                        userid = userid,
+                        channelid = channelid
+                    )
+                    AStrip(
+                        start = 11,
+                        end = 20,
+                        framesList = framesList,
+                        clubName = clubName,
+                        userid = userid,
+                        channelid = channelid
+                    )
+                    AStrip(
+                        start = 21,
+                        end = currentDate,
+                        framesList = framesList,
+                        clubName = clubName,
+                        userid = userid,
+                        channelid = channelid
+                    )
                 }
             }
         }
@@ -125,12 +174,35 @@ fun AMonthX(
         AyeTheme() {
             Row(
                 horizontalArrangement = Arrangement.SpaceEvenly,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth().background(AyeTheme.colors.uiBackground)
+                verticalAlignment = Alignment.Top,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(AyeTheme.colors.uiBackground)
             ) {
-                AStrip(start = 1, end = 10, framesList = framesList, clubName = clubName, userid = userid, channelid = channelid)
-                AStrip(start = 11, end = 20, framesList = framesList, clubName = clubName, userid = userid, channelid = channelid)
-                AStrip(start = 21, end = 31, framesList = framesList, clubName = clubName, userid = userid, channelid = channelid)
+                AStrip(
+                    start = 1,
+                    end = 10,
+                    framesList = framesList,
+                    clubName = clubName,
+                    userid = userid,
+                    channelid = channelid
+                )
+                AStrip(
+                    start = 11,
+                    end = 20,
+                    framesList = framesList,
+                    clubName = clubName,
+                    userid = userid,
+                    channelid = channelid
+                )
+                AStrip(
+                    start = 21,
+                    end = 31,
+                    framesList = framesList,
+                    clubName = clubName,
+                    userid = userid,
+                    channelid = channelid
+                )
             }
         }
     }

@@ -27,27 +27,19 @@ import com.example.toastgoand.ToastgoApplication
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.home.directs.components.DirectItem
 import com.example.toastgoand.home.directs.components.NudgeToItem
-import com.example.toastgoand.network.AppRoomDB
 import com.example.toastgoand.network.directs.MyDirectsDataClass
-import com.example.toastgoand.network.directs.MyDirectsRepo
 import com.example.toastgoand.network.nudgelist.NudgeToDataClass
-import com.example.toastgoand.network.nudgelist.NudgeToRepo
-import com.example.toastgoand.network.userdetails.UserDetailsRepo
-import com.example.toastgoand.splash.SplashActivity
+import com.example.toastgoand.uibits.GlowIndicator
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.SupervisorJob
 
 class DirectsFragment : Fragment() {
-    val applicationScope = CoroutineScope(SupervisorJob())
-    val database by lazy { AppRoomDB.getDatabase(activity?.getApplication() as ToastgoApplication, applicationScope) }
 
     private val viewModel: DirectsViewModel by viewModels {
         DirectsViewModelFactory(
-            MyDirectsRepo(database.myDirectsDao()),
-            UserDetailsRepo(database.userDetailsDao()),
-            NudgeToRepo(database.nudgeToDao())
+            (getActivity()?.getApplication() as ToastgoApplication).repositoryMyDirects,
+            (getActivity()?.getApplication() as ToastgoApplication).repository,
+            (getActivity()?.getApplication() as ToastgoApplication).repositoryNudgeTo
         )
     }
 
@@ -77,6 +69,12 @@ class DirectsFragment : Fragment() {
                     Surface(modifier = Modifier.background(AyeTheme.colors.uiBackground)) {
                         SwipeRefresh(
                             state = rememberSwipeRefreshState(isRefreshing),
+                            indicator = { state, trigger ->
+                                GlowIndicator(
+                                    swipeRefreshState = state,
+                                    refreshTriggerDistance = trigger
+                                )
+                            },
                             onRefresh = { viewModel.refresh() }
                         ) {
                             LazyColumn(
@@ -126,6 +124,11 @@ class DirectsFragment : Fragment() {
             }
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.callingInitHere()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

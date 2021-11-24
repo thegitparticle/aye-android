@@ -21,3 +21,4 @@
 #-renamesourcefileattribute SourceFile
 
 -keep class io.agora.**{*;}
+-keep public class * extends android.support.v4.**

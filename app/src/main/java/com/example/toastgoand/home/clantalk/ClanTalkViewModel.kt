@@ -14,6 +14,7 @@ import com.pubnub.api.callbacks.SubscribeCallback
 import com.pubnub.api.models.consumer.PNStatus
 import com.pubnub.api.models.consumer.history.PNHistoryItemResult
 import com.pubnub.api.models.consumer.pubsub.PNMessageResult
+import com.pubnub.api.models.consumer.pubsub.files.PNFileEventResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -29,8 +30,8 @@ class ClanTalkViewModel(repoDeets: UserDetailsRepo, private val repoRecos: Defau
     val oldMessages: LiveData<List<PNHistoryItemResult>>
         get() = _oldMessages
 
-    private var _newMessages = MutableLiveData<List<PNMessageResult>>()
-    val newMessages: LiveData<List<PNMessageResult>>
+    private var _newMessages = MutableLiveData<List<Any>>()
+    val newMessages: LiveData<List<Any>>
         get() = _newMessages
 
     private var _streamerDeets = MutableLiveData<OtherProfileDataClass>()
@@ -60,6 +61,10 @@ class ClanTalkViewModel(repoDeets: UserDetailsRepo, private val repoRecos: Defau
                 override fun message(pubnub: PubNub, pnMessageResult: PNMessageResult) {
                     Log.i("livemessage", "Message payload: ${pnMessageResult}")
                     _newMessages.postValue(listOf(pnMessageResult))
+                }
+
+                override fun file(pubnub: PubNub, pnFileEventResult: PNFileEventResult) {
+                   _newMessages.postValue(listOf(pnFileEventResult))
                 }
             })
         }

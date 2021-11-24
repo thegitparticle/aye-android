@@ -37,6 +37,14 @@ import com.google.accompanist.insets.ProvideWindowInsets
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.Edit
 import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import retrofit2.http.Part
+import android.os.FileUtils
+import okhttp3.*
+import okhttp3.RequestBody.Companion.asRequestBody
+import okio.IOException
+import java.io.File
+
 
 class EditProfileActivity : BaseActivity() {
 
@@ -44,7 +52,10 @@ class EditProfileActivity : BaseActivity() {
 
     private val pickImage = 100
     private var imageUri: Uri? = null
+    private var imagePath: String? = ""
     private var profileupdateid: String? = ""
+    private var imageData = "".toUri()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,6 +82,8 @@ class EditProfileActivity : BaseActivity() {
                         contract = ActivityResultContracts.GetContent(),
                         onResult = { uri: Uri? ->
                             imageUri = uri
+                            imagePath = uri?.encodedPath
+                            imageData = Uri.parse(imageUri.toString())
                             showGallerySelect = false
 
                         }
@@ -146,35 +159,122 @@ class EditProfileActivity : BaseActivity() {
                                 ) {
                                     Button(
                                         onClick = {
+                                            Log.i(
+                                                "editprofilelogs",
+                                                "clicked on button"
+                                            )
+
                                             composableScope.launch {
                                                 try {
-                                                    val bio_here = ""
-                                                    val image_here = "file:///$imageUri"
-                                                    val payload = image_here.toUri().toFile()?.let {
-                                                        EditProfileDataClass(
-                                                            bio = bio_here,
-                                                            image = it
+
+                                                    fun createPartFromString(param: String): RequestBody {
+                                                        return RequestBody.create("multipart/form-data".toMediaTypeOrNull(), param)
+                                                    }
+
+
+
+                                                    fun prepareFilePart(partName: String, fileUri: Uri): MultipartBody.Part? {
+
+                                                        Log.i(
+                                                            "editprofilelogsprepfile",
+                                                            "thos func is called"
+                                                        )
+
+                                                        val file: File = fileUri.toFile()
+
+                                                        Log.i(
+                                                            "editprofilelogsprepfile",
+                                                            "file var is done"
+                                                        )
+
+                                                        contentResolver.getType(
+                                                            fileUri
+                                                        )?.let {
+                                                            Log.i(
+                                                                "editprofilelogsmimetype",
+                                                                it
+                                                            )
+                                                        }
+
+                                                        val requestFile: RequestBody = file
+                                                            .asRequestBody(
+                                                               "png"
+                                                                    .toMediaTypeOrNull()
+                                                            )
+
+                                                        Log.i(
+                                                            "editprofilelogsprepfile",
+                                                            "request file body is done \"file://$imageUri\""
+                                                        )
+
+                                                        return MultipartBody.Part.createFormData(partName, "uploadandroid.png", requestFile);
+                                                    }
+
+                                                    val bio: RequestBody =
+                                                        createPartFromString("")
+
+                                                    var redoneUrl = imageUri.toString().drop(10)
+
+                                                    Log.i(
+                                                        "editprofilelogs",
+                                                        "functions setup done"
+                                                    )
+
+                                                    Log.i(
+                                                        "editprofilelogsuri",
+                                                        "file:///$redoneUrl"
+                                                    )
+
+                                                    imagePath?.let {
+                                                        Log.i(
+                                                            "editprofilelogspath",
+                                                            it
                                                         )
                                                     }
 
-                                                    profileupdateid?.let {
-                                                        if (payload != null) {
+                                                    Log.i(
+                                                        "editprofilelogsdatapath", imageData.toString()
+                                                    )
+
+                                                    val image: MultipartBody.Part? =
+                                                        prepareFilePart("image", "file://$imageUri".toUri())
+
+                                                    Log.i(
+                                                        "editprofilelogs",
+                                                        "image part making done"
+                                                    )
+
+                                                    Log.i(
+                                                        "editprofilelogs",
+                                                        "composable scope payload setup done"
+                                                    )
+
+//                                                    profileupdateid?.let {
+
                                                             try {
                                                                 EditProfileApi.retrofitService.setNewProfile(
-                                                                    profileupdateid = it,
-                                                                    data = payload
+                                                                    profileupdateid = "84",
+                                                                    bio = createPartFromString(""),
+                                                                    image = image
                                                                 )
                                                                 Log.i(
                                                                     "editprofilelogs",
                                                                     "kinda worked"
                                                                 )
                                                             } catch (ex: Exception) {
-                                                                Log.i("editprofilelogs", ex.toString())
+
+                                                                Log.i(
+                                                                    "editprofilelogs222",
+                                                                    ex.toString() + "exception caught"
+                                                                )
                                                             }
-                                                        }
-                                                    }
+
+//                                                    }
                                                 } catch (e: Exception) {
-                                                    Log.i("editprofilelogs", e.toString())
+                                                    Log.i(
+                                                        "editprofilelogs333",
+                                                        e.toString() + "exception"
+                                                    )
                                                 }
                                             }
 

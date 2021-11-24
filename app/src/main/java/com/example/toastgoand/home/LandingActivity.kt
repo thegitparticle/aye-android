@@ -65,20 +65,12 @@ import com.example.toastgoand.home.myprofile.MyProfileActivity
 import com.example.toastgoand.home.startclan.StartClanActivity
 import com.example.toastgoand.navigator.Navigator
 import com.example.toastgoand.navigator.Screen
-import com.example.toastgoand.network.AppRoomDB
-import com.example.toastgoand.network.defaultrecos.DefaultRecosRepo
 import com.example.toastgoand.network.directs.MyDirectsDataClass
-import com.example.toastgoand.network.directs.MyDirectsRepo
 import com.example.toastgoand.network.myclans.MyClansDataClass
-import com.example.toastgoand.network.myclans.MyClansRepo
-import com.example.toastgoand.network.myfriends.MyFriendsRepo
-import com.example.toastgoand.network.nudgelist.NudgeToRepo
 import com.example.toastgoand.network.userdetails.User
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
-import com.example.toastgoand.network.userdetails.UserDetailsRepo
 import com.example.toastgoand.prefhelpers.Constant
 import com.example.toastgoand.prefhelpers.PrefHelper
-import com.example.toastgoand.splash.SplashActivity
 import com.example.toastgoand.uibits.CircleIcon
 import com.example.toastgoand.uibits.TextRowButtonClan
 import com.example.toastgoand.uibits.TextRowButtonDirect
@@ -91,8 +83,6 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.tabs.TabLayout
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.UserPlus
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.SupervisorJob
 
 
 @AndroidEntryPoint
@@ -103,16 +93,6 @@ class LandingActivity : BaseActivity() {
     private lateinit var pager: ViewPager
     private lateinit var tab: TabLayout
 
-    val applicationScope = CoroutineScope(SupervisorJob())
-
-    val database by lazy { AppRoomDB.getDatabase(this, applicationScope) }
-    val repository by lazy { UserDetailsRepo(database.userDetailsDao()) }
-    val repositoryMyClans by lazy { MyClansRepo(database.myClansDao()) }
-    val repositoryMyDirects by lazy { MyDirectsRepo(database.myDirectsDao()) }
-    val repositoryNudgeTo by lazy { NudgeToRepo(database.nudgeToDao()) }
-    val repositoryMyFriends by lazy { MyFriendsRepo(database.myFriendsDao()) }
-    val repositoryDefaultRecos by lazy { DefaultRecosRepo(database.defaultRecosDao()) }
-
     @Inject
     lateinit var navigator: Navigator
 
@@ -120,9 +100,9 @@ class LandingActivity : BaseActivity() {
 
     private val viewModel: LandingViewModel by viewModels {
         LandingViewModelFactory(
-            repository,
-            repositoryMyClans,
-            repositoryMyDirects,
+            (this.application as ToastgoApplication).repository,
+            (this.application as ToastgoApplication).repositoryMyClans,
+            (this.application as ToastgoApplication).repositoryMyDirects,
         )
     }
 
@@ -135,9 +115,6 @@ class LandingActivity : BaseActivity() {
             val sheet = StreamBottomSheetFragment()
             sheet.show(supportFragmentManager, "StreamBottomSheetFragment")
         }
-
-
-        Log.i("slowstartupdebug", "landing screen onncreate launched")
 
         viewModel.deets.value?.image?.let { Log.i("dpdebughere", it) }
 
@@ -162,7 +139,7 @@ class LandingActivity : BaseActivity() {
                     )
                 )
 
-                val painterAye = rememberImagePainter(data = R.drawable.aye_logo)
+                val painterAye = rememberImagePainter(data = R.drawable.sup_on_red)
                 val painterDp = rememberImagePainter(data = deetsHere.image)
 
                 viewModel.deets.value?.image?.let { Log.i("dpdebughere compose", it) }
@@ -196,8 +173,8 @@ class LandingActivity : BaseActivity() {
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
                             .padding(horizontal = 20.dp)
-                            .width(55.dp)
-                            .height(35.dp)
+                            .width(51.dp)
+                            .height(45.dp)
                             .clickable {
                                 val intent = Intent(context, TheAyeActivity::class.java).apply {}
                                 startActivity(intent)
@@ -323,58 +300,14 @@ class LandingActivity : BaseActivity() {
 }
 
 class StreamBottomSheetFragment : SuperBottomSheetFragment() {
-    val applicationScope = CoroutineScope(SupervisorJob())
-    val database by lazy {
-        AppRoomDB.getDatabase(
-            activity?.getApplication() as ToastgoApplication,
-            applicationScope
-        )
-    }
 
     private val viewModel: LandingViewModel by viewModels {
         LandingViewModelFactory(
-            UserDetailsRepo(database.userDetailsDao()),
-            MyClansRepo(database.myClansDao()),
-            MyDirectsRepo(database.myDirectsDao()),
+            (getActivity()?.getApplication() as ToastgoApplication).repository,
+            (getActivity()?.getApplication() as ToastgoApplication).repositoryMyClans,
+            (getActivity()?.getApplication() as ToastgoApplication).repositoryMyDirects,
         )
     }
-
-//    val applicationScope = CoroutineScope(SupervisorJob())
-//    val database by lazy { activity?.applicationContext?.let { AppRoomDB.getDatabase(it, applicationScope) } }
-//    val database by lazy { activity?.applicationContext?.let {
-//        AppRoomDB.getDatabase(
-//            it,
-//            applicationScope)
-//    } }
-
-//    private val viewModel: LandingViewModel by viewModels {
-//        database?.userDetailsDao()?.let { UserDetailsRepo(it) }?.let {
-//            LandingViewModelFactory(
-//                it,
-//            database?.myClansDao()?.let { MyClansRepo(it) },
-//            database?.myDirectsDao()?.let { MyDirectsRepo(it) }
-//        )
-//        }
-//    }
-
-
-//        database?.let { UserDetailsRepo(it.userDetailsDao()) }?.let {
-//            LandingViewModelFactory(
-//                it,
-//                MyClansRepo(database.myClansDao()),
-//                MyDirectsRepo(database.myDirectsDao())
-//    //            (getActivity()?.getApplication() as ToastgoApplication).repository,
-//                (getActivity()?.getApplication() as ToastgoApplication).repositoryMyClans,
-//                (getActivity()?.getApplication() as ToastgoApplication).repositoryMyDirects,
-
-    //            getActivity()?.repository,
-    //            LandingActivity
-    //            this.repository,
-    //            this.repositoryMyClans,
-    //            this.repositoryMyDirects,
-//            )
-//        }
-//    }
 
     @SuppressLint("MissingSuperCall")
     override fun onCreateView(

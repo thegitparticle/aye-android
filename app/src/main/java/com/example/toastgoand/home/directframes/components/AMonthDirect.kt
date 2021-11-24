@@ -99,8 +99,10 @@ fun AMonthDirectX(
             if (currentDate <= 10) {
                 Row(
                     horizontalArrangement = Arrangement.SpaceEvenly,
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth().fillMaxHeight()
+                    verticalAlignment = Alignment.Top,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight()
                 ) {
                     AStripDirect(
                         start = 1,
@@ -114,31 +116,45 @@ fun AMonthDirectX(
             } else if (currentDate in 11..20) {
                 Row(
                     horizontalArrangement = Arrangement.SpaceEvenly,
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth().fillMaxHeight()
+                    verticalAlignment = Alignment.Top,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight()
                 ) {
-                    AStripDirect(start = 1, end = 10, framesList = framesList, directid = directid,
+                    AStripDirect(
+                        start = 1, end = 10, framesList = framesList, directid = directid,
                         otherName = otherName,
-                        userid = userid)
-                    AStripDirect(start = 11, end = currentDate, framesList = framesList, directid = directid,
+                        userid = userid
+                    )
+                    AStripDirect(
+                        start = 11, end = currentDate, framesList = framesList, directid = directid,
                         otherName = otherName,
-                        userid = userid)
+                        userid = userid
+                    )
                 }
             } else {
                 Row(
                     horizontalArrangement = Arrangement.SpaceEvenly,
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth().fillMaxHeight()
+                    verticalAlignment = Alignment.Top,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight()
                 ) {
-                    AStripDirect(start = 1, end = 10, framesList = framesList, directid = directid,
+                    AStripDirect(
+                        start = 1, end = 10, framesList = framesList, directid = directid,
                         otherName = otherName,
-                        userid = userid)
-                    AStripDirect(start = 11, end = 20, framesList = framesList, directid = directid,
+                        userid = userid
+                    )
+                    AStripDirect(
+                        start = 11, end = 20, framesList = framesList, directid = directid,
                         otherName = otherName,
-                        userid = userid)
-                    AStripDirect(start = 21, end = currentDate, framesList = framesList, directid = directid,
+                        userid = userid
+                    )
+                    AStripDirect(
+                        start = 21, end = currentDate, framesList = framesList, directid = directid,
                         otherName = otherName,
-                        userid = userid)
+                        userid = userid
+                    )
                 }
             }
         }
@@ -146,17 +162,26 @@ fun AMonthDirectX(
         AyeTheme() {
             Row(
                 horizontalArrangement = Arrangement.SpaceEvenly,
-                verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth().fillMaxHeight()
+                verticalAlignment = Alignment.Top,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
             ) {
-                AStripDirect(start = 1, end = 10, framesList = framesList, directid = directid,
+                AStripDirect(
+                    start = 1, end = 10, framesList = framesList, directid = directid,
                     otherName = otherName,
-                    userid = userid)
-                AStripDirect(start = 11, end = 20, framesList = framesList, directid = directid,
+                    userid = userid
+                )
+                AStripDirect(
+                    start = 11, end = 20, framesList = framesList, directid = directid,
                     otherName = otherName,
-                    userid = userid)
-                AStripDirect(start = 21, end = 31, framesList = framesList, directid = directid,
+                    userid = userid
+                )
+                AStripDirect(
+                    start = 21, end = 31, framesList = framesList, directid = directid,
                     otherName = otherName,
-                    userid = userid)
+                    userid = userid
+                )
             }
         }
     }

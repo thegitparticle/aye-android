@@ -53,6 +53,13 @@ class DirectsViewModel(private val repo: MyDirectsRepo, private val repoDeets: U
         }
     }
 
+    fun callingInitHere () {
+
+        deets.observeForever {
+            deets.value?.user?.let { getMyDirectsHere(it.id); getNudgeToHere(it.id) }
+        }
+    }
+
     fun getMyDirectsHere(userid: Int) {
         viewModelScope.launch {
             try {
