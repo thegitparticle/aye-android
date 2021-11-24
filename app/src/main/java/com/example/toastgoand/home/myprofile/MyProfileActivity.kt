@@ -21,10 +21,12 @@ import com.example.toastgoand.R
 import com.example.toastgoand.ToastgoApplication
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityMyProfileBinding
+import com.example.toastgoand.home.LandingActivity
 import com.example.toastgoand.home.myprofile.components.ButtonsList
 import com.example.toastgoand.home.myprofile.components.Details
 import com.example.toastgoand.network.userdetails.User
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
+import com.example.toastgoand.splash.SplashActivity
 import com.example.toastgoand.uibits.HeaderOtherScreens
 import com.google.accompanist.insets.ProvideWindowInsets
 
@@ -33,7 +35,8 @@ class MyProfileActivity : BaseActivity() {
 
     private val viewModel: MyProfileViewModel by viewModels {
         MyProfileViewModelFactory(
-            (this.application as ToastgoApplication).repository
+//            (this.application as ToastgoApplication).repository
+                (LandingActivity().repository)
         )
     }
 

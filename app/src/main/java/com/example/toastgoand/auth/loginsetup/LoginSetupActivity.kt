@@ -23,6 +23,7 @@ import com.example.toastgoand.databinding.ActivityLoginSetupBinding
 import com.example.toastgoand.home.LandingActivity
 import com.example.toastgoand.prefhelpers.Constant
 import com.example.toastgoand.prefhelpers.PrefHelper
+import com.example.toastgoand.splash.SplashActivity
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_create_clan.*
@@ -37,7 +38,7 @@ class LoginSetupActivity : BaseActivity() {
     private lateinit var binding: ActivityLoginSetupBinding
 
     private val viewModel: LoginSetupViewModel by viewModels {
-        LoginSetupViewModelFactory((application as ToastgoApplication).repository)
+        LoginSetupViewModelFactory(LandingActivity().repository)
     }
 
     lateinit var prefHelper: PrefHelper

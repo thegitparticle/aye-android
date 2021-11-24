@@ -18,6 +18,7 @@ import com.example.toastgoand.network.nudgelist.NudgeToDao
 import com.example.toastgoand.network.nudgelist.NudgeToDataClass
 import com.example.toastgoand.network.userdetails.UserDetailsDao
 import com.example.toastgoand.network.userdetails.UserDetailsDataClass
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 
 @Database(
@@ -42,7 +43,7 @@ abstract class AppRoomDB : RoomDatabase() {
         private var INSTANCE: AppRoomDB? = null
 
         fun getDatabase(
-            context: Context,
+            @ApplicationContext context: Context,
             scope: CoroutineScope
         ): AppRoomDB {
             // if the INSTANCE is not null, then return it, if it is, then create the database

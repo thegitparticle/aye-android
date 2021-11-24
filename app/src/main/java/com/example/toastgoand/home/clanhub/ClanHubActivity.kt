@@ -29,6 +29,7 @@ import com.example.toastgoand.R
 import com.example.toastgoand.ToastgoApplication
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityClanHubBinding
+import com.example.toastgoand.home.LandingActivity
 import com.example.toastgoand.home.clanhub.clanaddpeople.ClanAddPeopleActivity
 import com.example.toastgoand.home.clanhub.components.ClanMetrics
 import com.example.toastgoand.home.clanhub.components.UsersListItem
@@ -36,6 +37,7 @@ import com.example.toastgoand.home.clanhub.network.QuitClanApi
 import com.example.toastgoand.home.clans.ClansViewModel
 import com.example.toastgoand.home.clans.ClansViewModelFactory
 import com.example.toastgoand.home.invitepeopledirectly.InvitePeopleDirectlyActivity
+import com.example.toastgoand.splash.SplashActivity
 import com.example.toastgoand.uibits.HeaderOtherScreens
 import com.google.accompanist.insets.ProvideWindowInsets
 import kotlinx.coroutines.launch
@@ -46,7 +48,7 @@ class ClanHubActivity : BaseActivity() {
 
     private val viewModel: ClanHubViewModel by viewModels {
         ClanHubViewModelFactory(
-            (this.getApplication() as ToastgoApplication).repository
+            LandingActivity().repository
         )
     }
 

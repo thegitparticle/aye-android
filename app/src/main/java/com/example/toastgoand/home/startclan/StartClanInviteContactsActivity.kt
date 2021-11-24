@@ -31,8 +31,10 @@ import com.example.toastgoand.R
 import com.example.toastgoand.ToastgoApplication
 import com.example.toastgoand.composestyle.AyeTheme
 import com.example.toastgoand.databinding.ActivityStartClanBinding
+import com.example.toastgoand.home.LandingActivity
 import com.example.toastgoand.home.invitepeopledirectly.ContactItemRender
 import com.example.toastgoand.home.invitepeopledirectly.network.ContactsListItemDataClass
+import com.example.toastgoand.splash.SplashActivity
 import com.example.toastgoand.uibits.HeaderOtherScreens
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.ArrowRight
@@ -43,8 +45,8 @@ class StartClanInviteContactsActivity : BaseActivity() {
 
     private val viewModel: StartClanViewModel by viewModels {
         StartClanViewModelFactory(
-            (this.application as ToastgoApplication).repositoryMyFriends,
-            (this.application as ToastgoApplication).repository
+            LandingActivity().repositoryMyFriends,
+            LandingActivity().repository
         )
     }
 
