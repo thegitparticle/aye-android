@@ -283,15 +283,6 @@ class LandingActivity : BaseActivity() {
             setCancelable(false)
         }.show()
 
-        dialogBinding?.btnOk?.setOnClickListener {
-            customDialog.dismiss()
-            navigator.navigateTo(Screen.QUICK)
-        }
-
-        dialogBinding?.backImageButton?.setOnClickListener {
-            customDialog.dismiss()
-            binding.navView.visibility = View.VISIBLE
-        }
     }
 
     override fun binding(): ViewBinding {

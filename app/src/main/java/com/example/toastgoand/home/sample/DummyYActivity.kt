@@ -27,6 +27,6 @@ class DummyYActivity : AppCompatActivity() {
             val intent = Intent(this, SplashActivity::class.java)
             startActivity(intent)
             finish()
-        }, 2000)
+        }, 200)
     }
 }

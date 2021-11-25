@@ -37,8 +37,8 @@ class SplashActivity : BaseActivity() {
 
     private fun bindViews() {
         binding = viewBinding as ActivitySplashBinding
-        splashLogoImage = binding.splashLogoImage
-        splashLogoImage.animation = AnimationUtils.loadAnimation(this, R.anim.fade_in)
+//        splashLogoImage = binding.splashLogoImage
+//        splashLogoImage.animation = AnimationUtils.loadAnimation(this, R.anim.fade_in)
     }
 
     override fun binding(): ViewBinding {
