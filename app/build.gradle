@@ -8,6 +8,7 @@ plugins {
     id 'kotlin-android-extensions'
     id 'com.google.gms.google-services'
     id "de.jjohannes.missing-metadata-guava" version "0.1"
+    id "io.sentry.android.gradle" version "2.1.5"
 }
 
 
@@ -71,6 +72,7 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
+
 }
 
 dependencies {
@@ -265,4 +267,7 @@ dependencies {
 
     //keyboard event listener
     implementation "net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:3.0.0-RC3"
+
+    //sentry
+    implementation 'io.sentry:sentry-android:5.4.1'
 }

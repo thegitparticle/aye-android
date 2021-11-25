@@ -38,6 +38,7 @@ import com.example.toastgoand.splash.SplashActivity
 import com.google.accompanist.insets.ProvideWindowInsets
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.X
+import io.sentry.Sentry
 import kotlinx.coroutines.launch
 import kotlin.random.Random
 
@@ -83,13 +84,6 @@ class TheAyeActivity : BaseActivity() {
                     Scaffold(
                     ) { contentPadding ->
                         Box(modifier = Modifier.fillMaxWidth()) {
-                            val painter = painterResource(id = R.drawable.aye_bg_1)
-                            Image(
-                                painter = painter,
-                                contentDescription = "background image",
-                                contentScale = ContentScale.FillBounds,
-                                modifier = Modifier.fillMaxSize()
-                            )
                             Column(
                                 modifier = Modifier
                                     .fillMaxWidth()

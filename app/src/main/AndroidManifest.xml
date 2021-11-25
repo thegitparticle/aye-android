@@ -226,6 +226,11 @@
                 <action android:name="android.intent.action.screenshare" />
             </intent-filter>
         </service>
+
+        <meta-data android:name="io.sentry.dsn" android:value="https://1230908a0deb478c92f52c41f14d4563@o578195.ingest.sentry.io/6080002" />
+        <!-- Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
+           We recommend adjusting this value in production. -->
+        <meta-data android:name="io.sentry.traces.sample-rate" android:value="1.0" />
     </application>
 
 </manifest>
