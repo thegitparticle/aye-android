@@ -12,7 +12,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class DefaultRecosDataClass(
     @PrimaryKey val id: Int,
-    val links: List<String>
+    @Serializable val links: List<String>
 )
 
 

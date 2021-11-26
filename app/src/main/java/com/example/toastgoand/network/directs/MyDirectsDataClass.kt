@@ -8,6 +8,7 @@ import kotlinx.serialization.Serializable
     tableName = "myDirectsTable"
 )
 
+@Serializable
 data class MyDirectsDataClass (
     @PrimaryKey val direct_channel_id : String,
     val display_guys : DisplayGuys,

@@ -1,5 +1,6 @@
 package com.example.toastgoand.network.userdetails
 
+import androidx.annotation.Keep
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -10,6 +11,8 @@ import kotlinx.serialization.Serializable
     tableName = "userDetailsTable"
 )
 
+@Keep
+@Serializable
 data class UserDetailsDataClass (
     @ColumnInfo(name = "user") val user : User,
     @ColumnInfo(name = "bio") val bio : String,
@@ -17,6 +20,7 @@ data class UserDetailsDataClass (
     @PrimaryKey @ColumnInfo(name = "id") val id : Int
 )
 
+@Keep
 @Serializable
 data class User (
      val username : String,

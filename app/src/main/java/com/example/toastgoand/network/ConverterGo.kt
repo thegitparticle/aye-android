@@ -1,5 +1,6 @@
 package com.example.toastgoand.network
 
+import androidx.annotation.Keep
 import androidx.room.TypeConverter
 import com.example.toastgoand.home.clans.DisplayPhoto
 import com.example.toastgoand.network.defaultrecos.DefaultRecosDataClass
@@ -15,11 +16,9 @@ import com.google.gson.Gson
 
 import com.google.gson.reflect.TypeToken
 
-
-
-
 @Serializable
 class ConverterGo {
+
     @TypeConverter
     fun fromList(value : User) = Json.encodeToString(value)
 

@@ -1,5 +1,6 @@
 package com.example.toastgoand.network.myclans
 
+import androidx.annotation.Keep
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.serialization.Serializable
@@ -23,6 +24,7 @@ data class MyClansDataClass(
     val display_photos: MutableList<DisplayPhotos>?
 )
 
+@Keep
 @Serializable
 data class DisplayPhotos(
     val user_id: Int,

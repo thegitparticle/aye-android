@@ -22,9 +22,9 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.PersonAdd
-import androidx.compose.material.icons.rounded.PersonAddAlt1
+//import androidx.compose.material.icons.Icons
+//import androidx.compose.material.icons.rounded.PersonAdd
+//import androidx.compose.material.icons.rounded.PersonAddAlt1
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -82,6 +82,7 @@ import javax.inject.Inject
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.tabs.TabLayout
 import compose.icons.FeatherIcons
+import compose.icons.feathericons.Lock
 import compose.icons.feathericons.UserPlus
 
 
@@ -154,7 +155,7 @@ class LandingActivity : BaseActivity() {
                     verticalAlignment = Alignment.Bottom
                 ) {
                     CircleIcon(
-                        iconName = Icons.Rounded.PersonAddAlt1,
+                        iconName = FeatherIcons.Lock,
                         modifier = Modifier
                             .padding(horizontal = 20.dp),
                         onIconPressed =
