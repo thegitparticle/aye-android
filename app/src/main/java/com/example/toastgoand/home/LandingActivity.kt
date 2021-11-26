@@ -155,7 +155,7 @@ class LandingActivity : BaseActivity() {
                     verticalAlignment = Alignment.Bottom
                 ) {
                     CircleIcon(
-                        iconName = FeatherIcons.Lock,
+                        iconName = FeatherIcons.UserPlus,
                         modifier = Modifier
                             .padding(horizontal = 20.dp),
                         onIconPressed =
