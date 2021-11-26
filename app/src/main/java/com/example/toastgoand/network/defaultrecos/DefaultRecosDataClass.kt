@@ -1,5 +1,6 @@
 package com.example.toastgoand.network.defaultrecos
 
+import androidx.annotation.Keep
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.serialization.Serializable
@@ -8,7 +9,7 @@ import kotlinx.serialization.Serializable
     tableName = "defaultRecosTable"
 )
 
-
+@Keep
 @Serializable
 data class DefaultRecosDataClass(
     @PrimaryKey val id: Int,

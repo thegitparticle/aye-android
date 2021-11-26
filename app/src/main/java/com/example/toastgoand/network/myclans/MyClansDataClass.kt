@@ -9,6 +9,8 @@ import kotlinx.serialization.Serializable
     tableName = "myClansTable"
 )
 
+@Keep
+@Serializable
 data class MyClansDataClass(
     val club_profile_pic: String,
     val club_name: String,
