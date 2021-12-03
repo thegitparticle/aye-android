@@ -1,5 +1,7 @@
 package com.example.toastgoand.home.myprofile.components
 
+import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -13,8 +15,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.toastgoand.composestyle.AyeTheme
+import com.example.toastgoand.home.myprofile.SettingsActivity
+import com.example.toastgoand.prefhelpers.Constant
+import com.example.toastgoand.prefhelpers.PrefHelper
+import com.example.toastgoand.splash.SplashActivity
 import com.example.toastgoand.uibits.SqaureRoundedIcon
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.Edit3
@@ -23,6 +30,10 @@ import compose.icons.feathericons.LogOut
 
 @Composable
 fun SettingsButtons() {
+
+    val context = LocalContext.current
+
+    lateinit var prefHelper: PrefHelper
 
     Column(
         modifier = Modifier
@@ -44,6 +55,22 @@ fun SettingsButtons() {
             title = "Logout",
             icon = FeatherIcons.LogOut,
             color = AyeTheme.colors.error,
+            onPressed = {
+
+                val sharedPrefs = context.getSharedPreferences("sharedprefauth", Context.MODE_PRIVATE)
+                var editor = sharedPrefs.edit()
+
+                editor.clear()
+
+                prefHelper = PrefHelper(context = context)
+                prefHelper.put(Constant.PREF_IS_LOGIN, false)
+
+                context.startActivity(
+                    Intent(
+                        context,
+                        SplashActivity::class.java
+                    ))
+            }
         )
     }
 
