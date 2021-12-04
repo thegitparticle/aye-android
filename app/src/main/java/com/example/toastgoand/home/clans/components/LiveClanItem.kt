@@ -2,6 +2,7 @@ package com.example.toastgoand.home.clans.components
 
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
@@ -66,13 +67,17 @@ fun LiveClanItem(myclan: MyClansDataClass, position: Int) {
                 ) {
                     if (totalMember == 2) {
                         OnePerson(displayObject = myclan.display_photos?.get(0))
+                        Log.i("liveclanrenderdebug", "one person clan")
                     } else if (totalMember == 3) {
                         TwoPeople(displayItems = myclan.display_photos)
+                        Log.i("liveclanrenderdebug", "two person clan")
                     } else if (totalMember == 4) {
                         ThreePeople(displayItems = myclan.display_photos)
+                        Log.i("liveclanrenderdebug", "three person clan")
                     } else if (totalMember != null) {
                         if (totalMember > 4) {
                             myclan.display_photos?.let { ThreePlusPeople(displayItems = it) }
+                            Log.i("liveclanrenderdebug", "3+ person clan")
                         } else {
                             OnePerson(displayObject = myclan.display_photos?.get(0))
                         }
@@ -106,13 +111,17 @@ fun LiveClanItem(myclan: MyClansDataClass, position: Int) {
                 ) {
                     if (totalMember == 2) {
                         OnePerson(displayObject = myclan.display_photos?.get(0))
+                        Log.i("liveclanrenderdebug", "one person clan")
                     } else if (totalMember == 3) {
                         TwoPeople(displayItems = myclan.display_photos)
+                        Log.i("liveclanrenderdebug", "two person clan")
                     } else if (totalMember == 4) {
                         ThreePeople(displayItems = myclan.display_photos)
+                        Log.i("liveclanrenderdebug", "three person clan")
                     } else if (totalMember != null) {
                         if (totalMember > 4) {
                             myclan.display_photos?.let { ThreePlusPeople(displayItems = it) }
+                            Log.i("liveclanrenderdebug", "3+ person clan")
                         } else {
                             OnePerson(displayObject = myclan.display_photos?.get(0))
                         }
@@ -136,7 +145,7 @@ fun OnePerson(displayObject: DisplayPhotos) {
 @Composable
 fun TwoPeople(displayItems: List<DisplayPhotos>) {
     AyeTheme() {
-        Row(Modifier.fillMaxSize(fraction = 0.4f), horizontalArrangement = Arrangement.Center) {
+        Row(Modifier.fillMaxSize(), horizontalArrangement = Arrangement.Center) {
             PersonImage(imageLink = displayItems[0].display_pic)
             PersonImage(imageLink = displayItems[1].display_pic)
         }
@@ -245,7 +254,7 @@ private fun PersonImage(imageLink: String) {
                         contentDescription = "clan member dp",
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
-                            .size(70.dp)
+                            .size(55.dp)
                             .drawColorShadow(
                                 AyeTheme.colors.textSecondary,
                                 offsetY = 4.dp,
@@ -258,7 +267,7 @@ private fun PersonImage(imageLink: String) {
                         contentDescription = "clan member dp",
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
-                            .size(70.dp)
+                            .size(55.dp)
                     )
                 }
             }
