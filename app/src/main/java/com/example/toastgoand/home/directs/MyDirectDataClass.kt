@@ -1,10 +1,14 @@
 package com.example.toastgoand.home.directs
 
+import androidx.annotation.Keep
 import com.beust.klaxon.Json
 import com.beust.klaxon.Klaxon
+import kotlinx.serialization.Serializable
 
 private val klaxon = Klaxon()
 
+@Keep
+@Serializable
 data class MyDirectDataClass (
     @Json(name = "direct_channel_id")
     val directChannelID: String,
@@ -31,6 +35,8 @@ data class MyDirectDataClass (
     }
 }
 
+@Keep
+@Serializable
 data class DisplayGuys (
     @Json(name = "user_id")
     val userID: String,

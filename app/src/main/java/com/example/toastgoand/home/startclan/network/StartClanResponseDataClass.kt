@@ -1,7 +1,11 @@
 package com.example.toastgoand.home.startclan.network
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.Serializable
 
+@Keep
+@Serializable
 data class StartClanResponseDataClass(
     @SerializedName("id") val id: Int?,
     @SerializedName("name") val name: String?,

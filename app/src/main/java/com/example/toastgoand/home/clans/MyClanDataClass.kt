@@ -1,10 +1,14 @@
 package com.example.toastgoand.home.clans
 
+import androidx.annotation.Keep
 import com.beust.klaxon.Json
 import com.beust.klaxon.Klaxon
+import kotlinx.serialization.Serializable
 
 private val klaxon = Klaxon()
 
+@Keep
+@Serializable
 data class MyClanDataClass (
     @Json(name = "club_profile_pic")
     val clubProfilePic: String,
@@ -43,6 +47,8 @@ data class MyClanDataClass (
     }
 }
 
+@Keep
+@Serializable
 data class DisplayPhoto (
     @Json(name = "user_id")
     val userID: Int,

@@ -1,5 +1,10 @@
 package com.example.toastgoand.home.otherprofile
 
+import androidx.annotation.Keep
+import kotlinx.serialization.Serializable
+
+@Keep
+@Serializable
 data class OtherProfileDataClass(
     val user: DepthDetails,
     val bio: String,
@@ -7,6 +12,8 @@ data class OtherProfileDataClass(
     val id: Int
 )
 
+@Keep
+@Serializable
 data class DepthDetails(
     val username: String,
     val phone: String,

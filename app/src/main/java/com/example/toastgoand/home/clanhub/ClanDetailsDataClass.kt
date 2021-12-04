@@ -1,5 +1,10 @@
 package com.example.toastgoand.home.clanhub
 
+import androidx.annotation.Keep
+import kotlinx.serialization.Serializable
+
+@Keep
+@Serializable
 data class ClanDetailsDataClass (
     val id : Int,
     val name : String,
@@ -12,7 +17,8 @@ data class ClanDetailsDataClass (
     val users : List<ClanMember>
     )
 
-
+@Keep
+@Serializable
 data class ClanMember (
     val user_id : Int,
     val username : String,

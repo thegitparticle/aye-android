@@ -1,6 +1,10 @@
 package com.example.toastgoand.home.directframes
 
+import androidx.annotation.Keep
+import kotlinx.serialization.Serializable
 
+@Keep
+@Serializable
 data class DirectFrameDataClass (
     val id: Int,
     val published_date: String,

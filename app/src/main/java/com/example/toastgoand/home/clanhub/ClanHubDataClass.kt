@@ -1,10 +1,14 @@
 package com.example.toastgoand.home.clanhub
 
+import androidx.annotation.Keep
 import com.beust.klaxon.Json
 import com.beust.klaxon.Klaxon
+import kotlinx.serialization.Serializable
 
 private val klaxon = Klaxon()
 
+@Keep
+@Serializable
 data class ClanHubDataClass (
     val id: Long,
     val name: String,
@@ -35,6 +39,8 @@ data class ClanHubDataClass (
     }
 }
 
+@Keep
+@Serializable
 data class User (
     @Json(name = "user_id")
     val userID: Long,
