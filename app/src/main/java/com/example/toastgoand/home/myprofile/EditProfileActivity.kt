@@ -1,6 +1,8 @@
 package com.example.toastgoand.home.myprofile
 
+import android.content.Context
 import android.content.Intent
+import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -40,10 +42,13 @@ import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import retrofit2.http.Part
 import android.os.FileUtils
+import com.androidnetworking.AndroidNetworking
+import com.androidnetworking.common.Priority
 import okhttp3.*
 import okhttp3.RequestBody.Companion.asRequestBody
 import okio.IOException
 import java.io.File
+import java.io.FileOutputStream
 
 
 class EditProfileActivity : BaseActivity() {
@@ -64,6 +69,77 @@ class EditProfileActivity : BaseActivity() {
         fun onBackPressedHere() {
             onBackPressed()
         }
+
+        fun getPathFromContent(link: Uri): String {
+
+            val projection = arrayOf(MediaStore.Images.Media.DATA)
+            val cursor: Cursor? = contentResolver.query(link, projection, null, null, null)
+
+            val column_index = cursor!!.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+            cursor.moveToFirst()
+
+            return cursor.getString(column_index)
+        }
+
+//        private const val BUFFER_SIZE = 1024 * 2
+
+//        fun createOutputFile(
+//            context: Context,
+//            contentUri: Uri,
+//            fileNamePrefix: String,
+//            defaultFileExtension: String
+//        ): File {
+//            var count = 0
+//            var file: File
+//
+//            val uriPath: String? = contentUri.path
+//            val fileExtension = if (uriPath == null) defaultFileExtension
+//            else MediaFileHelper.getFileExtension(uriPath)
+//
+//            do {
+//                count++
+//
+//                val mFileName = "$fileNamePrefix${StringHelper.getUniqueId()}$count$fileExtension"
+//                val newFilePath =
+//                    "${context.getExternalFilesDir(null)?.absolutePath}${context.getString(R.string.audio_select_directory)}/$mFileName"
+//
+//                file = File(newFilePath)
+//
+//            } while (file.exists() && !file.isDirectory)
+//
+//            return file
+//        }
+//
+//        fun copyUriToFile(context: Context, srcUri: Uri, dstFile: File) {
+//            try {
+//                val inputStream = context.contentResolver.openInputStream(srcUri) ?: return
+//                val outputStream = FileOutputStream(dstFile)
+//                inputStream.copyTo(outputStream, BUFFER_SIZE)
+//                inputStream.close()
+//                outputStream.close()
+//            } catch (e: IOException) {
+//                e.printStackTrace()
+//            }
+//        }
+//
+//        fun getPathFromURI(
+//            context: Context,
+//            contentUri: Uri,
+//            fileNamePrefix: String,
+//            defaultFileExtension: String
+//        ): String? {
+//            val uriPath: String = contentUri.path ?: return null
+//            val fileName: String = MediaFileHelper.getFileNameWithExtension(uriPath)
+//
+//            if (fileName.isNotBlank()) {
+//                val destFile = createOutputFile(context, contentUri, fileNamePrefix, defaultFileExtension)
+//                copyUriToFile(context, contentUri, destFile)
+//                return destFile.absolutePath
+//            }
+//            return null
+//        }
+
+
 
         setContent {
 
@@ -165,124 +241,23 @@ class EditProfileActivity : BaseActivity() {
                                             )
 
                                             composableScope.launch {
-                                                try {
 
-                                                    fun createPartFromString(param: String): RequestBody {
-                                                        return RequestBody.create("multipart/form-data".toMediaTypeOrNull(), param)
-                                                    }
-
-
-
-                                                    fun prepareFilePart(partName: String, fileUri: Uri): MultipartBody.Part? {
-
-                                                        Log.i(
-                                                            "editprofilelogsprepfile",
-                                                            "thos func is called"
-                                                        )
-
-                                                        val file: File = fileUri.toFile()
-
-                                                        Log.i(
-                                                            "editprofilelogsprepfile",
-                                                            "file var is done"
-                                                        )
-
-                                                        contentResolver.getType(
-                                                            fileUri
-                                                        )?.let {
-                                                            Log.i(
-                                                                "editprofilelogsmimetype",
-                                                                it
-                                                            )
-                                                        }
-
-                                                        val requestFile: RequestBody = file
-                                                            .asRequestBody(
-                                                               "png"
-                                                                    .toMediaTypeOrNull()
-                                                            )
-
-                                                        Log.i(
-                                                            "editprofilelogsprepfile",
-                                                            "request file body is done \"file://$imageUri\""
-                                                        )
-
-                                                        return MultipartBody.Part.createFormData(partName, "uploadandroid.png", requestFile);
-                                                    }
-
-                                                    val bio: RequestBody =
-                                                        createPartFromString("")
-
-                                                    var redoneUrl = imageUri.toString().drop(10)
-
-                                                    Log.i(
-                                                        "editprofilelogs",
-                                                        "functions setup done"
-                                                    )
-
-                                                    Log.i(
-                                                        "editprofilelogsuri",
-                                                        "file:///$redoneUrl"
-                                                    )
-
-                                                    imagePath?.let {
-                                                        Log.i(
-                                                            "editprofilelogspath",
+                                                    imageUri?.let {
+                                                        getContentResolver().openInputStream(it)
+                                                            .toString().toMediaTypeOrNull().toString()
+                                                    }?.let {
+                                                        Log.i("uploaddpdebug",
                                                             it
                                                         )
                                                     }
 
-                                                    Log.i(
-                                                        "editprofilelogsdatapath", imageData.toString()
-                                                    )
+//                                                AndroidNetworking.upload("https://apisayepirates.life/api/users/profile-update/${profileupdateid}/")
+//                                                    .addMultipartFile("image", imageUri?.toFile())
+//                                                    .addMultipartParameter("bio", "")
+//                                                    .setPriority(Priority.HIGH)
+//                                                    .build()
 
-                                                    val image: MultipartBody.Part? =
-                                                        prepareFilePart("image", "file://$imageUri".toUri())
-
-                                                    Log.i(
-                                                        "editprofilelogs",
-                                                        "image part making done"
-                                                    )
-
-                                                    Log.i(
-                                                        "editprofilelogs",
-                                                        "composable scope payload setup done"
-                                                    )
-
-//                                                    profileupdateid?.let {
-
-                                                            try {
-                                                                EditProfileApi.retrofitService.setNewProfile(
-                                                                    profileupdateid = "84",
-                                                                    bio = createPartFromString(""),
-                                                                    image = image
-                                                                )
-                                                                Log.i(
-                                                                    "editprofilelogs",
-                                                                    "kinda worked"
-                                                                )
-                                                            } catch (ex: Exception) {
-
-                                                                Log.i(
-                                                                    "editprofilelogs222",
-                                                                    ex.toString() + "exception caught"
-                                                                )
-                                                            }
-
-//                                                    }
-                                                } catch (e: Exception) {
-                                                    Log.i(
-                                                        "editprofilelogs333",
-                                                        e.toString() + "exception"
-                                                    )
-                                                }
                                             }
-
-//                                        context.startActivity(
-//                                            Intent(
-//                                                context,
-//                                                StartClanActivity::class.java
-//                                            ).apply { })
                                         },
                                         colors = ButtonDefaults.textButtonColors(
                                             backgroundColor = AyeTheme.colors.success,
@@ -308,6 +283,8 @@ class EditProfileActivity : BaseActivity() {
                 }
             }
         }
+
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

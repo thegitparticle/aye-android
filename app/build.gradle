@@ -115,6 +115,13 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.1'
     implementation "com.squareup.retrofit2:converter-scalars:$version_retrofit"
 
+    // fast networking
+    implementation 'com.amitshekhar.android:android-networking:1.0.2'
+
+    //upload service
+    def uploadServiceVersion = "4.7.0"
+    implementation "net.gotev:uploadservice:$uploadServiceVersion"
+
     // managing middleware with view-model structure
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
 

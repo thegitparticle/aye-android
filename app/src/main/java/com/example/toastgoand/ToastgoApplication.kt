@@ -2,6 +2,7 @@ package com.example.toastgoand
 
 import android.app.Application
 import android.util.Log
+import com.androidnetworking.AndroidNetworking
 import com.example.toastgoand.network.AppRoomDB
 import com.example.toastgoand.network.defaultrecos.DefaultRecosRepo
 import com.example.toastgoand.network.directs.MyDirectsRepo
@@ -12,10 +13,24 @@ import com.example.toastgoand.network.userdetails.UserDetailsRepo
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
+import net.gotev.uploadservice.UploadServiceConfig
 
 @HiltAndroidApp
 class ToastgoApplication: Application() {
     val applicationScope = CoroutineScope(SupervisorJob())
+
+    override fun onCreate() {
+
+        super.onCreate()
+
+        AndroidNetworking.initialize(this)
+
+//        UploadServiceConfig.initialize(
+//            context = this,
+//            debug = BuildConfig.DEBUG
+//        )
+    }
+
 //
 //    fun logHere () {
 //        Log.i("slowstartupdebug", "before database initlaiza in app class")
